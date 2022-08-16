@@ -1,0 +1,3 @@
+[console_scripts]
+readeeg = cli.main:main
+

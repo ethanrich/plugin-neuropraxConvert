@@ -1,0 +1,10 @@
+LICENSE
+README.md
+setup.py
+cli/__init__.py
+cli/main.py
+readEEG.egg-info/PKG-INFO
+readEEG.egg-info/SOURCES.txt
+readEEG.egg-info/dependency_links.txt
+readEEG.egg-info/entry_points.txt
+readEEG.egg-info/top_level.txt
