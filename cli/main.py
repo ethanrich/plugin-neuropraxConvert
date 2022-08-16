@@ -1,10 +1,7 @@
 
 import click
 import os
-from reader.read import read_brainvis_triplet
-
-@click.command()
-# @click.option("--name", prompt="Your name", help="The person to greet.")
+from reader.read import call_octave_convert_files
 
 def collect_files(path):
     # get all files
@@ -17,12 +14,15 @@ def collect_files(path):
             ee_.append(name)
     return eeg, ee_
 
-
+@click.command()
 def main():
     # collect the data files
     path = os.getcwd()
     eeg, ee_ = collect_files(path)
 
-    # read them
-    header, e, x = read_brainvis_triplet(path+"\\"+ee_[0], eeg_fname=path+"\\"+eeg[0])
-    click.echo(header)
+    click.echo("Collected files")
+    
+    # convert files
+    for file in eeg:
+        call_octave_convert_files(file_to_convert=file)
+    click.echo("Finished")
