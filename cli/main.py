@@ -1,9 +1,10 @@
 
 import click
 import os
-from reader.read import call_octave_convert_files
+from reader.read import call_octave_convert_files, np_info_to_py
+from tqdm import tqdm
 
-def collect_files(path):
+def collect_files():
     # get all files
     eeg = []
     ee_ = []
@@ -17,12 +18,18 @@ def collect_files(path):
 @click.command()
 def main():
     # collect the data files
-    path = os.getcwd()
-    eeg, ee_ = collect_files(path)
-
-    click.echo("Collected files")
+    eeg, ee_ = collect_files()
     
-    # convert files
-    for file in eeg:
+    # make a folder in the current working directory for the new stuff
+    new_folder = 'eingelegt'
+    try:
+        os.mkdir(new_folder)
+    except:
+        pass
+    
+    # convert files to Python dicts
+    for file in tqdm(eeg):
         call_octave_convert_files(file_to_convert=file)
-    click.echo("Finished")
+        np_info_to_py(file[:-4] + '_NP_info.mat', folder=new_folder)
+        
+    click.echo("Finished with conversion to Python and all files pickled. Bitteschön.")

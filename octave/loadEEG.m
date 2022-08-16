@@ -14,6 +14,6 @@ function [] = loadEEG(filename)
   ##NP_marker = np_readmarker(filename,0,inf,'samples');
 
   ##save('NP_data.mat', 'NP_data')
-  save([savepath filename(1:end-4) "_NP_info.mat"], 'NP_info')
+  save([savepath filename(1:end-4) "_NP_info.mat"], 'NP_info', '-v7')
   ##save('NP_marker.mat', 'NP_marker')
 end
