@@ -18,7 +18,6 @@ def call_octave_convert_files(file_to_convert="empty"):
         octave.addpath(root)
         octave.push("savepath", os.getcwd())
         octave.loadEEG(file_to_convert, nout=0)
-        octave.exit()
         print("Files converted")
     else:
         print("Failed, try again or contact support")
