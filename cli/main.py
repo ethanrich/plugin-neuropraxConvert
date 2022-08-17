@@ -2,9 +2,18 @@ import click
 import os
 from reader.read import *
 from tqdm import tqdm
+import configparser
+from reader.utils import get_project_root
 
 @click.command()
 def main():
+    
+    # get the path of the local octave executable from the user setting
+    ini_path = get_project_root() + "\\cli\\" + "config.ini"
+    config = configparser.ConfigParser()
+    config.read(ini_path)
+    local_octave = config.get('settings','local_octave')
+    
     # collect the binary files
     eeg, ee_, _ = collect_files()
     
@@ -13,7 +22,7 @@ def main():
     
     # convert files to Python dicts
     for file in tqdm(eeg):
-        call_octave_convert_files(file_to_convert=file)
+        call_octave_convert_files(local_octave=local_octave, file_to_convert=file)
         np_to_py(file[:-4] + '_NP_')
         
     # collect the mat files

@@ -2,6 +2,7 @@ from reader.utils import get_project_root
 import os    
 import pickle
 from scipy.io import loadmat
+import time
 
 def collect_files():
     # get all files
@@ -24,16 +25,20 @@ def make_new_dir(sub='eingelegt'):
     except:
         pass
 
-def call_octave_convert_files(file_to_convert="empty"):
+def call_octave_convert_files(local_octave="", file_to_convert="empty"):
     # if no file give, insult the user
     if file_to_convert == "empty":
         print("Come on then, give us a file")
     
     # brute force the environment variable setting. Seems to take 1-5 iterations. No clue why
     os.environ['OCTAVE_EXECUTABLE'] = ""
+    t0 = time.time()
     while "octave.exe" not in os.environ['OCTAVE_EXECUTABLE']:
-        OCTAVE_EXECUTABLE = "C:\\Users\\eri\\AppData\\Local\\Programs\\GNU Octave\\Octave-7.2.0\\mingw64\\bin\\octave.exe"
-        os.environ['OCTAVE_EXECUTABLE'] = "C:\\Users\\eri\\AppData\\Local\\Programs\\GNU Octave\\Octave-7.2.0\\mingw64\\bin\\octave.exe"
+        # get the octave path from the user's input
+        OCTAVE_EXECUTABLE = local_octave
+        os.environ['OCTAVE_EXECUTABLE'] = local_octave
+        if time.time()-t0 > 10:
+            raise Exception("Please add the path to your octave.exe in tool-neuropraxpy\cli\config.ini")
     
     # when the environment variable is finally set, call octave to convert binary to .mat
     if 'octave' in os.environ['OCTAVE_EXECUTABLE']:
