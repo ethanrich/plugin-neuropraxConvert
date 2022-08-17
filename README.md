@@ -22,7 +22,7 @@ If there is a bug, please raise an Issue.
 1) Find your Octave executable file that contains "mingw64\bin\" at the end, like this: ***C:\Users\eri\AppData\Local\Programs\GNU Octave\Octave-7.2.0\mingw64\bin\octave.exe***
 2) Paste the full path of the Octave executable to the configuration file located in the repository, at ***tool-neuropraxpy\cli\config.ini***
 
-#### 4. Convert Binary Files ####
+#### 4. Convert Binary Files To Pickle (for Python) ####
 
 1) Open a command prompt or Anaconda Prompt (whatever you used to pip install) in the folder of your .EEG/.EE_ files
 2) Run the command `neuropraxpy`
