@@ -1,5 +1,5 @@
 # tool-neuropraxpy
-This is a CLI (command line interface) tool to read binary files from NEUROPRAX (.EEG/.EE_ files) and parse them into Python dictionaries. 
+This is a CLI (command line interface) tool to read binary files from NEUROPRAX (.EEG/.EE_ files) and parse them into Python dictionaries. Python wraps a module of MATLAB scripts for converting the binary files to .mat format. The hard work was done for me. 
 
 Functionality is limited to Windows. I could update it to include Linux. Let me know. 
 
