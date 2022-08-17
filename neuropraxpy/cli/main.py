@@ -1,9 +1,9 @@
 import click
 import os
-from reader.read import *
 from tqdm import tqdm
 import configparser
-from reader.utils import get_project_root
+from neuropraxpy.reader.read import collect_files, make_new_dir, call_octave_convert_files, np_to_py
+from neuropraxpy.reader.utils import get_project_root
 
 @click.command()
 def main():

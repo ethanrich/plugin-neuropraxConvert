@@ -1,3 +1,0 @@
-[console_scripts]
-neuropraxpy = cli.main:main
-

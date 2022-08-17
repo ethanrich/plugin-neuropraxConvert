@@ -1,4 +1,4 @@
-from reader.utils import get_project_root
+from neuropraxpy.reader.utils import get_project_root
 import os    
 import pickle
 from scipy.io import loadmat
@@ -56,7 +56,7 @@ def save_as_pickle(file_name, to_save):
     # basic pickle saver
     with open(file_name + '.pickle', 'wb') as handle:
         pickle.dump(to_save, handle, protocol=pickle.HIGHEST_PROTOCOL)
-
+        
 def np_to_py(matfile, folder='eingelegt'):
     
     # collect the info, data, and marker files
