@@ -52,13 +52,13 @@ function [np_data] = np_readdata (filename, idx_begin, data_length, option)
 % Info's lesen
 np_info=np_readfileinfo(filename,'NO_MINMAX');
 
-% Daten initialisieren, Startsamples und Blocklänge ermitteln
+% Daten initialisieren, Startsamples und Blocklï¿½nge ermitteln
 if (0==idx_begin) && (inf==data_length)
     N_start=0;
-    N = np_info.N;                 
+    N = np_info.N;
 else
     switch upper(option)
-        case 'SAMPLES', 
+        case 'SAMPLES',
             N_start = idx_begin;
             N       = data_length;
         case 'TIME',
@@ -82,14 +82,14 @@ np_data.t=single((N_start:N_start+N-1)'./np_info.fa);
 % Messadten einlesen
 %
 % sequentielles Datenformat in Datei (K-Kanalindex, N-Sampleindex):
-% x11 x21 x31 ... xK1 ...  
+% x11 x21 x31 ... xK1 ...
 % x12 x22 x32 ... xK2 ...
 % ...
 % x1(N-1) x2(N-1) ... xK(N-1) ...
 % x1N x2N x3N ... xKN
 %
 % einlesen in eine Matrix mit der Dimension: (KxN)
-% anschließend transponieren in eine Matrix der Dimension: (NxK)
+% anschlieï¿½end transponieren in eine Matrix der Dimension: (NxK)
 %
 % -------------------------------------------------------------------------
 fid=fopen(filename,'r');
@@ -118,7 +118,7 @@ if ~isempty(DTRIGchannel)
     np_data.DTRIG1=single(not(bitget(double(DTRIG),1)));
     np_data.DTRIG1_posTrig=find(diff(np_data.DTRIG1)==+1.0);
     np_data.DTRIG1_negTrig=find(diff(np_data.DTRIG1)==-1.0);
-    
+
     np_data.DTRIG2=single(not(bitget(double(DTRIG),2)));
     np_data.DTRIG2_posTrig=find(diff(np_data.DTRIG2)==+1.0);
     np_data.DTRIG2_negTrig=find(diff(np_data.DTRIG2)==-1.0);

@@ -1,1 +1,0 @@
-start octave-cli "C:\Users\eri\AppData\Local\Programs\GNU Octave\Octave-7.2.0\mingw64\bin\octave-cli.exe" /cd C:\\Users\\eri\\Downloads\\ma_trend /loadEEG()

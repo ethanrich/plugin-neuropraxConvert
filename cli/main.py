@@ -1,35 +1,28 @@
-
 import click
 import os
-from reader.read import call_octave_convert_files, np_info_to_py
+from reader.read import *
 from tqdm import tqdm
-
-def collect_files():
-    # get all files
-    eeg = []
-    ee_ = []
-    for name in os.listdir("."):
-        if name.endswith(".EEG"):
-            eeg.append(name)
-        elif name.endswith(".EE_"):
-            ee_.append(name)
-    return eeg, ee_
 
 @click.command()
 def main():
-    # collect the data files
-    eeg, ee_ = collect_files()
+    # collect the binary files
+    eeg, ee_, _ = collect_files()
     
     # make a folder in the current working directory for the new stuff
-    new_folder = 'eingelegt'
-    try:
-        os.mkdir(new_folder)
-    except:
-        pass
+    make_new_dir(sub='eingelegt')
     
     # convert files to Python dicts
     for file in tqdm(eeg):
         call_octave_convert_files(file_to_convert=file)
-        np_info_to_py(file[:-4] + '_NP_info.mat', folder=new_folder)
+        np_to_py(file[:-4] + '_NP_')
         
+    # collect the mat files
+    _, _, mats = collect_files()
+    # make a folder for the mat files
+    make_new_dir(sub='matfiles')
+    # send the matfiles to the folder (didn't work to just do it through octave for some reason)
+    for mat in mats:
+        os.rename(os.getcwd()+"\\"+mat, os.getcwd()+"\\matfiles\\"+mat)
+
+    
     click.echo("Finished with conversion to Python and all files pickled. Bitteschön.")
