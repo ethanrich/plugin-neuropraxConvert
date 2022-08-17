@@ -1,4 +1,4 @@
-# tool-readEEG
+# tool-neuropraxpy
 This is a CLI (command line interface) tool to read binary files from NEUROPRAX (.EEG/.EE_ files) and parse them into Python dictionaries. 
 
 Functionality is limited to Windows. I could update it to include Linux. Let me know. 
