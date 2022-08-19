@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>nonlin_min (optim_doc)</title>
+
+<meta name="description" content="nonlin_min (optim_doc)">
+<meta name="keywords" content="nonlin_min (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Scalar-optimization.html#Scalar-optimization" rel="up" title="Scalar optimization">
+<link href="lm_005ffeasible.html#lm_005ffeasible" rel="next" title="lm_feasible">
+<link href="Scalar-optimization.html#Scalar-optimization" rel="prev" title="Scalar optimization">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="nonlin_005fmin"></a>
+<div class="header">
+<p>
+Next: <a href="lm_005ffeasible.html#lm_005ffeasible" accesskey="n" rel="next">lm_feasible</a>, Up: <a href="Scalar-optimization.html#Scalar-optimization" accesskey="u" rel="up">Scalar optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Frontend-nonlin_005fmin-for-scalar-non_002dlinear-optimization"></a>
+<h3 class="section">1.1 Frontend nonlin_min for scalar non-linear optimization</h3>
+<a name="index-nonlin_005fmin-2"></a>
+
+<a name="XREFnonlin_005fmin"></a><dl>
+<dt><a name="index-nonlin_005fmin"></a>Function File: <em>[<var>p</var>, <var>objf</var>, <var>cvg</var>, <var>outp</var>] =</em> <strong>nonlin_min</strong> <em>(<var>f</var>, <var>pin</var>)</em></dt>
+<dt><a name="index-nonlin_005fmin-1"></a>Function File: <em>[<var>p</var>, <var>objf</var>, <var>cvg</var>, <var>outp</var>] =</em> <strong>nonlin_min</strong> <em>(<var>f</var>, <var>pin</var>, <var>settings</var>)</em></dt>
+<dd><p>Frontend for nonlinear minimization of a scalar objective function.
+</p>
+<p>The functions supplied by the user have a minimal interface; any
+additionally needed constants can be supplied by wrapping the user
+functions into anonymous functions.
+</p>
+<p>The following description applies to usage with vector-based
+parameter handling. Differences in usage for structure-based
+parameter handling will be explained separately.
+</p>
+<p><var>f</var>: objective function. It gets a column vector of real
+parameters as argument. In gradient determination, this function
+may be called with an informational second argument (if the
+function accepts it), whose content depends on the function for
+gradient determination.
+</p>
+<p><var>pin</var>: real column vector of initial parameters.
+</p>
+<p><var>settings</var>: structure whose fields stand for optional settings
+referred to below. The fields can be set by <code>optimset()</code>.
+</p>
+<p>The returned values are the column vector of final parameters
+<var>p</var>, the final value of the objective function <var>objf</var>, an
+integer <var>cvg</var> indicating if and how optimization succeeded or
+failed, and a structure <var>outp</var> with additional information,
+curently with possible fields: <code>niter</code>, the number of
+iterations, <code>nobjf</code>, the number of objective function calls
+(indirect calls by gradient function not counted), <code>lambda</code>, the
+lambda of constraints at the result, and <code>user_interaction</code>,
+information on user stops (see settings). The backend may define
+additional fields. <var>cvg</var> is greater than zero for success and
+less than or equal to zero for failure; its possible values depend on
+the used backend and currently can be <code>0</code> (maximum number of
+iterations exceeded), <code>1</code> (success without further specification
+of criteria), <code>2</code> (parameter change less than specified
+precision in two consecutive iterations), <code>3</code> (improvement in
+objective function less than specified), <code>-1</code> (algorithm aborted
+by a user function), or <code>-4</code> (algorithm got stuck).
+</p>
+
+</dd></dl>
+
+
+<a name="Settings"></a>
+<h4 class="subheading">Settings</h4>
+
+<p>The fields of the <var>settings</var> structure can be set with
+<a href="https://www.gnu.org/software/octave/doc/interpreter/XREFoptimset.html#XREFoptimset">(octave)optimset</a>.
+</p>
+<p>For settings common to all frontends (including these for statistics)
+see
+<a href="Common-frontend-options.html#Common-frontend-options">Common frontend options</a>.
+</p>
+<p>For additional settings common to all optimization frontends
+see
+<a href="Common-optimization-options.html#Common-optimization-options">Common optimization options</a>.
+</p>
+<a name="Specific-defaults_003a"></a>
+<h4 class="subsubheading">Specific defaults:</h4>
+
+<table>
+<tr><td><code>Algorithm</code>:</td><td>&quot;lm_feasible&quot;</td></tr>
+</table>
+
+<a name="Additional-settings_003a"></a>
+<h4 class="subsubheading">Additional settings:</h4>
+
+<dl compact="compact">
+<dt><code>objf_grad</code></dt>
+<dd><p>Function computing the gradient of the objective function with respect
+to the parameters.  Default: real finite differences.  Will be called
+with the column vector of parameters and, if it accepts it, an
+informational structure as arguments.  If <code>objf_grad</code> was specified
+by the user, the informational structure has the fields <code>f</code>: value
+of objective function for current parameters, <code>fixed</code>: logical
+vector indicating which parameters are not optimized, so these partial
+derivatives need not be computed and can be set to zero, <code>diffp</code>,
+<code>diff_onesided</code>, <code>lbound</code>, <code>ubound</code>: identical to the
+user settings of this name, <code>plabels</code>: 1-dimensional cell-array of
+column-cell-arrays, each column with labels for all parameters; the
+first column contains the numerical indices of the parameters; the
+second and third columns, present for structure based parameter
+handling,
+see
+<a href="Parameter-structures.html#Parameter-structures">Parameter structures</a>,
+contain the names of the parameters and the subindices of
+the parameters,
+see
+<a href="Non_002dscalar-parameters.html#Non_002dscalar-parameters">Non-scalar parameters</a>, respectively.  The default
+gradient function will call the objective function with the second
+argument set with fields <code>f</code>: as the <code>f</code> passed to the
+gradient function, <code>plabels</code>: cell-array of 1x1 cell-arrays with
+the entries of the column-cell-arrays of <code>plabels</code> as passed to the
+jacobian function corresponding to current parameter, <code>side</code>:
+<code>0</code> for one-sided interval, <code>1</code> or <code>2</code>, respectively, for
+the sides of a two-sided interval, and <code>parallel</code>: logical scalar
+indicating parallel computation of partial derivatives.  This
+information can be useful if the model function can omit some
+computations depending on the currently computed partial derivative.
+</p></dd>
+<dt><code>objf_hessian</code></dt>
+<dd><p>Function computing the Hessian of the objective function with respect to
+the parameters.  The default is backend specific.  Will be called with
+the column vector of parameters as argument.
+</p></dd>
+<dt><code>inverse_hessian</code></dt>
+<dd><p>Logical scalar, indicating whether the Hessian function passed by the
+user actually returns the inverse of the Hessian.
+</p></dd>
+<dt><code>complex_step_derivative_objf</code></dt>
+<dd><p>Logical scalar, default: <code>false</code>.  Estimate gradient of objective
+function with complex step derivative approximation.  Use only if you
+know that your objective function is suitable for this.  No user
+function for the gradient (<code>objf_grad</code>) must be specified.
+</p></dd>
+<dt><code>save_state</code></dt>
+<dd><p>String with path to a file which will be created for periodical saving
+of the state of optimization.  Useful for very long optimizations which
+might get interrupted.  The format of the saved state will be
+backend-specific.  Currently, only the <code>&quot;siman&quot;</code> backend honours
+this option.  Default: empty string, meaning no saving of state.
+</p></dd>
+<dt><code>recover_state</code></dt>
+<dd><p>String with path to a file created due to option <code>save_state</code>,
+which is used to recover a saved state before starting optimization.
+Default: empty string, meaning no recovering of state.
+</p></dd>
+</dl>
+
+<a name="Structure-based-parameter-handling"></a>
+<h4 class="subheading">Structure based parameter handling</h4>
+
+<p>Please
+see
+<a href="Parameter-structures.html#Parameter-structures">Parameter structures</a>.
+</p>
+<a name="Backend-information"></a>
+<h4 class="subheading">Backend information</h4>
+
+<p>Please
+see
+<a href="Scalar-optimization.html#Scalar-optimization">Scalar optimization</a> and choose backend from menu.
+</p>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="lm_005ffeasible.html#lm_005ffeasible" accesskey="n" rel="next">lm_feasible</a>, Up: <a href="Scalar-optimization.html#Scalar-optimization" accesskey="u" rel="up">Scalar optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

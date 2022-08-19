@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>siman (optim_doc)</title>
+
+<meta name="description" content="siman (optim_doc)">
+<meta name="keywords" content="siman (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Scalar-optimization.html#Scalar-optimization" rel="up" title="Scalar optimization">
+<link href="samin.html#samin" rel="next" title="samin">
+<link href="octave_005fsqp.html#octave_005fsqp" rel="prev" title="octave_sqp">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="siman"></a>
+<div class="header">
+<p>
+Next: <a href="samin.html#samin" accesskey="n" rel="next">samin</a>, Previous: <a href="octave_005fsqp.html#octave_005fsqp" accesskey="p" rel="prev">octave_sqp</a>, Up: <a href="Scalar-optimization.html#Scalar-optimization" accesskey="u" rel="up">Scalar optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Simulated-annealing-backend-siman-of-scalar-optimization"></a>
+<h3 class="section">1.4 Simulated annealing backend siman of scalar optimization</h3>
+<a name="index-siman"></a>
+
+<p>A simulated annealing (stochastic) optimizer, changing all parameters at
+once in a single step, so being suitable for non-bound constraints.
+</p>
+<p>No gradient or hessian of the objective function is used. The settings
+<code>MaxIter</code>, <code>fract_prec</code>, <code>TolFun</code>, <code>TolX</code>, and
+<code>max_fract_change</code> are not honoured.
+</p>
+<p>Accepts the additional settings <code>T_init</code> (initial temperature,
+default 0.01), <code>T_min</code> (final temperature, default 1.0e-5),
+<code>mu_T</code> (factor of temperature decrease, default 1.005),
+<code>iters_fixed_T</code> (iterations within one temperature step, default
+10), <code>max_rand_step</code> (column vector or structure-based
+configuration of maximum random steps for each parameter, default 0.005
+* <var>pin</var>), <code>stoch_regain_constr</code> (if <code>true</code>, regain
+constraints after a random step, otherwise take new random value until
+constraints are met, default <code>false</code>), <code>trace_steps</code> (set
+field <code>trace</code> of <var>outp</var> with a matrix with a row for each step,
+first column iteration number, second column repeat number within
+iteration, third column value of objective function, rest columns
+parameter values, default <code>false</code>), and <code>siman_log</code> (set field
+<code>log</code> of <var>outp</var> with a matrix with a row for each iteration,
+first column temperature, second column value of objective function,
+rest columns numbers of tries with decrease, no decrease but accepted,
+and no decrease and rejected.
+</p>
+<p>Steps with increase <code>diff</code> of objective function are accepted if
+<code>rand (1) &lt; exp (- diff / T)</code>, where <code>T</code> is the temperature of
+the current iteration.
+</p>
+<p>If regaining of constraints failed, optimization will be aborted and
+returned value of <var>cvg</var> will be <code>0</code>. Otherwise, <var>cvg</var> will
+be <code>1</code>. Returned structure <var>outp</var>, additionally to the possible
+fields <code>trace</code> and <code>log</code> described above, will have the fields
+<code>niter</code> and <code>user_interaction</code>.
+</p>
+<p>Interpretation of <code>Display</code>: if set to <code>&quot;iter&quot;</code>, an
+informational line is printed after each iteration.
+</p>
+<p>If <code>parallel_local</code> is equivalent to <code>true</code>, the objective
+function is evaluated for several parameter combinations in parallel. If
+<code>parallel_local</code> is set to an integer <code>&gt; 1</code>, this is the
+maximal number of parallel processes; if it is <code>&lt;= 1</code>, the maximal
+number will be the number of available processor cores.  The course of
+optimization won&rsquo;t be changed by parallelization, provided the random
+number generator starts with the same state.  To achieve this, some of
+the parallel results are discarded, causing the speedup to be smaller if
+the rate of acceptance of results is high.  Also, due to overhead, there
+won&rsquo;t be any speedup, but even a slowdown, if the objective function is
+not computationally extensive enough.
+</p>
+<p>Honours options <code>save_state</code> and <code>recover_state</code>, described
+for the frontend.
+</p>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="samin.html#samin" accesskey="n" rel="next">samin</a>, Previous: <a href="octave_005fsqp.html#octave_005fsqp" accesskey="p" rel="prev">octave_sqp</a>, Up: <a href="Scalar-optimization.html#Scalar-optimization" accesskey="u" rel="up">Scalar optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

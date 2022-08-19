@@ -1,0 +1,22 @@
+## DO NOT EDIT! Generated from properties.cc
+%!test
+%! a = zmq_socket();
+%!
+%! props = __zmq_properties__(a);
+%! assert(props.type, "ZMQ_PUB")
+%!
+%! assert(__zmq_properties__(a, "type"), "ZMQ_PUB")
+%! assert(__zmq_properties__(a, "recvmore"), 0)
+%!
+%! fail ("__zmq_properties__ (a,'invalid')", "unknown property");
+%!
+%! id = uint8([ 1, 2, 3 ]);
+%! __zmq_properties__(a, "identity", id);
+%! assert(__zmq_properties__(a, "identity"), id);
+%! id = uint8([ 1, 2, 3, 4 ]);
+%! a.identity = id;
+%! assert(__zmq_properties__(a, "identity"), id);
+%! assert (isa (a, 'octave_zeromq_socket'))
+%! zmq_close(a);
+%!error <Invalid call to __zmq_properties__> __zmq_properties__ ()
+%!error <Invalid call to __zmq_properties__> __zmq_properties__ ()

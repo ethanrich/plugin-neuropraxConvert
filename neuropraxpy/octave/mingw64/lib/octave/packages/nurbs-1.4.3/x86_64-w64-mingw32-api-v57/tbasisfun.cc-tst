@@ -1,0 +1,31 @@
+## DO NOT EDIT! Generated from tbasisfun.cc
+%!demo
+%! U = {[0 0 1/2 1 1], [0 0 0 1 1]};
+%! p = [3, 3];
+%! [X, Y] = meshgrid (linspace(0, 1, 30));
+%! u = [X(:), Y(:)]';
+%! N = tbasisfun (u, p, U);
+%! surf (X, Y, reshape (N, size(X)))
+%! title('Basis function associated to a local knot vector')
+%! hold off
+%!test
+%! U = [0 1/2 1];
+%! p = 1;
+%! u = [0.3 0.4 0.6 0.7];
+%! [N, Nder] = tbasisfun (u, p, U);
+%! assert (N, [0.6 0.8 0.8 0.6], 1e-12);
+%! assert (Nder, [2 2 -2 -2], 1e-12);
+%!test
+%! U = {[0 1/2 1] [0 1/2 1]};
+%! p = [1 1];
+%! u = [0.3 0.4 0.6 0.7; 0.3 0.4 0.6 0.7];
+%! [N, Nder] = tbasisfun (u, p, U);
+%! assert (N, [0.36 0.64 0.64 0.36], 1e-12);
+%! assert (Nder, [1.2 1.6 -1.6 -1.2; 1.2 1.6 -1.6 -1.2], 1e-12);
+%!test
+%! U = {[0 1/2 1] [0 1/2 1] [0 1/2 1]};
+%! p = [1 1 1];
+%! u = [0.4 0.4 0.6 0.6; 0.4 0.4 0.6 0.6; 0.4 0.6 0.4 0.6];
+%! [N, Nder] = tbasisfun (u, p, U);
+%! assert (N, [0.512 0.512 0.512 0.512], 1e-12);
+%! assert (Nder, [1.28 1.28 -1.28 -1.28; 1.28 1.28 -1.28 -1.28; 1.28 -1.28 1.28 -1.28], 1e-12);

@@ -1,0 +1,14 @@
+## DO NOT EDIT! Generated from dicomread.cpp
+%!shared testfile
+%! testfile = file_in_loadpath("imdata/CT-MONO2-16-ankle.dcm");
+%!fail ("dicomread");
+%!fail ("dicomread (1)");
+%!fail ("dicomread ('hopefully_a_non_existant_file')");
+%!test
+%! rd=dicomread(testfile);
+%! assert(rd(100,101),int16(128));
+%!test
+%! data={};
+%! data.Filename = testfile;
+%! rd=dicomread(data);
+%! assert(rd(100,101),int16(128));

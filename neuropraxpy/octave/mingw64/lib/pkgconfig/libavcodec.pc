@@ -1,0 +1,14 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=/usr/lib
+includedir=/usr/include
+
+Name: libavcodec
+Description: FFmpeg codec library
+Version: 58.54.100
+Requires: 
+Requires.private: libswresample >= 3.5.100, libavutil >= 56.31.100
+Conflicts:
+Libs: -L${libdir}  -lavcodec 
+Libs.private: -L/usr/lib -lvpx -lm -L/usr/lib -lvpx -lm -L/usr/lib -lvpx -lm -L/usr/lib -lvpx -lm -liconv -lm -llzma -lopencore-amrwb -L/usr/lib -lz -lmp3lame -lm -lopencore-amrnb -L/usr/lib -lspeex -ltheoraenc -ltheoradec -logg -L/usr/lib -lvorbis -L/usr/lib -lvorbisenc -L/usr/lib -lx264 -lxvidcore -lole32 -luser32
+Cflags: -I${includedir}

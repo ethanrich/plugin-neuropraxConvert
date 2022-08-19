@@ -1,0 +1,9 @@
+Name: libpq
+Description: PostgreSQL libpq library
+Url: http://www.postgresql.org/
+Version: 9.4.26
+Requires: 
+Requires.private: 
+Cflags: -I/usr/include
+Libs: -L/usr/lib -lpq
+Libs.private: -L/usr/lib -lshell32 -lwsock32 -lws2_32 -lsecur32

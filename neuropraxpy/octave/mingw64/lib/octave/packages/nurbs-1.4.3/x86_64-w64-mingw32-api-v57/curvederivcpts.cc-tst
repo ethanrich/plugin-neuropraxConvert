@@ -1,0 +1,6 @@
+## DO NOT EDIT! Generated from curvederivcpts.cc
+%!test
+%! line = nrbmak([0.0 1.5; 0.0 3.0],[0.0 0.0 1.0 1.0]);
+%! pk   = curvederivcpts (line.number-1, line.order-1, line.knots,
+%!                        line.coefs(1,:), 2);
+%! assert (pk, [0 3/2; 3/2 0], 100*eps);

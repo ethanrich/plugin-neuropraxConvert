@@ -1,0 +1,19 @@
+## DO NOT EDIT! Generated from pcregexp.cc
+%!assert(pcregexp("f(.*)uck"," firetruck "),[2,10;3,7]);
+%!test
+%! [m,b]=pcregexp("f(.*)uck"," firetruck ");
+%! assert(m,[2,10;3,7]);
+%! assert(b, "iretr")
+%!test
+%! [m,b] = pcregexp("a(.*?)d", "asd asd");
+%! assert(m, [1,3;2,2]);
+%! assert(b, "s");
+%!test
+%! [m,b] = pcregexp("a", "A");
+%! assert(isempty(m))
+%! assert(b, "")
+%!fail("[m,b] = pcregexp('a', 'a')", "pcregexp")
+%!fail("pcregexp('(', '')", "pcregexp")
+%!
+%!demo
+%! [m, s1] = pcregexp("(a.*?(d))", "asd asd")

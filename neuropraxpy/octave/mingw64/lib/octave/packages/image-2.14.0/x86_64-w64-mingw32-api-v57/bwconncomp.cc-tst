@@ -1,0 +1,116 @@
+## DO NOT EDIT! Generated from bwconncomp.cc
+%!test
+%! a = rand (10) > 0.5;
+%! cc = bwconncomp (a, 4);
+%! assert (cc.Connectivity, 4)
+%! assert (cc.ImageSize, [10 10])
+%!
+%! b = false (10);
+%! for i = 1:numel (cc.PixelIdxList)
+%!   b(cc.PixelIdxList{i}) = true;
+%! endfor
+%! assert (a, b)
+%!test
+%! a = rand (10, 13) > 0.5;
+%! cc = bwconncomp (a, 4);
+%! assert (cc.ImageSize, [10 13])
+%!
+%! b = false (10, 13);
+%! for i = 1:numel (cc.PixelIdxList)
+%!   b(cc.PixelIdxList{i}) = true;
+%! endfor
+%! assert (a, b)
+%!test
+%! a = rand (15) > 0.5;
+%! conn_8 = bwconncomp (a, 8);
+%! assert (conn_8, bwconncomp (a))
+%! assert (conn_8, bwconncomp (a, ones (3)))
+%! assert (conn_8.Connectivity, 8)
+%! assert (bwconncomp (a, ones (3)).Connectivity, 8)
+%! assert (bwconncomp (a, [0 1 0; 1 1 1; 0 1 0]).Connectivity, 4)
+%!test
+%! bw = logical ([
+%!   1  0  0  1  0  1  0
+%!   1  0  0  1  0  1  0
+%!   0  0  0  0  0  1  0
+%!   0  0  0  0  1  0  0
+%!   1  1  0  1  1  0  0
+%!   0  1  0  0  0  0  0
+%!   1  1  0  0  0  0  0
+%! ]);
+%! cc = bwconncomp (bw);
+%! cc = struct ();
+%! cc.Connectivity = 8;
+%! cc.ImageSize = [7 7];
+%! cc.NumObjects = 4;
+%! ## The commented line has the results from Matlab.  We return the
+%! ## same result but in a slightly different order.  Since the order
+%! ## is not defined, it is not required for compatibility.
+%! #cc.PixelIdxList = {[1;2], [5;7;12;13;14], [22;23], [26;32;33;36;37;38]};
+%! cc.PixelIdxList = {[1;2], [5;12;13;7;14], [22;23], [26;32;33;38;37;36]};
+%! assert (bwconncomp (bw), cc)
+%!test
+%! ## test that PixelIdxList is a row vector
+%! a = rand (40, 40) > 0.2;
+%! cc = bwconncomp (a, 4);
+%! assert (rows (cc.PixelIdxList), 1)
+%! assert (columns (cc.PixelIdxList), cc.NumObjects)
+%!assert (bwconncomp (false (5)), struct ("ImageSize", [5 5], "NumObjects", 0,
+%!                                        "PixelIdxList", {cell(1, 0)},
+%!                                        "Connectivity", 8))
+%!test
+%! in = [ 0   0   1   0   0   1   0   1   0   0
+%!        0   0   1   0   0   0   0   0   1   1
+%!        1   0   0   0   0   1   1   0   0   0
+%!        1   0   0   0   1   0   0   0   0   0
+%!        1   1   1   1   0   0   0   0   0   1
+%!        0   1   0   1   1   0   0   1   0   0
+%!        1   0   0   0   1   0   0   0   0   0
+%!        0   0   0   1   1   0   0   1   0   0
+%!        0   1   0   1   1   0   0   1   1   0
+%!        0   1   0   1   1   1   0   0   1   0];
+%! assert (bwareaopen (in, 1, 4), logical (in))
+%!
+%! out = [0   0   0   0   0   0   0   0   0   0
+%!        0   0   0   0   0   0   0   0   0   0
+%!        1   0   0   0   0   0   0   0   0   0
+%!        1   0   0   0   0   0   0   0   0   0
+%!        1   1   1   1   0   0   0   0   0   0
+%!        0   1   0   1   1   0   0   0   0   0
+%!        0   0   0   0   1   0   0   0   0   0
+%!        0   0   0   1   1   0   0   0   0   0
+%!        0   0   0   1   1   0   0   0   0   0
+%!        0   0   0   1   1   1   0   0   0   0];
+%! assert (bwareaopen (logical (in), 10, 4), logical (out))
+%! assert (bwareaopen (in, 10, 4), logical (out))
+%! assert (bwareaopen (in, 10, [0 1 0; 1 1 1; 0 1 0]), logical (out))
+%!
+%! out = [0   0   0   0   0   0   0   0   0   0
+%!        0   0   0   0   0   0   0   0   0   0
+%!        1   0   0   0   0   1   1   0   0   0
+%!        1   0   0   0   1   0   0   0   0   0
+%!        1   1   1   1   0   0   0   0   0   0
+%!        0   1   0   1   1   0   0   0   0   0
+%!        1   0   0   0   1   0   0   0   0   0
+%!        0   0   0   1   1   0   0   0   0   0
+%!        0   0   0   1   1   0   0   0   0   0
+%!        0   0   0   1   1   1   0   0   0   0];
+%! assert (bwareaopen (in, 10, 8), logical (out))
+%! assert (bwareaopen (in, 10, ones (3)), logical (out))
+%! assert (bwareaopen (in, 10), logical (out))
+%!
+%! out = [0   0   0   0   0   0   0   0   0   0
+%!        0   0   0   0   0   0   0   0   0   0
+%!        1   0   0   0   0   0   0   0   0   0
+%!        1   0   0   0   0   0   0   0   0   0
+%!        1   1   1   1   0   0   0   0   0   0
+%!        0   1   0   1   1   0   0   0   0   0
+%!        0   0   0   0   1   0   0   0   0   0
+%!        0   0   0   1   1   0   0   1   0   0
+%!        0   0   0   1   1   0   0   1   1   0
+%!        0   0   0   1   1   1   0   0   1   0];
+%! assert (bwareaopen (in, 4, [1 1 0; 1 1 1; 0 1 1]), logical (out))
+%!error bwareaopen ("not an image", 78, 8)
+%!error bwareaopen (rand (10) > 0.5, 10, 100)
+%!error bwareaopen (rand (10) > 0.5, 10, "maximal")
+%!error bwareaopen (rand (10) > 0.5, 10, [1 1 1; 0 1 1; 0 1 0])

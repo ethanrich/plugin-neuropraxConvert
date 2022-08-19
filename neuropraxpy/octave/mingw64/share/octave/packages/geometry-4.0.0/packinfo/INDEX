@@ -1,0 +1,45 @@
+geometry >> Computational Geometry
+2D Polylines
+ clipPolyline
+ clipPolyline_clipper
+ simplifyPolyline_geometry
+2D Ellipses
+ cov2ellipse
+ ellipse2cov
+2D Polygons
+ clipPolygon
+ clipPolygon_clipper
+ clipPolygon_mrf
+ drawFilledPolygon
+ ispolycw
+ ispolyccw
+ isPolygonCCW
+ isPolygonCW_Clipper
+ joinPolygons
+ orientPolygon
+ polygon2patch
+ polygon2shape
+ poly2ccw 
+ poly2cw
+ simplifyPolygon_geometry
+2D Piecewise polynomial shapes
+ curveval
+ curve2polyline
+ plotShape
+ polygon2shape
+ shape2polygon
+ shapeCentroid
+ transformShape
+2D Others
+ beltProblem
+Input [broken]
+ @svg/svg
+ @svg/plot
+ @svg/getpath
+ @svg/path2polygon
+ @svg/normalize
+ @svg/pathid
+ @svg/height
+ @svg/width
+Output
+ data2geo

@@ -1,0 +1,22 @@
+## DO NOT EDIT!  Generated automatically from pt-fcn-handle.cc by Make.
+%!function r = __f2 (f, x)
+%!  r = f (x);
+%!endfunction
+%!function f = __f1 (k)
+%!  f = @(x) __f2 (@(y) y-k, x);
+%!endfunction
+%!assert ((__f1 (3)) (10) == 7)
+%!test
+%! g = @(t) feval (@(x) t*x, 2);
+%! assert (g(0.5) == 1);
+%!test
+%! h = @(x) sin (x);
+%! g = @(f, x) h (x);
+%! f = @() g (@(x) h, pi);
+%! assert (f () == sin (pi));
+%!test
+%! f = @() 'foo';
+%! assert (f (), 'foo');
+%!test
+%! f = @()'foo';
+%! assert (f (), 'foo');

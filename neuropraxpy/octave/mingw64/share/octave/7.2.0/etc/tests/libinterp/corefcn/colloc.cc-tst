@@ -1,0 +1,13 @@
+## DO NOT EDIT!  Generated automatically from colloc.cc by Make.
+%!assert (colloc (1), 0.5)
+%!assert (colloc (1, "left"), [0; 0.5])
+%!assert (colloc (1, "right"), [0.5; 1])
+%!assert (colloc (1, "left", "right"), [0; 0.5; 1])
+%!error colloc ()
+%!error colloc (1,2,3,4)
+%!error <N must be a scalar> colloc (ones (2,2))
+%!error <N cannot be NaN> colloc (NaN)
+%!error <N must be positive> colloc (-1)
+%!error <optional arguments must be strings> colloc (1, 1)
+%!error <string argument must be "left" or "right"> colloc (1, "foobar")
+%!error <total number of roots .* must be .= 1> colloc (0)

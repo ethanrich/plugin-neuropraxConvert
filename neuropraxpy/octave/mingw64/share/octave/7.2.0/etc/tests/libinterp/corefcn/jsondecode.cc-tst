@@ -1,0 +1,6 @@
+## DO NOT EDIT!  Generated automatically from jsondecode.cc by Make.
+%!testif HAVE_RAPIDJSON
+%! fail ("jsondecode ()");
+%! fail ("jsondecode ('1', 2)");
+%! fail ("jsondecode (1)", "JSON_TXT must be a character string");
+%! fail ("jsondecode ('12-')", "parse error at offset 3");

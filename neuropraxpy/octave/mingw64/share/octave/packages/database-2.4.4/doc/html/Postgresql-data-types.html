@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- General documentation for the database package for Octave.
+
+Copyright (C) 2016-2018 Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.3, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>database_doc: Postgresql data types</title>
+
+<meta name="description" content="database_doc: Postgresql data types">
+<meta name="keywords" content="database_doc: Postgresql data types">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Postgresql.html#Postgresql" rel="up" title="Postgresql">
+<link href="Connection-functions.html#Connection-functions" rel="next" title="Connection functions">
+<link href="Postgresql.html#Postgresql" rel="prev" title="Postgresql">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="Postgresql-data-types"></a>
+<div class="header">
+<p>
+Next: <a href="Connection-functions.html#Connection-functions" accesskey="n" rel="next">Connection functions</a>, Up: <a href="Postgresql.html#Postgresql" accesskey="u" rel="up">Postgresql</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Representation-in-Octave-of-types-specific-to-Postgresql"></a>
+<h3 class="section">7.1 Representation in Octave of types specific to Postgresql</h3>
+<a name="index-data-types-1"></a>
+
+<p>For the general types, defined by SQL and potentially available in each
+database implementation,
+see
+<a href="SQL-data-types.html#SQL-data-types">SQL data types</a>.
+</p>
+<p>The last column indicates whether the SQL type is automatically deduced
+by this packages functions from the representation of the data in
+Octave. If not, the correct SQL type must be specified by the user if
+the data is sent from Octave to the database.
+</p>
+<table>
+<thead><tr><th>Postgresql</th><th>Octave</th><th>auto</th></tr></thead>
+<tr><td>oid</td><td>uint32 scalar</td><td>yes</td></tr>
+<tr><td>text</td><td>string</td><td>yes</td></tr>
+<tr><td>name</td><td>string of length &lt; <code>NAMEDATALEN</code> (often 64)</td><td>no</td></tr>
+<tr><td>money</td><td>int64 scalar, which is 100 times the currency value to enable
+storing the &rsquo;small currency&rsquo; (e.g. Cent) fraction in the last two
+digits</td><td>no</td></tr>
+<tr><td>point</td><td>geometric point data for one point (see below)</td><td>yes</td></tr>
+<tr><td>lseg</td><td>geometric point data for two points (see below)</td><td>yes</td></tr>
+<tr><td>line (not yet implemented by postgresql-9.2.4)</td><td>as lseg</td><td>no</td></tr>
+<tr><td>box</td><td>as lseg</td><td>no</td></tr>
+<tr><td>circle</td><td>real vector (but the restrictions for type uint8 as in geometric
+element type apply, as explained below) with 3 elements, no. 1 and 2
+centre coordinates, no. 3 radius</td><td>yes</td></tr>
+<tr><td>polygon</td><td>geometric point data (see below)</td><td>no</td></tr>
+<tr><td>path</td><td>structure with fields <code>closed</code> (boolean, is path closed?)
+and <code>path</code> (geometric point data, see below).</td><td>no</td></tr>
+<tr><td>inet</td><td>uint8 array of 4 or 5 elements for IPv4 or uint16 array of 8 or
+9 elements for IPv6. 5th or 9th element, respectively, contain number
+of set bits in network mask, the default (if there are only 4 or 8
+elements, respectively) is all bits set.</td><td>no</td></tr>
+<tr><td>cidr</td><td>as inet</td><td>no</td></tr>
+<tr><td>macaddr</td><td>uint8 array of 6 elements</td><td>no</td></tr>
+<tr><td>uuid</td><td>uint8 array of 16 elements</td><td>no</td></tr>
+<tr><td>any enum type</td><td>string</td><td>no</td></tr>
+</table>
+
+<p>The 8-byte-time value (see time types in <a href="SQL-data-types.html#SQL-data-types">SQL data types</a>) can be an
+int64 scalar, representing microseconds, if the Postgresql server is
+configured for integer date/time, or a double scalar, representing
+seconds, if the server is configured for float date/time
+(deprecated). One can use <a href="pq_005fconninfo.html#pq_005fconninfo">pq_conninfo</a> to query the respective
+server configuration.
+</p>
+<p>Geometric point data: if converting from Octave data, any real array
+(but if of type uint8, the geometric type name must always be specified,
+for otherwise uint8 would be considered as bytea) with even number of
+elements. Two adjacent elements (adjacent if indexed with a single
+index) define a pair of 2D point coordinates. In converting from
+Postgresql data, dimensions of Octave geometric point data will be
+chosen to be (2, n_points) and elements will be of format double.
+</p>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Connection-functions.html#Connection-functions" accesskey="n" rel="next">Connection functions</a>, Up: <a href="Postgresql.html#Postgresql" accesskey="u" rel="up">Postgresql</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

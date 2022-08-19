@@ -1,0 +1,24 @@
+## Generated from __udpport_read__.cc
+%!test
+%! a = udpport ();
+%! assert (! isnull (a));
+%! [d,c] = __udpport_read__ (a, 1, 0);
+%! assert (c == 0);
+%! assert (isempty (d));
+%! clear a;
+%!error <Invalid call to __udpport_read__> __udpport_read__(1, 10, 0)
+%!test
+%! a = udpport ();
+%! fail ("__udpport_read__ (a, 10, 0, 0)", "Invalid call to __udpport_read__");
+%! clear a;
+%!test
+%! # does read wait
+%! a = udpport ();
+%! assert (! isnull (a));
+%! tic;
+%! [d,c] = __udpport_read__ (a, 1, 1000);
+%! t = toc;
+%! assert (c, 0);
+%! assert (isempty (d));
+%! assert (t, 1.0, 0.1)
+%! clear a;

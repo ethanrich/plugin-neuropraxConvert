@@ -1,0 +1,9 @@
+strings >> Strings
+Search and replace
+ pcregexp
+Operations
+ editdistance
+ cstrcmp
+Conversion
+ base64encode
+ base64decode

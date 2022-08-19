@@ -1,0 +1,5 @@
+## DO NOT EDIT! Generated from __errcore__.cc
+%!error __errcore__ ()
+%!error __errcore__ (1)
+%!error __errcore__ (1, 2, 3)
+%!error __errcore__ ([1 2], 3)

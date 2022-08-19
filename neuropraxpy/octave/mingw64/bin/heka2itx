@@ -1,0 +1,3 @@
+#!/bin/sh
+#conversion from HEKA DAT2 to ITX format format
+save2gdf -f=ITX $@

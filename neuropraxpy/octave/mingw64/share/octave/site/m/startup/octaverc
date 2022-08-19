@@ -1,0 +1,7 @@
+## System-wide startup file for Octave.
+##
+## This file should contain any commands that should be executed each
+## time Octave starts for every user at this site.
+EXEC_PATH (cstrcat (fullfile (OCTAVE_HOME, 'notepad++'), pathsep, EXEC_PATH));
+EXEC_PATH (cstrcat (fullfile (OCTAVE_HOME, 'bin'), pathsep, EXEC_PATH));
+EDITOR (fullfile (OCTAVE_HOME, 'notepad++', 'notepad++.exe'));

@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>polyfitinf (optim_doc)</title>
+
+<meta name="description" content="polyfitinf (optim_doc)">
+<meta name="keywords" content="polyfitinf (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Residual-optimization.html#Residual-optimization" rel="up" title="Residual optimization">
+<link href="wpolyfit.html#wpolyfit" rel="next" title="wpolyfit">
+<link href="pronyfit.html#pronyfit" rel="prev" title="pronyfit">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="polyfitinf"></a>
+<div class="header">
+<p>
+Next: <a href="wpolyfit.html#wpolyfit" accesskey="n" rel="next">wpolyfit</a>, Previous: <a href="pronyfit.html#pronyfit" accesskey="p" rel="prev">pronyfit</a>, Up: <a href="Residual-optimization.html#Residual-optimization" accesskey="u" rel="up">Residual optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Function-polyfitinf-for-polynomial-fitting_002e"></a>
+<h3 class="section">2.10 Function polyfitinf for polynomial fitting.</h3>
+<a name="index-polyfitinf"></a>
+
+<a name="Helptext_003a-8"></a>
+<h4 class="subheading">Helptext:</h4>
+
+<a name="XREFpolyfitinf"></a><pre class="verbatim">function [A,REF,HMAX,H,R,EQUAL] = polyfitinf(M,N,K,X,Y,EPSH,MAXIT,REF0)
+
+  Best polynomial approximation in discrete uniform norm
+
+  INPUT VARIABLES:
+
+  M       : degree of the fitting polynomial
+  N       : number of data points
+  X(N)    : x-coordinates of data points
+  Y(N)    : y-coordinates of data points
+  K       : character of the polynomial:
+                  K = 0 : mixed parity polynomial
+                  K = 1 : odd polynomial  ( X(1) must be &gt;  0 )
+                  K = 2 : even polynomial ( X(1) must be &gt;= 0 )
+  EPSH    : tolerance for leveling. A useful value for 24-bit
+            mantissa is EPSH = 2.0E-7
+  MAXIT   : upper limit for number of exchange steps
+  REF0(M2): initial alternating set ( N-vector ). This is an
+            OPTIONAL argument. The length M2 is given by:
+                  M2 = M + 2                      , if K = 0
+                  M2 = integer part of (M+3)/2    , if K = 1
+                  M2 = 2 + M/2 (M must be even)   , if K = 2
+
+  OUTPUT VARIABLES:
+
+  A       : polynomial coefficients of the best approximation
+            in order of increasing powers:
+                  p*(x) = A(1) + A(2)*x + A(3)*x^2 + ...
+  REF     : selected alternating set of points
+  HMAX    : maximum deviation ( uniform norm of p* - f )
+  H       : pointwise approximation errors
+	R		: total number of iterations
+  EQUAL   : success of failure of algorithm
+                  EQUAL=1 :  succesful
+                  EQUAL=0 :  convergence not acheived
+                  EQUAL=-1:  input error
+                  EQUAL=-2:  algorithm failure
+
+  Relies on function EXCH, provided below.
+
+  Example: 
+  M = 5; N = 10000; K = 0; EPSH = 10^-12; MAXIT = 10;
+  X = linspace(-1,1,N);   % uniformly spaced nodes on [-1,1]
+  k=1; Y = abs(X).^k;     % the function Y to approximate
+  [A,REF,HMAX,H,R,EQUAL] = polyfitinf(M,N,K,X,Y,EPSH,MAXIT);
+  p = polyval(A,X); plot(X,Y,X,p) % p is the best approximation
+
+  Note: using an even value of M, e.g., M=2, in the example above, makes
+  the algorithm to fail with EQUAL=-2, because of collocation, which
+  appears because both the appriximating function and the polynomial are
+  even functions. The way aroung it is to approximate only the right half
+  of the function, setting K = 2 : even polynomial. For example: 
+
+N = 10000; K = 2; EPSH = 10^-12; MAXIT = 10;  X = linspace(0,1,N);
+for i = 1:2
+    k = 2*i-1; Y = abs(X).^k;
+    for j = 1:4
+        M = 2^j;
+        [~,~,HMAX] = polyfitinf(M,N,K,X,Y,EPSH,MAXIT);
+        approxerror(i,j) = HMAX;
+    end
+end
+disp('Table 3.1 from Approximation theory and methods, M.J.D.POWELL, p. 27');
+disp(' ');
+disp('            n          K=1          K=3'); 
+disp(' '); format short g;
+disp([(2.^(1:4))' approxerror']);
+
+  ALGORITHM:
+
+  Computation of the polynomial that best approximates the data (X,Y)
+  in the discrete uniform norm, i.e. the polynomial with the  minimum
+  value of max{ | p(x_i) - y_i | , x_i in X } . That polynomial, also
+  known as minimax polynomial, is obtained by the exchange algorithm,
+  a finite iterative process requiring, at most,
+     n
+   (   ) iterations ( usually p = M + 2. See also function EXCH ).
+     p
+  since this number can be very large , the routine  may not converge
+  within MAXIT iterations . The  other possibility of  failure occurs
+  when there is insufficient floating point precision  for  the input
+  data chosen.
+
+  CREDITS: This routine was developed and modified as 
+  computer assignments in Approximation Theory courses by 
+  Prof. Andrew Knyazev, University of Colorado Denver, USA.
+
+  Team Fall 98 (Revision 1.0):
+          Chanchai Aniwathananon
+          Crhistopher Mehl
+          David A. Duran
+          Saulo P. Oliveira
+
+  Team Spring 11 (Revision 1.1): Manuchehr Aminian
+
+  The algorithm and the comments are based on a FORTRAN code written
+  by Joseph C. Simpson. The code is available on Netlib repository:
+  http://www.netlib.org/toms/501
+  See also: Communications of the ACM, V14, pp.355-356(1971)
+
+  NOTES:
+
+  1) A may contain the collocation polynomial
+  2) If MAXIT is exceeded, REF contains a new reference set
+  3) M, EPSH and REF can be altered during the execution
+  4) To keep consistency to the original code , EPSH can be
+  negative. However, the use of REF0 is *NOT* determined by
+  EPSH&lt; 0, but only by its inclusion as an input parameter.
+
+  Some parts of the code can still take advantage of vectorization.  
+
+  Revision 1.0 from 1998 is a direct human translation of 
+  the FORTRAN code http://www.netlib.org/toms/501
+  Revision 1.1 is a clean-up and technical update.  
+  Tested on MATLAB Version 7.11.0.584 (R2010b) and 
+  GNU Octave Version 3.2.4
+
+</pre>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="wpolyfit.html#wpolyfit" accesskey="n" rel="next">wpolyfit</a>, Previous: <a href="pronyfit.html#pronyfit" accesskey="p" rel="prev">pronyfit</a>, Up: <a href="Residual-optimization.html#Residual-optimization" accesskey="u" rel="up">Residual optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

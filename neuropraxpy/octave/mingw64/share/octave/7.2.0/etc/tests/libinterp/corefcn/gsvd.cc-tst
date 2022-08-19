@@ -1,0 +1,202 @@
+## DO NOT EDIT!  Generated automatically from gsvd.cc by Make.
+%!test <60273>
+%! A = reshape (1:15,5,3);
+%! B = magic (3);
+%! [U,V,X,C,S] = gsvd (A,B);
+%! assert (size (U), [5, 5]);
+%! assert (size (V), [3, 3]);
+%! assert (size (X), [3, 3]);
+%! assert (size (C), [5, 3]);
+%! assert (C(4:5, :), zeros (2,3));
+%! assert (size (S), [3, 3]);
+%! assert (U*C*X', A, 50*eps);
+%! assert (V*S*X', B, 50*eps);
+%! S0 = gsvd (A, B);
+%! assert (size (S0), [3, 1]);
+%! S1 = sort (svd (A / B));
+%! assert (S0, S1, 10*eps);
+%!test <60273>
+%! A = reshape (1:15,3,5);
+%! B = magic (5);
+%! [U,V,X,C,S] = gsvd (A,B);
+%! assert (size (U), [3, 3]);
+%! assert (size (V), [5, 5]);
+%! assert (size (X), [5, 5]);
+%! assert (size (C), [3, 5]);
+%! assert (C(:, 4:5), zeros (3,2));
+%! assert (size (S), [5, 5]);
+%! assert (U*C*X', A, 120*eps);  # less accurate in this orientation
+%! assert (V*S*X', B, 150*eps);  # for some reason.
+%! S0 = gsvd (A, B);
+%! assert (size (S0), [5, 1]);
+%! S0 = S0(3:end);
+%! S1 = sort (svd (A / B));
+%! assert (S0, S1, 20*eps);
+%!shared A, A0, B, B0, U, V, C, S, X, old_state, restore_state
+%! old_state = randn ("state");
+%! restore_state = onCleanup (@() randn ("state", old_state));
+%! randn ("state", 40); # initialize generator to make behavior reproducible
+%! A0 = randn (5, 3);
+%! B0 = diag ([1 2 4]);
+%! A = A0;
+%! B = B0;
+%!test <48807>
+%! [U, V, X, C, S] = gsvd (A, B);
+%! assert (C'*C + S'*S, eye (3), 5*eps);
+%! assert (U*C*X', A, 10*eps);
+%! assert (V*S*X', B, 20*eps);
+%!test <48807>
+%! B(2, 2) = 0;
+%! [U, V, X, C, S] = gsvd (A, B);
+%! assert (C'*C + S'*S, eye (3), 5*eps);
+%! assert (U*C*X', A, 10*eps);
+%! assert (V*S*X', B, 20*eps);
+%!test <48807>
+%! B = B0;
+%! A(:, 3) = 2*A(:, 1) - A(:, 2);
+%! [U, V, X, C, S] = gsvd (A, B);
+%! assert (C'*C + S'*S, eye (3), 5*eps);
+%! assert (U*C*X', A, 10*eps);
+%! assert (V*S*X', B, 20*eps);
+%!#test <48807>
+%! B(:, 3) = 2*B(:, 1) - B(:, 2);
+%! [U, V, X, C, S] = gsvd (A, B);
+%! assert (C'*C + S'*S, eye (3), 5*eps);
+%! assert (U*C*X', A, 10*eps);
+%! assert (V*S*X', B, 20*eps);
+%!test <48807>
+%! A = A0.';
+%! B0 = diag ([1 2 4 8 16]);
+%! B = B0;
+%! [U, V, X, C, S] = gsvd (A, B);
+%! assert (C'*C + S'*S, eye (5), 5*eps);
+%! assert (U*C*X', A, 15*eps);
+%! assert (V*S*X', B, 85*eps);
+%!test <48807>
+%! B(2, 2) = 0;
+%! [U, V, X, C, S] = gsvd (A, B);
+%! assert (C'*C + S'*S, eye (5), 5*eps);
+%! assert (U*C*X', A, 15*eps);
+%! assert (V*S*X', B, 85*eps);
+%!test <48807>
+%! B = B0;
+%! A(3, :) = 2*A(1, :) - A(2, :);
+%! [U, V, X, C, S] = gsvd (A, B);
+%! assert (C'*C + S'*S, eye (5), 5*eps);
+%! assert (U*C*X', A, 15*eps);
+%! assert (V*S*X', B, 85*eps);
+%!#test <48807>
+%! A = A0.'; B = B0.';
+%! A(:, 3) = 2*A(:, 1) - A(:, 2);
+%! B(:, 3) = 2*B(:, 1) - B(:, 2);
+%! [U, V, X, C, S] = gsvd (A, B);
+%! assert (C'*C + S'*S, eye (3), 5*eps);
+%! assert (U*C*X', A, 10*eps);
+%! assert (V*S*X', B, 20*eps);
+%!test <48807>
+%! A0 = A0 + j*randn (5, 3);
+%! B0 = diag ([1 2 4]) + j*diag ([4 -2 -1]);
+%! A = A0;
+%! B = B0;
+%! [U, V, X, C, S] = gsvd (A, B);
+%! assert (C'*C + S'*S, eye (3), 5*eps);
+%! assert (U*C*X', A, 10*eps);
+%! assert (V*S*X', B, 25*eps);
+%!test <48807>
+%! B(2, 2) = 0;
+%! [U, V, X, C, S] = gsvd (A, B);
+%! assert (C'*C + S'*S, eye (3), 5*eps);
+%! assert (U*C*X', A, 10*eps);
+%! assert (V*S*X', B, 25*eps);
+%!test <48807>
+%! B = B0;
+%! A(:, 3) = 2*A(:, 1) - A(:, 2);
+%! [U, V, X, C, S] = gsvd (A, B);
+%! assert (C'*C + S'*S, eye (3), 5*eps);
+%! assert (U*C*X', A, 15*eps);
+%! assert (V*S*X', B, 25*eps);
+%!#test <48807>
+%! B(:, 3) = 2*B(:, 1) - B(:, 2);
+%! [U, V, X, C, S] = gsvd (A, B);
+%! assert (C'*C + S'*S, eye (3), 5*eps);
+%! assert (U*C*X', A, 10*eps);
+%! assert (V*S*X', B, 20*eps);
+%!test <48807>
+%! A = A0.';
+%! B0 = diag ([1 2 4 8 16]) + j*diag ([-5 4 -3 2 -1]);
+%! B = B0;
+%! [U, V, X, C, S] = gsvd (A, B);
+%! assert (C'*C + S'*S, eye (5), 5*eps);
+%! assert (U*C*X', A, 25*eps);
+%! assert (V*S*X', B, 85*eps);
+%!test <48807>
+%! B(2, 2) = 0;
+%! [U, V, X, C, S] = gsvd (A, B);
+%! assert (C'*C + S'*S, eye (5), 5*eps);
+%! assert (U*C*X', A, 10*eps);
+%! assert (V*S*X', B, 85*eps);
+%!test <48807>
+%! B = B0;
+%! A(3, :) = 2*A(1, :) - A(2, :);
+%! [U, V, X, C, S] = gsvd (A, B);
+%! assert (C'*C + S'*S, eye (5), 5*eps);
+%! assert (U*C*X', A, 10*eps);
+%! assert (V*S*X', B, 85*eps);
+%!#test <48807>
+%! A = A0.';
+%! B = B0.';
+%! A(:, 3) = 2*A(:, 1) - A(:, 2);
+%! B(:, 3) = 2*B(:, 1) - B(:, 2);
+%! [U, V, X, C, S] = gsvd (A, B);
+%! assert (C'*C + S'*S, eye (5), 5*eps);
+%! assert (U*C*X', A, 10*eps);
+%! assert (V*S*X', B, 85*eps);
+%!test
+%! s = gsvd (single (eye (5)), B);
+%! assert (class (s), "single");
+%! [U,V,X,C,S] = gsvd (single (eye(5)), B);
+%! assert (class (U), "single");
+%! assert (class (V), "single");
+%! assert (class (X), "single");
+%! assert (class (C), "single");
+%! assert (class (S), "single");
+%!
+%! s = gsvd (A, single (eye (5)));
+%! assert (class (s), "single");
+%! [U,V,X,C,S] = gsvd (A, single (eye (5)));
+%! assert (class (U), "single");
+%! assert (class (V), "single");
+%! assert (class (X), "single");
+%! assert (class (C), "single");
+%! assert (class (S), "single");
+%!error <Invalid call> gsvd ()
+%!error <Invalid call> gsvd (1)
+%!error <Invalid call> gsvd (1,2,3,4)
+%!warning <economy-sized decomposition is not yet implemented> gsvd (1,2,0);
+%!error <A and B must have the same number of columns> gsvd (1,[1, 2])
+%!error <A cannot have Inf or NaN values> gsvd (Inf, single (2))
+%!error <A cannot have Inf or NaN values> gsvd (NaN, single (2))
+%!error <B cannot have Inf or NaN values> gsvd (single (1), Inf)
+%!error <B cannot have Inf or NaN values> gsvd (single (1), NaN)
+%!error <A must be a real or complex matrix> gsvd ({1}, single (2i))
+%!error <B must be a real or complex matrix> gsvd (single (i), {2})
+%!error <A cannot have Inf or NaN values> gsvd (Inf, single (2i))
+%!error <A cannot have Inf or NaN values> gsvd (NaN, single (2i))
+%!error <B cannot have Inf or NaN values> gsvd (single (i), Inf)
+%!error <B cannot have Inf or NaN values> gsvd (single (i), NaN)
+%!error <A and B must be real or complex matrices> gsvd ({1}, single (2))
+%!error <A and B must be real or complex matrices> gsvd (single (1), {2})
+%!error <A cannot have Inf or NaN values> gsvd (Inf, 2)
+%!error <A cannot have Inf or NaN values> gsvd (NaN, 2)
+%!error <B cannot have Inf or NaN values> gsvd (1, Inf)
+%!error <B cannot have Inf or NaN values> gsvd (1, NaN)
+%!error <A must be a real or complex matrix> gsvd ({1}, 2i)
+%!error <B must be a real or complex matrix> gsvd (i, {2})
+%!error <A cannot have Inf or NaN values> gsvd (Inf, 2i)
+%!error <A cannot have Inf or NaN values> gsvd (NaN, 2i)
+%!error <B cannot have Inf or NaN values> gsvd (i, Inf)
+%!error <B cannot have Inf or NaN values> gsvd (i, NaN)
+%!error <A and B must be real or complex matrices> gsvd ({1}, double (2))
+%!error <A and B must be real or complex matrices> gsvd (double (1), {2})
+%!error <A and B cannot be empty matrices> gsvd (zeros (0,1), 1)
+%!error <A and B cannot be empty matrices> gsvd (1, zeros (0,1))

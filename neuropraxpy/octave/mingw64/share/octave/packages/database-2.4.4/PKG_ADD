@@ -1,0 +1,2 @@
+[~] = __all_db_opts__ ("pq_connect");
+[~] = __all_db_opts__ ("pq_exec_params");

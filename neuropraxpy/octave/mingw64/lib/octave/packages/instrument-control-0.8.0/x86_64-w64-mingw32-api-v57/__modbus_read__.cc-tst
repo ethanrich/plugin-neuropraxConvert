@@ -1,0 +1,2 @@
+## Generated from __modbus_read__.cc
+%!error __modbus_read__(1, 10, 0)

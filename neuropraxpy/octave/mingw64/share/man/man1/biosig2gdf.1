@@ -1,0 +1,43 @@
+.TH BIOSIG2GDF 1
+.SH NAME
+biosig2gdf - converts different biomedical signal file formats
+     into a simplified version of GDF, and can stream the result
+     to stdout. This is useful for reading the data by an unnamed
+     pipe into different programming environment, while a
+     simplified parser can be used to decode the data.
+     The conversion performs a conversion to GDFv3 format,
+     where all channels have the same data type and the same
+     sampling rate.
+
+
+.SH SYNOPSIS
+.B biosig2gdf\ [OPTIONS]\  SOURCE\  [DEST]
+
+
+.SH DESCRIPTION
+ SOURCE is the source file
+ DEST is the destination file
+ Supported OPTIONS are:
+ \-v, \-\-version
+ 	prints version information
+ \-h, \-\-help
+ 	prints this information
+ \-z	compress data using gzip
+ \-z=#, compress data with level #
+ 	#=0 no compression; #=9 best compression
+
+.SH AUTHOR
+Alois Schloegl
+
+.SH REPORTING BUGS
+Report bugs to <biosig-general@lists.sourceforge.net>
+
+.SH COPYRIGHT
+Copyright (C) 2020 Alois Schloegl
+License GPLv3+:  GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This  is  free  software:  you  are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+.SH RESOURCES
+https://biosig.sourceforge.io
+

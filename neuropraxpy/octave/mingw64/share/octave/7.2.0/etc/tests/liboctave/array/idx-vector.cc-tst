@@ -1,0 +1,3 @@
+## DO NOT EDIT!  Generated automatically from idx-vector.cc by Make.
+%!error id=Octave:index-out-of-bounds 1(find ([1,1] != 0))
+%!assert ((1:3)(find ([1,0,1] != 0)), [1,3])

@@ -1,0 +1,36 @@
+Summary of important user-visible changes for version 2.0.1:
+------------------------------------------------------------
+
+** Minor changes in src/Makefile and warning supression
+
+Summary of important user-visible changes for version 2.0.0:
+------------------------------------------------------------
+
+** Upgrade to PROJ >= 6.3.0
+
+Summary of important user-visible changes for version 1.1.6:
+------------------------------------------------------------
+
+** Add -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H to compilation order
+
+Summary of important user-visible changes for version 1.1.5:
+------------------------------------------------------------
+
+** Minor changes in src/Makefile
+
+Summary of important user-visible changes for version 1.1.4:
+------------------------------------------------------------
+
+** Changed calls to ismatrix() for isnumeric() Octave funcions
+
+Summary of important user-visible changes for version 1.1.3:
+------------------------------------------------------------
+
+** Only minor changes in Mercurial repository managment
+
+Summary of important user-visible changes for version 1.1.2:
+------------------------------------------------------------
+
+** Change 'autoload' option to 'no' by default
+
+** Changes for working with PROJ >= 4.8.0

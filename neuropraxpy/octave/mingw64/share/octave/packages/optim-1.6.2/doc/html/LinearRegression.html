@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>LinearRegression (optim_doc)</title>
+
+<meta name="description" content="LinearRegression (optim_doc)">
+<meta name="keywords" content="LinearRegression (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Residual-optimization.html#Residual-optimization" rel="up" title="Residual optimization">
+<link href="wsolve.html#wsolve" rel="next" title="wsolve">
+<link href="polyconf.html#polyconf" rel="prev" title="polyconf">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="LinearRegression"></a>
+<div class="header">
+<p>
+Next: <a href="wsolve.html#wsolve" accesskey="n" rel="next">wsolve</a>, Previous: <a href="polyconf.html#polyconf" accesskey="p" rel="prev">polyconf</a>, Up: <a href="Residual-optimization.html#Residual-optimization" accesskey="u" rel="up">Residual optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Function-LinearRegression"></a>
+<h3 class="section">2.13 Function LinearRegression</h3>
+<a name="index-LinearRegression-3"></a>
+
+<a name="XREFLinearRegression"></a><dl>
+<dt><a name="index-LinearRegression"></a>Function File: <em></em> <strong>LinearRegression</strong> <em>(<var>F</var>, <var>y</var>)</em></dt>
+<dt><a name="index-LinearRegression-1"></a>Function File: <em></em> <strong>LinearRegression</strong> <em>(<var>F</var>, <var>y</var>, <var>w</var>)</em></dt>
+<dt><a name="index-LinearRegression-2"></a>Function File: <em>[<var>p</var>, <var>e_var</var>, <var>r</var>, <var>p_var</var>, <var>fit_var</var>] =</em> <strong>LinearRegression</strong> <em>(&hellip;)</em></dt>
+<dd>
+
+<p>general linear regression
+</p>
+<p>determine the parameters p_j  (j=1,2,...,m) such that the function
+f(x) = sum_(j=1,...,m) p_j*f_j(x) is the best fit to the given values
+y_i by f(x_i) for i=1,...,n, i.e. minimize
+sum_(i=1,...,n)(y_i-sum_(j=1,...,m) p_j*f_j(x_i))^2 with respect to p_j
+</p>
+<p>parameters:  
+</p><ul>
+<li> <var>F</var> is an n*m matrix with the values of the basis functions at
+the support points. In column j give the values of f_j at the points
+x_i  (i=1,2,...,n)
+</li><li> <var>y</var> is a column vector of length n with the given values
+</li><li> <var>w</var> is a column vector of length n with the weights of
+the data points. 1/w_i is expected to be proportional to the
+estimated uncertainty in the y values. Then the weighted expression
+sum_(i=1,...,n)(w_i^2*(y_i-f(x_i))^2) is minimized.
+</li></ul>
+
+<p>return values:
+</p><ul>
+<li> <var>p</var> is the vector of length m with the estimated values
+of the parameters
+</li><li> <var>e_var</var> is the vector of estimated variances of the
+provided y values. If weights are provided, then the product
+e_var_i * w^2_i is assumed to be constant.
+</li><li> <var>r</var> is the weighted norm of the residual
+</li><li> <var>p_var</var> is the vector of estimated variances of the parameters p_j
+</li><li> <var>fit_var</var> is the vector of the estimated variances of the
+fitted function values f(x_i)
+</li></ul>
+
+<p>To estimate the variance of the difference between future y values
+and fitted y values use the sum of <var>e_var</var> and <var>fit_var</var>
+</p>
+<p>Caution:  
+do NOT request <var>fit_var</var> for large data sets, as a n by n matrix is
+generated
+</p>
+</dd></dl>
+
+
+<p>See also <a href="https://www.gnu.org/software/octave/doc/interpreter/XREFols.html#XREFols">(octave)ols</a>, <a href="https://www.gnu.org/software/octave/doc/interpreter/XREFgls.html#XREFgls">(octave)gls</a>,
+<a href="https://www.gnu.org/software/octave/doc/interpreter/XREFregress.html#XREFregress">(octave)regress</a>, <a href="leasqr.html#XREFleasqr">leasqr</a>,
+<a href="nonlin_005fcurvefit.html#XREFnonlin_005fcurvefit">nonlin_curvefit</a>,
+<a href="https://www.gnu.org/software/octave/doc/interpreter/XREFpolyfit.html#XREFpolyfit">(octave)polyfit</a>, <a href="wpolyfit.html#XREFwpolyfit">wpolyfit</a>,
+<a href="pronyfit.html#XREFpronyfit">pronyfit</a>.
+</p>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="wsolve.html#wsolve" accesskey="n" rel="next">wsolve</a>, Previous: <a href="polyconf.html#polyconf" accesskey="p" rel="prev">polyconf</a>, Up: <a href="Residual-optimization.html#Residual-optimization" accesskey="u" rel="up">Residual optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

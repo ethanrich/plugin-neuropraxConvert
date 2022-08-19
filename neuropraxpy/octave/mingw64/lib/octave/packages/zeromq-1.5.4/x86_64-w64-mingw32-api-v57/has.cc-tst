@@ -1,0 +1,7 @@
+## DO NOT EDIT! Generated from has.cc
+%!test
+%! ipc = zmq_has ("ipc");
+%! assert (~isempty (ipc));
+%!error <Invalid call to zmq_has> zmq_has()
+%!error <Invalid call to zmq_has> zmq_has(1)
+%!error <Invalid call to zmq_has> zmq_has("ipc", "ipc")

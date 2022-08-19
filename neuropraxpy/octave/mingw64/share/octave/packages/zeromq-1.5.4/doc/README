@@ -1,0 +1,29 @@
+This package is an octave binding for the zeromq library.
+
+Dependancies
+------------
+zmq library and include files http://zeromq.org/
+
+for fedora: yum install zeromq-devel
+
+for ubuntu: apt install libzmq-dev
+
+
+Installing
+----------
+From octave:
+
+* Local file:
+  pkg install zeromq-{VERSION}.tar.gz
+
+* Octave forge:
+  pkg install -forge zermoq
+
+Using
+------
+
+* Load the package prior to using the functions:
+ pkg load zermoq
+
+* functions are close to the C API for the zermoq library.
+

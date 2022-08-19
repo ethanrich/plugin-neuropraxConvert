@@ -1,0 +1,6 @@
+## DO NOT EDIT! Generated from packfields.cc
+%!test
+%! foo = "hello";
+%! bar = 42;
+%! packfields ("s", "foo", "bar");
+%! assert (s, struct ("foo", "hello", "bar", 42));

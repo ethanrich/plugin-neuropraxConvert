@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>wls (optim_doc)</title>
+
+<meta name="description" content="wls (optim_doc)">
+<meta name="keywords" content="wls (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Residual-optimization.html#Residual-optimization" rel="up" title="Residual optimization">
+<link href="lsqlin.html#lsqlin" rel="next" title="lsqlin">
+<link href="curvefit_005fstat.html#curvefit_005fstat" rel="prev" title="curvefit_stat">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="wls"></a>
+<div class="header">
+<p>
+Next: <a href="lsqlin.html#lsqlin" accesskey="n" rel="next">lsqlin</a>, Previous: <a href="curvefit_005fstat.html#curvefit_005fstat" accesskey="p" rel="prev">curvefit_stat</a>, Up: <a href="Residual-optimization.html#Residual-optimization" accesskey="u" rel="up">Residual optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Statistics-for-weighted-least-squares"></a>
+<h3 class="section">2.6 Statistics for weighted least squares</h3>
+<a name="index-wls"></a>
+<a name="index-statistics-for-weighted-least-squares"></a>
+
+<p>The backends for <code>objf_type == &quot;wls&quot;</code> (currently the only supported
+type of objective function) compute <code>covd</code> (due to user request or
+as a prerequisite for <code>covp</code> and <code>corp</code>) as a diagonal matrix
+by assuming that the variances of data points are proportional to the
+reciprocal of the squared <code>weights</code> and guessing the factor of
+proportionality from the residuals. If <code>covp</code> is not defined
+(e.g. because the Jacobian has no full rank), an attempt is made to
+still compute its uniquely defined elements, if any. In <code>corp</code>,
+interdependent parameters can cause elements of <code>1</code> or <code>-1</code>,
+which in this case are not the real coefficients of correlation, but
+rather indicate the direction of parameter interdependence. To be
+consistent with this, an attempt is made (often not successful) to
+identify parameter interdependence and mark it with elements of <code>1</code>
+or <code>-1</code> in <code>corp</code> even if the respective elements of
+<code>covp</code> can not be computed.
+</p>
+
+
+
+
+</body>
+</html>

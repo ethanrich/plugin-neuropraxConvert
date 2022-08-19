@@ -1,0 +1,10 @@
+autoload ("__mididevinfo__", "__midi__.oct");
+autoload ("__midistat__", "__midi__.oct");
+autoload ("__midi__", "__midi__.oct");
+autoload ("__mididevice__", "__midi__.oct");
+autoload ("__midisend__", "__midi__.oct");
+autoload ("__midicallback__", "__midi__.oct");
+autoload ("__midirecv__", "__midi__.oct");
+autoload ("__audio_pkg_lock__", "__midi__.oct");
+__audio_pkg_lock__(1);
+autoload ("__midiflush__", "__midi__.oct");

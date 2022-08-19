@@ -1,0 +1,7 @@
+## DO NOT EDIT! Generated from upfirdn.cc
+%!assert (isequal (upfirdn (1:100, 1, 1, 1), 1:100))
+%!assert (isequal (upfirdn (1:100, 1, 1, 2), 1:2:100))
+%!error upfirdn ()
+%!error upfirdn (1,2)
+%!error upfirdn (1,2,3)
+%!error upfirdn (1,2,3,4,5)

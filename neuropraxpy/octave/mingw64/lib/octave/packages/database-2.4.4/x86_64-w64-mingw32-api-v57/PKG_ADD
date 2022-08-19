@@ -1,0 +1,11 @@
+autoload ("__pq_connect__", "pq_interface.oct");
+autoload ("pq_update_types", "pq_interface.oct");
+autoload ("pq_close", "pq_interface.oct");
+autoload ("pq_lo_import", "pq_interface.oct");
+autoload ("pq_lo_export", "pq_interface.oct");
+autoload ("pq_lo_unlink", "pq_interface.oct");
+autoload ("pq_conninfo", "pq_interface.oct");
+autoload ("__pq_exec_params__", "pq_interface.oct");
+autoload ("__database_pkg_lock__", "pq_interface.oct");
+__database_pkg_lock__(1);
+autoload ("__pq_internal_exit__", "pq_interface.oct");

@@ -1,0 +1,20 @@
+\input texinfo
+@setfilename COPYING
+@settitle COPYING file
+@documentencoding UTF-8
+
+@c This is part of the GNU Octave Interval Package.
+@c Copyright 2015 Oliver Heimlich.
+
+The interval package is free software and can be used under the terms of the GNU General Public License Version 3 (or at your option any later version).  The wording of the license can be found below.
+
+The interval package contains derivative work, which is based on other free software released under various licenses.  Original authors are properly attributed in the manual and copyright statements have been retained in the particular source files or in separate .license files.  For simplicity, most derivative work has been relicensed in this package.  Thus, the GPLv3+ is the main license for the software and documentation in this package.
+
+This package bundles the library crlibm in @code{src/crlibm/}, which is licensed under the GNU Lesser General Public License Version 2.1 (or at your option any later version).  The license can be found in @code{src/crlibm/COPYING.LIB}.
+
+@sp 5
+
+@center The GNU General Public License.
+@include license/gpl-3.0.texi
+
+@bye

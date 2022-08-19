@@ -1,0 +1,40 @@
+## Generated from __tcpserver_read__.cc
+%!test
+%! a = tcpserver (0);
+%! assert (! isnull (a));
+%! assert (a.Connected == false);
+%! b = tcpclient ("127.0.0.1", a.ServerPort);
+%! assert (! isnull (b));
+%! # server should be waiting for
+%! pause(0.5);
+%! assert (a.Connected == true);
+%! # try read when nothing
+%! fail ("__tcpserver_read__ (a, 10, 0, 0)", "Invalid call to __tcpserver_read__");
+%!
+%! assert (a.Connected == true);
+%! [d,c] = __tcpserver_read__ (a, 1, 0);
+%! assert (0, c);
+%! assert (isempty (d));
+%!
+%! tic;
+%! [d,c] = __tcpserver_read__ (a, 1, 1000);
+%! t = toc;
+%! assert (c, 0);
+%! assert (isempty (d));
+%! assert (t, 1.0, 0.1)
+%!
+%! # write some data from ciient
+%! __tcpclient_write__(b, "hello");
+%! [d,c] = __tcpserver_read__ (a, 5, 1000);
+%! assert (5, c);
+%!
+%! clear b
+%! [d,c] = __tcpserver_read__ (a, 1, 0);
+%! assert (0, c);
+%!
+%! pause(0.5);
+%! assert (a.Connected == false);
+%!
+%! clear a
+%!error <Invalid call to __tcpserver_read__> __tcpserver_read__ (1)
+%!error <Invalid call to __tcpserver_read__> __tcpserver_read__ (1, 10, 0)

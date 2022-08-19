@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Common frontend options (optim_doc)</title>
+
+<meta name="description" content="Common frontend options (optim_doc)">
+<meta name="keywords" content="Common frontend options (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="Common-optimization-options.html#Common-optimization-options" rel="next" title="Common optimization options">
+<link href="fmincon.html#fmincon" rel="prev" title="fmincon">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="Common-frontend-options"></a>
+<div class="header">
+<p>
+Next: <a href="Common-optimization-options.html#Common-optimization-options" accesskey="n" rel="next">Common optimization options</a>, Previous: <a href="Compatibility-functions.html#Compatibility-functions" accesskey="p" rel="prev">Compatibility functions</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Options-common-to-all-frontends"></a>
+<h2 class="chapter">8 Options common to all frontends</h2>
+<a name="index-common-options"></a>
+
+<p>All frontends for optimization and for result statistics
+(<a href="nonlin_005fmin.html#nonlin_005fmin">nonlin_min</a>, <a href="nonlin_005fresidmin.html#nonlin_005fresidmin">nonlin_residmin</a>, <a href="nonlin_005fcurvefit.html#nonlin_005fcurvefit">nonlin_curvefit</a>,
+<a href="residmin_005fstat.html#residmin_005fstat">residmin_stat</a>, <a href="curvefit_005fstat.html#curvefit_005fstat">curvefit_stat</a>)accept the following options,
+settable with <a href="https://www.gnu.org/software/octave/doc/interpreter/XREFoptimset.html#XREFoptimset">(octave)optimset</a>.
+</p>
+<p>These options are handled within the frontend.
+</p>
+<dl compact="compact">
+<dt><code>FinDiffRelStep</code></dt>
+<dd><p>Column vector (or scalar, for all parameters) of fractional intervals
+supposed to be used by gradient or Jacobian functions performing finite
+differencing. Default: <code>.002 * ones (size (parameters))</code> for
+central intervals and <code>.001 * ones (size (parameters))</code> for
+one-sided intervals. The default function for finite differencing won&rsquo;t
+let the absolute interval width get smaller than
+<code>abs (FinDiffRelStep .* TypicalX</code> (see below).
+</p></dd>
+<dt><code>diffp</code></dt>
+<dd><p>Can be used alternatively to <code>FinDiffRelStep</code>, but for central
+intervals twice the specified value will be used for backwards compatibility.
+</p></dd>
+<dt><code>diff_onesided</code></dt>
+<dd><p>Logical column vector (or scalar, for all parameters) indicating the
+parameters for which one-sided intervals (instead of central intervals)
+should be used by gradient or Jacobian functions performing finite
+differencing. Default: <code>false (size (parameters))</code>.
+</p></dd>
+<dt><code>FinDiffType</code></dt>
+<dd><p>Can be used alternatively to <code>diff_onesided</code>, but always applies to
+all parameters at once. Possible values: <code>&quot;central&quot;</code> (central
+intervals) or <code>&quot;forward&quot;</code> (one-sided intervals).
+</p></dd>
+<dt><code>TypicalX</code></dt>
+<dd><p>Column vector (or scalar, for all parameters) whose absolute value
+specifies minimal absolute parameter values for computation of intervals
+in finite differencing by gradient or Jacobian functions (see
+<code>FinDiffRelStep</code>). Default: 0.0001. Must not be zero.
+</p></dd>
+<dt><code>cstep</code></dt>
+<dd><p>Scalar step size for complex step derivative approximation of gradients
+or Jacobians. Default: 1e-20.
+</p></dd>
+<dt><code>parallel_local</code></dt>
+<dd><p>Logical or numeric scalar, default: <code>false</code>. If the <code>parallel</code>
+package, <code>version &gt;= 2.0.5</code>, is loaded, estimate gradients of
+objective function and Jacobians of model function and of constraints in
+parallel processes. If <code>parallel_local</code> is set to an integer
+<code>&gt; 1</code>, this is number of parallel processes; if it is <code>&lt;= 1</code>,
+the number of processes will be the number of available processor cores.
+Works for default (real) finite differences and for complex step
+derivatives. Due to overhead, a speed advantage can only be expected if
+objective function, model function or constraint functions are time
+consuming enough. Additionally, this setting is also passed to the
+individual optimization backends, which may also consider this option
+(see documentation of backends). If this option is equivalent to
+<code>true</code>, a warning (ID: <code>optim:parallel_local</code>) will be issued
+if no <code>parallel</code> package of a correct version is loaded.
+</p></dd>
+<dt><code>parallel_net</code></dt>
+<dd><p>Empty (default) or a parallel connections object, see function
+<code>pconnect</code> of the <code>parallel</code> package. If not empty, estimate
+gradients of objective function and Jacobians of model function and of
+constraints using parallel processing in a network of machines. The
+considerations regarding a speed advantage are similar to those for
+option <code>parallel_local</code>.
+</p></dd>
+<dt><code>fixed</code></dt>
+<dd><p>Logical column vector indicating which parameters are not optimized, but
+kept to their inital value.
+</p></dd>
+</dl>
+
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Common-optimization-options.html#Common-optimization-options" accesskey="n" rel="next">Common optimization options</a>, Previous: <a href="Compatibility-functions.html#Compatibility-functions" accesskey="p" rel="prev">Compatibility functions</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+database >> Database.
+Postgresql connection
+ pq_connect
+ pq_close
+ pq_update_types
+ pq_conninfo
+Postgresql command execution
+ pq_exec_params
+Postgresql large objects
+ pq_lo_import
+ pq_lo_export
+ pq_lo_unlink
+ pq_lo_view
+Documentation
+ database_doc
+Helpers
+ var2bytea
+ bytea2var
+Option setting
+ setdbopts
+ getdbopts

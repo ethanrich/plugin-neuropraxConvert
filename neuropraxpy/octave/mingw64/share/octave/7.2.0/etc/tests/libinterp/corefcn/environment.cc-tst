@@ -1,0 +1,25 @@
+## DO NOT EDIT!  Generated automatically from environment.cc by Make.
+%!test
+%! orig_val = EDITOR ();
+%! old_val = EDITOR ("X");
+%! assert (orig_val, old_val);
+%! assert (EDITOR (), "X");
+%! EDITOR (orig_val);
+%! assert (EDITOR (), orig_val);
+%!error EDITOR (1, 2)
+%!test
+%! orig_val = EXEC_PATH ();
+%! old_val = EXEC_PATH ("X");
+%! assert (orig_val, old_val);
+%! assert (EXEC_PATH (), "X");
+%! EXEC_PATH (orig_val);
+%! assert (EXEC_PATH (), orig_val);
+%!error EXEC_PATH (1, 2)
+%!test
+%! orig_val = IMAGE_PATH ();
+%! old_val = IMAGE_PATH ("X");
+%! assert (orig_val, old_val);
+%! assert (IMAGE_PATH (), "X");
+%! IMAGE_PATH (orig_val);
+%! assert (IMAGE_PATH (), orig_val);
+%!error IMAGE_PATH (1, 2)

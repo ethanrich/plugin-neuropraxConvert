@@ -1,0 +1,92 @@
+Summary of important user-visible changes for linear-algebra 2.2.3:
+-------------------------------------------------------------------
+
+** The following functions have been removed from the package.  
+   They have been in Octave core since version 4.4 or earlier:
+
+      condeig
+      gsvd
+      pgmres (superseded by gmres in core Octave)
+
+
+Summary of important user-visible changes for linear-algebra 2.2.2:
+-------------------------------------------------------------------
+
+** Several functions have been adapted to the new core-Octave "ismatrix"
+   behavior (the latter only checks for 2D size, not class). To this
+   end all input matrices are checked against the "isnumeric" function.
+   The linear-algebra package is expected to still work for older Octave
+   versions than 4.0.0 as this "isnumeric" check is only additional.
+
+** nmf_* functions use inputParser from Octave 4.0.0. They won't work
+   with older versions. 
+
+** The interface of nmf_bpas has been simplified. The option 'verbose' 
+   is now a switch and it doesn't require a value. The history of the
+   calculations is stored and returned only if the 4th output argument 
+   is requested.
+
+ ** Package is no longer dependent on general (>= 1.3.0)
+
+Summary of important user-visible changes for linear-algebra 2.2.1:
+-------------------------------------------------------------------
+
+ ** The following functions is new in 2.2.1:
+      vec_projection
+
+ ** fixed bugs:
+      nmf_pg doesn't use text_waitbar by default. The miscellaneous
+      package is not required.
+
+      nmf_bpas now respects the verbose option
+
+      @blksparse/ctranspose returns a Block Sparse Matrix
+
+      @kronprod/iscomplex.m, @kronprod/uminus.m:fixtypos
+
+      src/CmplxGSVD.cc, src/dbleGSVD.cc: update Array constructor usage
+
+      funm.m: fix texinfo, fix typo preventing thfm invocation where
+      applicable, return real matrix when all |imaginary entries| < eps
+      
+      @kronprod and @blksparse subfunctions have been documented
+
+ ** Makefile fixed to work with non-standard linker options e.g on
+    Apple.
+
+ ** The function circulant_make_matrix has been deprecated and will
+    be removed from future versions of the linear-algebra package.
+
+Summary of important user-visible changes for linear-algebra 2.2.0:
+-------------------------------------------------------------------
+
+ ** The following functions are new in 2.2.0:
+
+      circulant_eig     circulant_inv     circulant_make_matrix
+      circulant_matrix_vector_product
+      nmf_pg     nmf_bpas
+
+ ** Package is now dependent on general (>= 1.3.0)
+
+ ** Package is no longer automatically loaded.
+
+Summary of important user-visible changes for linear-algebra 2.1.0:
+-------------------------------------------------------------------
+
+ ** The following functions are new in 2.1.0:
+
+      lobpcg  ndcovlt
+
+ ** The following functions were removed since equivalents are now
+    part of GNU octave core:
+
+      bicg  mgorth
+
+ ** The following functions were deprecated since equivalents are
+    now part of GNU octave core:
+
+      pgmres
+
+ ** The function `funm' now also accepts function handles.
+
+ ** Help text of most functions has been improved.

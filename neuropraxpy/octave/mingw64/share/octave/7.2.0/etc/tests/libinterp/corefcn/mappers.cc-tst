@@ -1,0 +1,761 @@
+## DO NOT EDIT!  Generated automatically from mappers.cc by Make.
+%!assert (abs (1), 1)
+%!assert (abs (-3.5), 3.5)
+%!assert (abs (3+4i), 5)
+%!assert (abs (3-4i), 5)
+%!assert (abs ([1.1, 3i; 3+4i, -3-4i]), [1.1, 3; 5, 5])
+%!assert (abs (single (1)), single (1))
+%!assert (abs (single (-3.5)), single (3.5))
+%!assert (abs (single (3+4i)), single (5))
+%!assert (abs (single (3-4i)), single (5))
+%!assert (abs (single ([1.1, 3i; 3+4i, -3-4i])), single ([1.1, 3; 5, 5]))
+%!error abs ()
+%!error abs (1, 2)
+%!shared rt2, rt3
+%! rt2 = sqrt (2);
+%! rt3 = sqrt (3);
+%!test
+%! x = [1, rt3/2, rt2/2, 1/2, 0, -1/2, -rt2/2, -rt3/2, -1];
+%! v = [0, pi/6, pi/4, pi/3, pi/2, 2*pi/3, 3*pi/4, 5*pi/6, pi];
+%! assert (acos (x), v, sqrt (eps));
+%!test
+%! x = single ([1, rt3/2, rt2/2, 1/2, 0, -1/2, -rt2/2, -rt3/2, -1]);
+%! v = single ([0, pi/6, pi/4, pi/3, pi/2, 2*pi/3, 3*pi/4, 5*pi/6, pi]);
+%! assert (acos (x), v, sqrt (eps ("single")));
+%!test
+%! rval = 0;
+%! ival = 1.31695789692481671;
+%! obs = acos ([2, 2-i*eps, 2+i*eps]);
+%! exp = [rval + ival*i, rval + ival*i, rval - ival*i];
+%! assert (obs, exp, 3*eps);
+%! rval = pi;
+%! obs = acos ([-2, -2-i*eps, -2+i*eps]);
+%! exp = [rval - ival*i, rval + ival*i, rval - ival*i];
+%! assert (obs, exp, 5*eps);
+%! assert (acos ([2 0]),  [ival*i, pi/2], 3*eps);
+%! assert (acos ([2 0i]), [ival*i, pi/2], 3*eps);
+%!testif ; ! ismac () && ! ispc ()   <*45507>
+%! x = [1, -1, i, -i] .* 1e150;
+%! v = [0, pi, pi/2, pi/2];
+%! assert (real (acos (x)), v);
+%!testif ; ismac () || ispc ()   <52627>
+%! ## Same test code as above, but intended only for test statistics on Mac and
+%! ## Windows.  Their trig/hyperbolic functions have huge tolerances.
+%! x = [1, -1, i, -i] .* 1e150;
+%! v = [0, pi, pi/2, pi/2];
+%! assert (real (acos (x)), v);
+%!error acos ()
+%!error acos (1, 2)
+%!testif ; ! ismac ()
+%! x = [1, 0, -1, 0];
+%! v = [0, pi/2*i, pi*i, pi/2*i];
+%! assert (acosh (x), v, sqrt (eps));
+%!testif ; ismac ()   <52627>
+%! ## Same test code as above, but intended only for test statistics on Mac.
+%! ## Mac trig/hyperbolic functions have huge tolerances.
+%! x = [1, 0, -1, 0];
+%! v = [0, pi/2*i, pi*i, pi/2*i];
+%! assert (acosh (x), v, sqrt (eps));
+%!test <49091>
+%! re = 2.99822295029797;
+%! im = pi/2;
+%! assert (acosh (-10i), re - i*im);
+%!testif ; ! ismac ()
+%! x = single ([1, 0, -1, 0]);
+%! v = single ([0, pi/2*i, pi*i, pi/2*i]);
+%! assert (acosh (x), v, sqrt (eps ("single")));
+%!testif ; ismac ()   <52627>
+%! ## Same test code as above, but intended only for test statistics on Mac.
+%! ## Mac trig/hyperbolic functions have huge tolerances.
+%! x = single ([1, 0, -1, 0]);
+%! v = single ([0, pi/2*i, pi*i, pi/2*i]);
+%! assert (acosh (x), v, sqrt (eps ("single")));
+%!test <49091>
+%! re = single (2.99822295029797);
+%! im = single (pi/2);
+%! assert (acosh (single (10i)), re + i*im, 5*eps ("single"));
+%! assert (acosh (single (-10i)), re - i*im, 5*eps ("single"));
+%!testif ; ! ismac () && ! ispc ()   <*45507>
+%! x = [1, -1, i, -i] .* 1e150;
+%! v = [0, pi, pi/2, -pi/2];
+%! assert (imag (acosh (x)), v);
+%!testif ; ismac () || ispc ()   <52627>
+%! ## Same test code as above, but intended only for test statistics on Mac and
+%! ## Windows.  Their trig/hyperbolic functions have huge tolerances.
+%! x = [1, -1, i, -i] .* 1e150;
+%! v = [0, pi, pi/2, -pi/2];
+%! assert (imag (acosh (x)), v);
+%!error acosh ()
+%!error acosh (1, 2)
+%!assert (arg (1), 0)
+%!assert (arg (i), pi/2)
+%!assert (arg (-1), pi)
+%!assert (arg (-i), -pi/2)
+%!assert (arg ([1, i; -1, -i]), [0, pi/2; pi, -pi/2])
+%!assert (arg (single (1)), single (0))
+%!assert (arg (single (i)), single (pi/2))
+%!test
+%! if (ismac ())
+%!   ## Avoid failing for a MacOS feature
+%!   assert (arg (single (-1)), single (pi), 2*eps (single (1)));
+%! else
+%!   assert (arg (single (-1)), single (pi));
+%! endif
+%!assert (arg (single (-i)), single (-pi/2))
+%!assert (arg (single ([1, i; -1, -i])), single ([0, pi/2; pi, -pi/2]), 2e1*eps ("single"))
+%!error arg ()
+%!error arg (1, 2)
+%!shared rt2, rt3
+%! rt2 = sqrt (2);
+%! rt3 = sqrt (3);
+%!test
+%! x = [0, 1/2, rt2/2, rt3/2, 1, rt3/2, rt2/2, 1/2, 0];
+%! v = [0, pi/6, pi/4, pi/3, pi/2, pi/3, pi/4, pi/6, 0];
+%! assert (asin (x), v, sqrt (eps));
+%!test
+%! x = single ([0, 1/2, rt2/2, rt3/2, 1, rt3/2, rt2/2, 1/2, 0]);
+%! v = single ([0, pi/6, pi/4, pi/3, pi/2, pi/3, pi/4, pi/6, 0]);
+%! assert (asin (x), v, sqrt (eps ("single")));
+%!test
+%! rval = pi/2;
+%! ival = 1.31695789692481635;
+%! obs = asin ([2, 2-i*eps, 2+i*eps]);
+%! exp = [rval - ival*i, rval - ival*i, rval + ival*i];
+%! if (ismac ())
+%!   ## Math libraries on macOS seem to implement asin with less accuracy.
+%!   tol = 6*eps;
+%! else
+%!   tol = 2*eps;
+%! endif
+%! assert (obs, exp, tol);
+%! obs = asin ([-2, -2-i*eps, -2+i*eps]);
+%! exp = [-rval + ival*i, -rval - ival*i, -rval + ival*i];
+%! assert (obs, exp, tol);
+%! assert (asin ([2 0]),  [rval - ival*i, 0], tol);
+%! assert (asin ([2 0i]), [rval - ival*i, 0], tol);
+%!testif ; ! ismac () && ! ispc ()   <*45507>
+%! x = [1, -1, i, -i] .* 1e150;
+%! v = [pi/2, -pi/2, 0, -0];
+%! assert (real (asin (x)), v);
+%!testif ; ismac () || ispc ()   <52627>
+%! ## Same test code as above, but intended only for test statistics on Mac and
+%! ## Windows. Their trig/hyperbolic functions have huge tolerances.
+%! x = [1, -1, i, -i] .* 1e150;
+%! v = [pi/2, -pi/2, 0, -0];
+%! assert (real (asin (x)), v);
+%!error asin ()
+%!error asin (1, 2)
+%!test
+%! v = [0, pi/2*i, 0, -pi/2*i];
+%! x = [0, i, 0, -i];
+%! assert (asinh (x), v,  sqrt (eps));
+%!test
+%! v = single ([0, pi/2*i, 0, -pi/2*i]);
+%! x = single ([0, i, 0, -i]);
+%! assert (asinh (x), v,  sqrt (eps ("single")));
+%!testif ; ! ismac () && ! ispc ()   <*45507>
+%! x = [1, -1, i, -i] .* 1e150;
+%! v = [0, 0, pi/2, -pi/2];
+%! assert (imag (asinh (x)), v);
+%!testif ; ismac () || ispc ()   <52627>
+%! ## Same test code as above, but intended only for test statistics on Mac and
+%! ## Windows.  Their trig/hyperbolic functions have huge tolerances.
+%! x = [1, -1, i, -i] .* 1e150;
+%! v = [0, 0, pi/2, -pi/2];
+%! assert (imag (asinh (x)), v);
+%!error asinh ()
+%!error asinh (1, 2)
+%!shared rt2, rt3
+%! rt2 = sqrt (2);
+%! rt3 = sqrt (3);
+%!test
+%! v = [0, pi/6, pi/4, pi/3, -pi/3, -pi/4, -pi/6, 0];
+%! x = [0, rt3/3, 1, rt3, -rt3, -1, -rt3/3, 0];
+%! assert (atan (x), v, sqrt (eps));
+%!test
+%! v = single ([0, pi/6, pi/4, pi/3, -pi/3, -pi/4, -pi/6, 0]);
+%! x = single ([0, rt3/3, 1, rt3, -rt3, -1, -rt3/3, 0]);
+%! assert (atan (x), v, sqrt (eps ("single")));
+%!test <*44310>
+%! x = [1, -1, i, -i] .* 1e150;
+%! v = [pi/2, -pi/2, pi/2, -pi/2];
+%! assert (real (atan (x)), v);
+%! assert (imag (atan (x)), [0, 0, 0, 0], eps);
+%!error atan ()
+%!error atan (1, 2)
+%!test
+%! v = [0, 0];
+%! x = [0, 0];
+%! assert (atanh (x), v, sqrt (eps));
+%!test
+%! v = single ([0, 0]);
+%! x = single ([0, 0]);
+%! assert (atanh (x), v, sqrt (eps ("single")));
+%!test <*44310>
+%! x = [1, -1, i, -i] .* 1e150;
+%! v = [pi/2, pi/2, pi/2, -pi/2];
+%! assert (imag (atanh (x)), v);
+%! assert (real (atanh (x)), [0, 0, 0, 0], eps);
+%!error atanh ()
+%!error atanh (1, 2)
+%!assert (cbrt (64), 4)
+%!assert (cbrt (-125), -5)
+%!assert (cbrt (0), 0)
+%!assert (cbrt (Inf), Inf)
+%!assert (cbrt (-Inf), -Inf)
+%!assert (cbrt (NaN), NaN)
+%!assert (cbrt (2^300), 2^100)
+%!assert (cbrt (125*2^300), 5*2^100)
+%!error cbrt ()
+%!error cbrt (1, 2)
+%!assert (ceil ([2, 1.1, -1.1, -1]), [2, 2, -1, -1])
+%!assert (ceil ([2+2i, 1.1+1.1i, -1.1-1.1i, -1-i]), [2+2i, 2+2i, -1-i, -1-i])
+%!assert (ceil (single ([2, 1.1, -1.1, -1])), single ([2, 2, -1, -1]))
+%!assert (ceil (single ([2+2i, 1.1+1.1i, -1.1-1.1i, -1-i])), single ([2+2i, 2+2i, -1-i, -1-i]))
+%!error ceil ()
+%!error ceil (1, 2)
+%!assert (conj (1), 1)
+%!assert (conj (i), -i)
+%!assert (conj (1+i), 1-i)
+%!assert (conj (1-i), 1+i)
+%!assert (conj ([-1, -i; -1+i, -1-i]), [-1, i; -1-i, -1+i])
+%!assert (conj (single (1)), single (1))
+%!assert (conj (single (i)), single (-i))
+%!assert (conj (single (1+i)), single (1-i))
+%!assert (conj (single (1-i)), single (1+i))
+%!assert (conj (single ([-1, -i; -1+i, -1-i])), single ([-1, i; -1-i, -1+i]))
+%!error conj ()
+%!error conj (1, 2)
+%!shared rt2, rt3
+%! rt2 = sqrt (2);
+%! rt3 = sqrt (3);
+%!test
+%! x = [0, pi/6, pi/4, pi/3, pi/2, 2*pi/3, 3*pi/4, 5*pi/6, pi];
+%! v = [1, rt3/2, rt2/2, 1/2, 0, -1/2, -rt2/2, -rt3/2, -1];
+%! assert (cos (x), v, sqrt (eps));
+%!test
+%! rt2 = sqrt (2);
+%! rt3 = sqrt (3);
+%! x = single ([0, pi/6, pi/4, pi/3, pi/2, 2*pi/3, 3*pi/4, 5*pi/6, pi]);
+%! v = single ([1, rt3/2, rt2/2, 1/2, 0, -1/2, -rt2/2, -rt3/2, -1]);
+%! assert (cos (x), v, sqrt (eps ("single")));
+%!error cos ()
+%!error cos (1, 2)
+%!test
+%! x = [0, pi/2*i, pi*i, 3*pi/2*i];
+%! v = [1, 0, -1, 0];
+%! assert (cosh (x), v, sqrt (eps));
+%!test
+%! x = single ([0, pi/2*i, pi*i, 3*pi/2*i]);
+%! v = single ([1, 0, -1, 0]);
+%! assert (cosh (x), v, sqrt (eps ("single")));
+%!error cosh ()
+%!error cosh (1, 2)
+%!test
+%! a = -1i*sqrt (-1/(6.4187*6.4187));
+%! assert (erf (a), erf (real (a)));
+%!test
+%! x = [0,.5,1];
+%! v = [0, .520499877813047, .842700792949715];
+%! assert (erf (x), v, 1.e-10);
+%! assert (erf (-x), -v, 1.e-10);
+%! assert (erfc (x), 1-v, 1.e-10);
+%! assert (erfinv (v), x, 1.e-10);
+%!test
+%! a = -1i*sqrt (single (-1/(6.4187*6.4187)));
+%! assert (erf (a), erf (real (a)));
+%!test
+%! x = single ([0,.5,1]);
+%! v = single ([0, .520499877813047, .842700792949715]);
+%! assert (erf (x), v, 1.e-6);
+%! assert (erf (-x), -v, 1.e-6);
+%! assert (erfc (x), 1-v, 1.e-6);
+%! assert (erfinv (v), x, 1.e-6);
+%!test
+%! x = [1+2i,-1+2i,1e-6+2e-6i,0+2i];
+%! v = [-0.53664356577857-5.04914370344703i, 0.536643565778565-5.04914370344703i, 0.112837916709965e-5+0.225675833419178e-5i, 18.5648024145755526i];
+%! assert (erf (x), v, -1.e-10);
+%! assert (erf (-x), -v, -1.e-10);
+%! assert (erfc (x), 1-v, -1.e-10);
+%!error erf ()
+%!error erf (1, 2)
+%!assert (erf (erfinv ([-0.9 -0.3 0 0.4 0.8])), [-0.9 -0.3 0 0.4 0.8], eps)
+%!assert (erf (erfinv (single ([-0.9 -0.3 0 0.4 0.8]))), single ([-0.9 -0.3 0 0.4 0.8]), eps ("single"))
+%!assert (erf (erfinv ([-0.999 -0.99 0.9999 0.99999])), [-0.999 -0.99 0.9999 0.99999], eps)
+%!assert (erf (erfinv (single ([-0.999 -0.99 0.9999 0.99999]))), single ([-0.999 -0.99 0.9999 0.99999]), eps ("single"))
+%!assert (erfinv (erf ([-3 -1 -0.4 0.7 1.3 2.8])), [-3 -1 -0.4 0.7 1.3 2.8], -1e-12)
+%!assert (erfinv (erf (single ([-3 -1 -0.4 0.7 1.3 2.8]))), single ([-3 -1 -0.4 0.7 1.3 2.8]), -1e-4)
+%!assert (erfinv ([-1, 1, 1.1, -2.1]), [-Inf, Inf, NaN, NaN])
+%!error erfinv (1+2i)
+%!error erfinv ()
+%!error erfinv (1, 2)
+%!assert (erfc (erfcinv ([1.9 1.3 1 0.6 0.2])), [1.9 1.3 1 0.6 0.2], eps)
+%!assert (erfc (erfcinv (single ([1.9 1.3 1 0.6 0.2]))), single ([1.9 1.3 1 0.6 0.2]), eps ("single"))
+%!assert (erfc (erfcinv ([0.001 0.01 1.9999 1.99999])), [0.001 0.01 1.9999 1.99999], eps)
+%!assert (erfc (erfcinv (single ([0.001 0.01 1.9999 1.99999]))), single ([0.001 0.01 1.9999 1.99999]), eps ("single"))
+%!assert (erfcinv (erfc ([-3 -1 -0.4 0.7 1.3 2.8])), [-3 -1 -0.4 0.7 1.3 2.8], -1e-12)
+%!assert (erfcinv (erfc (single ([-3 -1 -0.4 0.7 1.3 2.8]))), single ([-3 -1 -0.4 0.7 1.3 2.8]), -1e-4)
+%!assert (erfcinv ([2, 0, -0.1, 2.1]), [-Inf, Inf, NaN, NaN])
+%!error erfcinv (1+2i)
+%!error erfcinv ()
+%!error erfcinv (1, 2)
+%!test
+%! a = -1i*sqrt (-1/(6.4187*6.4187));
+%! assert (erfc (a), erfc (real (a)));
+%!error erfc ()
+%!error erfc (1, 2)
+%!test
+%! x = [1+2i,-1+2i,1e-6+2e-6i,0+2i];
+%! assert (erfcx (x), exp (x.^2) .* erfc (x), -1.e-10);
+%!test
+%! x = [100, 100+20i];
+%! v = [0.0056416137829894329, 0.0054246791754558-0.00108483153786434i];
+%! assert (erfcx (x), v, -1.e-10);
+%!error erfcx ()
+%!error erfcx (1, 2)
+%!test
+%! x = [-0.1, 0.1, 1, 1+2i,-1+2i,1e-6+2e-6i,0+2i];
+%! assert (erfi (x), -i * erf (i*x), -1.e-10);
+%!error erfi ()
+%!error erfi (1, 2)
+%!test
+%! x = [0.1, 1, 1+2i,-1+2i,1e-4+2e-4i,0+2i];
+%! v = [0.099335992397852861, 0.53807950691, -13.38892731648-11.828715104i, 13.38892731648-11.828715104i, 0.0001000000073333+0.000200000001333i, 48.160012114291i];
+%! assert (dawson (x), v, -1.e-10);
+%! assert (dawson (-x), -v, -1.e-10);
+%!error dawson ()
+%!error dawson (1, 2)
+%!assert (exp ([0, 1, -1, -1000]), [1, e, 1/e, 0], sqrt (eps))
+%!assert (exp (1+i), e * (cos (1) + sin (1) * i), sqrt (eps))
+%!assert (exp (single ([0, 1, -1, -1000])), single ([1, e, 1/e, 0]), sqrt (eps ("single")))
+%!assert (exp (single (1+i)), single (e * (cos (1) + sin (1) * i)), sqrt (eps ("single")))
+%!assert (exp ([Inf, -Inf, NaN]), [Inf 0 NaN])
+%!assert (exp (single ([Inf, -Inf, NaN])), single ([Inf 0 NaN]))
+%!error exp ()
+%!error exp (1, 2)
+%!assert (expm1 (2*eps), 2*eps, 1e-29)
+%!assert (expm1 ([Inf, -Inf, NaN]), [Inf -1 NaN])
+%!assert (expm1 (single ([Inf, -Inf, NaN])), single ([Inf -1 NaN]))
+%!error expm1 ()
+%!error expm1 (1, 2)
+%!assert (! isfinite (Inf))
+%!assert (! isfinite (NaN))
+%!assert (isfinite (rand (1,10)))
+%!assert (! isfinite (single (Inf)))
+%!assert (! isfinite (single (NaN)))
+%!assert (isfinite (single (rand (1,10))))
+%!assert (isfinite ('a'))
+%!error isfinite ()
+%!error isfinite (1, 2)
+%!assert (fix ([1.1, 1, -1.1, -1]), [1, 1, -1, -1])
+%!assert (fix ([1.1+1.1i, 1+i, -1.1-1.1i, -1-i]), [1+i, 1+i, -1-i, -1-i])
+%!assert (fix (single ([1.1, 1, -1.1, -1])), single ([1, 1, -1, -1]))
+%!assert (fix (single ([1.1+1.1i, 1+i, -1.1-1.1i, -1-i])), single ([1+i, 1+i, -1-i, -1-i]))
+%!error fix ()
+%!error fix (1, 2)
+%!assert (floor ([2, 1.1, -1.1, -1]), [2, 1, -2, -1])
+%!assert (floor ([2+2i, 1.1+1.1i, -1.1-1.1i, -1-i]), [2+2i, 1+i, -2-2i, -1-i])
+%!assert (floor (single ([2, 1.1, -1.1, -1])), single ([2, 1, -2, -1]))
+%!assert (floor (single ([2+2i, 1.1+1.1i, -1.1-1.1i, -1-i])), single ([2+2i, 1+i, -2-2i, -1-i]))
+%!error floor ()
+%!error floor (1, 2)
+%!test
+%! a = -1i*sqrt (-1/(6.4187*6.4187));
+%! assert (gamma (a), gamma (real (a)));
+%!test
+%! x = [.5, 1, 1.5, 2, 3, 4, 5];
+%! v = [sqrt(pi), 1, .5*sqrt(pi), 1, 2, 6, 24];
+%! assert (gamma (x), v, sqrt (eps));
+%!test
+%! a = single (-1i*sqrt (-1/(6.4187*6.4187)));
+%! assert (gamma (a), gamma (real (a)));
+%!test
+%! x = single ([.5, 1, 1.5, 2, 3, 4, 5]);
+%! v = single ([sqrt(pi), 1, .5*sqrt(pi), 1, 2, 6, 24]);
+%! assert (gamma (x), v, sqrt (eps ("single")));
+%!test
+%! ## Test exceptional values
+%! x = [-Inf, -1, -0, 0, 1, Inf, NaN];
+%! v = [Inf, Inf, -Inf, Inf, 1, Inf, NaN];
+%! assert (gamma (x), v);
+%! assert (gamma (single (x)), single (v));
+%!error gamma ()
+%!error gamma (1, 2)
+%!assert (imag (1), 0)
+%!assert (imag (i), 1)
+%!assert (imag (1+i), 1)
+%!assert (imag ([i, 1; 1, i]), full (eye (2)))
+%!assert (imag (single (1)), single (0))
+%!assert (imag (single (i)), single (1))
+%!assert (imag (single (1+i)), single (1))
+%!assert (imag (single ([i, 1; 1, i])), full (eye (2,"single")))
+%!error imag ()
+%!error imag (1, 2)
+%!test
+%! charset = char (0:127);
+%! result = false (1, 128);
+%! result(double ("A":"Z") + 1) = true;
+%! result(double ("0":"9") + 1) = true;
+%! result(double ("a":"z") + 1) = true;
+%! assert (isalnum (charset), result);
+%!assert (isalnum(["Ä8Aa?"; "(Uß ;"]), logical ([1 1 1 1 1 0; 0 1 1 1 0 0]))
+%!error isalnum ()
+%!error isalnum (1, 2)
+%!test
+%! charset = char (0:127);
+%! result = false (1, 128);
+%! result(double ("A":"Z") + 1) = true;
+%! result(double ("a":"z") + 1) = true;
+%! assert (isalpha (charset), result);
+%!assert (isalpha("Ä8Aa(Uß ;"), logical ([1 1 0 1 1 0 1 1 1 0 0]))
+%!error isalpha ()
+%!error isalpha (1, 2)
+%!test
+%! charset = char (0:127);
+%! result = true (1, 128);
+%! assert (isascii (charset), result);
+%!error isascii ()
+%!error isascii (1, 2)
+%!test
+%! charset = char (0:127);
+%! result = false (1, 128);
+%! result(1:32) = true;
+%! result(128) = true;
+%! assert (iscntrl (charset), result);
+%!error iscntrl ()
+%!error iscntrl (1, 2)
+%!test
+%! charset = char (0:127);
+%! result = false (1, 128);
+%! result(double ("0":"9") + 1) = true;
+%! assert (isdigit (charset), result);
+%!assert (isdigit("Ä8Aa(Uß ;"), logical ([0 0 1 0 0 0 0 0 0 0 0]))
+%!error isdigit ()
+%!error isdigit (1, 2)
+%!assert (isinf (Inf))
+%!assert (! isinf (NaN))
+%!assert (! isinf (NA))
+%!assert (isinf (rand (1,10)), false (1,10))
+%!assert (isinf ([NaN -Inf -1 0 1 Inf NA]), [false, true, false, false, false, true, false])
+%!assert (isinf (single (Inf)))
+%!assert (! isinf (single (NaN)))
+%!assert (! isinf (single (NA)))
+%!assert (isinf (single (rand (1,10))), false (1,10))
+%!assert (isinf (single ([NaN -Inf -1 0 1 Inf NA])), [false, true, false, false, false, true, false])
+%!assert (! isinf ('a'))
+%!error isinf ()
+%!error isinf (1, 2)
+%!test
+%! charset = char (0:127);
+%! result = false (1, 128);
+%! result(34:127) = true;
+%! assert (isgraph (charset), result);
+%!assert (isgraph("Ä8Aa(Uß ;"), logical ([1 1 1 1 1 1 1 1 1 0 1]))
+%!error isgraph ()
+%!error isgraph (1, 2)
+%!test
+%! charset = char (0:127);
+%! result = false (1, 128);
+%! result(double ("a":"z") + 1) = true;
+%! assert (islower (charset), result);
+%!assert (islower("Ä8Aa(Uß ;"), logical ([0 0 0 0 1 0 0 1 1 0 0]))
+%!error islower ()
+%!error islower (1, 2)
+%!assert (! isna (Inf))
+%!assert (! isna (NaN))
+%!assert (isna (NA))
+%!assert (isna (rand (1,10)), false (1,10))
+%!assert (isna ([NaN -Inf -1 0 1 Inf NA]), [false, false, false, false, false, false, true])
+%!assert (! isna (single (Inf)))
+%!assert (! isna (single (NaN)))
+%!assert (isna (single (NA)))
+%!assert (isna (single (rand (1,10))), false (1,10))
+%!assert (isna (single ([NaN -Inf -1 0 1 Inf NA])), [false, false, false, false, false, false, true])
+%!error isna ()
+%!error isna (1, 2)
+%!assert (! isnan (Inf))
+%!assert (isnan (NaN))
+%!assert (isnan (NA))
+%!assert (isnan (rand (1,10)), false (1,10))
+%!assert (isnan ([NaN -Inf -1 0 1 Inf NA]), [true, false, false, false, false, false, true])
+%!assert (! isnan (single (Inf)))
+%!assert (isnan (single (NaN)))
+%!assert (isnan (single (NA)))
+%!assert (isnan (single (rand (1,10))), false (1,10))
+%!assert (isnan (single ([NaN -Inf -1 0 1 Inf NA])), [true, false, false, false, false, false, true])
+%!assert (! isnan ('a'))
+%!error isnan ()
+%!error isnan (1, 2)
+%!test
+%! charset = char (0:127);
+%! result = false (1, 128);
+%! result(33:127) = true;
+%! assert (isprint (charset), result);
+%!assert (isprint("Ä8Aa(Uß ;"), logical ([1 1 1 1 1 1 1 1 1 1 1]))
+%!error isprint ()
+%!error isprint (1, 2)
+%!test
+%! charset = char (0:127);
+%! result = false (1, 128);
+%! result(34:48) = true;
+%! result(59:65) = true;
+%! result(92:97) = true;
+%! result(124:127) = true;
+%! assert (ispunct (charset), result);
+%!assert (ispunct("Ä8Aa(Uß ;"), logical ([0 0 0 0 0 1 0 0 0 0 1]))
+%!error ispunct ()
+%!error ispunct (1, 2)
+%!test
+%! charset = char (0:127);
+%! result = false (1, 128);
+%! result(double (" \f\n\r\t\v") + 1) = true;
+%! assert (isspace (charset), result);
+%!assert (isspace("Ä8Aa(Uß ;"), logical ([0 0 0 0 0 0 0 0 0 1 0]))
+%!error isspace ()
+%!error isspace (1, 2)
+%!test
+%! charset = char (0:127);
+%! result = false (1, 128);
+%! result(double ("A":"Z") + 1) = true;
+%! assert (isupper (charset), result);
+%!assert (isupper("Ä8Aa(Uß ;"), logical ([1 1 0 1 0 0 1 0 0 0 0]))
+%!error isupper ()
+%!error isupper (1, 2)
+%!test
+%! charset = char (0:127);
+%! result = false (1, 128);
+%! result(double ("A":"F") + 1) = true;
+%! result(double ("0":"9") + 1) = true;
+%! result(double ("a":"f") + 1) = true;
+%! assert (isxdigit (charset), result);
+%!assert (isxdigit("Ä8Aa(Uß ;"), logical ([0 0 1 1 1 0 0 0 0 0 0]))
+%!error isxdigit ()
+%!error isxdigit (1, 2)
+%!test
+%! a = -1i*sqrt (-1/(6.4187*6.4187));
+%! assert (gammaln (a), gammaln (real (a)));
+%!test
+%! x = [.5, 1, 1.5, 2, 3, 4, 5];
+%! v = [sqrt(pi), 1, .5*sqrt(pi), 1, 2, 6, 24];
+%! assert (gammaln (x), log (v), sqrt (eps));
+%!test
+%! a = single (-1i*sqrt (-1/(6.4187*6.4187)));
+%! assert (gammaln (a), gammaln (real (a)));
+%!test
+%! x = single ([.5, 1, 1.5, 2, 3, 4, 5]);
+%! v = single ([sqrt(pi), 1, .5*sqrt(pi), 1, 2, 6, 24]);
+%! assert (gammaln (x), log (v), sqrt (eps ("single")));
+%!test
+%! x = [-1, 0, 1, Inf];
+%! v = [Inf, Inf, 0, Inf];
+%! assert (gammaln (x), v);
+%! assert (gammaln (single (x)), single (v));
+%!error gammaln ()
+%!error gammaln (1,2)
+%!assert (log ([1, e, e^2]), [0, 1, 2], sqrt (eps))
+%!assert (log ([-0.5, -1.5, -2.5]), log ([0.5, 1.5, 2.5]) + pi*1i, sqrt (eps))
+%!assert (log (single ([1, e, e^2])), single ([0, 1, 2]), sqrt (eps ("single")))
+%!assert (log (single ([-0.5, -1.5, -2.5])), single (log ([0.5, 1.5, 2.5]) + pi*1i), 4*eps ("single"))
+%!error log ()
+%!error log (1, 2)
+%!assert (log10 ([0.01, 0.1, 1, 10, 100]), [-2, -1, 0, 1, 2], sqrt (eps))
+%!assert (log10 (single ([0.01, 0.1, 1, 10, 100])), single ([-2, -1, 0, 1, 2]), sqrt (eps ("single")))
+%!error log10 ()
+%!error log10 (1, 2)
+%!assert (log1p ([0, 2*eps, -2*eps]), [0, 2*eps, -2*eps], 1e-29)
+%!assert (log1p (single ([0, 2*eps, -2*eps])), ...
+%!        single ([0, 2*eps, -2*eps]), 1e-29)
+%!assert <*62094> (log1p (0.1i), ...
+%!                 0.004975165426584041 + 0.09966865249116203i, eps (0.2))
+%!assert <*62094> (log1p (single (0.1i)), ...
+%!                 single (0.004975165426584041 + 0.09966865249116203i), ...
+%!                 eps (single (0.2)))
+%!error log1p ()
+%!error log1p (1, 2)
+%!assert (real (1), 1)
+%!assert (real (i), 0)
+%!assert (real (1+i), 1)
+%!assert (real ([1, i; i, 1]), full (eye (2)))
+%!assert (real (single (1)), single (1))
+%!assert (real (single (i)), single (0))
+%!assert (real (single (1+i)), single (1))
+%!assert (real (single ([1, i; i, 1])), full (eye (2, "single")))
+%!error real ()
+%!error real (1, 2)
+%!assert (round (1), 1)
+%!assert (round (1.1), 1)
+%!assert (round (5.5), 6)
+%!assert (round (i), i)
+%!assert (round (2.5+3.5i), 3+4i)
+%!assert (round (-2.6), -3)
+%!assert (round ([1.1, -2.4; -3.7, 7.1]), [1, -2; -4, 7])
+%!assert (round (single (1)), single (1))
+%!assert (round (single (1.1)), single (1))
+%!assert (round (single (5.5)), single (6))
+%!assert (round (single (i)), single (i))
+%!assert (round (single (2.5+3.5i)), single (3+4i))
+%!assert (round (single (-2.6)), single (-3))
+%!assert (round (single ([1.1, -2.4; -3.7, 7.1])), single ([1, -2; -4, 7]))
+%!error round ()
+%!error round (1, 2)
+%!assert (roundb (1), 1)
+%!assert (roundb (1.1), 1)
+%!assert (roundb (1.5), 2)
+%!assert (roundb (4.5), 4)
+%!assert (roundb (i), i)
+%!assert (roundb (2.5+3.5i), 2+4i)
+%!assert (roundb (-2.6), -3)
+%!assert (roundb ([1.1, -2.4; -3.7, 7.1]), [1, -2; -4, 7])
+%!assert (roundb (single (1)), single (1))
+%!assert (roundb (single (1.1)), single (1))
+%!assert (roundb (single (1.5)), single (2))
+%!assert (roundb (single (4.5)), single (4))
+%!assert (roundb (single (i)), single (i))
+%!assert (roundb (single (2.5+3.5i)), single (2+4i))
+%!assert (roundb (single (-2.6)), single (-3))
+%!assert (roundb (single ([1.1, -2.4; -3.7, 7.1])), single ([1, -2; -4, 7]))
+%!error roundb ()
+%!error roundb (1, 2)
+%!assert (sign (-2) , -1)
+%!assert (sign (0), 0)
+%!assert (sign (3), 1)
+%!assert (sign ([1, -pi; e, 0]), [1, -1; 1, 0])
+%!assert (sign (single (-2)) , single (-1))
+%!assert (sign (single (0)), single (0))
+%!assert (sign (single (3)), single (1))
+%!assert (sign (single ([1, -pi; e, 0])), single ([1, -1; 1, 0]))
+%!error sign ()
+%!error sign (1, 2)
+%!assert (signbit (1) == 0)
+%!assert (signbit (-2) != 0)
+%!assert (signbit (0) == 0)
+%!assert (signbit (-0) != 0)
+%!assert (signbit (single (1)) == 0)
+%!assert (signbit (single (-2)) != 0)
+%!assert (signbit (single (0)) == 0)
+%!assert (signbit (single (-0)) != 0)
+%!error sign ()
+%!error sign (1, 2)
+%!shared rt2, rt3
+%! rt2 = sqrt (2);
+%! rt3 = sqrt (3);
+%!test
+%! x = [0, pi/6, pi/4, pi/3, pi/2, 2*pi/3, 3*pi/4, 5*pi/6, pi];
+%! v = [0, 1/2, rt2/2, rt3/2, 1, rt3/2, rt2/2, 1/2, 0];
+%! assert (sin (x), v, sqrt (eps));
+%!test
+%! x = single ([0, pi/6, pi/4, pi/3, pi/2, 2*pi/3, 3*pi/4, 5*pi/6, pi]);
+%! v = single ([0, 1/2, rt2/2, rt3/2, 1, rt3/2, rt2/2, 1/2, 0]);
+%! assert (sin (x), v, sqrt (eps ("single")));
+%!error sin ()
+%!error sin (1, 2)
+%!test
+%! x = [0, pi/2*i, pi*i, 3*pi/2*i];
+%! v = [0, i, 0, -i];
+%! assert (sinh (x), v, sqrt (eps));
+%!test
+%! x = single ([0, pi/2*i, pi*i, 3*pi/2*i]);
+%! v = single ([0, i, 0, -i]);
+%! assert (sinh (x), v, sqrt (eps ("single")));
+%!error sinh ()
+%!error sinh (1, 2)
+%!assert (sqrt (4), 2)
+%!assert (sqrt (-1), i)
+%!assert (sqrt (1+i), exp (0.5 * log (1+i)), sqrt (eps))
+%!assert (sqrt ([4, -4; i, 1-i]), [2, 2i; exp(0.5 * log (i)), exp(0.5 * log (1-i))], sqrt (eps))
+%!assert (sqrt (single (4)), single (2))
+%!assert (sqrt (single (-1)), single (i))
+%!assert (sqrt (single (1+i)), single (exp (0.5 * log (1+i))), sqrt (eps ("single")))
+%!assert (sqrt (single ([4, -4; i, 1-i])), single ([2, 2i; exp(0.5 * log (i)), exp(0.5 * log (1-i))]), sqrt (eps ("single")))
+%!error sqrt ()
+%!error sqrt (1, 2)
+%!shared rt2, rt3
+%! rt2 = sqrt (2);
+%! rt3 = sqrt (3);
+%!test
+%! x = [0, pi/6, pi/4, pi/3, 2*pi/3, 3*pi/4, 5*pi/6, pi];
+%! v = [0, rt3/3, 1, rt3, -rt3, -1, -rt3/3, 0];
+%! assert (tan (x), v,  sqrt (eps));
+%!test
+%! x = single ([0, pi/6, pi/4, pi/3, 2*pi/3, 3*pi/4, 5*pi/6, pi]);
+%! v = single ([0, rt3/3, 1, rt3, -rt3, -1, -rt3/3, 0]);
+%! assert (tan (x), v,  sqrt (eps ("single")));
+%!error tan ()
+%!error tan (1, 2)
+%!test
+%! x = [0, pi*i];
+%! v = [0, 0];
+%! assert (tanh (x), v, sqrt (eps));
+%!test
+%! x = single ([0, pi*i]);
+%! v = single ([0, 0]);
+%! assert (tanh (x), v, sqrt (eps ("single")));
+%!error tanh ()
+%!error tanh (1, 2)
+%!assert (tolower ("OCTAVE"), "octave")
+%!assert (tolower ("123OCTave! _&"), "123octave! _&")
+%!assert (tolower ({"ABC", "DEF", {"GHI", {"JKL"}}}), {"abc", "def", {"ghi", {"jkl"}}})
+%!assert (tolower (["ABC"; "DEF"]), ["abc"; "def"])
+%!assert (tolower ({["ABC"; "DEF"]}), {["abc";"def"]})
+%!assert (tolower (["ABCÄÖÜSS"; "abcäöüß"]), ["abcäöüss"; "abcäöüß"])
+%!assert (tolower (repmat ("ÄÖÜ", 2, 1, 3)), repmat ("äöü", 2, 1, 3))
+%!assert (tolower (68), 68)
+%!assert (tolower ({[68, 68; 68, 68]}), {[68, 68; 68, 68]})
+%!assert (tolower (68i), 68i)
+%!assert (tolower ({[68i, 68; 68, 68i]}), {[68i, 68; 68, 68i]})
+%!assert (tolower (single (68i)), single (68i))
+%!assert (tolower ({single([68i, 68; 68, 68i])}), {single([68i, 68; 68, 68i])})
+%!test
+%! classes = {@char, @double, @single, ...
+%!            @int8, @int16, @int32, @int64, ...
+%!            @uint8, @uint16, @uint32, @uint64};
+%! for i = 1:numel (classes)
+%!   cls = classes{i};
+%!   assert (class (tolower (cls (97))), class (cls (97)));
+%!   assert (class (tolower (cls ([98, 99]))), class (cls ([98, 99])));
+%! endfor
+%!test
+%! a(3,3,3,3) = "D";
+%! assert (tolower (a)(3,3,3,3), "d");
+%!test
+%! charset = char (0:127);
+%! result = charset;
+%! result (double ("A":"Z") + 1) = result (double ("a":"z") + 1);
+%! assert (tolower (charset), result);
+%!error <Invalid call to tolower> lower ()
+%!error <Invalid call to tolower> tolower ()
+%!error tolower (1, 2)
+%!assert (toupper ("octave"), "OCTAVE")
+%!assert (toupper ("123OCTave! _&"), "123OCTAVE! _&")
+%!assert (toupper ({"abc", "def", {"ghi", {"jkl"}}}), {"ABC", "DEF", {"GHI", {"JKL"}}})
+%!assert (toupper (["abc"; "def"]), ["ABC"; "DEF"])
+%!assert (toupper ({["abc"; "def"]}), {["ABC";"DEF"]})
+%!assert (toupper (["ABCÄÖÜSS"; "abcäöüß"]), ["ABCÄÖÜSS"; "ABCÄÖÜSS"])
+%!assert (toupper (repmat ("äöü", 2, 1, 3)), repmat ("ÄÖÜ", 2, 1, 3))
+%!assert (toupper (100), 100)
+%!assert (toupper ({[100, 100; 100, 100]}), {[100, 100; 100, 100]})
+%!assert (toupper (100i), 100i)
+%!assert (toupper ({[100i, 100; 100, 100i]}), {[100i, 100; 100, 100i]})
+%!assert (toupper (single (100i)), single (100i))
+%!assert (toupper ({single([100i, 100; 100, 100i])}),
+%!                 {single([100i, 100; 100, 100i])})
+%!test
+%! classes = {@char, @double, @single, ...
+%!            @int8, @int16, @int32, @int64, ...
+%!            @uint8, @uint16, @uint32, @uint64};
+%! for i = 1:numel (classes)
+%!   cls = classes{i};
+%!   assert (class (toupper (cls (97))), class (cls (97)));
+%!   assert (class (toupper (cls ([98, 99]))), class (cls ([98, 99])));
+%! endfor
+%!test
+%! a(3,3,3,3) = "d";
+%! assert (toupper (a)(3,3,3,3), "D");
+%!test
+%! charset = char (0:127);
+%! result = charset;
+%! result (double  ("a":"z") + 1) = result (double  ("A":"Z") + 1);
+%! assert (toupper (charset), result);
+%!error <Invalid call to toupper> toupper ()
+%!error <Invalid call to toupper> upper ()
+%!error toupper (1, 2)

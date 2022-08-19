@@ -1,0 +1,76 @@
+## DO NOT EDIT!  Generated automatically from fft.cc by Make.
+%!testif HAVE_FFTW
+%! assert (fft ([]), [])
+%!testif HAVE_FFTW
+%! assert (fft (zeros (10,0)), zeros (10,0))
+%!testif HAVE_FFTW
+%! assert (fft (zeros (0,10)), zeros (0,10))
+%!testif HAVE_FFTW
+%! assert (fft (0), 0)
+%!testif HAVE_FFTW
+%! assert (fft (1), 1)
+%!testif HAVE_FFTW
+%! assert (fft (ones (2,2)), [2,2; 0,0])
+%!testif HAVE_FFTW
+%! assert (fft (eye (2,2)), [1,1; 1,-1])
+%!testif HAVE_FFTW
+%! assert (fft (single ([])), single ([]))
+%!testif HAVE_FFTW
+%! assert (fft (zeros (10,0,"single")), zeros (10,0,"single"))
+%!testif HAVE_FFTW
+%! assert (fft (zeros (0,10,"single")), zeros (0,10,"single"))
+%!testif HAVE_FFTW
+%! assert (fft (single (0)), single (0))
+%!testif HAVE_FFTW
+%! assert (fft (single (1)), single (1))
+%!testif HAVE_FFTW
+%! assert (fft (ones (2,2,"single")), single ([2,2; 0,0]))
+%!testif HAVE_FFTW
+%! assert (fft (eye (2,2,"single")), single ([1,1; 1,-1]))
+%!error fft ()
+%!testif HAVE_FFTW
+%! N = 64;
+%! n = 4;
+%! t = 2*pi*(0:1:N-1)/N;
+%! s = cos (n*t);
+%! S = fft (s);
+%!
+%! answer = zeros (size (t));
+%! answer(n+1) = N/2;
+%! answer(N-n+1) = N/2;
+%!
+%! assert (S, answer, 4*N*eps);
+%!testif HAVE_FFTW
+%! N = 64;
+%! n = 7;
+%! t = 2*pi*(0:1:N-1)/N;
+%! s = cos (n*t);
+%!
+%! S = zeros (size (t));
+%! S(n+1) = N/2;
+%! S(N-n+1) = N/2;
+%!
+%! assert (ifft (S), s, 4*N*eps);
+%!testif HAVE_FFTW
+%! N = 64;
+%! n = 4;
+%! t = single (2*pi*(0:1:N-1)/N);
+%! s = cos (n*t);
+%! S = fft (s);
+%!
+%! answer = zeros (size (t), "single");
+%! answer(n+1) = N/2;
+%! answer(N-n+1) = N/2;
+%!
+%! assert (S, answer, 4*N*eps ("single"));
+%!testif HAVE_FFTW
+%! N = 64;
+%! n = 7;
+%! t = 2*pi*(0:1:N-1)/N;
+%! s = cos (n*t);
+%!
+%! S = zeros (size (t), "single");
+%! S(n+1) = N/2;
+%! S(N-n+1) = N/2;
+%!
+%! assert (ifft (S), s, 4*N*eps ("single"));

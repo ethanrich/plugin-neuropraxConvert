@@ -1,0 +1,18 @@
+## DO NOT EDIT!  Generated automatically from symtab.cc by Make.
+%!assert <34497> (! strcmp (which ("bar"), ""))
+%!function x = bar ()
+%!  x = 5;
+%!endfunction
+%!test
+%! assert (bar == 5);
+%! assert (strcmp (which ("bar"), "command-line function"));
+%! clear -f bar;
+%! assert (! strcmp (which ("bar"), ""));
+%!function x = bar ()
+%!  x = 5;
+%!endfunction
+%!test
+%! assert (bar == 5);
+%! assert (strcmp (which ("bar"), "command-line function"));
+%! clear bar;
+%! assert (! strcmp (which ("bar"), ""));

@@ -1,0 +1,4 @@
+## DO NOT EDIT! Generated from syndtable.cc
+%!error syndtable ()
+%!error syndtable (1, 2)
+%!error syndtable ([1 2])

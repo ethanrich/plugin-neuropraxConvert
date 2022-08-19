@@ -1,0 +1,14 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+datarootdir=${prefix}/share
+datadir=${datarootdir}/proj
+
+Name: PROJ
+Description: Coordinate transformation software library
+Requires:
+Version: 8.1.1
+Libs: -L${libdir} -lproj
+Libs.private: -L/usr/lib -lsqlite3 -L/usr/lib -ltiff -lcurl -lstdc++
+Cflags: -I${includedir}

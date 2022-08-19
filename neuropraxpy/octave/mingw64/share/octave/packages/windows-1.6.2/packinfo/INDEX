@@ -1,0 +1,32 @@
+windows >> Windows
+Windows Utilities
+ grab
+ win32_MessageBox
+ win32_DeleteRegistry
+ win32_ReadRegistry
+ win32_WriteRegistry
+ win32_RegEnumValue
+ win32_RegEnumKey
+ win32api
+ winopen
+ clipboard
+ 
+COM Interface
+ actxserver
+ com_atexit
+ com_delete
+ com_get
+ com_invoke
+ com_release
+ com_set
+ iscom
+ @octave_com_object/get
+ @octave_com_object/invoke
+ @octave_com_object/set
+ @octave_com_object/release
+ @octave_com_object/delete
+ @octave_com_object/methods
+Features
+ windows_feature
+Examples
+ mat2xls

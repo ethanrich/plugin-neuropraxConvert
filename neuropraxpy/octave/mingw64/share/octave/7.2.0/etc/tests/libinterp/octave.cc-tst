@@ -1,0 +1,9 @@
+## DO NOT EDIT!  Generated automatically from octave.cc by Make.
+%!assert (islogical (isguirunning ()))
+%!error isguirunning (1)
+%!assert (iscellstr (argv ()))
+%!error argv (1)
+%!assert (ischar (program_invocation_name ()))
+%!error program_invocation_name (1)
+%!assert (ischar (program_name ()))
+%!error program_name (1)

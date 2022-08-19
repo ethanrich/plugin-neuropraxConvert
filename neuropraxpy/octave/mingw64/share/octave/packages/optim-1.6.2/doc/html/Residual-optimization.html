@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Residual optimization (optim_doc)</title>
+
+<meta name="description" content="Residual optimization (optim_doc)">
+<meta name="keywords" content="Residual optimization (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="nonlin_005fresidmin.html#nonlin_005fresidmin" rel="next" title="nonlin_residmin">
+<link href="battery.html#battery" rel="prev" title="battery">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="Residual-optimization"></a>
+<div class="header">
+<p>
+Next: <a href="Zero-finders.html#Zero-finders" accesskey="n" rel="next">Zero finders</a>, Previous: <a href="Scalar-optimization.html#Scalar-optimization" accesskey="p" rel="prev">Scalar optimization</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Functions-for-optimization-of-a-model-function-returning-an-array"></a>
+<h2 class="chapter">2 Functions for optimization of a model function returning an array</h2>
+<a name="index-residual-optimization"></a>
+
+<p>Model functions whose parameters are to be optimized may return a vector
+or array of values.  Either these or their differences to some constant
+values (curve fitting) can be minimized in some sense, often, but not
+necessarily, by minimizing the sum of their squares.  It is usually
+preferable to use optimizers designed for residual optimization for this
+purpose.  These can exploit information contained in the individual
+elements of the returned array, which would not be possible if the user
+calculated a norm (<abbr>e.g.</abbr> sum of squares) of the elements and
+performed a scalar optimization.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">Optimization frontends
+</pre></th></tr><tr><td align="left" valign="top">&bull; <a href="nonlin_005fresidmin.html#nonlin_005fresidmin" accesskey="1">nonlin_residmin</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">The standard interface for non-linear
+                                 residual minimization.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="nonlin_005fcurvefit.html#nonlin_005fcurvefit" accesskey="2">nonlin_curvefit</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">A convenience interface, curve fitting.
+</td></tr>
+<tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
+Optimization backends
+</pre></th></tr><tr><td align="left" valign="top">&bull; <a href="lm_005fsvd_005ffeasible.html#lm_005fsvd_005ffeasible" accesskey="3">lm_svd_feasible</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">L/M algorithm with SVD, constraints met
+                                 throughout optimization.
+</td></tr>
+<tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
+Statistics frontends
+</pre></th></tr><tr><td align="left" valign="top">&bull; <a href="residmin_005fstat.html#residmin_005fstat" accesskey="4">residmin_stat</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Statistics for residual minimization.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="curvefit_005fstat.html#curvefit_005fstat" accesskey="5">curvefit_stat</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Statistics for curve fitting.
+</td></tr>
+<tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
+Statistics backends
+</pre></th></tr><tr><td align="left" valign="top">&bull; <a href="wls.html#wls" accesskey="6">wls</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Statistics for weighted least squares.
+</td></tr>
+<tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
+Standalone functions
+</pre></th></tr><tr><td align="left" valign="top">&bull; <a href="lsqlin.html#lsqlin" accesskey="7">lsqlin</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Linear least squares with linear
+                                 constraints.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="leasqr.html#leasqr" accesskey="8">leasqr</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">An older function for curve fitting.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="pronyfit.html#pronyfit" accesskey="9">pronyfit</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Prony&rsquo;s method for non-linear exponential
+                                 fitting.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="polyfitinf.html#polyfitinf">polyfitinf</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Function polyfitinf for polynomial
+                                 fitting.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="wpolyfit.html#wpolyfit">wpolyfit</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Polynomial fitting suitable for polyconf.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="polyconf.html#polyconf">polyconf</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Confidence and prediction intervals for
+                                 polynomial fitting.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="LinearRegression.html#LinearRegression">LinearRegression</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Function LinearRegression.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="wsolve.html#wsolve">wsolve</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Another linear solver.
+</td></tr>
+</table>
+
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Zero-finders.html#Zero-finders" accesskey="n" rel="next">Zero finders</a>, Previous: <a href="Scalar-optimization.html#Scalar-optimization" accesskey="p" rel="prev">Scalar optimization</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

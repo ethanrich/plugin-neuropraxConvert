@@ -1,0 +1,13 @@
+Name: OctPROJ
+Version: 2.0.1
+Date: 2020-05-16
+Author: José Luis García Pallero <jgpallero@gmail.com>
+Maintainer: José Luis García Pallero <jgpallero@gmail.com>
+Title: GNU Octave bindings to PROJ
+Description: This package allows to call functions of PROJ library for
+ cartographic projections and CRS transformations.
+Depends: Octave (>= 3.0.0)
+Url: https://bitbucket.org/jgpallero/octproj/
+Autoload: no
+License: GPLv3+
+SystemRequirements: libproj-dev (>= 6.3.0) (Debian system)

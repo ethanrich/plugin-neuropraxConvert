@@ -1,0 +1,35 @@
+timestamp:
+
+Timestamp (8 byte, float or int) (microseconds (int) or seconds
+(float) before or after 2000-01-01 00:00)
+
+
+timestamptz:
+
+TimestampTz (8 byte, float or int) (as timestamp)
+
+
+interval:
+
+TimeOffset (8 byte, float or int) (microseconds (int) or seconds (float))
+
+int32                (days)
+
+int32                (months)
+
+
+time:
+
+TimeADT (8 byte, float or int) (microseconds (int) or seconds (float) ?)
+
+
+timetz:
+
+TimeADT (8 byte, float or int) (microseconds (int) or seconds (float) ?)
+
+int32                 (timezone in seconds)
+
+
+date:
+
+int32 (difference to 2000-01-01)

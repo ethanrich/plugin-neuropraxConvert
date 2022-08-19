@@ -1,0 +1,18 @@
+## Generated from tcp.cc
+%!test
+%! addr = resolvehost ('gnu.org', 'address');
+%! a = tcp (addr, 80);
+%! assert (! isnull (a));
+%! assert (isa (a, 'octave_tcp'));
+%! tcp_close (a);
+%!test
+%! addr = resolvehost ('gnu.org', 'address');
+%! a = tcp (addr, 80, 'name', 'test', 'timeout', 2.5);
+%! assert (! isnull (a));
+%! assert (isa (a, 'octave_tcp'));
+%! assert (get(a, 'name'), 'test');
+%! assert (get(a, 'timeout'), 2.5);
+%! tcp_close (a);
+%!error <Invalid call to tcp> tcp (1)
+%!error <Invalid call to tcp> tcp (1, 1)
+%!error <Invalid call to tcp> tcp ('127.0.0.1', '80', 'prop1')

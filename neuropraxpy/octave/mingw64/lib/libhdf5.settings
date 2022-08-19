@@ -1,0 +1,90 @@
+        SUMMARY OF THE HDF5 CONFIGURATION
+        =================================
+
+General Information:
+-------------------
+                   HDF5 Version: 1.12.1
+                  Configured on: 2022-07-28
+                  Configured by: Ninja
+                    Host system: Linux-5.17.0-1-amd64
+              Uname information: Windows
+                       Byte sex: little-endian
+             Installation point: /scratch/build/mxe-octave-w64/release/usr/x86_64-w64-mingw32
+
+Compiling Options:
+------------------
+                     Build Mode: Release
+              Debugging Symbols: OFF
+                        Asserts: OFF
+                      Profiling: OFF
+             Optimization Level: OFF
+
+Linking Options:
+----------------
+                      Libraries: 
+  Statically Linked Executables: OFF
+                        LDFLAGS: 
+                     H5_LDFLAGS: 
+                     AM_LDFLAGS: 
+                Extra libraries: m;ws2_32;wsock32
+                       Archiver: /scratch/build/mxe-octave-w64/release/usr/bin/x86_64-w64-mingw32-ar
+                         Ranlib: /scratch/build/mxe-octave-w64/release/usr/bin/x86_64-w64-mingw32-ranlib
+
+Languages:
+----------
+                              C: YES
+                     C Compiler: /scratch/build/mxe-octave-w64/release/usr/bin/x86_64-w64-mingw32-gcc 11.2.0
+                       CPPFLAGS: 
+                    H5_CPPFLAGS: 
+                    AM_CPPFLAGS: 
+                         CFLAGS:   -std=c99  -fstdarg-opt -fdiagnostics-urls=never -fno-diagnostics-color -fmessage-length=0
+                      H5_CFLAGS: 
+                      AM_CFLAGS: 
+               Shared C Library: YES
+               Static C Library: NO
+
+                        Fortran: OFF
+               Fortran Compiler: /scratch/build/mxe-octave-w64/release/usr/bin/x86_64-w64-mingw32-gfortran 
+                  Fortran Flags: 
+               H5 Fortran Flags: 
+               AM Fortran Flags: 
+         Shared Fortran Library: YES
+         Static Fortran Library: NO
+
+                            C++: OFF
+                   C++ Compiler: /scratch/build/mxe-octave-w64/release/usr/bin/x86_64-w64-mingw32-g++ 
+                      C++ Flags:  
+                   H5 C++ Flags: 
+                   AM C++ Flags: 
+             Shared C++ Library: YES
+             Static C++ Library: NO
+
+                            JAVA: OFF
+                 JAVA Compiler:  
+
+Features:
+---------
+                   Parallel HDF5: OFF
+Parallel Filtered Dataset Writes: 
+              Large Parallel I/O: 
+              High-level library: ON
+                Build HDF5 Tests: OFF
+                Build HDF5 Tools: ON
+                    Threadsafety: OFF (recursive RW locks: ) 
+             Default API mapping: v112
+  With deprecated public symbols: ON
+          I/O filters (external):  DEFLATE
+                             MPE: 
+                      Direct VFD: 
+                      Mirror VFD: 
+              (Read-Only) S3 VFD: 
+            (Read-Only) HDFS VFD: 
+                         dmalloc: 
+  Packages w/ extra debug output: 
+                     API Tracing: OFF
+            Using memory checker: OFF
+ Memory allocation sanity checks: OFF
+          Function Stack Tracing: OFF
+                Use file locking: best-effort
+       Strict File Format Checks: OFF
+    Optimization Instrumentation: 

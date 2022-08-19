@@ -1,0 +1,276 @@
+Summary of important user-visible changes for generate_html 0.3.3:
+-------------------------------------------------------------------
+
+ ** Fix non-cuddling ++ operators to work with Octave >= 7..
+
+ ** Dont duplicate demo figures in following non figure demos. (Bug #58126)
+
+Summary of important user-visible changes for generate_html 0.3.2:
+-------------------------------------------------------------------
+
+ ** Fix empty '{}' to work with Octave >= 6..
+
+Summary of important user-visible changes for generate_html 0.3.1:
+-------------------------------------------------------------------
+
+ ** Add lacking information to the informational json file (this file
+    is written since version 0.3.0 of generate_html).
+
+Summary of important user-visible changes for generate_html 0.3.0:
+-------------------------------------------------------------------
+
+ ** Nested namespaces and classes under namespaces are now handled in
+    generating the alphabetical function database.
+
+ ** Toplevel functions are now in separate files of the alphabetic
+    function database, and in the same directory tree as classes and
+    namespaces.
+
+ ** Function html helptexts are now in a directory tree corresponding
+    to that of the alphabetic function database.
+
+ ** Add repository link to index page.
+
+ ** In the individual options, as returned by `get_html_options' and
+    used in html generation, replacement strings ("%...") are not
+    considered anymore. Instead, options can be anonymous functions
+    which use their arguments to configure the output string. So if
+    users manually changed options with replacements, they have to do
+    it differently now; looking into the `get_html_options.m' file
+    will help to figure out the correct way.
+
+ ** Add Octave Forge stylesheet, icons, and javascript files.
+
+ ** Page margins of Octave Forge additional package documentation are
+    now configurable with the Octave Forge stylesheet.
+
+Summary of important user-visible changes for generate_html 0.2.0:
+-------------------------------------------------------------------
+
+ ** New function `check_duplicates' checks for duplicate symbols by
+    querying a server at Octave Forge.
+
+ ** New function `urlview' asynchroneously starts a browser for an
+    url, supports sending parameters with POST and GET methods.
+
+ ** Vectorize generation of alphabetic function database.
+
+ ** Make alphabetic databases for class methods and namespaced
+    functions, too.
+
+Summary of important user-visible changes for generate_html 0.1.13:
+-------------------------------------------------------------------
+
+ ** Changes to the package index page
+
+    o generate_package_html: Make icons clickable.
+
+ ** Change URLs
+
+    o get_html_options: Use the new https URLs for the octave-forge
+      (default) style.
+
+ ** Bug fixes
+
+    o html_help_text, generate_package_html: Handle undocumented
+      functions.
+
+    o generate_html_manual (get_txi_files): Ignore
+      version-octave.texi, which was previously named version.texi.
+
+ ** Improve release Makefile
+
+    o Makefile: Make release tarballs reproducible
+
+
+Summary of important user-visible changes for generate_html 0.1.12:
+-------------------------------------------------------------------
+
+ ** New option for generate_package_html
+
+    o generate_package_html, get_html_options: Add new field
+      'older_versions_download' to the option structure.
+      This field makes it possible for packages to customize (or
+      suppress) the "older versions" download link, which is actually
+      Octave Forge-specific (patch #8984).
+
+ ** Changes to the package index page
+
+    o generate_package_html: The content of the optional "url" field
+      of the DESCRIPTION file is now shown beneath the news link
+      (patch #8990).
+
+
+Summary of important user-visible changes for generate_html 0.1.11:
+-------------------------------------------------------------------
+
+ ** Content of autoload field not shown anymore
+
+    o generate_package_html: index.html no longer displays autoload
+      information (and there is no other place in the generated HTML
+      with that information).  The main reasons for this change are:
+
+       1) there are no Octave Forge packages that autoload anymore,
+
+       2) support for autoload of packages will be completely removed
+          in Octave 4.2.x.
+
+ ** New option for generate_package_html
+
+    o generate_package_html, get_html_options: Add new field
+      'package_doc_options' to the option structure (patch #9002).
+      This field makes it possible to pass options to makeinfo when
+      building the package documentation.
+
+
+Summary of important user-visible changes for generate_html 0.1.10:
+-------------------------------------------------------------------
+
+ ** Bug fixes
+
+    o generate_package_html: Fixed title of copying and news page.
+
+    o generate_package_html: Support multiple image references per line (to copy
+      images into the output directory).
+
+ ** Other changes
+
+    o generate_package_html: Short description has been updated for redesign of
+      Octave-Forge package overview page (patch #8787).  Short description is
+      made of the first sentence from the full package desription.
+
+    o generate_package_html: Package documentation may use vector graphics (svg
+      images, bug #45628).
+
+
+Summary of important user-visible changes for generate_html 0.1.9:
+------------------------------------------------------------------
+
+ ** Bug fixes
+
+    o generate_package_html: Add missing "alt" attribute to <img> tags in
+      index.html.
+
+    o html_help_text: Fix crash for demos in @class methods (bug #44972).
+
+    o generate_package_html: Fix crash when options.include_package_news is
+      false.
+
+    o texi2html: Fix a bug that caused tex2html to output an empty page with
+      TexInfo 4.x when there is only one @deftypefn and no following
+      @deftypefnx (bug #45530).
+
+    o generate_package_html: Fix a bug that prevented generate_package_html from
+      being run twice when package_doc contains images (bug #45111).
+
+    o html_help_text: Use a simple deterministic counter to enumerate images
+      instead of a random number (thus avoiding the risk of having one image
+      overwritten by another one).
+
+ ** Other changes
+
+    o generate_package_html: Better-looking "News" and "Package documentation"
+      links (patch #8698).
+
+    o generate_package_html: Improve dependencies display: also display system
+      requirements (bug #45499).
+
+
+Summary of important user-visible changes for generate_html 0.1.8:
+------------------------------------------------------------------
+
+ ** Bug fixes
+
+    o html_help_text.m, texi2html.m: Fix a bug that was the cause of unmatched
+      </p> tags in the HTML output.
+
+    o get_html_options.m: Fix default header (add !DOCTYPE, charset, etc.)
+      and Octave Forge header (unordered <ul> </ul> lists are not allowed to be
+      nested in <p> </p> blocks).
+
+** Other changes
+
+    o html_help_text.m: Now entirely based on texi2html.m
+
+    o texi2html.m: Use <dt class="deftypefn"> </dt> blocks both with TexInfo 4.x
+      and with TexInfo 5.x.
+
+
+Summary of important user-visible changes for generate_html 0.1.7:
+------------------------------------------------------------------
+
+ ** Bug fixes
+
+    o Omit the "News" link if there is no NEWS file, instead of generating an
+      error (the NEWS file is optional, according to the manual)
+
+    o Fix broken links on the NEWS, COPYING and overview pages (the link that
+      was supposed to point to the index.html of the package)
+
+    o Protect symbols <, > and & by replacing them with the corresponding HTML
+      entity (&lt;, &gt; and &amp;) everywhere it makes sense
+
+    o get_txi_files.m: Update the list of ignored *.texi files
+
+    o generate_package_html.m: Let email addresses appear if they exist in
+      DESCRIPTION (they were previously hidden because of the < > delimiters)
+
+    o generate_package_html.m: Fix anchor names
+
+    o html_help_text.m: Hide figures only if gnuplot is in use (see bug #33180)
+
+    o html_help_text.m: Prevent empty <pre> </pre> blocks (bug #44451)
+
+ ** New features
+
+    o Introduce a new %charset variable for header template, which defaults to
+      utf-8 (instead of the hard-coded iso-8859-1 that was previously in use)
+
+ ** Documentation
+
+    o Add generate_operators to the INDEX
+
+    o Provide minimal (one-line) help text for generate_html_manual
+
+ ** Cleanup
+
+    o Remove obsolete function generate_alphabet
+
+    o Remove unused "docbrowser" style
+
+
+Summary of important user-visible changes for generate_html 0.1.6:
+------------------------------------------------------------------
+
+ ** Create page with content of each package NEWS file.
+
+ ** Create package documentation in html from Texinfo sources in doc/.
+    Note that this is the package documentation/manual, and in addition
+    to the help text of individual functions.
+
+ ** Fix broken links from the pages of methods of a @class type, to the
+    package index package.
+
+ ** Link on each page header to the source of Octave Forge now points to
+    the code page of Octave Forge website.  It previously pointed to the
+    SVN repository in Sourceforge which has been retired.
+
+
+Summary of important user-visible changes for generate_html 0.1.5:
+------------------------------------------------------------------
+
+ ** Updated link for the Octave Forge SVN repository.
+
+
+Summary of important user-visible changes for generate_html 0.1.4:
+------------------------------------------------------------------
+
+ ** HTML pages with documentation of each function now mention the
+    package that the function belongs too and have a link for the
+    package main page.
+
+ ** Autoload field when generating a package index.html page is now
+    correct.
+
+ ** keywords on the `See also:' will be interpreted properly (rather
+    than just function names).

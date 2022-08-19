@@ -1,0 +1,56 @@
+## DO NOT EDIT! Generated from medfilt1.cc
+%!assert (medfilt1 ([1 2 3 4 3 2 1]), [1 2 3 3 3 2 1]);
+%!assert (medfilt1 ([1 2 3 4 3 2 1]'), [1 2 3 3 3 2 1]');
+%!assert (medfilt1 ([1 2 3 4 3 2 1], "truncate"), [1.5 2 3 3 3 2 1.5]);
+%!assert (medfilt1 ([-1 2 3 4 3 -2 1], "truncate"), [0.5 2 3 3 3 1 -0.5]);
+%!assert (medfilt1 ([-1 2 3 4 3 -2 1], "zeropad"), [0 2 3 3 3 1 0]);
+%!assert (medfilt1 ([]), []);
+%!test
+%! A = [1 2 3  ; 6 5 4  ; 6 5 2 ];
+%! assert (medfilt1 (A,4,[],2), [0.5 1.5 1.5; 2.5 4.5 4.5; 2.5 3.5 3.5]);
+%! assert (medfilt1 (A,4,[],1), [0.5 3.5 3.5; 1 3.5 3.5; 1.5 2.5 2.5]');
+%! assert (medfilt1 (A,3,[],1), [1 2 3; 6 5 3; 6 5 2]);
+%!test
+%! A = [ Inf 4 -4 NaN -1 -1 -3 -2 1 -Inf];
+%! B = medfilt1 (A, 7, [], 1, 'includenan', 'zeropad');
+%! assert (B, [0, 0, 0, NaN, 0, 0, 0, 0, 0, 0]);
+%! B = medfilt1 (A, 7, [], 2, 'includenan', 'zeropad');
+%! assert (B, [NaN, NaN, NaN, NaN, NaN, NaN, NaN, -1, -1, 0]);
+%! B = medfilt1 (A, 7, [], 2, 'includenan', 'truncate');
+%! assert (B, [NaN, NaN, NaN, NaN, NaN, NaN, NaN, -1.5, -2, -2.5]);
+%! B = medfilt1 (A, 7, [], 2, 'omitnan', 'zeropad');
+%! assert (B, [0, 0, -0.5, -1, -1.5, -1.5, -1.5, -1, -1, 0]);
+%! B = medfilt1 (A, 7, [], 2, 'omitnan', 'truncate');
+%! assert (B, [4, 1.5, -1, -1, -1.5, -1.5, -1.5, -1.5, -2, -2.5]);
+%!test
+%! A = medfilt1 ([ NaN NaN -Inf], 4, [], 2, 'omitnan', 'truncate');
+%! assert (A, [NaN, -Inf, -Inf]);
+%!test
+%! A = medfilt1 ([-2 Inf -2; 1 3 -Inf; 1 0 -Inf], 1, [], 2);
+%! assert (A, [-2 Inf -2; 1 3 -Inf; 1 0 -Inf]);
+%!test
+%! A = medfilt1 ([-Inf 0 -3; Inf 1 NaN], 9, [], 1);
+%! assert (A, [0, 0, NaN; 0, 0, NaN]);
+%! A = medfilt1 ([-Inf 0 -3; Inf 1 NaN], 9, [], 1, 'omitnan', 'truncate');
+%! assert (A, [NaN, 0.5, -3; NaN, 0.5, -3]);
+%!test
+%! A = medfilt1 ([Inf -3 Inf Inf 0 -2; Inf 1 NaN 5 5 -3], 3, [], 1);
+%! assert (A, [Inf, 0, NaN, 5, 0, -2; Inf, 0, NaN, 5, 0, -2]);
+%!test
+%! A = medfilt1 ([3 3 7 5 6]', 5, [], 1, 'omitnan', 'truncate');
+%! assert (A, [3, 4, 5, 5.5, 6]');
+%! A = medfilt1 ([3 3 7 5 6]', 5, [], 2, 'omitnan', 'truncate');
+%! assert (A, [3, 3, 7, 5, 6]');
+%!test
+%! A = medfilt1 ([3 1 4 1 3], 3, 'omitnan', 'truncate');
+%! assert (A, [2, 3, 1, 3, 2]);
+%!test
+%! A = medfilt1 ([3 1 4 1 3], 6, 'omitnan', 'truncate');
+%! assert (A, [3, 2, 3, 3, 2]);
+%!test
+%! A = medfilt1 ([1 2 3 4 4 3 2 1; 6 5 4 3 3 4 5 6; 6 5 4 3 2 1 0 -1; 6 5 4 3 2 1 0 -1]);
+%! assert (A, [1 2 3 3 3 3 2 1; 6 5 4 3 3 3 2 1; 6 5 4 3 2 1 0 -1; 6 5 4 3 2 1 0 -1]);
+%!error (medfilt1 ([1 2 3], -1));
+%!error (medfilt1 ([1 2 3], 1, [], "hello"));
+%!error (medfilt1 ([1 2 3], 1, [], "omitnan", false));
+%!error (medfilt1 ({1 2 3}));

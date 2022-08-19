@@ -1,0 +1,62 @@
+## DO NOT EDIT!  Generated automatically from sysdep.cc by Make.
+%!assert (ischar (getenv ("OCTAVE_HOME")))
+%!test
+%! setenv ("dummy_variable_that_cannot_matter", "foobar");
+%! assert (getenv ("dummy_variable_that_cannot_matter"), "foobar");
+%! unsetenv ("dummy_variable_that_cannot_matter");
+%! assert (getenv ("dummy_variable_that_cannot_matter"), "");
+%!testif ; ispc ()
+%! assert (ischar (winqueryreg ("HKEY_LOCAL_MACHINE",
+%!                              'SOFTWARE\Microsoft\Windows\CurrentVersion',
+%!                              "ProgramFilesDir")));
+%!testif ; ispc ()
+%! assert (isa (winqueryreg ("HKEY_LOCAL_MACHINE",
+%!                           'SYSTEM\CurrentControlSet\Control\FileSystem',
+%!                           "Win31FileSystem"), "int32"));
+%!testif ; ispc ()
+%! assert (iscellstr (winqueryreg ("name", "HKEY_LOCAL_MACHINE",
+%!                                 'SOFTWARE\Microsoft\Windows\CurrentVersion')));
+%!testif ; ispc ()
+%! fail ('winqueryreg (1, ''SOFTWARE\Microsoft\Windows\CurrentVersion'')',
+%!       "first argument must be 'name' or a valid ROOTKEY identifier");
+%!testif ; ispc ()
+%! fail ('winqueryreg ("HKEY_LOCAL_MACHINE", 1)', "SUBKEY must be a string");
+%!testif ; ispc ()
+%! fail (['winqueryreg ("HKEY_LOCAL_MACHINE", ', ...
+%!        '''SOFTWARE\Microsoft\Windows\CurrentVersion'', 1)'],
+%!       "VALUENAME must be a string");
+%!testif ; ispc ()
+%! fail (['winqueryreg ("FOO", ', ...
+%!        '''SOFTWARE\Microsoft\Windows\CurrentVersion'')'],
+%!       "ROOTKEY is not a valid root key identifier");
+%!testif ; ispc ()
+%! fail ('winqueryreg ("HKEY_LOCAL_MACHINE", ''FOO\bar'')',
+%!       "no value found for");
+%!testif ; ispc ()
+%! fail (['winqueryreg ("HKEY_LOCAL_MACHINE", ', ...
+%!        '''SOFTWARE\Microsoft\Windows\CurrentVersion'', "foo")'],
+%!       "no value found for");
+%!testif ; ispc ()
+%! fail ('winqueryreg ("name", "HKEY_LOCAL_MACHINE")',
+%!       "if the first argument is 'name', ROOTKEY and SUBKEY must be given");
+%!testif ; ispc ()
+%! fail (['winqueryreg ("name", 1, ', ...
+%!        '''SOFTWARE\Microsoft\Windows\CurrentVersion'')'],
+%!       "ROOTKEY must be a string");
+%!testif ; ispc ()
+%! fail ('winqueryreg ("name", "HKEY_LOCAL_MACHINE", 1)',
+%!       "SUBKEY must be a string");
+%!test
+%! pause (1);
+%!error pause (1, 2)
+%!assert (islogical (isieee ()))
+%!assert (ischar (native_float_format ()))
+%!test
+%! home = get_home_directory ();
+%! assert (tilde_expand ("~/foobar"), [home "/foobar"]);
+%! assert (tilde_expand ("/foo/bar"), "/foo/bar");
+%! assert (tilde_expand ("foo/bar"), "foo/bar");
+%!test
+%! if (! ispc ())
+%!   assert (get_home_directory (), getenv ("HOME"));
+%! endif

@@ -1,0 +1,387 @@
+@c ---------------------------------------------------
+@node Sockets functions
+@section Sockets functions
+@cindex Sockets functions
+@c Sockets functions accept
+@c -----------------------------------------
+@subsection accept
+@cindex accept
+@deftypefn {Loadable Function} {[@var{client}, @var{info}] =} accept (@var{s})
+Accept incoming connection on specified socket.
+
+Accepts an incoming connection on the socket @var{s}.
+The newly created socket is returned in @var{client}, and
+associated information in a struct info.
+
+See the @command{accept} man pages for further details.
+
+@end deftypefn
+@c Sockets functions bind
+@c -----------------------------------------
+@subsection bind
+@cindex bind
+@deftypefn {Loadable Function} {} bind (@var{s}, @var{portnumber})
+Bind specific socket to port number.
+
+See the @command{bind} man pages for further details.
+
+@end deftypefn
+@c Sockets functions connect
+@c -----------------------------------------
+@subsection connect
+@cindex connect
+@deftypefn {Loadable Function} {} connect (@var{s}, @var{serverinfo})
+Connect socket.
+
+Connects the socket @var{s} following the information
+in the struct @var{serverinfo} which must contain the
+following fields:
+
+@table @code
+@item addr
+a string with the host name to connect to
+
+@item port
+the port number to connect to (an integer)
+@end table
+
+On successful connect, the returned status is zero.
+
+See the @command{connect} man pages for further details.
+@end deftypefn
+@c Sockets functions disconnect
+@c -----------------------------------------
+@subsection disconnect
+@cindex disconnect
+@deftypefn {Loadable Function} {} disconnect (@var{s})
+Disconnect socket.
+
+Disconnects the socket @var{s}.  If successful, @code{disconnect} returns 0,
+otherwise, it returns -1.
+
+Since we can't call fclose on the file descriptor directly, use this
+function to disconnect the socket.
+
+@end deftypefn
+@c Sockets functions gethostbyname
+@c -----------------------------------------
+@subsection gethostbyname
+@cindex gethostbyname
+@deftypefn {Loadable Function} {} gethostbyname (@var{hostname})
+Return IP address for host name.
+
+For example:
+
+@example
+@group
+gethostbyname ("localhost
+@result{} 127.0.0.1
+@end group
+@end example
+
+See the @command{gethostbyname} man pages for details.
+
+@end deftypefn
+@c Sockets functions getsockopt
+@c -----------------------------------------
+@subsection getsockopt
+@cindex getsockopt
+@deftypefn {Loadable Function} {[@var{data}, @var{status}] =} getsockopt (@var{s}, @var{level}, @var{optname})
+Get a socket option value from a socket.
+
+Returns the value of @var{level} @var{optname} from the socket @var{s}.
+
+Data type depends on the option used. @var{status} returns as  0 if no error.
+
+See the @command{getsockopt} man pages for further details.
+
+@end deftypefn
+@c Sockets functions listen
+@c -----------------------------------------
+@subsection listen
+@cindex listen
+@deftypefn {Loadable Function} {} listen (@var{s}, @var{backlog})
+Listen on socket for connections.
+
+Listens on socket @var{s} for connections.  @var{backlog} specifies
+how large the queue of incoming connections is allowed to
+grow.
+
+On success, zero is returned.
+
+See the @command{listen} man pages for further details.
+
+@end deftypefn
+@c Sockets functions recv
+@c -----------------------------------------
+@subsection recv
+@cindex recv
+@deftypefn  {Loadable Function} {[@var{data}, @var{count}] =} recv (@var{s}, @var{len})
+@deftypefnx {Loadable Function} {[@var{data}, @var{count}] =} recv (@var{s}, @var{len}, @var{flags})
+Read data from specified socket.
+
+Requests reading @var{len} bytes from the socket @var{s}.
+The optional integer @var{flags} parameter can be used to modify the
+behaviour of @code{recv}.
+
+The read data is returned in the uint8 array @var{data}.  The number of
+bytes read is returned in @var{count}.
+
+You can get non-blocking operation by using the flag @code{MSG_DONTWAIT}
+which makes the @code{recv()} call return immediately.  If there is no
+data, -1 is returned in count.
+
+See the @command{recv} man pages for further details.
+
+@end deftypefn
+@c Sockets functions recvfrom
+@c -----------------------------------------
+@subsection recvfrom
+@cindex recvfrom
+@deftypefn  {Loadable Function} {[@var{data}, @var{count}, @var{src_info}] =} recvfrom (@var{s}, @var{len})
+@deftypefnx {Loadable Function} {[@var{data}, @var{count}, @var{src_info}] =} recvfrom (@var{s}, @var{len}, @var{flags})
+Read data from specified socket.
+
+Requests reading @var{len} bytes from the socket @var{s}.
+The optional integer @var{flags} parameter can be used to modify the
+behaviour of @code{recvfrom}.
+
+The read data is returned in the uint8 array @var{data}.  The number of
+bytes read is returned in @var{count} and a structure with fields addr and port contain the source of the
+data.
+
+You can get non-blocking operation by using the flag @code{MSG_DONTWAIT}
+which makes the @code{recvfrom()} call return immediately.  If there is no
+data, -1 is returned in count.
+
+See the @command{recvfrom} man pages for further details.
+
+@end deftypefn
+@c Sockets functions select
+@c -----------------------------------------
+@subsection select
+@cindex select
+@deftypefn {Loadable Function} {[@var{status}, @var{rfdset}, @var{wfdset}] =} select (@var{nfds}, @var{rfdset}, @var{wfdset}, @var{efdset}, @var{timeout})
+Wait for socket activity on selected sockets.
+
+The fdsets are vectors of fds to check, for example [1 2 3]. Empty vectors equate to null.
+
+nfds tests file descriptions in the range of 0 - nfds-1.
+
+Timeout is can be either an real value for number of seconds, a struct with a tm_sec and tm_usec fields, or empty set for null.
+
+@var{status} returns as  0 if timeout, or number of waiting sockets if ok.
+
+See the @command{select} man pages for further details.
+
+@end deftypefn
+@c Sockets functions send
+@c -----------------------------------------
+@subsection send
+@cindex send
+@deftypefn  {Loadable Function} {} send (@var{s}, @var{data})
+@deftypefnx {Loadable Function} {} send (@var{s}, @var{data}, @var{flags})
+Send data on specified socket.
+
+Sends data on socket @var{s}.  @var{data} should be an uint8 array or
+a string.
+
+See the @command{send} man pages for further details.
+
+@end deftypefn
+@c Sockets functions sendto
+@c -----------------------------------------
+@subsection sendto
+@cindex sendto
+@deftypefn {Loadable Function} {} sendto (@var{s}, @var{data}, @var{dest_info})
+@deftypefnx {Loadable Function} {} sendto (@var{s}, @var{data}, @var{flags}, @var{dest_info})
+Send data on specified socket.
+
+Sends data on socket @var{s} to destination.  @var{data} should be an uint8 array or
+a string.
+
+The dest_info struct @var{dest_info} must contain the
+following fields:
+
+@table @code
+@item addr
+a string with the host name to send to
+
+@item port
+the port number to send to (an integer)
+@end table
+
+See the @command{sendto} man pages for further details.
+
+@end deftypefn
+@c Sockets functions setsockopt
+@c -----------------------------------------
+@subsection setsockopt
+@cindex setsockopt
+@deftypefn {Loadable Function} {@var{status} =} setsockopt (@var{s}, @var{level}, @var{optname}, @var{optvalue})
+Set a socket option value on a socket.
+
+@var{status} returns as  0 if no error.
+
+See the @command{setsockopt} man pages for further details.
+
+@end deftypefn
+@c Sockets functions shutdown
+@c -----------------------------------------
+@subsection shutdown
+@cindex shutdown
+@deftypefn {Loadable Function} {} shutdown (@var{s}, @var{how})
+Shutdown all or part of a connection of a socket.
+
+On success, zero is returned.
+
+See the @command{shutdown} man pages for further details.
+
+@end deftypefn
+@c Sockets functions socket
+@c -----------------------------------------
+@subsection socket
+@cindex socket
+@deftypefn  {Loadable Function} {} socket ()
+@deftypefnx {Loadable Function} {} socket (@var{domain})
+@deftypefnx {Loadable Function} {} socket (@var{domain}, @var{type})
+@deftypefnx {Loadable Function} {} socket (@var{domain}, @var{type}, @var{protocol})
+Creates a socket.
+
+@var{domain} is an integer, where the value AF_INET
+can be used to create an IPv4 socket.
+
+@var{type} is an integer describing the socket.  When using IP, specifying
+SOCK_STREAM gives a TCP socket.
+
+@var{protocol} is currently not used and should be 0 if specified.
+
+If no input arguments are given, default values AF_INET and
+SOCK_STREAM are used.
+
+See the local @command{socket} reference for more details.
+@end deftypefn
+@c ---------------------------------------------------
+@node Socket constants
+@section Socket constants
+@cindex Socket constants
+@c Socket constants AF_APPLETALK
+@c -----------------------------------------
+@subsection AF_APPLETALK
+@cindex AF_APPLETALK
+Socket constant for AF_APPLETALK
+
+@c Socket constants AF_INET
+@c -----------------------------------------
+@subsection AF_INET
+@cindex AF_INET
+Socket constant for AF_INET
+
+@c Socket constants AF_LOCAL
+@c -----------------------------------------
+@subsection AF_LOCAL
+@cindex AF_LOCAL
+Socket constant for AF_LOCAL
+
+@c Socket constants AF_UNIX
+@c -----------------------------------------
+@subsection AF_UNIX
+@cindex AF_UNIX
+Socket constant for AF_UNIX
+
+@c Socket constants MSG_DONTWAIT
+@c -----------------------------------------
+@subsection MSG_DONTWAIT
+@cindex MSG_DONTWAIT
+Socket constant for MSG_DONTWAIT
+
+@c Socket constants MSG_PEEK
+@c -----------------------------------------
+@subsection MSG_PEEK
+@cindex MSG_PEEK
+Socket constant for MSG_PEEK
+
+@c Socket constants MSG_WAITALL
+@c -----------------------------------------
+@subsection MSG_WAITALL
+@cindex MSG_WAITALL
+Socket constant for MSG_WAITALL
+
+@c Socket constants SHUT_RD
+@c -----------------------------------------
+@subsection SHUT_RD
+@cindex SHUT_RD
+Socket constant for SHUT_RD
+
+@c Socket constants SHUT_RDWR
+@c -----------------------------------------
+@subsection SHUT_RDWR
+@cindex SHUT_RDWR
+Socket constant for SHUT_RDWR
+
+@c Socket constants SHUT_WR
+@c -----------------------------------------
+@subsection SHUT_WR
+@cindex SHUT_WR
+Socket constant for SHUT_WR
+
+@c Socket constants SOCK_DGRAM
+@c -----------------------------------------
+@subsection SOCK_DGRAM
+@cindex SOCK_DGRAM
+Socket constant for SOCK_DGRAM
+
+@c Socket constants SOCK_RAW
+@c -----------------------------------------
+@subsection SOCK_RAW
+@cindex SOCK_RAW
+Socket constant for SOCK_RAW
+
+@c Socket constants SOCK_RDM
+@c -----------------------------------------
+@subsection SOCK_RDM
+@cindex SOCK_RDM
+Socket constant for SOCK_RDM
+
+@c Socket constants SOCK_SEQPACKET
+@c -----------------------------------------
+@subsection SOCK_SEQPACKET
+@cindex SOCK_SEQPACKET
+Socket constant for SOCK_SEQPACKET
+
+@c Socket constants SOCK_STREAM
+@c -----------------------------------------
+@subsection SOCK_STREAM
+@cindex SOCK_STREAM
+Socket constant for SOCK_STREAM
+
+@c Socket constants SOL_SOCKET
+@c -----------------------------------------
+@subsection SOL_SOCKET
+@cindex SOL_SOCKET
+Socket constant for SOL_SOCKET
+
+@c Socket constants SO_BROADCAST
+@c -----------------------------------------
+@subsection SO_BROADCAST
+@cindex SO_BROADCAST
+Socket constant for SO_BROADCAST
+
+@c Socket constants SO_DONTROUTE
+@c -----------------------------------------
+@subsection SO_DONTROUTE
+@cindex SO_DONTROUTE
+Socket constant for SO_DONTROUTE
+
+@c Socket constants SO_KEEPALIVE
+@c -----------------------------------------
+@subsection SO_KEEPALIVE
+@cindex SO_KEEPALIVE
+Socket constant for SO_KEEPALIVE
+
+@c Socket constants SO_REUSEADDR
+@c -----------------------------------------
+@subsection SO_REUSEADDR
+@cindex SO_REUSEADDR
+Socket constant for SO_REUSEADDR
+

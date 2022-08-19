@@ -1,0 +1,12 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: ARPACK-NG
+Description: Collection of Fortran77 subroutines designed to solve large scale eigenvalue problems
+Version: 3.8.0
+URL: https://github.com/opencollab/arpack-ng/
+Libs: -L${libdir} -larpack
+Libs.private: -llapack -lblas
+Cflags: -I${includedir}/arpack

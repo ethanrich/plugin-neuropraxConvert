@@ -1,0 +1,34 @@
+Summary of important user-visible changes for optiminterp 0.3.7:
+-------------------------------------------------------------------
+
+ ** detect use of gfortran >= 10
+
+ ** minor makefile updates for CPPFLAGS and LDFLAGS
+
+Summary of important user-visible changes for optiminterp 0.3.6:
+-------------------------------------------------------------------
+
+ ** remove use of depreciated f77_exception_encountered
+
+Summary of important user-visible changes for optiminterp 0.3.5:
+-------------------------------------------------------------------
+
+ ** Update build scripts for octave 4.4 (Bug #51498)
+
+ ** Move test scripts into embedded test blocks
+
+
+Summary of important user-visible changes for optiminterp 0.3.4:
+-------------------------------------------------------------------
+
+ ** Makefile fixed to work with non-standard linker options e.g on
+    Apple.
+
+ ** Package is no longer automatically loaded.
+
+ ** Add test script which compares the solution of the local optimal 
+    interpolation to the global optimal interpolation.
+
+ ** Add the DIVA kernel (data-interpolating variational analysis) as
+    a compile-time option (CPPFLAGS must conaint 
+    -DBACKGROUND_COVARIANCE_DIVA)

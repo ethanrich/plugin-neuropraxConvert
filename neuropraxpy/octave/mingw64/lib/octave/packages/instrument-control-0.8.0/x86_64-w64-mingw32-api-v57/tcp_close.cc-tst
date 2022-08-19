@@ -1,0 +1,7 @@
+## Generated from tcp_close.cc
+%!test
+%! addr = resolvehost ('gnu.org', 'address');
+%! a = tcp (addr, 80);
+%! tcp_close (a);
+%!error <Invalid call to tcp_close> tcp_close (1)
+%!error <Invalid call to tcp_close> tcp_close ()

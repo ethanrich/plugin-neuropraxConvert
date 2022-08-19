@@ -1,0 +1,8 @@
+## DO NOT EDIT!  Generated automatically from Cell.cc by Make.
+%!shared a
+%! a = {"foo", "bar"};
+%!assert (a(), a)
+%!error <invalid empty index expression> a{}
+%!error <wrong type argument 'cell array'> nnz ({0, 1, 2})
+%!error <wrong type argument 'cell array'> nnz (cell ())
+%!error <wrong type argument 'cell array'> nnz ({"foo", "bar"})

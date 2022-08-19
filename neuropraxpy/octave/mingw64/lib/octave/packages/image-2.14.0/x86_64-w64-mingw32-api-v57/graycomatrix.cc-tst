@@ -1,0 +1,26 @@
+## DO NOT EDIT! Generated from graycomatrix.cc
+%!shared a
+%!test
+%!  a = [0 0 0 1 2;
+%!       1 1 0 1 1;
+%!       2 2 1 0 0;
+%!       1 1 0 2 0;
+%!       0 0 1 0 1];
+%!  squeeze(graycomatrix(a, 3, 1, -pi/4)) == [4 2 0;
+%!                                     2 3 2;
+%!                                     1 2 0];
+%!
+%!assert(size(graycomatrix(a, 3, 1:5, [0:3]*-pi/4)), [3, 3, 5, 4])
+%!demo
+%!
+%!  # Pattern Recognition Engineering (Nadler & Smith)
+%!  # Digital Image Processing (Gonzales & Woods), p. 668
+%!
+%!  a = [0 0 0 1 2;
+%!       1 1 0 1 1;
+%!       2 2 1 0 0;
+%!       1 1 0 2 0;
+%!       0 0 1 0 1];
+%!
+%!  graycomatrix(a, 3, 1, [0 1]*-pi/4)
+%!

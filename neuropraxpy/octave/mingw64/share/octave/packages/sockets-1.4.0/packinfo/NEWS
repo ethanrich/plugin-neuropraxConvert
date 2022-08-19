@@ -1,0 +1,49 @@
+Summary of important user-visible changes for sockets 1.4.0
+-------------------------------------------------------------------
+
+ ** Socket constants that are OS dependant will show an error if not 
+    available instead of not existing. (Bug #51273)
+
+ ** Added new functions: select, shutdown
+
+ ** Added constants: SHUT_RD, SHUT_RDWR, SHUT_WR
+
+ ** Added qt5 documentation
+
+ ** Install .cc tests
+
+Summary of important user-visible changes for sockets 1.3.0:
+-------------------------------------------------------------------
+
+ ** added new functions: sendto, recvfrom, getsockopt, setsockopt
+
+ ** added constants SOL_SOCKET, SO_REUSEADDR, SO_KEEPALIVE,
+    SO_DONTROUTE, SO_BROADCAST
+
+ ** added initial user manual 
+
+Summary of important user-visible changes for sockets 1.2.1:
+-------------------------------------------------------------------
+
+ ** Updates for Octave 6 compatability
+
+ ** Change minimum Octave version to 3.6
+
+Summary of important user-visible changes for sockets 1.2.0:
+-------------------------------------------------------------------
+
+ ** Sockets are now represented with ordinary numbers, not a
+    custom socket type. If you relied on checks like
+    isa(s,'octave_socket') you will need to update your code.
+
+ ** Functions are cleaned on package unload (requires Octave >= 3.8)
+    using the PKG_DEL directive.
+
+ ** The sockets package is now dependent on Octave versions >= 3.2.0
+
+ ** Functions now perform better input check to prevent accidental segfaults.
+
+Summary of important user-visible changes for sockets 1.0.8:
+-------------------------------------------------------------------
+
+ ** updated function documentation with more details

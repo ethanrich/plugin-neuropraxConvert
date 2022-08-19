@@ -1,0 +1,7 @@
+## DO NOT EDIT!  Generated automatically from ov-str-mat.cc by Make.
+%!test <*49536>
+%! warning ("on", "Octave:charmat-truncated", "local");
+%! s = char ("this", "is", "a", "char", "matrix");
+%! fail ("sprintf (s)", ...
+%!       "warning",     ...
+%!       "multi-row character matrix converted to a string");

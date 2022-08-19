@@ -1,0 +1,836 @@
+@chapter Quaternion Constructors
+@section quaternion
+@findex quaternion
+
+ @deftypefn {Function File} {@var{q} =} quaternion (@var{w})
+ @deftypefnx {Function File} {@var{q} =} quaternion (@var{x}, @var{y}, @var{z})
+ @deftypefnx {Function File} {@var{q} =} quaternion (@var{w}, @var{x}, @var{y}, @var{z})
+ Constructor for quaternions - create or convert to quaternion.
+
+ @example
+ q = w + x*i + y*j + z*k
+ @end example
+
+ Arguments @var{w}, @var{x}, @var{y} and @var{z} can be scalars,
+ matrices or n-dimensional arrays, but they must be real-valued
+ and of equal size.
+ If scalar part @var{w} or components @var{x}, @var{y} and @var{z}
+ of the vector part are not specified, zero matrices of appropriate
+ size are assumed.
+
+ @strong{Example}
+ @example
+ @group
+ octave:1> q = quaternion (2)
+ q = 2 + 0i + 0j + 0k
+ 
+ octave:2> q = quaternion (3, 4, 5)
+ q = 0 + 3i + 4j + 5k
+ 
+ octave:3> q = quaternion (2, 3, 4, 5)
+ q = 2 + 3i + 4j + 5k
+ @end group
+ @end example
+ @example
+ @group
+ octave:4> w = [2, 6, 10; 14, 18, 22];
+ octave:5> x = [3, 7, 11; 15, 19, 23];
+ octave:6> y = [4, 8, 12; 16, 20, 24];
+ octave:7> z = [5, 9, 13; 17, 21, 25];
+ octave:8> q = quaternion (w, x, y, z)
+ q.w =
+     2    6   10
+    14   18   22
+ 
+ q.x =
+     3    7   11
+    15   19   23
+ 
+ q.y =
+     4    8   12
+    16   20   24
+ 
+ q.z =
+     5    9   13
+    17   21   25
+ 
+ octave:9> 
+ @end group
+ @end example
+
+ @end deftypefn
+@section qi
+@findex qi
+
+ @deftypefn {Function File} {} qi
+ Create x-component of a quaternion's vector part.
+
+ @example
+ q = w + x*qi + y*qj + z*qk
+ @end example
+
+ @strong{Example}
+ @example
+ @group
+ octave:1> q1 = quaternion (1, 2, 3, 4)
+ q1 = 1 + 2i + 3j + 4k
+ octave:2> q2 = 1 + 2*qi + 3*qj + 4*qk
+ q2 = 1 + 2i + 3j + 4k
+ octave:3> 
+ @end group
+ @end example
+
+ @end deftypefn
+@section qj
+@findex qj
+
+ @deftypefn {Function File} {} qj
+ Create y-component of a quaternion's vector part.
+
+ @example
+ q = w + x*qi + y*qj + z*qk
+ @end example
+
+ @strong{Example}
+ @example
+ @group
+ octave:1> q1 = quaternion (1, 2, 3, 4)
+ q1 = 1 + 2i + 3j + 4k
+ octave:2> q2 = 1 + 2*qi + 3*qj + 4*qk
+ q2 = 1 + 2i + 3j + 4k
+ octave:3> 
+ @end group
+ @end example
+
+ @end deftypefn
+@section qk
+@findex qk
+
+ @deftypefn {Function File} {} qk
+ Create z-component of a quaternion's vector part.
+
+ @example
+ q = w + x*qi + y*qj + z*qk
+ @end example
+
+ @strong{Example}
+ @example
+ @group
+ octave:1> q1 = quaternion (1, 2, 3, 4)
+ q1 = 1 + 2i + 3j + 4k
+ octave:2> q2 = 1 + 2*qi + 3*qj + 4*qk
+ q2 = 1 + 2i + 3j + 4k
+ octave:3> 
+ @end group
+ @end example
+
+ @end deftypefn
+@chapter Conversions
+@section q2rot
+@findex q2rot
+
+ @deftypefn {Function File} {[@var{axis}, @var{angle}] =} q2rot (@var{q})
+ @deftypefnx {Function File} {[@var{axis}, @var{angle}, @var{qn}] =} q2rot (@var{q})
+ Extract vector/angle form of a unit quaternion @var{q}.
+
+ @strong{Inputs}
+ @table @var
+ @item q
+ Unit quaternion describing the rotation.
+ Quaternion @var{q} can be a scalar or an array.
+ In the latter case, @var{q} is reshaped to a row vector
+ and the return values @var{axis} and @var{angle} are
+ concatenated horizontally, accordingly.
+ @end table
+
+ @strong{Outputs}
+ @table @var
+ @item axis
+ Eigenaxis as a 3-d unit vector @code{[x; y; z]}.
+ If input argument @var{q} is a quaternion array,
+ @var{axis} becomes a matrix where
+ @var{axis(:,i)} corresponds to @var{q(i)}.
+ @item angle
+ Rotation angle in radians.  The positive direction is
+ determined by the right-hand rule applied to @var{axis}.
+ The angle lies in the interval [0, 2*pi].
+ If input argument @var{q} is a quaternion array,
+ @var{angle} becomes a row vector where
+ @var{angle(i)} corresponds to @var{q(i)}.
+ @item qn
+ Optional output of diagnostic nature.
+ @code{qn = reshape (q, 1, [])} or, if needed, 
+ @code{qn = reshape (unit (q), 1, [])}.
+ @end table
+
+ @strong{Example}
+ @example
+ @group
+ octave:1> axis = [0; 0; 1]
+ axis =
+ 
+    0
+    0
+    1
+ 
+ octave:2> angle = pi/4
+ angle =  0.78540
+ octave:3> q = rot2q (axis, angle)
+ q = 0.9239 + 0i + 0j + 0.3827k
+ octave:4> [vv, th] = q2rot (q)
+ vv =
+ 
+    0
+    0
+    1
+ 
+ th =  0.78540
+ octave:5> theta = th*180/pi
+ theta =  45.000
+ octave:6>
+ @end group
+ @end example
+
+ @end deftypefn
+@section rot2q
+@findex rot2q
+
+ @deftypefn {Function File} {@var{q} =} rot2q (@var{axis}, @var{angle})
+ Create unit quaternion @var{q} which describes a rotation of
+ @var{angle} radians about the vector @var{axis}.  This function uses
+ the active convention where the vector @var{axis} is rotated by @var{angle}
+ radians.  If the coordinate frame should be rotated by @var{angle}
+ radians, also called the passive convention, this is equivalent
+ to rotating the @var{axis} by @var{-angle} radians.
+
+ @strong{Inputs}
+ @table @var
+ @item axis
+ Vector @code{[x, y, z]} or @code{[x; y; z]} describing the axis of rotation.
+ @item angle
+ Rotation angle in radians.  The positive direction is
+ determined by the right-hand rule applied to @var{axis}.
+ If @var{angle} is a real-valued array, a quaternion array
+ @var{q} of the same size is returned.
+ @end table
+
+ @strong{Outputs}
+ @table @var
+ @item q
+ Unit quaternion describing the rotation.
+ If @var{angle} is an array, @var{q(i,j)} corresponds to
+ the rotation angle @var{angle(i,j)}.
+ @end table
+
+ @strong{Example}
+ @example
+ @group
+ octave:1> axis = [0, 0, 1];
+ octave:2> angle = pi/4;
+ octave:3> q = rot2q (axis, angle)
+ q = 0.9239 + 0i + 0j + 0.3827k
+ octave:4> v = quaternion (1, 1, 0)
+ v = 0 + 1i + 1j + 0k
+ octave:5> vr = q * v * conj (q)
+ vr = 0 + 0i + 1.414j + 0k
+ octave:6>
+ @end group
+ @end example
+
+ @end deftypefn
+@section rotm2q
+@findex rotm2q
+
+ @deftypefn {Function File} {@var{q} =} rotm2q (@var{R})
+ Convert 3x3 rotation matrix @var{R} to unit quaternion @var{q}.
+ @end deftypefn
+@chapter Quaternion Methods
+@section @@quaternion/abs
+@findex abs
+
+ @deftypefn {Function File} {@var{qabs} =} abs (@var{q})
+ Modulus of a quaternion.
+
+ @example
+ q = w + x*i + y*j + z*k
+ abs (q) = sqrt (w.^2 + x.^2 + y.^2 + z.^2)
+ @end example
+ @end deftypefn
+@section @@quaternion/arg
+@findex arg
+
+ @deftypefn {Function File} {@var{theta} =} arg (@var{q})
+ Compute the argument or phase of quaternion @var{q} in radians.
+ @var{theta} is defined as @code{atan2 (sqrt (q.x.^2 + q.y.^2 + q.z.^2), q.w)}.
+ The argument @var{theta} lies in the range (0, pi). 
+ @end deftypefn
+@section @@quaternion/blkdiag
+@findex blkdiag
+
+ @deftypefn {Function File} {@var{q} =} blkdiag (@var{q1}, @var{q2}, @dots{})
+ Block-diagonal concatenation of quaternions.
+ @end deftypefn
+@section @@quaternion/cast
+@findex cast
+
+ @deftypefn {Function File} {@var{q} =} cast (@var{q}, @var{'type'})
+ Convert the components of quaternion @var{q} to data type @var{type}.
+ Valid types are int8, uint8, int16, uint16, int32, uint32, int64,
+ uint64, double, single and logical.
+ @end deftypefn
+@section @@quaternion/cat
+@findex cat
+
+ @deftypefn {Function File} {@var{q} =} cat (@var{dim}, @var{q1}, @var{q2}, @dots{})
+ Concatenation of quaternions along dimension @var{dim}.
+ @end deftypefn
+@section @@quaternion/ceil
+@findex ceil
+
+ @deftypefn {Function File} {@var{q} =} ceil (@var{q})
+ Round quaternion @var{q} towards positive infinity.
+ @end deftypefn
+@section @@quaternion/columns
+@findex columns
+
+ @deftypefn {Function File} {@var{nc} =} columns (@var{q})
+ Return number of columns @var{nc} of quaternion array @var{q}.
+ @end deftypefn
+@section @@quaternion/conj
+@findex conj
+
+ @deftypefn {Function File} {@var{q} =} conj (@var{q})
+ Return conjugate of a quaternion.
+
+ @example
+ q = w + x*i + y*j + z*k
+ conj (q) = w - x*i - y*j - z*k
+ @end example
+ @end deftypefn
+@section @@quaternion/cumsum
+@findex cumsum
+
+ @deftypefn {Function File} {@var{q} =} cumsum (@var{q})
+ @deftypefnx {Function File} {@var{q} =} cumsum (@var{q}, @var{dim})
+ @deftypefnx {Function File} {@var{q} =} cumsum (@dots{}, @var{'native'})
+ @deftypefnx {Function File} {@var{q} =} cumsum (@dots{}, @var{'double'})
+ @deftypefnx {Function File} {@var{q} =} cumsum (@dots{}, @var{'extra'})
+ Cumulative sum of elements along dimension @var{dim}.  If @var{dim} is omitted,
+ it defaults to the first non-singleton dimension.
+ See @code{help cumsum} for more information.
+ @end deftypefn
+@section @@quaternion/diag
+@findex diag
+
+ @deftypefn {Function File} {@var{q} =} diag (@var{v})
+ @deftypefnx {Function File} {@var{q} =} diag (@var{v}, @var{k})
+ Return a diagonal quaternion matrix with quaternion vector V on diagonal K.
+ The second argument is optional. If it is positive,
+ the vector is placed on the K-th super-diagonal.
+ If it is negative, it is placed on the -K-th sub-diagonal.
+ The default value of K is 0, and the vector is placed
+ on the main diagonal.
+ Given a matrix argument, instead of a vector, @command{diag}
+ extracts the @var{K}-th diagonal of the matrix.
+ @end deftypefn
+@section @@quaternion/diff
+@findex diff
+
+ @deftypefn {Function File} {@var{qdot} =} diff (@var{q}, @var{omega})
+ Derivative of a quaternion.
+
+ Let Q be a quaternion to transform a vector from a fixed frame to
+ a rotating frame.  If the rotating frame is rotating about the
+ [x, y, z] axes at angular rates [wx, wy, wz], then the derivative
+ of Q is given by
+
+ @example
+ Q' = diff(Q, omega)
+ @end example
+
+ If the passive convention is used (rotate the frame, not the vector),
+ then
+
+ @example
+ Q' = diff(Q,-omega)
+ @end example
+ @end deftypefn
+@section @@quaternion/exp
+@findex exp
+
+ @deftypefn {Function File} {@var{qexp} =} exp (@var{q})
+ Exponential of a quaternion.
+ @end deftypefn
+@section @@quaternion/fix
+@findex fix
+
+ @deftypefn {Function File} {@var{q} =} fix (@var{q})
+ Round quaternion @var{q} towards zero.
+ @end deftypefn
+@section @@quaternion/floor
+@findex floor
+
+ @deftypefn {Function File} {@var{q} =} floor (@var{q})
+ Round quaternion @var{q} towards negative infinity.
+ @end deftypefn
+@section @@quaternion/full
+@findex full
+
+ @deftypefn {Function File} {@var{fq} =} full (@var{sq})
+ Return a full storage quaternion representation @var{fq}
+ from sparse or diagonal quaternion @var{sq}.
+ @end deftypefn
+@section @@quaternion/get
+@findex get
+
+ @deftypefn {Function File} {} get (@var{q})
+ @deftypefnx {Function File} {@var{value} =} get (@var{q}, @var{"key"})
+ @deftypefnx {Function File} {[@var{val1}, @var{val2}, @dots{}] =} get (@var{q}, @var{"key1"}, @var{"key2"}, @dots{})
+ Access key values of quaternion objects.
+
+ @strong{Keys}
+ @table @var
+ @item w
+ Return scalar part @var{w} of quaternion @var{q} as a built-in type.
+
+ @item x, y, z
+ Return component @var{x}, @var{y} or @var{z} of the vector part of 
+ quaternion @var{q} as a built-in type.
+
+ @item s
+ Return scalar part of quaternion @var{q}.  The vector part of @var{q}
+ is set to zero.
+
+ @item v
+ Return vector part of quaternion @var{q}.  The scalar part of @var{q}
+ is set to zero.
+ @end table
+ @end deftypefn
+@section @@quaternion/inv
+@findex inv
+
+ @deftypefn {Function File} {@var{qinv} =} inv (@var{q})
+ Return inverse of a quaternion.
+ @end deftypefn
+@section @@quaternion/isempty
+@findex isempty
+
+ @deftypefn {Function File} {@var{bool} =} isempty (@var{q})
+ Return true if quaternion @var{q} is empty and false otherwise.
+ @end deftypefn
+@section @@quaternion/isfinite
+@findex isfinite
+
+ @deftypefn {Function File} {@var{bool} =} isfinite (@var{q})
+ Return a logical array which is true where the elements of
+ @var{q} are finite values and false where they are not.
+ @end deftypefn
+@section @@quaternion/isinf
+@findex isinf
+
+ @deftypefn {Function File} {@var{bool} =} isinf (@var{q})
+ Return a logical array which is true where the elements of
+ @var{q} are infinite and false where they are not.
+ @end deftypefn
+@section @@quaternion/isnan
+@findex isnan
+
+ @deftypefn {Function File} {@var{bool} =} isnan (@var{q})
+ Return a logical array which is true where the elements of
+ @var{q} are NaN values and false where they are not.
+ @end deftypefn
+@section @@quaternion/ispure
+@findex ispure
+
+ @deftypefn {Function File} {@var{bool} =} ispure (@var{q})
+ Return true if scalar part of quaternion is zero, otherwise return false.
+ @end deftypefn
+@section @@quaternion/isreal
+@findex isreal
+
+ @deftypefn {Function File} {@var{bool} =} isreal (@var{q})
+ Return true if the vector part of quaternion @var{q} is zero
+ and false otherwise.
+ @end deftypefn
+@section @@quaternion/length
+@findex length
+
+ @deftypefn {Function File} {@var{l} =} length (@var{q})
+ Return the "length" @var{l} of the quaternion array @var{q}.
+ For quaternion matrices, the length is the number of rows or columns,
+ whichever is greater (this odd definition is used for compatibility
+ with @acronym{MATLAB}).
+ @end deftypefn
+@section @@quaternion/log
+@findex log
+
+ @deftypefn {Function File} {@var{qlog} =} log (@var{q})
+ Logarithmus naturalis of a quaternion.
+ @end deftypefn
+@section @@quaternion/mean
+@findex mean
+
+ @deftypefn {Function File} {@var{q} =} mean (@var{q})
+ @deftypefnx {Function File} {@var{q} =} mean (@var{q}, @var{dim})
+ @deftypefnx {Function File} {@var{q} =} mean (@var{q}, @var{opt})
+ @deftypefnx {Function File} {@var{q} =} mean (@var{q}, @var{dim}, @var{opt})
+ Compute the mean of the elements of the quaternion array @var{q}.
+
+ @example
+ mean (q) = mean (q.w) + mean (q.x)*i + mean (q.y)*j + mean (q.z)*k
+ @end example
+
+ See @code{help mean} for more information and a description of the
+ parameters @var{dim} and @var{opt}.
+ @end deftypefn
+@section @@quaternion/ndims
+@findex ndims
+
+ @deftypefn {Function File} {@var{n} =} ndims (@var{q})
+ Return the number of dimensions of quaternion @var{q}.
+ For any array, the result will always be larger than or equal to 2.
+ Trailing singleton dimensions are not counted.
+ @end deftypefn
+@section @@quaternion/norm
+@findex norm
+
+ @deftypefn {Function File} {@var{n} =} norm (@var{q})
+ Norm of a quaternion.
+ @end deftypefn
+@section @@quaternion/numel
+@findex numel
+
+ @deftypefn {Function File} {@var{n} =} numel (@var{q})
+ @deftypefnx {Function File} {@var{n} =} numel (@var{q}, @var{idx1}, @var{idx2}, @dots{})
+ For internal use only, use @code{prod(size(q))} or @code{numel (q.w)} instead.
+ For technical reasons, this method must return the number of elements which are
+ returned from cs-list indexing, no matter whether it is called with one or more
+ arguments.
+ @end deftypefn
+@section @@quaternion/repmat
+@findex repmat
+
+ @deftypefn  {Function File} {@var{qret} =} repmat (@var{q}, @var{m})
+ @deftypefnx {Function File} {@var{qret} =} repmat (@var{q}, @var{m}, @var{n})
+ @deftypefnx {Function File} {@var{qret} =} repmat (@var{q}, [@var{m} @var{n}])
+ @deftypefnx {Function File} {@var{qret} =} repmat (@var{q}, [@var{m} @var{n} @var{p} @dots{}])
+ Form a block quaternion matrix @var{qret} of size @var{m} by @var{n},
+ with a copy of quaternion matrix @var{q} as each element.
+ If @var{n} is not specified, form an @var{m} by @var{m} block matrix.
+ @end deftypefn
+@section @@quaternion/reshape
+@findex reshape
+
+ @deftypefn {Function File} {@var{q} =} reshape (@var{q}, @var{m}, @var{n}, @dots{})
+ @deftypefnx {Function File} {@var{q} =} reshape (@var{q}, [@var{m} @var{n} @dots{}])
+ @deftypefnx {Function File} {@var{q} =} reshape (@var{q}, @dots{}, [], @dots{})
+ @deftypefnx {Function File} {@var{q} =} reshape (@var{q}, @var{size})
+ Return a quaternion array with the specified dimensions (@var{m}, @var{n}, @dots{})
+ whose elements are taken from the quaternion array @var{q}.  The elements of the
+ quaternion are accessed in column-major order (like Fortran arrays are stored).
+ @end deftypefn
+@section @@quaternion/round
+@findex round
+
+ @deftypefn {Function File} {@var{q} =} round (@var{q})
+ Round the components of quaternion @var{q} towards the nearest integers.
+ @end deftypefn
+@section @@quaternion/rows
+@findex rows
+
+ @deftypefn {Function File} {@var{nr} =} rows (@var{q})
+ Return number of rows @var{nr} of quaternion array @var{q}.
+ @end deftypefn
+@section @@quaternion/set
+@findex set
+
+ @deftypefn {Function File} {} set (@var{q})
+ @deftypefnx {Function File} {} set (@var{q}, @var{"key"}, @var{value}, @dots{})
+ @deftypefnx {Function File} {@var{qret} =} set (@var{q}, @var{"key"}, @var{value}, @dots{})
+ Set or modify properties of quaternion objects.
+ If no return argument @var{qret} is specified, the modified quaternion object is stored
+ in input argument @var{q}.  @command{set} can handle multiple keys in one call:
+ @code{set (q, 'key1', val1, 'key2', val2, 'key3', val3)}.
+ @code{set (q)} prints a list of the object's key names.
+
+ @strong{Keys}
+ @table @var
+ @item w
+ Assign real-valued array @var{val} to scalar part @var{w} of quaternion @var{q}.
+
+ @item x, y, z
+ Assign real-valued array @var{val} to component @var{x}, @var{y} or @var{z}
+ of the vector part of quaternion @var{q}.
+
+ @item s
+ Assign scalar part of quaternion @var{val} to scalar part of quaternion @var{q}.
+ The vector part of @var{q} is left untouched.
+
+ @item v
+ Assign vector part of quaternion @var{val} to vector part of quaternion @var{q}.
+ The scalar part of @var{q} is left untouched.
+ @end table
+ @end deftypefn
+@section @@quaternion/size
+@findex size
+
+ @deftypefn {Function File} {@var{nvec} =} size (@var{q})
+ @deftypefnx {Function File} {@var{n} =} size (@var{q}, @var{dim})
+ @deftypefnx {Function File} {[@var{nx}, @var{ny}, @dots{}] =} size (@var{q})
+ Return size of quaternion arrays.
+
+ @strong{Inputs}
+ @table @var
+ @item q
+ Quaternion object.
+ @item dim
+ If given a second argument, @command{size} will return the size of the
+ corresponding dimension.
+ @end table
+
+ @strong{Outputs}
+ @table @var
+ @item nvec
+ Row vector.  The first element is the number of rows and the second
+ element the number of columns.  If @var{q} is an n-dimensional array
+ of quaternions, the n-th element of @var{nvec} corresponds to the
+ size of the n-th dimension of @var{q}.
+ @item n
+ Scalar value.  The size of the dimension @var{dim}.
+ @item nx
+ Number of rows.
+ @item ny
+ Number of columns.
+ @item @dots{}
+ Sizes of the 3rd to n-th dimensions.
+ @end table
+ @end deftypefn
+@section @@quaternion/size_equal
+@findex size_equal
+
+ @deftypefn {Function File} {@var{bool} =} size_equal (@var{a}, @var{b}, @dots{})
+ Return true if quaternions (and matrices) @var{a}, @var{b}, @dots{}
+ are of equal size and false otherwise.
+ @end deftypefn
+@section @@quaternion/sparse
+@findex sparse
+
+ @deftypefn {Function File} {@var{sq} =} sparse (@var{fq})
+ Return a sparse quaternion representation @var{sq} from
+ full quaternion @var{fq}.
+ @end deftypefn
+@section @@quaternion/squeeze
+@findex squeeze
+
+ @deftypefn {Function File} {@var{qret} =} squeeze (@var{q})
+ Remove singleton dimensions from quaternion @var{q} and return the result.
+ Note that for compatibility with @acronym{MATLAB}, all objects have a minimum
+ of two dimensions and row vectors are left unchanged.
+ @end deftypefn
+@section @@quaternion/sum
+@findex sum
+
+ @deftypefn {Function File} {@var{q} =} sum (@var{q})
+ @deftypefnx {Function File} {@var{q} =} sum (@var{q}, @var{dim})
+ @deftypefnx {Function File} {@var{q} =} sum (@dots{}, @var{'native'})
+ @deftypefnx {Function File} {@var{q} =} sum (@dots{}, @var{'double'})
+ @deftypefnx {Function File} {@var{q} =} sum (@dots{}, @var{'extra'})
+ Sum of elements along dimension @var{dim}.  If @var{dim} is omitted,
+ it defaults to the first non-singleton dimension.
+ See @code{help sum} for more information.
+ @end deftypefn
+@section @@quaternion/tril
+@findex tril
+
+ @deftypefn {Function File} {@var{q} =} tril (@var{q})
+ @deftypefnx {Function File} {@var{q} =} tril (@var{q}, @var{k})
+ @deftypefnx {Function File} {@var{q} =} tril (@var{q}, @var{k}, @var{'pack'})
+ Return a new quaternion matrix formed by extracting the lower
+ triangular part of the quaternion @var{q}, and setting all
+ other elements to zero.  The second argument @var{k} is optional,
+ and specifies how many diagonals above or below the main diagonal
+ should also be included.  Default value for @var{k} is zero.
+ If the option "pack" is given as third argument, the extracted
+ elements are not inserted into a matrix, but rather stacked
+ column-wise one above other.
+ @end deftypefn
+@section @@quaternion/triu
+@findex triu
+
+ @deftypefn {Function File} {@var{q} =} triu (@var{q})
+ @deftypefnx {Function File} {@var{q} =} triu (@var{q}, @var{k})
+ @deftypefnx {Function File} {@var{q} =} triu (@var{q}, @var{k}, @var{'pack'})
+ Return a new quaternion matrix formed by extracting the upper
+ triangular part of the quaternion @var{q}, and setting all
+ other elements to zero.  The second argument @var{k} is optional,
+ and specifies how many diagonals above or below the main diagonal
+ should also be included.  Default value for @var{k} is zero.
+ If the option "pack" is given as third argument, the extracted
+ elements are not inserted into a matrix, but rather stacked
+ column-wise one above other.
+ @end deftypefn
+@section @@quaternion/unit
+@findex unit
+
+ @deftypefn {Function File} {@var{qn} =} unit (@var{q})
+ Normalize quaternion to length 1 (unit quaternion).
+
+ @example
+ q = w + x*i + y*j + z*k
+ unit (q) = q ./ sqrt (w.^2 + x.^2 + y.^2 + z.^2)
+ @end example
+ @end deftypefn
+@chapter Overloaded Quaternion Operators
+@section @@quaternion/ctranspose
+@findex ctranspose
+
+ Conjugate transpose of a quaternion.  Used by Octave for "q'".
+@section @@quaternion/end
+@findex end
+
+ End indexing for quaternions.
+ Used by Octave for "q(1:end)".
+@section @@quaternion/eq
+@findex eq
+
+ Equal to operator for two quaternions.  Used by Octave for "q1 == q2".
+@section @@quaternion/ge
+@findex ge
+
+ Greater-than-or-equal-to operator for two quaternions.
+ Used by Octave for "q1 >= q2".
+ The ordering is lexicographic.
+@section @@quaternion/gt
+@findex gt
+
+ Greater-than operator for two quaternions.
+ Used by Octave for "q1 > q2".
+ The ordering is lexicographic.
+@section @@quaternion/horzcat
+@findex horzcat
+
+ Horizontal concatenation of quaternions.  Used by Octave for "[q1, q2]".
+@section @@quaternion/ldivide
+@findex ldivide
+
+ Element-wise left division for quaternions.  Used by Octave for "q1 .\ q2".
+@section @@quaternion/le
+@findex le
+
+ Less-than-or-equal-to operator for two quaternions.
+ Used by Octave for "q1 <= q2".
+ The ordering is lexicographic.
+@section @@quaternion/lt
+@findex lt
+
+ Less-than operator for two quaternions.
+ Used by Octave for "q1 < q2".
+ The ordering is lexicographic.
+@section @@quaternion/minus
+@findex minus
+
+ Subtraction of two quaternions.  Used by Octave for "q1 - q2".
+@section @@quaternion/mldivide
+@findex mldivide
+
+ Matrix left division for quaternions.  Used by Octave for "q1 \ q2".
+@section @@quaternion/mpower
+@findex mpower
+
+ Matrix power operator of quaternions.  Used by Octave for "q^x".
+@section @@quaternion/mrdivide
+@findex mrdivide
+
+ Matrix right division for quaternions.  Used by Octave for "q1 / q2".
+@section @@quaternion/mtimes
+@findex mtimes
+
+ Matrix multiplication of two quaternions. Used by Octave for "q1 * q2".
+@section @@quaternion/ne
+@findex ne
+
+ Not-equal-to operator for two quaternions.  Used by Octave for "q1 != q2".
+@section @@quaternion/plus
+@findex plus
+
+ Addition of two quaternions.  Used by Octave for "q1 + q2".
+@section @@quaternion/power
+@findex power
+
+ Power operator of quaternions.  Used by Octave for "q.^x".
+ Exponent x can be scalar or of appropriate size.
+@section @@quaternion/rdivide
+@findex rdivide
+
+ Element-wise right division for quaternions.  Used by Octave for "q1 ./ q2".
+@section @@quaternion/subsasgn
+@findex subsasgn
+
+ Subscripted assignment for quaternions.
+ Used by Octave for "q.key = value".
+
+ @strong{Subscripts}
+ @table @var
+ @item q.w
+ Assign real-valued array @var{val} to scalar part @var{w} of quaternion @var{q}.
+
+ @item q.x, q.y, q.z
+ Assign real-valued array @var{val} to component @var{x}, @var{y} or @var{z}
+ of the vector part of quaternion @var{q}.
+
+ @item q.s
+ Assign scalar part of quaternion @var{val} to scalar part of quaternion @var{q}.
+ The vector part of @var{q} is left untouched.
+
+ @item q.v
+ Assign vector part of quaternion @var{val} to vector part of quaternion @var{q}.
+ The scalar part of @var{q} is left untouched.
+
+ @item q(@dots{})
+ Assign @var{val} to certain elements of quaternion array @var{q}, e.g. @code{q(3, 2:end) = val}.
+ @end table
+@section @@quaternion/subsref
+@findex subsref
+
+ Subscripted reference for quaternions.  Used by Octave for "q.w".
+
+ @strong{Subscripts}
+ @table @var
+ @item q.w
+ Return scalar part @var{w} of quaternion @var{q} as a built-in type.
+
+ @item q.x, q.y, q.z
+ Return component @var{x}, @var{y} or @var{z} of the vector part of 
+ quaternion @var{q} as a built-in type.
+
+ @item q.s
+ Return scalar part of quaternion @var{q}.  The vector part of @var{q}
+ is set to zero.
+
+ @item q.v
+ Return vector part of quaternion @var{q}.  The scalar part of @var{q}
+ is set to zero.
+
+ @item q(@dots{})
+ Extract certain elements of quaternion array @var{q}, e.g. @code{q(3, 2:end)}.
+ @end table
+@section @@quaternion/times
+@findex times
+
+ Element-wise multiplication of two quaternions.  Used by Octave for "q1 .* q2".
+@section @@quaternion/transpose
+@findex transpose
+
+ Transpose of a quaternion.  Used by Octave for "q.'".
+@section @@quaternion/uminus
+@findex uminus
+
+ Unary minus of a quaternion.  Used by Octave for "-q".
+@section @@quaternion/uplus
+@findex uplus
+
+ Unary plus of a quaternion.  Used by Octave for "+q".
+@section @@quaternion/vertcat
+@findex vertcat
+
+ Vertical concatenation of quaternions.  Used by Octave for "[q1; q2]".

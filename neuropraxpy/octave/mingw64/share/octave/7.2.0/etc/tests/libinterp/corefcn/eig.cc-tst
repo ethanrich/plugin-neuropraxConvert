@@ -1,0 +1,248 @@
+## DO NOT EDIT!  Generated automatically from eig.cc by Make.
+%!assert (eig ([1, 2; 2, 1]), [-1; 3], sqrt (eps))
+%!test
+%! [v, d] = eig ([1, 2; 2, 1]);
+%! x = 1 / sqrt (2);
+%! assert (d, [-1, 0; 0, 3], sqrt (eps))
+%! assert (v, [-x, x; x, x], sqrt (eps))
+%!test
+%! [v, d, w] = eig ([1, 2; 2, 1]);
+%! x = 1 / sqrt (2);
+%! assert (w, [-x, x; x, x], sqrt (eps))
+%!test
+%! [v, d] = eig ([1, 2; 2, 1], "balance");
+%! x = 1 / sqrt (2);
+%! assert (d, [-1, 0; 0, 3], sqrt (eps))
+%! assert (v, [-x, x; x, x], sqrt (eps))
+%!test
+%! [v, d, w] = eig ([1, 2; 2, 1], "balance");
+%! x = 1 / sqrt (2);
+%! assert (w, [-x, x; x, x], sqrt (eps));
+%!assert (eig (single ([1, 2; 2, 1])), single ([-1; 3]), sqrt (eps ("single")))
+%!assert (eig (single ([1, 2; 2, 1]), "balance"),
+%!        single ([-1; 3]), sqrt (eps ("single")))
+%!test
+%! [v, d] = eig (single ([1, 2; 2, 1]));
+%! x = single (1 / sqrt (2));
+%! assert (d, single ([-1, 0; 0, 3]), sqrt (eps ("single")))
+%! assert (v, [-x, x; x, x], sqrt (eps ("single")))
+%!test
+%! [v, d, w] = eig (single ([1, 2; 2, 1]));
+%! x = single (1 / sqrt (2));
+%! assert (w, [-x, x; x, x], sqrt (eps ("single")))
+%!test
+%! [v, d] = eig (single ([1, 2; 2, 1]), "balance");
+%! x = single (1 / sqrt (2));
+%! assert (d, single ([-1, 0; 0, 3]), sqrt (eps ("single")));
+%! assert (v, [-x, x; x, x], sqrt (eps ("single")))
+%!test
+%! [v, d, w] = eig (single ([1, 2; 2, 1]), "balance");
+%! x = single (1 / sqrt (2));
+%! assert (w, [-x, x; x, x], sqrt (eps ("single")))
+%!function nonsym_chol_2_output (A, B, res = sqrt (eps))
+%!  [v, d] = eig (A, B);
+%!  [v2, d2] = eig (A, B, "qz");
+%!  [v3, d3] = eig (A, B, "chol");
+%!  assert (A * v(:, 1), d(1, 1) * B * v(:, 1), res)
+%!  assert (A * v(:, 2), d(2, 2) * B * v(:, 2), res)
+%!  assert (v, v2)
+%!  assert (v, v3)
+%!  assert (d, d2)
+%!  assert (d, d3)
+%!endfunction
+%!test nonsym_chol_2_output ([1, 2; -1, 1], [3, 3; 1, 2])
+%!test nonsym_chol_2_output ([1+3i, 2+3i; 3-8i, 8+3i], [8+i, 3+i; 4-9i, 3+i])
+%!test nonsym_chol_2_output ([1, 2; 3, 8], [8, 3; 4, 3])
+%!test nonsym_chol_2_output (single ([1, 2; -1, 1]),
+%!                           single ([3, 3; 1, 2]), sqrt (eps ("single")))
+%!test nonsym_chol_2_output (single ([1+3i, 2+3i; 3-8i, 8+3i]),
+%!                           single ([8+i, 3+i; 4-9i, 3+i]),
+%!                           sqrt (eps ("single")))
+%!function nonsym_chol_3_output (A, B, res = sqrt (eps))
+%!  [v, d, w] = eig (A, B);
+%!  [v2, d2, w2] = eig (A, B, "qz");
+%!  [v3, d3, w3] = eig (A, B, "chol");
+%!  wt = w';
+%!  assert (wt(1, :)* A, d(1, 1) * wt(1, :) * B, res)
+%!  assert (wt(2, :)* A, d(2, 2) * wt(2, :) * B, res)
+%!  assert (v, v2)
+%!  assert (v, v3)
+%!  assert (d, d2)
+%!  assert (d, d3)
+%!  assert (w, w2)
+%!  assert (w, w3)
+%!endfunction
+%!test nonsym_chol_3_output ([1, 2; -1, 1], [3, 3; 1, 2])
+%!test nonsym_chol_3_output ([1+3i, 2+3i; 3-8i, 8+3i], [8+i, 3+i; 4-9i, 3+i])
+%!test nonsym_chol_3_output ([1, 2; 3, 8], [8, 3; 4, 3])
+%!test nonsym_chol_3_output (single ([1, 2; -1, 1]),
+%!                           single ([3, 3; 1, 2]), sqrt (eps ("single")))
+%!test nonsym_chol_3_output (single ([1+3i, 2+3i; 3-8i, 8+3i]),
+%!                           single ([8+i, 3+i; 4-9i, 3+i]),
+%!                           sqrt (eps ("single")))
+%!function sym_chol_2_input (A, B, res = sqrt (eps))
+%!  [v, d] = eig (A, B);
+%!  [v2, d2] = eig (A, B, "chol");
+%!  assert (A * v(:, 1), d(1, 1) * B * v(:, 1), res)
+%!  assert (A * v(:, 2), d(2, 2) * B * v(:, 2), res)
+%!  assert (v, v2)
+%!  assert (d, d2)
+%!endfunction
+%!test sym_chol_2_input ([1, 2; 2, 1], [3, -2; -2, 3])
+%!test sym_chol_2_input ([1+3i, 2+i; 2-i, 1+3i], [5+9i, 2+i; 2-i, 5+9i])
+%!test sym_chol_2_input ([1, 1+i; 1-i, 1], [2, 0; 0, 2])
+%!test sym_chol_2_input (single ([1, 2; 2, 1]), single ([3, -2; -2, 3]),
+%!                       sqrt (eps ("single")))
+%!test sym_chol_2_input (single ([1+3i, 2+i; 2-i, 1+3i]),
+%!                       single ([5+9i, 2+i; 2-i, 5+9i]), sqrt (eps ("single")))
+%!test sym_chol_2_input (single ([1, 1+i; 1-i, 1]), single ([2, 0; 0, 2]),
+%!                       sqrt (eps ("single")))
+%!function sym_chol_3_input (A, B, res = sqrt (eps))
+%!  [v, d, w] = eig (A, B);
+%!  [v2, d2, w2] = eig (A, B, "chol");
+%!  wt = w';
+%!  assert (wt(1, :)* A, d(1, 1) * wt(1, :) * B, res)
+%!  assert (wt(2, :)* A, d(2, 2) * wt(2, :) * B, res)
+%!  assert (v, v2)
+%!  assert (d, d2)
+%!  assert (w, w2)
+%!endfunction
+%!test sym_chol_3_input ([1, 2; 2, 1], [3, -2; -2, 3])
+%!test sym_chol_3_input ([1+3i, 2+i; 2-i, 1+3i], [5+9i, 2+i; 2-i, 5+9i])
+%!test sym_chol_3_input ([1, 1+i; 1-i, 1], [2, 0; 0, 2])
+%!test sym_chol_3_input (single ([1, 2; 2, 1]), single ([3, -2; -2, 3]),
+%!                       sqrt (eps ("single")))
+%!test sym_chol_3_input (single ([1+3i, 2+i; 2-i, 1+3i]),
+%!                       single ([5+9i, 2+i; 2-i, 5+9i]), sqrt (eps ("single")))
+%!test sym_chol_3_input (single ([1, 1+i; 1-i, 1]), single ([2, 0; 0, 2]),
+%!                       sqrt (eps ("single")))
+%!test
+%! A = [3 -2 -0.9 0; -2 4 1 -0; -0 0 -1 0; -0.5 -0.5 0.1 1];
+%! [V1, D1] = eig (A);
+%! [V2, D2] = eig (A, "balance");
+%! [V3, D3] = eig (A, "nobalance");
+%! assert (V1, V2)
+%! assert (D1, D2)
+%! assert (isequal (V2, V3), false)
+%!function test_eig_args (args, options1, options2, testd = @() true)
+%!  [v, d, w] = eig (args{:}, options1{:});
+%!  [v2, d2, w2] = eig (args{:}, options2{:});
+%!  assert (testd (d))
+%!  assert (testd (d2))
+%!  assert (v, v2)
+%!  assert (d, d2)
+%!  assert (w, w2)
+%!endfunction
+%!function qz_chol_with_shapes (A, B)
+%!  for shapes = struct ("name", {"vector", "matrix"},
+%!                       "test", {@isvector, @isdiag})
+%!    test_eig_args ({A, B}, {"qz", shapes.name},
+%!                   {shapes.name, "qz"}, shapes.test);
+%!    test_eig_args ({A, B}, {"chol", shapes.name},
+%!                   {shapes.name, "chol"}, shapes.test);
+%!  endfor
+%!endfunction
+%!function balance_nobalance_with_shapes (A)
+%!  for shapes = struct ("name", {"vector", "matrix"},
+%!                       "test", {@isvector, @isdiag})
+%!    test_eig_args ({A}, {"balance", shapes.name},
+%!                   {shapes.name, "balance"}, shapes.test);
+%!    test_eig_args ({A}, {"nobalance", shapes.name},
+%!                   {shapes.name, "nobalance"}, shapes.test);
+%!  endfor
+%!endfunction
+%!function test_shapes (args)
+%!  d = eig (args{:});
+%!  assert (isvector (d))
+%!  d2 = eig (args{:}, "vector");
+%!  assert (isvector (d2))
+%!  [v, d3] = eig (args{:});
+%!  assert (isdiag (d3))
+%!  d4 = eig (args{:}, "matrix");
+%!  assert (isdiag (d4))
+%!  [v, d5, w] = eig (args{:});
+%!  assert (isdiag (d5))
+%!  d6 = eig (args{:}, "matrix");
+%!  assert (isdiag (d6))
+%!  assert (d, d2)
+%!  assert (d3, d4)
+%!  assert (d5, d6)
+%!  assert (d, diag (d3))
+%!  assert (d, diag (d5))
+%!endfunction
+%!function shapes_AEP (A)
+%!  test_shapes({A});
+%!endfunction
+%!function shapes_GEP (A, B)
+%!  test_shapes({A, B});
+%!endfunction
+%!test balance_nobalance_with_shapes ([1, 2; 2, 1]);
+%!test balance_nobalance_with_shapes (single ([1, 2; 2, 1]));
+%!test shapes_AEP ([1, 2; 2, 1]);
+%!test shapes_AEP (single ([1, 2; 2, 1]));
+%!test qz_chol_with_shapes ([1, 1+i; 1-i, 1], [2, 0; 0, 2]);
+%!test qz_chol_with_shapes ([1, 2; 3, 8], [8, 3; 4, 3]);
+%!test qz_chol_with_shapes ([1, 2; -1, 1], [3, 3; 1, 2]);
+%!test qz_chol_with_shapes (single ([1, 1+i; 1-i, 1]),  single ([2, 0; 0, 2]));
+%!test qz_chol_with_shapes (single ([1, 2; 3, 8]),  single ([8, 3; 4, 3]));
+%!test qz_chol_with_shapes (single ([1, 2; -1, 1]),  single ([3, 3; 1, 2]));
+%!test shapes_GEP ([1, 1+i; 1-i, 1], [2, 0; 0, 2]);
+%!test shapes_GEP ([1, 2; 3, 8], [8, 3; 4, 3]);
+%!test shapes_GEP ([1, 2; -1, 1], [3, 3; 1, 2]);
+%!test shapes_GEP (single ([1, 1+i; 1-i, 1]),  single ([2, 0; 0, 2]));
+%!test shapes_GEP (single ([1, 2; 3, 8]),  single ([8, 3; 4, 3]));
+%!test shapes_GEP (single ([1, 2; -1, 1]),  single ([3, 3; 1, 2]));
+%!function chol_qz_accuracy (A, B, is_qz_accurate, is_chol_accurate)
+%!  [V1, D1] = eig (A, B, 'qz');
+%!  [V2, D2] = eig (A, B); #default is chol
+%!  assert (isequal (A*V1, A*V1*D1), is_qz_accurate)
+%!  assert (isequal (A*V2, A*V2*D2), is_chol_accurate)
+%!endfunction
+%!test
+%! minij_100 = gallery ('minij', 100);
+%! chol_qz_accuracy (minij_100, minij_100, false, true);
+%! moler_100 = gallery ('moler', 100);
+%! chol_qz_accuracy (moler_100, moler_100, false, true);
+%! A = diag([1e-16, 1e-15]);
+%! chol_qz_accuracy (A, A, true, false);
+%!error eig ()
+%!error eig (false)
+%!error eig ([1, 2; 3, 4], [4, 3; 2, 1], 1)
+%!error <EIG requires same size matrices>
+%!  eig ([1, 2; 3, 4], 2)
+%!error <must be a square matrix>
+%! eig ([1, 2; 3, 4; 5, 6])
+%!error <wrong type argument>
+%!  eig ("abcd")
+%!error <invalid option "abcd">
+%!  eig ([1 2 ; 2 3], "abcd")
+%!error <invalid "chol" option for algebraic eigenvalue problem>
+%!  eig ([1 2 ; 2 3], "chol")
+%!error <invalid "qz" option for algebraic eigenvalue problem>
+%!  eig ([1 2 ; 2 3], "qz")
+%!error <wrong type argument>
+%!  eig (false, [1 2 ; 2 3])
+%!error <invalid option "abcd">
+%!  eig ([1 2 ; 2 3], [1 2 ; 2 3], "abcd")
+%!error <invalid "qz" option for algebraic eigenvalue problem>
+%!  eig ([1 2 ; 2 3], "balance", "qz")
+%!error <invalid option "abcd">
+%!  eig ([1 2 ; 2 3], [1 2 ; 2 3], "vector", "abcd")
+%!error <invalid option "abcd">
+%!  eig ([1 2 ; 2 3], "balance", "matrix", "abcd")
+%!error <"balance" and "nobalance" options are mutually exclusive>
+%!  eig ([1 2 ; 2 3], "balance", "nobalance")
+%!error <"balance" and "nobalance" options are mutually exclusive>
+%!  eig ([1 2 ; 2 3], "nobalance", "balance")
+%!error <"vector" and "matrix" options are mutually exclusive>
+%!  eig ([1 2 ; 2 3], "matrix", "vector")
+%!error <"vector" and "matrix" options are mutually exclusive>
+%!  eig ([1 2 ; 2 3], "vector", "matrix")
+%!error <"vector" and "matrix" options are mutually exclusive>
+%!  eig ([1 2 ; 2 3], [1 2 ; 2 3], "matrix", "vector")
+%!error <"vector" and "matrix" options are mutually exclusive>
+%!  eig ([1 2 ; 2 3], [1 2 ; 2 3], "vector", "matrix")
+%!error <wrong type argument>
+%!  eig ([1 2 ; 2 3], [1 2 ; 2 3], false)
+%!error <wrong type argument>
+%!  eig ([1 2 ; 2 3], [1 2 ; 2 3], [1 2 ; 2 3])

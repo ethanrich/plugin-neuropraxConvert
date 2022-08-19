@@ -1,0 +1,17 @@
+## DO NOT EDIT! Generated from col2num.cc
+%!test
+%! assert (col2num ("a"), 1, 1e-16);
+%!test
+%! assert (col2num ("z"), 26, 1e-16);
+%!test
+%! assert (col2num ("aa"), 27, 1e-16);
+%!test
+%!test
+%! assert (col2num ("A"), 1, 1e-16);
+%!test
+%!test
+%!test
+%!test
+%!test
+%!test
+%!test

@@ -1,0 +1,583 @@
+@c ---------------------------------------------------
+@node  Windows Utilities
+@section  Windows Utilities
+@cindex  Windows Utilities
+@c Windows Utilities clipboard
+@c -----------------------------------------
+@subsection  clipboard
+@cindex  clipboard
+@deftypefn {Loadable Function} clipboard (@var{'copy'}, @var{data})
+@deftypefnx {Loadable Function} @var{txt} = clipboard (@var{'paste'})
+
+Insert or get data from the clipboard.
+
+@var{'copy'} or @var{'paste'} is the required operation to perform.
+where 'copy' will copy data to the clipboard, and paste will paste data from
+the clipboard to a variable.
+
+@var{data} is the data to copy to the clipboard.
+
+@var{txt} is the text from the clipboard or an empty string it it can  not convert to text..
+
+Examples:
+
+Copy a string to the clipboard:
+@example
+clipboard('copy', 'hello world');
+@end example
+
+Get a string from the clipboard:
+@example
+txt = clipboard('paste');
+@end example
+
+@end deftypefn
+@c Windows Utilities grab
+@c -----------------------------------------
+@subsection  grab
+@cindex  grab
+@deftypefn {Loadable Function} {[@var{x},@var{y}] = } grab (@var{axis})
+
+Grab positions of landmarks on the screen.
+
+@var{x} is the x coordinates of the points.
+
+@var{y} is the y coordinates of the points.
+
+@var{axis} (optional) if specified then the first 2 clicks
+must be on the appropriate axes. x and y (or just x
+if only 2 points specified ) will then be normalised.
+
+for example: 
+@example
+x=grab([1 10]) 
+@end example
+
+the first two clicks should correspond to x=1 and x=10 
+subsequent clicks will then be normalized to graph units.  
+
+for example:
+@example
+[x,y]=grab; 
+@end example
+
+gives x and y in screen pixel units (upper left = 0,0 ) 
+
+Select points by positioning the cursor over the points
+and clicking <SPACE>. 'q' or <ESC> quits
+@end deftypefn
+@c Windows Utilities win32_DeleteRegistry
+@c -----------------------------------------
+@subsection  win32_DeleteRegistry
+@cindex  win32_DeleteRegistry
+@deftypefn {Loadable Function} {@var{code} =} win32_DeleteRegistry (@var{key}, @var{subkey}, @var{valuename})
+
+Delete a value from the Windows registry.
+
+Example:
+@example
+key='test\\\\temp';
+# create key
+win32_WriteRegistry('HKLM',key,'test_value', 0)
+# delete it
+win32_DeleteRegistry('HKLM',key,'test_value')
+@end example
+
+key must be one of the following strings:
+@table @asis
+@item HKCR
+HKEY_CLASSES_ROOT
+@item HKCU
+HKEY_CURRENT_USER
+@item HKLM
+HKEY_LOCAL_MACHINE
+@item HKU
+HKEY_USERS
+@end table
+
+@var{subkey} is the subkey to the registry value.
+
+@var{valuename} is the name of the value to delete from the registry.
+
+@var{code} is the success code. Values correspond to the
+codes in the winerror.h header file. The code of 0 is
+success, while other codes indicate failure
+@end deftypefn
+@c Windows Utilities win32_MessageBox
+@c -----------------------------------------
+@subsection  win32_MessageBox
+@cindex  win32_MessageBox
+@deftypefn {Loadable Function} {@var{rv} =} win32_MessageBox (@var{title}, @var{text})
+@deftypefnx {Loadable Function} {@var{rv} =} win32_MessageBox (@var{title}, @var{text}, @var{MboxType})
+
+Display a message box using the win32 API.
+
+@var{title} MessageBox title string
+
+@var{text} MessageBox text string
+
+@var{MBoxType} can be an integer or a string. 
+
+For integer values, consult <windows.h>
+
+The following string values are recognized:
+@itemize
+@item @code{MB_OK}
+@item @code{MB_OKCANCEL}
+@item @code{MB_ABORTRETRYIGNORE}
+@item @code{MB_YESNOCANCEL}
+@item @code{MB_YESNO}
+@item @code{MB_RETRYCANCEL}
+@end itemize
+Default is MB_OK
+
+Returns a value @var{rv}: 
+@table @asis
+@item 1
+User Clicked OK
+@item 2
+User Clicked Cancel
+@item 3
+User Clicked Abort
+i@item 4
+User Clicked Retry
+@item 5
+User Clicked Ignore
+@item 6 
+User Clicked Yes
+@item 7
+User Clicked No
+@item 10 
+User Clicked Try Again
+@item 11
+User Clicked Continue
+@end table
+@end deftypefn
+@c Windows Utilities win32_ReadRegistry
+@c -----------------------------------------
+@subsection  win32_ReadRegistry
+@cindex  win32_ReadRegistry
+@deftypefn {Loadable Function} {[ @var{rv}, @var{code} ] =} win32_ReadRegistry (@var{key}, @var{subkey}, @var{value})
+
+Read a value from the Windows registry.
+
+Example:
+@example
+key='SOFTWARE\\\\Cygnus Solutions\\\\Cygwin\\\\mounts v2';
+win32_ReadRegistry('HKLM',key,'cygdrive prefix')
+@end example
+
+key must be one of the following strings:
+@table @asis
+@item HKCR
+HKEY_CLASSES_ROOT
+@item HKCU
+HKEY_CURRENT_USER
+@item HKLM
+HKEY_LOCAL_MACHINE
+@item HKU
+HKEY_USERS
+@end table
+
+@var{rv} is an octave string of the returned bytes.
+This is a natural format for REG_SZ data; however, 
+if the registry data was in another format, REG_DWORD
+then the calling program will need to process them
+
+@var{code} is the success code. Values correspond to the
+codes in the winerror.h header file. The code of 0 is
+success, while other codes indicate failure
+In the case of failure, 'rv' will be empty
+@end deftypefn
+@c Windows Utilities win32_RegEnumKey
+@c -----------------------------------------
+@subsection  win32_RegEnumKey
+@cindex  win32_RegEnumKey
+@deftypefn {Loadable Function} {[ @var{rv}, @var{code} ] =} win32_RegEnumKey (@var{key}, @var{subkey})
+
+Read the keys of a given subkey from the Windows registry.
+
+Example:
+@example
+key='SOFTWARE\\\\Cygnus Solutions\\\\Cygwin\\\\mounts v2';
+win32_RegEnumKey('HKLM',key)
+@end example
+
+key must be one of the following strings:
+@table @asis
+@item HKCR
+HKEY_CLASSES_ROOT
+@item HKCU
+HKEY_CURRENT_USER
+@item HKLM
+HKEY_LOCAL_MACHINE
+@item HKU
+HKEY_USERS
+@end table
+
+@var{rv} is an array of value strings for the name of keys
+for a given key and subkey.
+
+@var{code} is the success code. Values correspond to the
+codes in the winerror.h header file. The code of 0 is
+success, while other codes indicate failure
+In the case of failure, 'rv' will be empty
+
+@xseealso{winqueryreg}
+@end deftypefn
+@c Windows Utilities win32_RegEnumValue
+@c -----------------------------------------
+@subsection  win32_RegEnumValue
+@cindex  win32_RegEnumValue
+@deftypefn {Loadable Function} {[ @var{rv}, @var{code} ] =} win32_RegEnumValue (@var{key}, @var{subkey})
+
+Read value names from from the Windows registry.
+
+Example:
+@example
+key='SOFTWARE\\\\Cygnus Solutions\\\\Cygwin\\\\mounts v2';
+win32_RegEnumValue('HKLM',key)
+@end example
+
+key must be one of the following strings:
+@table @asis
+@item HKCR
+HKEY_CLASSES_ROOT
+@item HKCU
+HKEY_CURRENT_USER
+@item HKLM
+HKEY_LOCAL_MACHINE
+@item HKU
+HKEY_USERS
+@end table
+
+@var{rv} is an array of value strings for the name of values
+for a given key and subkey.
+
+@var{code} is the success code. Values correspond to the
+codes in the winerror.h header file. The code of 0 is
+success, while other codes indicate failure
+In the case of failure, 'rv' will be empty
+
+@xseealso{winqueryreg}
+@end deftypefn
+@c Windows Utilities win32_WriteRegistry
+@c -----------------------------------------
+@subsection  win32_WriteRegistry
+@cindex  win32_WriteRegistry
+@deftypefn {Loadable Function} {@var{code} =} win32_WriteRegistry (@var{key}, @var{subkey}, @var{valuename}, @var{value})
+
+Write a value to the Windows registry.
+
+Example:
+@example
+key='test\\\\temp';
+win32_WriteRegistry('HKLM',key,'test_value', 0)
+@end example
+
+key must be one of the following strings:
+@table @asis
+@item HKCR
+HKEY_CLASSES_ROOT
+@item HKCU
+HKEY_CURRENT_USER
+@item HKLM
+HKEY_LOCAL_MACHINE
+@item HKU
+HKEY_USERS
+@end table
+
+@var{subkey} is the subkey to the registry value.
+
+@var{valuename} is the name of the value to write to the registry.
+
+@var{value} is the value to write. It must be a a string or an integer value.
+
+@var{code} is the success code. Values correspond to the
+codes in the winerror.h header file. The code of 0 is
+success, while other codes indicate failure
+@end deftypefn
+@c Windows Utilities win32api
+@c -----------------------------------------
+@subsection  win32api
+@cindex  win32api
+@deftypefn {Loadable Function} {@var{rv} =} win32_MessageBox (@var{title}, @var{text})
+@deftypefnx {Loadable Function} {@var{rv} =} win32_MessageBox (@var{title}, @var{text}, @var{MboxType})
+
+Display a message box using the win32 API.
+
+@var{title} MessageBox title string
+
+@var{text} MessageBox text string
+
+@var{MBoxType} can be an integer or a string. 
+
+For integer values, consult <windows.h>
+
+The following string values are recognized:
+@itemize
+@item @code{MB_OK}
+@item @code{MB_OKCANCEL}
+@item @code{MB_ABORTRETRYIGNORE}
+@item @code{MB_YESNOCANCEL}
+@item @code{MB_YESNO}
+@item @code{MB_RETRYCANCEL}
+@end itemize
+Default is MB_OK
+
+Returns a value @var{rv}: 
+@table @asis
+@item 1
+User Clicked OK
+@item 2
+User Clicked Cancel
+@item 3
+User Clicked Abort
+i@item 4
+User Clicked Retry
+@item 5
+User Clicked Ignore
+@item 6 
+User Clicked Yes
+@item 7
+User Clicked No
+@item 10 
+User Clicked Try Again
+@item 11
+User Clicked Continue
+@end table
+@end deftypefn
+@c Windows Utilities winopen
+@c -----------------------------------------
+@subsection  winopen
+@cindex  winopen
+@deftypefn {Loadable Function} winopen (@var{name})
+
+Open the file or directory @var{name} in the windows registered
+application for the file, using shell open command.
+
+Examples:
+
+Open file document.docx in the docx viewer:
+@example
+winopen ("document.docx");
+@end example
+
+Open the current directory in explorer:
+@example
+winopen (pwd);
+@end example
+
+
+@end deftypefn
+@c ---------------------------------------------------
+@node  COM Interface
+@section  COM Interface
+@cindex  COM Interface
+@c COM Interface @octave_com_object/delete
+@c -----------------------------------------
+@subsection  @@octave_com_object/delete
+@cindex  delete
+ @deftypefn  {} {} delete (@var{obj})
+ A delete override for octave_com_object objects.
+
+ Release interfaces from COM object @var{obj} and then delete the COM server.
+
+ @xseealso{com_delete delete}
+ @end deftypefn
+@c COM Interface @octave_com_object/get
+@c -----------------------------------------
+@subsection  @@octave_com_object/get
+@cindex  get
+ @deftypefn  {} {@var{S} =} get (@var{obj})
+ @deftypefnx  {} {@var{S} =} get (@var{obj}, @var{propertynames})
+ A get override for octave_com_object objects.
+
+ When specifying just @var{obj}, the function will return a list of property names in @var{S}.
+ When also providing @var{propertynames}, the function return the values of the properties.
+
+ @xseealso{com_get, get}
+ @end deftypefn
+@c COM Interface @octave_com_object/invoke
+@c -----------------------------------------
+@subsection  @@octave_com_object/invoke
+@cindex  invoke
+ @deftypefn  {} {} invoke (@var{obj})
+ @deftypefnx  {} {@var{S} =} invoke (@var{obj}, @var{methodname})
+ @deftypefnx  {} {@var{S} =} invoke (@var{obj}, @var{methodname}, @var{arg1}, @dots{}, @var{argN})
+ Invoke a method on a COM object.
+
+ When called with just the single @var{obj}, invoke displays the methods available to the object.
+ When called with @var{methodname}, invoke will invoke the method with optional args and return
+ the result in @var{S}.
+
+ @xseealso{com_invoke, methods}
+ @end deftypefn
+@c COM Interface @octave_com_object/methods
+@c -----------------------------------------
+@subsection  @@octave_com_object/methods
+@cindex  methods
+ @deftypefn  {} {} methods (@var{obj})
+ @deftypefnx {} {@var{mtds} =} methods (@var{obj})
+ List the names of the public methods for the object octave_com_object
+ @var{obj}.
+
+ When called with no output arguments, @code{methods} prints the list of
+ method names to the screen.  Otherwise, the output argument @var{mtds}
+ contains the list in a cell array of strings.
+
+ @xseealso{methods}
+ @end deftypefn
+@c COM Interface @octave_com_object/release
+@c -----------------------------------------
+@subsection  @@octave_com_object/release
+@cindex  release
+ @deftypefn  {} {} release (@var{obj})
+ Release the COM object @var{obj} and all of its resources.
+
+ @xseealso{com_release, delete}
+ @end deftypefn
+@c COM Interface @octave_com_object/set
+@c -----------------------------------------
+@subsection  @@octave_com_object/set
+@cindex  set
+ @deftypefn  {} {@var{S} =} set (@var{obj}, @var{propname}, @var{value})
+ A set override for octave_com_object objects.
+
+ Call set function on COM object @var{obj} to set property @var{propname} to value @var{value}. Returns any result in @var{S}.
+
+ @xseealso{com_set}
+ @end deftypefn
+@c COM Interface actxserver
+@c -----------------------------------------
+@subsection  actxserver
+@cindex  actxserver
+@deftypefn {Loadable Function} {@var{h} =} actxserver (@var{progid})
+
+Create a COM server using the @var{progid} identifier.
+
+Returns @var{h}, a handle to the default interface of the COM server.
+
+Example:
+
+@example
+@group
+# create a COM server running Microsoft Excel
+app = actxserver ('Excel.Application');
+# free the object
+destroy (app); 
+@end group
+@end example
+@end deftypefn
+@c COM Interface com_atexit
+@c -----------------------------------------
+@subsection  com_atexit
+@cindex  com_atexit
+@deftypefn {Loadable Function} {} com_atexit ()
+Close down all GNU Octave managed COM handles.
+
+Called during pkg unload.
+@end deftypefn
+@c COM Interface com_delete
+@c -----------------------------------------
+@subsection  com_delete
+@cindex  com_delete
+@deftypefn {Loadable Function} { } com_delete (@var{obj})
+Release interfaces from COM object @var{obj} and then delete the COM server
+
+@end deftypefn
+@c COM Interface com_get
+@c -----------------------------------------
+@subsection  com_get
+@cindex  com_get
+@deftypefn {Loadable Function} { @var{S} = } com_get (@var{obj})
+Call get function on COM object @var{obj}. Returns any result in @var{S}
+
+@end deftypefn
+@c COM Interface com_invoke
+@c -----------------------------------------
+@subsection  com_invoke
+@cindex  com_invoke
+@deftypefn {Loadable Function} { @var{result} = } com_invoke (@var{obj})
+@deftypefnx {Loadable Function} { @var{result} = } com_invoke (@var{obj}, @var{method} )
+
+Call invoke on @var{obj} to run a method, or obtain a list of all methods.
+
+@code{com_invoke (@var{obj})} returns a list of all methods available for object @var{obj} in @var{result}.
+
+@code{com_invoke (@var{obj}, @var{method} )} invokes @var{method} method for object @var{obj} and returns result @var{result}.
+
+@end deftypefn
+@c COM Interface com_release
+@c -----------------------------------------
+@subsection  com_release
+@cindex  com_release
+@deftypefn {Loadable Function} { } com_release (@var{obj})
+Release interfaces from COM object @var{obj}
+
+@end deftypefn
+@c COM Interface com_set
+@c -----------------------------------------
+@subsection  com_set
+@cindex  com_set
+@deftypefn {Loadable Function} { @var{S} = } com_set (@var{obj}, @var{propname}, @var{value})
+Call set function on COM object @var{obj} to set property @var{propname} to value @var{value}. Returns any result in @var{S}
+
+@end deftypefn
+@c COM Interface iscom
+@c -----------------------------------------
+@subsection  iscom
+@cindex  iscom
+ @deftypefn  {Function File} {@var{tf} = } iscom (@var{h})
+
+ Determine whether @var{h} is a COM object.
+
+ if @var{h} is a COM object, returns true, otherwise returns false.
+
+ @xseealso{actxserver}
+ @end deftypefn
+@c ---------------------------------------------------
+@node  Features
+@section  Features
+@cindex  Features
+@c Features windows_feature
+@c -----------------------------------------
+@subsection  windows_feature
+@cindex  windows_feature
+@deftypefn {Loadable Function} {} windows_feature (@var{name})
+@deftypefnx {Loadable Function} {} windows_feature (@var{name}, @var{value})
+Set or get a feature value.
+
+@var{name} - name of feature to get or set.@*
+@var{value} - value to set for feature.@*
+@end deftypefn
+@c ---------------------------------------------------
+@node  Examples
+@section  Examples
+@cindex  Examples
+@c Examples mat2xls
+@c -----------------------------------------
+@subsection  mat2xls
+@cindex  mat2xls
+ @deftypefn {Function File} {} mat2xls (@var{obj},@var{filename})
+ Save @var{obj} as an Excel sheet into the file @var{filename}. The
+ object @var{obj} must be either a cell matrix or a real matrix, that
+ is a 2-dimensional object. All elements of the matrix are converted
+ to Excel cells and put into the first worksheet, starting at cell A1.
+ Supported types are real values and strings.
+
+ If @var{filename} does not contain any directory, the file is saved
+ in the current directory.
+
+ This function is intended to demonstrate the use of the COM interface
+ within octave. You need Excel installed on your computer to make this
+ function work properly.
+
+ Examples:
+
+ @example
+   mat2xls (rand (10, 10), 'test1.xls');
+   mat2xls (@{'This', 'is', 'a', 'string'@}, 'test2.xls');
+ @end example
+
+ @end deftypefn

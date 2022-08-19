@@ -1,0 +1,6 @@
+#!/bin/sh
+# SAVE2SCP converts short-term ECG data into
+# the EN1094 SCP-ECG format.
+#
+### conversion into SCP-ECG (EN1064) standard
+save2gdf -f=SCP $@

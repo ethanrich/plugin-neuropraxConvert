@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>residmin_stat (optim_doc)</title>
+
+<meta name="description" content="residmin_stat (optim_doc)">
+<meta name="keywords" content="residmin_stat (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Residual-optimization.html#Residual-optimization" rel="up" title="Residual optimization">
+<link href="curvefit_005fstat.html#curvefit_005fstat" rel="next" title="curvefit_stat">
+<link href="lm_005fsvd_005ffeasible.html#lm_005fsvd_005ffeasible" rel="prev" title="lm_svd_feasible">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="residmin_005fstat"></a>
+<div class="header">
+<p>
+Next: <a href="curvefit_005fstat.html#curvefit_005fstat" accesskey="n" rel="next">curvefit_stat</a>, Previous: <a href="lm_005fsvd_005ffeasible.html#lm_005fsvd_005ffeasible" accesskey="p" rel="prev">lm_svd_feasible</a>, Up: <a href="Residual-optimization.html#Residual-optimization" accesskey="u" rel="up">Residual optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Statistics-for-residual-minimization"></a>
+<h3 class="section">2.4 Statistics for residual minimization</h3>
+<a name="index-residmin_005fstat-1"></a>
+
+<a name="XREFresidmin_005fstat"></a><dl>
+<dt><a name="index-residmin_005fstat"></a>Function File: <em><var>info</var> =</em> <strong>residmin_stat</strong> <em>(<var>f</var>, <var>p</var>, <var>settings</var>)</em></dt>
+<dd><p>Frontend for computation of statistics for a residual-based
+minimization.
+</p>
+<p><var>settings</var> is a structure whose fields can be set by
+<code>optimset</code>. With <var>settings</var> the computation of certain
+statistics is requested by setting the fields
+<code>ret_&lt;name_of_statistic&gt;</code> to <code>true</code>. The respective
+statistics will be returned in a structure as fields with name
+<code>&lt;name_of_statistic&gt;</code>. Depending on the requested statistic and
+on the additional information provided in <var>settings</var>, <var>f</var> and
+<var>p</var> may be empty. Otherwise, <var>f</var> is the model function of an
+optimization (the interface of <var>f</var> is described e.g. in
+<code>nonlin_residmin</code>, please see there), and <var>p</var> is a real
+column vector with parameters resulting from the same optimization.
+</p>
+<p>Currently, the following statistics (or general information) can be
+requested (the <code>ret_</code> is prepended so that the option name is
+complete):
+</p>
+<p><code>ret_dfdp</code>: Jacobian of model function with respect to
+parameters.
+</p>
+<p><code>ret_covd</code>: Covariance matrix of data (typically guessed by
+applying a factor to the covariance matrix of the residuals).
+</p>
+<p><code>ret_covp</code>: Covariance matrix of final parameters.
+</p>
+<p><code>ret_corp</code>: Correlation matrix of final parameters.
+</p>
+
+
+<p><strong>See also:</strong> <a href="curvefit_005fstat.html#XREFcurvefit_005fstat">curvefit_stat</a>.
+</p></dd></dl>
+
+
+<a name="Further-settings"></a>
+<h4 class="subheading">Further settings</h4>
+
+<p>The fields of the <var>settings</var> structure can be set with
+<a href="https://www.gnu.org/software/octave/doc/interpreter/XREFoptimset.html#XREFoptimset">(octave)optimset</a>.
+</p>
+<p>For settings common to all frontends
+see
+<a href="Common-frontend-options.html#Common-frontend-options">Common frontend options</a>.
+</p>
+<a name="Additional-settings_003a-2"></a>
+<h4 class="subsubheading">Additional settings:</h4>
+
+<dl compact="compact">
+<dt><code>objf_type</code></dt>
+<dd><p>Type of objective function of the optimization; must be specified in
+many cases. This determines which backends to use. Currently, there are
+only backends for the type &quot;wls&quot; (weighted least squares).
+</p></dd>
+<dt><code>residuals</code></dt>
+<dt><code>covd</code></dt>
+<dd><p>Optional information on the result of optimization, residuals and
+covariance matrix of data, respectively.
+</p></dd>
+<dt><code>weights</code></dt>
+<dd><p>Array of weights applied to the residuals in the previous
+optimization. Dimensions must match those of the residuals.
+</p></dd>
+<dt><code>dfdp</code></dt>
+<dd><p>Can be set in the same way and has the same default as in
+<code>nonlin_residmin</code> (
+see
+<a href="nonlin_005fresidmin.html#nonlin_005fresidmin">nonlin_residmin</a>), but alternatively may
+already contain the computed Jacobian of the model function at the final
+parameters in matrix- or structure-form.
+</p></dd>
+<dt><code>complex_step_derivative_f</code></dt>
+<dd><p>Estimate Jacobian of model function with complex step derivative
+approximation. Use only if you know that your model function is suitable
+for this. No user function for the Jacobian (<code>dfdp</code>) must be
+specified.
+</p></dd>
+</dl>
+
+<a name="Structure-based-parameter-handling-2"></a>
+<h4 class="subheading">Structure based parameter handling</h4>
+
+<p>Please
+see
+<a href="Parameter-structures.html#Parameter-structures">Parameter structures</a>.
+</p>
+<a name="Backend-information-2"></a>
+<h4 class="subheading">Backend information</h4>
+
+<p>Please
+see
+<a href="Residual-optimization.html#Residual-optimization">Residual optimization</a> and choose backend from menu under
+&lsquo;Statistics backends&rsquo;.
+</p>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="curvefit_005fstat.html#curvefit_005fstat" accesskey="n" rel="next">curvefit_stat</a>, Previous: <a href="lm_005fsvd_005ffeasible.html#lm_005fsvd_005ffeasible" accesskey="p" rel="prev">lm_svd_feasible</a>, Up: <a href="Residual-optimization.html#Residual-optimization" accesskey="u" rel="up">Residual optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

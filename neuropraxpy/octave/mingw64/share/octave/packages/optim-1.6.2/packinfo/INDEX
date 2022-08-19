@@ -1,0 +1,53 @@
+optimization >> Optimization
+Optimization
+ nelder_mead_min
+ nrm
+ line_min
+ powell
+ adsmax mdsmax
+ bfgsmin battery
+ cg_min
+ de_min
+ nonlin_min
+ brent_line_min
+Data fitting
+ lsqlin
+ pronyfit
+ wpolyfit
+ leasqr
+ nonlin_residmin
+ nonlin_curvefit
+ LinearRegression
+ polyfitinf
+ wsolve
+Optimization statistics
+ residmin_stat
+ curvefit_stat
+ polyconf
+Zero finding
+ vfzero
+Compatibility
+ quadprog
+ linprog
+ lsqnonlin
+ lsqcurvefit
+ nlinfit
+ fmincon
+Numerical derivatives
+ dfdp dcdp dfpdp dfxpdp cdiff deriv
+ numgradient numhessian jacobs
+Pivoting
+ cpiv_bard
+ gjp
+Tests
+ test_min_1 test_min_2 test_min_3 test_min_4
+ test_nelder_mead_min_1 test_nelder_mead_min_2
+ poly_2_ex
+ optim_problems
+ wrap_f_dfdp
+ test_wpolyfit
+Examples
+ bfgsmin_example
+ rosenbrock
+Documentation
+ optim_doc

@@ -1,0 +1,11 @@
+## DO NOT EDIT! Generated from dicominfo.cpp
+%!shared testfile
+%! testfile = file_in_loadpath("imdata/simpleImageWithIcon.dcm");
+%!fail("dicominfo")
+%!fail("dicominfo(1)")
+%!test
+%! s=dicominfo(testfile);
+%! assert(s.PatientName,"GDCM^Patient");
+%!test
+%! s=dicominfo(testfile);
+%! assert(s.IconImageSequence.Item_1.PhotometricInterpretation,"MONOCHROME2 ");

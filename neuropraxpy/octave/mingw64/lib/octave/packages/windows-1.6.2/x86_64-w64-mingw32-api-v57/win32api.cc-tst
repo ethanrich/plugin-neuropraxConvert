@@ -1,0 +1,47 @@
+## DO NOT EDIT! Generated from win32api.cc
+%!testif HAVE_WINDOWS_H
+%! fail ("win32_ReadRegistry('X','Y','Z')", "invalid reg key");
+%! fail ("win32_ReadRegistry('HKLM','Y','Z')", "error reading registry value");
+%!testif HAVE_WINDOWS_H
+%! val = win32_ReadRegistry('HKLM', 'SOFTWARE\Microsoft\Windows NT\CurrentVersion', "CurrentVersion");
+%! assert (ischar(val));
+%! assert (length(val) > 0);
+%!testif HAVE_WINDOWS_H
+%! fail ("win32_RegEnumValue('X','Y')", "invalid reg key");
+%! fail ("win32_RegEnumValue('HKLM','Y')", "error reading registry values");
+%!testif HAVE_WINDOWS_H
+%! val = win32_RegEnumValue('HKLM', 'SOFTWARE\Microsoft\Windows NT\CurrentVersion');
+%! assert (iscellstr(val));
+%! qval = winqueryreg("name", 'HKLM', 'SOFTWARE\Microsoft\Windows NT\CurrentVersion');
+%! assert (val, qval);
+%!testif HAVE_WINDOWS_H
+%! fail ("win32_RegEnumKey('X','Y')", "invalid reg key");
+%! fail ("win32_RegEnumKey('HKLM','Y')", "error reading registry values");
+%!testif HAVE_WINDOWS_H
+%! val = win32_RegEnumKey('HKLM', 'SOFTWARE\Microsoft\Windows NT\CurrentVersion');
+%! assert (iscellstr(val));
+%!testif HAVE_WINDOWS_H
+%! fail ("win32_WriteRegistry('HKCX','Environment','test_value', 'x')", "invalid reg key");
+%! err = win32_WriteRegistry('HKCU','Environment','test_value', 0);
+%! assert(err, 0);
+%! qval = winqueryreg('HKCU', 'Environment', 'test_value');
+%! assert(qval, int32(0));
+%! err = win32_WriteRegistry('HKCU','Environment','test_value', 1);
+%! qval = winqueryreg('HKCU', 'Environment', 'test_value');
+%! assert(qval, int32(1));
+%! err = win32_WriteRegistry('HKCU','Environment','test_value', "string");
+%! qval = winqueryreg('HKCU', 'Environment', 'test_value');
+%! assert(strcmp(qval, "string"));
+%! err = win32_WriteRegistry('HKCU','Environment\\\\Notvalid','test_value', "string");
+%! assert(err != 0);
+%! fail ("win32_WriteRegistry('HKCU','Environment','test_value', {})", "unsupported type to registry conversion");
+%!testif HAVE_WINDOWS_H
+%! err = win32_WriteRegistry('HKCU','Environment','test_value', 0);
+%! assert(err, 0);
+%! val = winqueryreg('HKCU', 'Environment', 'test_value');
+%! assert(val, int32(0));
+%! err = win32_DeleteRegistry('HKCU','Environment','test_value');
+%! assert(err, 0);
+%! err = win32_DeleteRegistry('HKCU','Environment','test_value');
+%! assert(err != 0);
+%! fail ("winqueryreg('HKCU','Environment', test_value')");

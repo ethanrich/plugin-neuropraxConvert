@@ -1,0 +1,113 @@
+database 2.4.4
+--------------
+
+ ** Build fixes. Builds with Octave 5.1.
+
+ ** Works now also with a postgresql server owned by a different user
+    than postgres.
+
+datatase 2.4.3
+--------------
+
+ ** Build fixes. Builds with Octave 4.4.
+
+datatase 2.4.2
+--------------
+
+ ** Some build fixes. Builds with Octave 4.2.
+
+ ** Some documentation fixes. Added installation hints to documentation.
+
+datatase 2.4.1
+--------------
+
+ ** Fixed data corruption bug in var2bytea.
+
+database 2.4.0
+--------------
+
+ ** Added general package documentation.
+
+ ** New functions var2bytea and bytea2var, enabling storing Octave
+    values of arbitrary type in a database.
+
+ ** Compatible with Octaves new exception-based error
+    handling. Compatibility with old error handling up to Octave-4.0
+    is retained.
+
+ ** Fixed racing condition in pq_lo_view.
+
+ ** Fix: remove autoloaded function at package unload.
+
+database 2.3.2
+--------------
+
+ ** Fix a potential source of internal bugs.
+
+ ** Incompatible versions of postgresql (< 8.3) are rejected at
+    configure time.
+
+database 2.3.1
+--------------
+
+ ** Fix for compilation for mxe-octave.
+
+database 2.3.0
+--------------
+
+ ** New function pq_lo_view.
+
+database 2.2.0
+--------------
+
+ ** pq_exec_params: For queries, information on postgresql data types
+    of columns is also returned.
+
+ ** Converters for all base types except text search types implemented.
+
+ ** New function pq_conninfo.
+
+ ** Fix for includes on Apple.
+
+database 2.1.1:
+---------------
+
+ ** Account for system-dependence of postgresql include directories.
+
+ ** Work around problem with sequential addpath in 'pkg build'.
+
+database 2.1.0:
+---------------
+
+ ** pq_exec_params: An Octave cell-array can be used as data for 'copy
+    from stdin'.
+
+database 2.0.1:
+---------------
+
+ ** Bugfix of random crash at initialization time.
+
+Initial release of new package database 2.0.0:
+----------------------------------------------
+
+** This is a complete replacement of the former database package and
+   is not compatible with previous releases. The current release only
+   supports postgresql.
+
+** Functions:
+
+     pq_connect:      connect to a postgresql database,
+
+     pq_exec_params:  execute an SQL command with optional parameters
+                      and return result,
+
+     pq_update_types: used if defined types change
+                      during connection time,
+
+     pq_lo_import:    import large object from client side,
+
+     pq_lo_export:    export large object to client side,
+
+     pq_lo_unlink:    delete large object,
+
+     pq_close:        disconnect from database.

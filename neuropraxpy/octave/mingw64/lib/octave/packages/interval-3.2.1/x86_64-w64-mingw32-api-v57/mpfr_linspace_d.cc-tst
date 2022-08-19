@@ -1,0 +1,3 @@
+## DO NOT EDIT! Generated from mpfr_linspace_d.cc
+%!assert (mpfr_linspace_d (-inf, 1, 10, 10), 1 : 10);
+%!assert (mpfr_linspace_d (inf, 1, 10, 8) - mpfr_linspace_d (-inf, 1, 10, 8), [0 2 2 4 4 4 8 0] .* eps);

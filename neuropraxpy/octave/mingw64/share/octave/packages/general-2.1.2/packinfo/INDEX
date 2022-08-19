@@ -1,0 +1,25 @@
+general >> General purpose functions
+Dictionaries
+ @dict/dict
+ @dict/display
+ @dict/get
+ @dict/has
+ @dict/isempty
+ @dict/join
+ @dict/length
+ @dict/struct
+ @dict/subsasgn
+ @dict/subsref
+Various Functions
+ adresamp2
+ cauchy
+ majle
+ mark_for_deletion
+ packfields
+ safeprod
+ SHA1
+ tablify
+ unpackfields
+ unresamp2
+ unvech
+ ztvals

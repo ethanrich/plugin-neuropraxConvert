@@ -1,0 +1,67 @@
+## DO NOT EDIT!  Generated automatically from ov-range.cc by Make.
+%!test
+%! a = b = 1:4;
+%! sv_file = [tempname(), ".sav"];
+%! unwind_protect
+%!   save (sv_file, "a", "-text");
+%!   clear a;
+%!   load (sv_file);
+%!   assert (a, b);
+%! unwind_protect_cleanup
+%!   unlink (sv_file);
+%! end_unwind_protect
+%!test
+%! a = b = uint8(5):-1:0;
+%! sv_file = [tempname(), ".sav"];
+%! unwind_protect
+%!   save (sv_file, "a", "-text");
+%!   clear a;
+%!   load (sv_file);
+%!   assert (a, b);
+%! unwind_protect_cleanup
+%!   unlink (sv_file);
+%! end_unwind_protect
+%!test
+%! a = b = 1:4;
+%! sv_file = [tempname(), ".dat"];
+%! unwind_protect
+%!   save (sv_file, "a", "-binary");
+%!   clear a;
+%!   load (sv_file);
+%!   assert (a, b);
+%! unwind_protect_cleanup
+%!   unlink (sv_file);
+%! end_unwind_protect
+%!test
+%! a = b = uint8(5):-1:0;
+%! sv_file = [tempname(), ".dat"];
+%! unwind_protect
+%!   save (sv_file, "a", "-binary");
+%!   clear a;
+%!   load (sv_file);
+%!   assert (a, b);
+%! unwind_protect_cleanup
+%!   unlink (sv_file);
+%! end_unwind_protect
+%!testif HAVE_HDF5
+%! a = b = 1:4;
+%! sv_file = [tempname(), ".h5"];
+%! unwind_protect
+%!   save (sv_file, "a", "-hdf5");
+%!   clear a;
+%!   load (sv_file);
+%!   assert (a, b);
+%! unwind_protect_cleanup
+%!   unlink (sv_file);
+%! end_unwind_protect
+%!testif HAVE_HDF5
+%! a = b = uint8(5):-1:0;
+%! sv_file = [tempname(), ".h5"];
+%! unwind_protect
+%!   save (sv_file, "a", "-hdf5");
+%!   clear a;
+%!   load (sv_file);
+%!   assert (a, b);
+%! unwind_protect_cleanup
+%!   unlink (sv_file);
+%! end_unwind_protect

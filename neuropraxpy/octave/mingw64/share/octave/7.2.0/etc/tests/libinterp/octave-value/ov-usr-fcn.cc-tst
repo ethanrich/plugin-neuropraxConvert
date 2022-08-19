@@ -1,0 +1,63 @@
+## DO NOT EDIT!  Generated automatically from ov-usr-fcn.cc by Make.
+%!function [x, y] = try_isargout ()
+%!  if (isargout (1))
+%!    if (isargout (2))
+%!      x = 1; y = 2;
+%!    else
+%!      x = -1;
+%!    endif
+%!  else
+%!    if (isargout (2))
+%!      y = -2;
+%!    else
+%!      error ("no outputs requested");
+%!    endif
+%!  endif
+%!endfunction
+%!
+%!function [a, b] = try_isargout2 (x, y)
+%!  a = y;
+%!  b = {isargout(1), isargout(2), x};
+%!endfunction
+%!
+%!test
+%! [x, y] = try_isargout ();
+%! assert ([x, y], [1, 2]);
+%!
+%!test
+%! [x, ~] = try_isargout ();
+%! assert (x, -1);
+%!
+%!test
+%! [~, y] = try_isargout ();
+%! assert (y, -2);
+%!
+%!error [~, ~] = try_isargout ()
+%!
+%!test
+%! [x, y] = try_isargout ();
+%! assert ([x, y], [1, 2]);
+%!
+%!test
+%! [~, y] = try_isargout;
+%! assert (y, -2);
+%!
+%!test
+%! fh = @try_isargout;
+%! af = @() try_isargout;
+%! c = {fh, af};
+%! [~, y] = fh ();
+%! assert (y, -2);
+%! [~, y] = af ();
+%! assert (y, -2);
+%! [~, y] = c{1}();
+%! assert (y, -2);
+%! [~, y] = c{2}();
+%! assert (y, -2);
+%!
+%!test
+%! [~, b] = try_isargout2 (try_isargout, rand);
+%! assert (b, {0, 1, -1});
+%!test
+%! [~, b] = try_isargout2 ({try_isargout, try_isargout}, rand);
+%! assert (b, {0, 1, {-1, -1}});

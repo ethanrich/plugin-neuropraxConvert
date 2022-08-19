@@ -1,0 +1,11 @@
+## DO NOT EDIT! Generated from isdicom.cpp
+%!test
+%! fpath = tempname ();
+%! wdata = uint8 (10*rand (10,10));
+%! dicomwrite(wdata, fpath);
+%! assert (isdicom (fpath), true);
+%!test
+%! assert (isdicom (which ("gray")), false);
+%! assert (isdicom (""), false);
+%!fail ("isdicom")
+%!fail ("isdicom(1)")

@@ -1,0 +1,531 @@
+.TH EPSTOOL 1 "2005-06-10" "Martin Pitt and Russell Lang"
+.SH NAME
+epstool \- Edit preview images and fix bounding boxes in EPS files.
+
+.SH SYNOPSIS
+.B epstool
+.I command
+[
+.I options
+]
+.I inputfile outputfile
+
+.SH DESCRIPTION
+.B epstool
+is a utility to create or extract preview images in EPS files. It can
+also calculate optimal bounding boxes.
+
+.SS "EPS (Encapsulated PostScript Format)"
+EPS is a specialised form of a PostScript file that complies
+with the Document Structuring Conventions (DSC) and is intended
+to be embedded inside another PostScript file.
+An EPS file must contain a special first line that identifies
+it as an EPS file (e.g. \fB%!PS\-Adobe\-3.0 EPSF\-3.0\fR) 
+and it must contain a \fB%%BoundingBox:\fR line.
+The EPS file only draws within the rectangle defined by the bounding box.
+The PostScript code must avoid using PostScript operators
+that would interfere with the embedding.  These include
+operators with global effects such as changing the page size
+and changing the half tone screen.
+
+.SS PREVIEWS
+
+EPS files may contain a preview to be used by programs that can't
+interpret the PostScript code. There are three ways to add a preview
+to an EPS file.
+
+.IP Interchange
+This preview is included within PostScript comments in a section
+marked %%BeginPreview: / %%EndPreview. The actual image data is stored
+in hexadecimal format. This format is most commonly used on Unix.
+
+.IP DOS\ EPS
+The preview is a TIFF or Windows Metafile. A DOS EPS file has a 30
+byte binary header which gives offsets and lengths for the PostScript,
+TIFF and Windows Metafile sections. You can't send a DOS EPS file
+directly to a printer \- you have to remove the binary header and
+preview first. This format is most commonly used on MS\-Windows.
+
+.IP PICT
+The preview is in PICT format stored in the resource fork of the file.
+This format is most commonly used on the Macinstosh.
+Epstool provides limited support for this format.
+
+.SH "COMMANDS (one only):"
+
+.TP
+.B \-t4, \-\-add\-tiff4\-preview
+Add a TIFF 4 preview. The preview is monochrome and is intended for
+use with old programs that won't read TIFF6, such as Word Perfect 5.1
+for DOS.
+
+.TP
+.B \-t6u, \-\-add\-tiff6u\-preview
+Add a TIFF 6 uncompressed preview. See 
+.B \-\-add\-tiff6p\-preview
+for how to
+add a greyscale or monochrome preview.
+
+.TP
+.B \-t6p, \-\-add\-tiff6p\-preview
+Add a TIFF 6 preview compressed with packbits (simple run length
+encoding). The preview will normally be full colour, but you can make
+it greyscale by adding the option
+.B \-\-device bmpgray
+or 
+.B \-\-device pgmraw,
+or monochrome using
+.B \-\-device bmpmono
+or
+.B \-\-device pbmraw\fR.
+
+.TP
+.B \-tg, \-\-add\-tiff\-preview
+Add a TIFF preview using ghostscript to generate the TIFF file. You
+must specify a suitable TIFF device using 
+.B \-\-device\fR. If you want a compressed monochrome image, you might use
+.B \-\-device tiffg3\fR.
+
+.TP
+.B \-i, \-\-add\-interchange\-preview
+Add a monochrome interchange preview.
+
+.TP
+.B \-w, \-\-add\-metafile\-preview
+Add a Windows Metafile (WMF) preview. The metafile will contain a
+bitmap, not vector information. The preview will normally be full
+colour. See
+.B \-\-add\-tiff6p\-preview
+for how to add a greyscale or monochrome preview.
+
+.TP
+.B \-\-add\-pict\-preview
+Add a Mac PICT preview.
+EPSF files with PICT previews can generally be used only on Mac computers.
+The preview will be full colour.  
+The AppleSingle and MacBinary formats will contain the EPSF and 
+the preview.  The AppleDouble or Resource format will contain the 
+preview only and needs to accompany the original EPSF file.
+To specify the file format use 
+\fB\-\-mac\-single\fR, \fB\-\-mac\-double\fR, \fB\-\-mac\-binary\fR
+or \fB\-\-mac\-rsrc\fR.
+
+.TP
+.B \-\-add\-user\-preview \fI filename
+Add a user supplied image as a preview. The image can be a Windows
+bitmap, a PBMPLUS file, a TIFF image or a Windows Metafile. Window
+bitmaps and PBMPLUS files will be converted to TIFF6 compressed with
+packbits. TIFF and Windows Metafile images will be added unchanged.
+
+.TP
+.B \-\-bitmap
+Create a bitmap of the area within the EPS bounding box. The bitmap
+type must be specified with \fB\-\-device\fR.
+If processing a DCS 2.0 file, the separation can be specified 
+with \fB\-\-page\-number\fR.
+
+.TP
+.B \-\-copy
+Copy the EPS file. This is generally used with the
+.B \-\-bbox
+option to update the bounding box.
+
+.TP
+.B \-\-dcs2\-multi
+Convert DCS 2.0 separations to multiple files. See DCS 2.0. If the
+output name is out.eps, then the separations would be named
+out.eps.Cyan etc.
+
+.TP
+.B \-\-dcs2\-single
+Convert DCS 2.0 separations to a single file. See DCS 2.0.
+
+.TP
+.B \-\-dcs2\-report
+Write the separation names, lengths and CMYK values to standard
+output. This can be used to identify if a DCS 2.0 file is missing the
+composite page or preview.
+
+.TP
+.B \-\-dump
+Display some information about the file type and DSC comments.
+
+.TP
+.B \-p, \-\-extract\-postscript
+Extract the PostScript section from a DOS EPS file.
+
+.TP
+.B \-v, \-\-extract\-preview
+Extract the preview section from a DOS EPS file.
+
+.TP
+.B \-h, \-\-help
+Display a summary of the epstool commands and options.
+
+.TP
+.B \-\-test\-eps
+Partially test if a file complies with the EPSF specification.
+
+.SH OPTIONS
+.TP
+.B \-b, \-\-bbox
+Calculate the bounding box using the ghostscript bbox device and
+update in the EPS file.
+
+.TP
+.B \-\-combine\-separations \fI filename
+Combine the separations of the input DCS 2.0 file
+with those of this file.  It is an error if the bounding boxes do
+not match or they contain separations with the same name.
+This option must be used with 
+\fB\-\-dcs2\-multi\fR or \fB\-\-dcs2\-single\fR.
+The composite page may later need to be updated with 
+\fB\-\-replace\-composite\fR.
+
+.TP
+.B \-\-combine\-tolerance \fI pts
+When using \fB\-\-combine\-separations\fR, 
+allow the bounding boxes to vary by up to \fIpts\fR points.  
+The default is 0 so the bounding boxes must match exactly.
+
+.TP
+.B \-\-custom\-colours \fI filename
+When using
+.B \-\-replace\-composite
+on a DCS 2.0 file, use the colours specified in this file in
+preference to those specified in the composite page.
+
+.TP
+.B \-d, \-\-debug
+Be more verbose about progress. Do not remove temporary files.
+
+.TP
+.B \-\-device\fI name
+Specify a ghostscript device to be used when creating the preview or
+bitmap. For
+.B \-\-add\-tiff\-preview
+this must be one of the ghostscript tiff devices (e.g. tiffg3,
+tiff24nc).  For any other preview, it must be one of the bmp or
+pbmplus devices (e.g. bmpgray, bmp16m, pgmraw, ppmraw). For bitmap
+output (\fB\-\-bitmap\fR) it can be any ghostscript bitmap device.
+
+.TP
+.B \-\-doseps\-reverse
+When writing a DOS EPS file (TIFF or WMF preview), the default
+is to write the PostScript before the preview.  
+Using \fB\-\-doseps\-reverse\fR puts the preview before
+the PostScript section, which is required by some buggy programs.
+Either order is correct.
+
+.TP
+.B \-\-dpi\fI resolution
+Set the resolution of the preview or bitmap. The default is 72 dpi.
+
+.TP
+.B \-\-dpi\-render\fI resolution
+Render at a higher resolution set by 
+.B \-\-dpi\-render
+, then downsample to the resolution set by 
+.B \-\-dpi\fR. This works when adding a preview image or using
+.B \-\-replace\-composite
+, but not when using
+.B \-\-bitmap.
+This improves the
+preview quality when the original contains a pre\-rendered image and
+.B \-\-dpi\-render
+is set to match the original target printer.
+
+.TP
+.B \-\-ignore\-information
+Ignore information messages from the DSC parser.  Use at your own risk.
+These messages usually indicate that something is wrong with an EPS
+file, but that most EPS handlers probably won't care.
+An example is a line with more than 255 characters.
+
+.TP
+.B \-\-ignore\-warnings
+Ignore warnings from the DSC parser.  Use at your own risk.
+These messages are usually about faults in the DSC comments
+that are recoverable by \fBepstool\fR, but may confuse other EPS
+handlers.  An example is a bounding box that incorrectly
+uses floating point numbers instead of integer.
+
+.TP
+.B \-\-ignore\-errors
+Ignore warnings from the DSC parser. Use at your own risk. You really
+should fix the EPS file first.
+
+.TP
+.B \-\-gs command
+Specify the name the ghostscript program. On Unix the default is gs.
+On Windows, 
+.B epstool
+will check the registry for installed versions of ghostscript and use
+the latest, otherwise it will use gswin32c.exe.
+
+.TP
+.B \-\-gs\-args\fI arguments
+Specify additional Ghostscript arguments. This might be used to select
+anti\-aliasing with "\-dTextAlphaBits=4 \-dGraphicsAlphaBits=4"
+
+.TP
+.B \-\-output\fI filename
+Specify the output file (instead of using the second file parameter).
+Using the filename \fB\-\fR causes epstool to write to 
+standard output, which requires the use of \fB\-\-quiet\fR.
+
+.TP
+.B \-\-mac\-binary
+When adding a PICT preview, use the MacBinary I format.
+for the Mac
+
+.TP
+.B \-\-mac\-double
+When adding a PICT preview, use the AppleDouble format
+for the Mac.
+
+.TP
+.B \-\-mac\-rsrc
+When adding a PICT preview, use the Resource format
+for the Mac.  
+
+.TP
+.B \-\-mac\-single
+When adding a PICT preview, use the AppleSingle format
+for the Mac.  
+
+.TP
+.B \-\-missing\-separations
+When writing a DCS 2.0 file, epstool
+will normally fail if a separation is missing.
+When this option is used, it will remove references to
+missing separations when writing the file.
+
+.TP
+.B \-\-page\-number\fI page
+When creating a bitmap with \fB\-\-device\fR from
+a DCS 2.0 file, \fIpage\fR specifies the separation to be used.
+Page 1 is the composite and page 2 is the first separation.
+Use \fB\-\-dcs2\-report\fR to get the list of separations.
+
+.TP
+.B \-\-quiet
+Try to run without writing to standard output.
+
+.TP
+.B \-\-rename\-separation\fI oldname  newname
+When copying a DCS 2.0 file with 
+\fB\-\-dcs2\-multi\fR or \fB\-\-dcs2\-single\fR,
+rename separation with \fIoldname\fR to \fInewname\fR.
+This option implies \fB\-\-missing\-separations\fR.
+It is assumed that the new name is just an alias for the same colour
+and that the CMYK or RGB values for the separation are not changed.
+This option may be used multiple times.
+This must be used if the input file incorrectly has two separations 
+of the same name.
+
+.TP
+.B \-\-replace\-composite
+Some DCS 2.0 files do not have an image in the composite page. This
+option replaces the composite page with a CMYK image derived from the
+separations. This option must be used with 
+.B \-\-dcs2\-multi
+or
+.B \-\-dcs2\-single\fR. See also the options 
+.B \-\-dpi
+and
+.B \-\-custom\-colours\fR.
+
+
+.SH MACINTOSH
+The Macintosh does not use a flat file system.  
+Each file can have a data fork and a resource fork.
+EPSF files have the PostScript in the data fork,
+and optionally have a preview in the resource fork
+as a PICT image.  In addition, file type is obtained
+from the finder info rather than a file extension.
+File types use a four character code such as "EPSF"
+or "PICT".
+When Macintosh files are copied to a foreign file system,
+the resource fork may be left behind. 
+Alternatives to retain the resource fork are to package the 
+finder data, data fork and resource fork in a single MacBinary 
+or AppleSingle file, or to put the data fork in a flat file 
+and the finder info and resource fork in an AppleDouble file.
+The Mac OSX finder will handle AppleDouble files automatically
+when copying files to and from a foreign file system.
+When copying \fItest.eps\fR to a foreign file system,
+the data fork would be written as \fItest.eps\fR
+and the finder info and resource fork to the AppleDouble file
+\fI._test.eps\fR or 
+\fI.AppleDouble/test.eps\fR.
+
+Epstool can read MacBinary and AppleSingle files.
+It can write MacBinary I, AppleSingle, AppleDouble or Resource files.
+Files written by epstool will have type \fIEPSF\fR
+and creator \fIMSWD\fR.
+When adding a preview to \fItest.eps\fR,
+it is suggested that you create the MacBinary
+file \fItest.eps.bin\fR.  
+On a Macintosh computer you then need to extract it with StuffIt Expander.
+Another alternative is to write the AppleDouble file
+to \fI._test.eps\fR then copy \fBboth files\fR
+to a file system accessible to a Mac computer.
+
+If the output file name starts with \fI.\fR then
+AppleDouble will be assumed, 
+otherwise if it ends with \fI.as\fR then 
+AppleSingle will be assumed, 
+otherwise if it ends with \fI.rsrc\fR or \fI/rsrc\fR then 
+Resource will be assumed, 
+otherwise MacBinary will be assumed.
+When writing a MacBinary file, it is recommended that you end 
+the filename in \fI.bin\fR.
+To force the file type, use
+\fB\-\-mac\-single\fR,
+\fB\-\-mac\-double\fR,
+\fB\-\-mac\-binary\fR
+or 
+\fB\-\-mac\-rsrc\fR.
+
+On Mac OS X you can access a file's resource fork from command 
+line tools by appending \fI/rsrc\fR to the original file name. 
+The easiest way to add a preview to the file \fItest.eps\fR 
+on Mac OS X is to let epstool write in \fB\-\-mac-rsrc\fR format 
+to \fItest.eps/rsrc\fR (see \fBExamples\fR).
+
+.SH DESKTOP COLOR SEPARATIONS (DCS 2.0)
+The Desktop Color Separation (DCS) image file format contains
+a low resolution preview, a main file with the full resolution
+composite image, and colour separations with full resolution
+separated plates.
+The separations will typically contain Cyan, Magenta, Yellow,
+Black and possibly spot colours.
+There are two versions of DCS 2.0.
+
+.TP
+Multiple File
+The main file contains \fI%%PlateFile: (name) EPS Local filename\fR
+comments which give the filenames of the separation plates.
+The main file may contain a low resolution DOS EPS preview.
+The separation files do not contain previews.
+
+.TP
+Single File
+This is an abuse of the EPS specification.
+The single file contains the main file and the separations
+concatenated together, which makes the DSC comments incorrect.
+The main file specifies the byte offsets to the separations using
+\fI%%PlateFile: (name) EPS #offset size\fR.
+The single file may then be placed inside a DOS EPS file
+with a low resolution preview.
+By default, epstool writes single file DCS 2.0.
+
+.P
+Epstool can add previews to single and multiple file DCS 2.0.
+It can split single file DCS 2.0 into multiple files and vice
+versa.  This allows a single file DCS 2.0 to be split,
+the composite image replaced, a new preview created, 
+and then be recombined into a single file.
+
+Some DCS 2.0 files do not have an image in the composite page.
+To determine if the composite page does not contain an image,
+use \fB\-\-dcs2\-report\fR and look to see if the composite
+section is very short.
+Using \fB\-\-dcs2\-single \-\-replace\-composite\fR replaces
+the composite page with the headers of the original composite page
+and a body containing a CMYK image derived from the separations.
+Set the resolution of the CMYK image using \fB\-\-dpi\fR.
+
+When replacing the composite page with a CMYK image using
+\fB\-\-replace\-composite\fR, the \fB\-\-custom\-colours\fR 
+option is useful for dealing with DCS 2.0 files that have incorrect
+CMYK colours, for example specifying that the varnish layer is grey.  
+Each line of the CMYK colours file is formatted like a DSC
+\fI%%CMYKCustomColor:\fR or \fI%%RGBCustomColor:\fR 
+line, as shown in the example below.
+
+.P
+%%CMYKCustomColor: 0.00 0.00 0.00 0.00 Varnish 
+.P
+%%CMYKCustomColor: 1.00 0.68 0.00 0.12 (Dark Blue)
+.P
+%%RGBCustomColor: 0.5 0.0 0.0 (Dark Red)
+
+DCS2 files should not have two separations with the same name.
+Epstool will not allow a DCS2 output file to have duplicate 
+separation names.  
+Use \fB\-\-rename\-separation\fR to resolve this.
+
+.SH EXAMPLES
+
+.TP
+Add colour preview (24bit/pixel) to EPS file
+  epstool \-t6p tiger.eps output.eps
+
+.TP
+Add TIFF (G3 Fax) preview to tiger.eps.
+  epstool \-\-add\-tiff\-preview \-\-device tiffg3 tiger.eps output.eps
+.P
+Any GS TIFF device can be used, e.g. tiffg4, tiffpack
+
+.TP
+Extract TIFF preview from tiger.eps
+  epstool \-v tiger.eps tiger.tif
+
+.TP
+Fix incorrect %%BoundingBox then add TIFF4 preview.
+  epstool \-\-bbox \-t4 golfer.eps output.eps
+
+.TP
+Adjust the BoundingBox of an existing EPS file, but don't add a preview:
+  epstool \-\-copy \-\-bbox input.eps output.eps
+
+.TP
+Add user supplied Windows Metafile to EPS file.
+  epstool \-\-add\-user\-preview logo.wmf logo.eps output.eps
+.P
+Typically used when an application can export EPS and WMF separately
+but can't export EPS with WMF preview.
+
+.TP
+Add a PICT preview and write an AppleDouble file.
+  epstool \-\-add\-pict\-preview \-\-mac\-double tiger.eps ._tiger.eps
+.P
+To be used by a Mac, both \fItiger.eps\fR and 
+\fI._tiger.eps\fR need to be on a foreign file system 
+accessible to the Mac.
+
+.TP
+Add a PICT preview, overwriting the existing resources.
+ epstool \-\-add\-pict\-preview \-\-mac\-rsrc tiger.eps tiger.eps/rsrc
+.P
+On Mac OS X you can access a file's resource fork from command line 
+tools by appending "/rsrc" to the file's original name. 
+
+.SH NOTES
+
+When adding a WMF preview to an EPS file using 
+\fB\-add\-user\-preview filename\fP, the
+placeable metafile header is removed from the metafile as it is put 
+into the EPS file.
+When extracting a WMF preview from an EPS file, a placeable metafile
+header is created from the EPS BoundingBox information.  
+This placeable metafile header assumes that the WMF has its origin 
+at (0,0), which might not be correct.
+
+When epstool is creating a TIFF or WMF preview,
+it will convert palette colour images into 24\-bit/pixel.
+
+The environment variable TEMP should point to a writeable directory
+for temporary files.  If not defined, /tmp will be used for Unix
+and the current directory will be used for other platforms.
+
+
+.SH AUTHOR
+.B epstool
+was written by Russell Lang <gsview@ghostgum.com.au>
+.PP
+This man page was contributed by Martin Pitt <martin@piware.de> for
+the Debian GNU/Linux system (but may be used by others).
+

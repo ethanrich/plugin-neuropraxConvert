@@ -1,0 +1,862 @@
+@c ---------------------------------------------------
+@node  ZeroMQ functions
+@section  ZeroMQ functions
+@cindex  ZeroMQ functions
+@c ZeroMQ functions iszmq
+@c -----------------------------------------
+@subsection  iszmq
+@cindex  iszmq
+ @deftypefn {Function File} {@var{tf} =} iszmq (@var{h})
+
+ Determine whether @var{h} is a zeromq socket object.
+
+ if @var{h} is a zeromq socket object, returns true, otherwise returns false.
+
+ @xseealso{zmq_socket}
+ @end deftypefn
+@c ZeroMQ functions zmq_bind
+@c -----------------------------------------
+@subsection  zmq_bind
+@cindex  zmq_bind
+@deftypefn {Loadable Function} status =  zmq_bind (@var{sock}, @var{endpoint})
+
+Bind a zeromq socket to a endpoint.
+
+@var{sock} - the socket to bind.
+
+@var{endpoint} - the endpoint string.
+
+On success, bind will return a @var{status} of true 
+
+@xseealso { zmq_socket }
+@end deftypefn
+@c ZeroMQ functions zmq_close
+@c -----------------------------------------
+@subsection  zmq_close
+@cindex  zmq_close
+@deftypefn {Loadable Function} {} zmq_close (@var{sock})
+
+Close a zeromq socket.
+
+@var{sock} - the socket type to close.
+
+@xseealso { zmq_socket }
+@end deftypefn
+@c ZeroMQ functions zmq_connect
+@c -----------------------------------------
+@subsection  zmq_connect
+@cindex  zmq_connect
+@deftypefn {Loadable Function} @var{status} =  zmq_connect (@var{sock}, @var{endpoint})
+
+Connect a zeromq socket to a endpoint.
+
+@var{sock} - the socket to connect.
+
+@var{endpoint} - the endpoint string.
+
+On success, connect will return a @var{status} of true 
+
+@xseealso{zmq_socket}
+@end deftypefn
+@c ZeroMQ functions zmq_curve_keypair
+@c -----------------------------------------
+@subsection  zmq_curve_keypair
+@cindex  zmq_curve_keypair
+@deftypefn {Loadable Function} [ @var{publickey}, @var{privatekey} ]  =  zmq_curve_keypair ()
+
+Generate a random private/public keypair
+
+@var{publickey} is a string that is the encoded public key
+
+@var{privatekey} is a string that is the encoded private key
+
+@xseealso { zmq_z85_encode }
+@end deftypefn
+@c ZeroMQ functions zmq_curve_public
+@c -----------------------------------------
+@subsection  zmq_curve_public
+@cindex  zmq_curve_public
+@deftypefn {Loadable Function} @var{publickey} = zmq_curve_public (@var{privatekey})
+
+Derive the public key from a private key
+
+@var{privatekey} is a string that is the encoded private key. It must be 40 characters in length
+
+@var{publickey} is a string that is the encoded public key
+
+@xseealso{zmq_curve_keypair}
+@end deftypefn
+@c ZeroMQ functions zmq_disconnect
+@c -----------------------------------------
+@subsection  zmq_disconnect
+@cindex  zmq_disconnect
+@deftypefn {Loadable Function} @var{status} =  zmq_connect (@var{sock}, @var{endpoint})
+
+Disconnect a zeromq socket from an endpoint.
+
+@var{sock} - the socket to disconnect from.
+
+@var{endpoint} - a previously connected endpoint string to disconnect.
+
+On success, disconnect will return a @var{status} of true 
+
+@xseealso{zmq_socket, zmq_connect}
+@end deftypefn
+@c ZeroMQ functions zmq_errno
+@c -----------------------------------------
+@subsection  zmq_errno
+@cindex  zmq_errno
+@deftypefn {Loadable Function} @var{errornum} =  zmq_errno ()
+
+Get the value of errno from zeromq.
+
+@var{errornum} is the errno value of the calling thread.
+
+@end deftypefn
+@c ZeroMQ functions zmq_getsockopt
+@c -----------------------------------------
+@subsection  zmq_getsockopt
+@cindex  zmq_getsockopt
+@deftypefn {Loadable Function} @var{value} =  zmq_getsockopt (@var{sock}, @var{optionid})
+
+Get the current value of an option.
+
+@var{sock} - the socket to connect.
+
+@var{optionid} - the setsockopt option to set.
+
+@var{value} - the value set for the option, or [].
+
+Valid @var{optionid}s are:
+@table @asis
+@item @code{ZMQ_RCVMORE}
+Flag for whether a message has been split into multiple messages. The return value will be either 0 or 1.
+@item @code{ZMQ_TYPE}
+Socket type for zeromq socket created with zmq_socket.
+Valid types are the same as the socket type value specified with zmq_socket. 
+@item @code{ZMQ_EVENTS}
+Get the event state of zeromq socket.
+The returned value is a bit mask that may contain the following set values:
+@itemize
+@item @code{ZMQ_POLLIN} set when at least one message is available to read and zmq_recv will not block.
+@item @code{ZMQ_POLLOUT} set when at least one message can be written without zmq_send blocking.
+@end itemize
+@item @code{ZMQ_IDENTITY}
+Get the socket identity value
+@item @code{ZMQ_LAST_ENDPOINT}
+Get the last endpoint the socket was connected to
+@item @code{ZMQ_CONNECT_TIMEOUT}
+Get the connect timeout value
+@item @code{ZMQ_SOCKS_PROXY}
+Get the SOCKS5 proxy value (string)
+@item @code{ZMQ_CURVE_SERVER}
+Get whether socket is a curve server (1) or not (0)
+@item @code{ZMQ_CURVE_PRIVATEKEY}
+Get a the curve socket private key (string)
+@item @code{ZMQ_CURVE_PUBLICKEY}
+Get a the curve socket public key (string)
+@item @code{ZMQ_CURVE_SERVERKEY}
+Get a the curve socket public key (string)
+@item @code{ZMQ_PLAIN_SERVER}
+Get whether socket server will use plain authentication (1) or not (0)
+@item @code{ZMQ_PLAIN_USERNAME}
+Get the plain socket username (string)
+@item @code{ZMQ_PLAIN_PASSWORD}
+Get the plain socket password (string)
+@item @code{ZMQ_GSSAPI_SERVER}
+Get whether socket server will use gssapi authentication (1) or not (0)
+@item @code{ZMQ_GSSAPI_PLAINTEXT}
+Get whether socket will encrypt gssapi authentication (1) or not (0)
+@item @code{ZMQ_GSSAPI_PRINCIPAL}
+Get the name of the gssapi principal (string)
+@item @code{ZMQ_GSSAPI_SERVICE_PRINCIPAL}
+Get the name of the gssapi service principal (string)
+@item @code{ZMQ_MECHANISM}
+Get the security mechanism (ZMQ_NULL, ZMQ_PLAIN, ZMQ_CURVE, ZMQ_GSSAPI)
+@end table
+
+@xseealso{zmq_socket, zmq_setsockopt}
+@end deftypefn
+@c ZeroMQ functions zmq_has
+@c -----------------------------------------
+@subsection  zmq_has
+@cindex  zmq_has
+@deftypefn {Loadable Function} {@var{yesno} =} zmq_has (@var{feature})
+
+Check if the zmq library supports a given feature.
+
+@var{feature} is the name of feature to check.
+
+Currently known features are:
+@table @asis
+@item 'ipc'
+library supports the ipc:// protocol
+@item 'pgm'
+library supports the pgm:// protocol
+@item 'tipc'
+library supports the tipc:// protocol
+@item 'norm'
+library supports the norm:// protocol
+@item 'curve'
+library supports the CURVE security mechanism
+@item 'gssapi'
+library supports the GSSAPI security mechanism
+@item 'draft'
+library was built with the draft API.
+@end table
+
+Returns the @var{yesno}, set to true if the feature is available, otherwise false.
+
+@end deftypefn
+@c ZeroMQ functions zmq_poll
+@c -----------------------------------------
+@subsection  zmq_poll
+@cindex  zmq_poll
+@deftypefn {Loadable Function} @var{havedata} =  zmq_poll (@var{sock}, @var{timeout})
+@deftypefnx {Loadable Function} @var{indexlist} =  zmq_poll (@var{socklist}, @var{timeout})
+
+Wait up to timeout time for received data on socket.
+
+@var{sock} - the socket to wait on.
+
+@var{socklist} - the array of sockets to wait on.
+
+@var{timeout} - timeout time in milliseconds.
+A value of 0 will return without waiting. A value of -1 will wait until there is data.
+
+@var{havedata} - value of 1 if have data.
+
+@var{indexlist} - cell array of indexes to sockets that have data.
+
+@xseealso {zmq_socket}
+
+@end deftypefn
+@c ZeroMQ functions zmq_recv
+@c -----------------------------------------
+@subsection  zmq_recv
+@cindex  zmq_recv
+@deftypefn {Loadable Function} data =  zmq_recv (@var{sock}, @var{len}[, @var{flags}])
+
+Attempt to receive up to @var{len} bytes of data from  zeromq socket.
+
+@var{sock} - the socket to receive from.
+
+@var{len} - number of bytes to read.
+
+@var{flags} - optional flags to pass to recv
+
+The read data is returned as @var{data} in an uint8 array.
+
+@xseealso{zmq_socket}
+@end deftypefn
+@c ZeroMQ functions zmq_send
+@c -----------------------------------------
+@subsection  zmq_send
+@cindex  zmq_send
+@deftypefn {Loadable Function} @var{count} =  zmq_send (@var{sock}, @var{data}[, @var{flags}])
+
+Attempt to send to @var{data} bytes of data to zeromq socket.
+
+@var{sock} - the socket to receive from.
+
+@var{data} - data to send - either string or uint8 type.
+
+@var{flags} - optional flags to pass to send
+
+Returns @var{count} of bytes written to socket, or -1 on error.
+
+@xseealso {zmq_socket}
+@end deftypefn
+@c ZeroMQ functions zmq_setsockopt
+@c -----------------------------------------
+@subsection  zmq_setsockopt
+@cindex  zmq_setsockopt
+@deftypefn {Loadable Function} status =  zmq_setsockopt (@var{sock}, @var{optionid}, @var{value})
+
+Set a socket option on a zeromq socket.
+
+@var{sock} - the socket to connect.
+
+@var{optionid} - the setsockopt option to set.
+
+@var{value} - the value to set.
+
+On success, setsockopt will return @var{status} of true 
+
+Known valid @var{optionid}s are:
+@table @asis
+@item @code{ZMQ_SUBSCRIBE}
+Subscribe to incoming messages matching the value. The value is either a string or a uint8 array that
+must match the start of any incoming message
+@item @code{ZMQ_UNSUBSCRIBE}
+Unsubscribe from incoming messages
+@item @code{ZMQ_CONNECT_TIMEOUT}
+Set timeout for connect calls
+@item @code{ZMQ_IDENTITY}
+Set the identity of a socket (string or uint8 data)
+@item @code{ZMQ_SOCKS_PROXY}
+Set the socks5 proxy value (string)
+@item @code{ZMQ_CURVE_SERVER}
+Set whether socket is a curve server (1) or not (0)
+@item @code{ZMQ_CURVE_PRIVATEKEY}
+Set the curve socket private key (string)
+@item @code{ZMQ_CURVE_PUBLICKEY}
+Set the curve socket public key (string)
+@item @code{ZMQ_CURVE_SERVERKEY}
+Set the curve socket public key (string)
+@item @code{ZMQ_PLAIN_SERVER}
+Set whether socket server will use plain authentication (1) or not (0)
+@item @code{ZMQ_PLAIN_USERNAME}
+Set the plain socket username (string)
+@item @code{ZMQ_PLAIN_PASSWORD}
+Set the plain socket password (string)
+@item @code{ZMQ_GSSAPI_SERVER}
+Set whether socket server will use gssapi authentication (1) or not (0)
+@item @code{ZMQ_GSSAPI_PLAINTEXT}
+Set whether socket will encrypt gssapi authentication (1) or not (0)
+@item @code{ZMQ_GSSAPI_PRINCIPAL}
+Set the name of the gssapi principal (string)
+@item @code{ZMQ_GSSAPI_SERVICE_PRINCIPAL}
+Set the name of the gssapi service principal (string)
+@end table
+
+@xseealso {zmq_getsockopt, ZMQ_SUBSCRIBE, ZMQ_UNSUBSCRIBE, ZMQ_CONNECT_TIMEOUT}
+@end deftypefn
+@c ZeroMQ functions zmq_socket
+@c -----------------------------------------
+@subsection  zmq_socket
+@cindex  zmq_socket
+@deftypefn {Loadable Function} {@var{sock} = } zmq_socket (@var{type})
+
+Create a zeromq socket.
+
+@var{type} - the socket type to create.
+
+Supported socket types are:
+@table @asis
+@item  @code{ZMQ_PUB} 
+Publish socket
+@item  @code{ZMQ_SUB} 
+Subscribe socket
+@item  @code{ZMQ_REQ} 
+Request socket
+@item  @code{ZMQ_REP} 
+Reply socket
+@item  @code{ZMQ_PULL} 
+Pull socket
+@item  @code{ZMQ_PUSH} 
+Push socket
+@item  @code{ZMQ_PAIR} 
+Pair socket
+@item  @code{ZMQ_DEALER}
+Dealer socket
+@item  @code{ZMQ_ROUTER}
+Router socket
+@item  @code{ZMQ_XPUB} 
+Publish socket
+@item  @code{ZMQ_XSUB} 
+Subscribe socket
+@item  @code{ZMQ_STREAM} 
+Stream socket
+@end table
+
+zmq_socket() returns an instance of @var{octave_zeromq_socket} class as the result.
+
+@xseealso {ZMQ_PUB, ZMQ_SUB, ZMQ_PUSH, ZMQ_PULL, ZMQ_REQ, ZMQ_REP, ZMQ_PAIR, ZMQ_DEALER, ZMQ_ROUTER, ZMQ_XPUB, ZMQ_XSUB, ZMQ_STREAM}
+@end deftypefn
+@c ZeroMQ functions zmq_strerror
+@c -----------------------------------------
+@subsection  zmq_strerror
+@cindex  zmq_strerror
+@deftypefn {Loadable Function} @var{errorstr} =  zmq_strerror ()
+
+Get the last error from zeromq.
+
+@var{errorstr} is a string representation of the last error
+
+@end deftypefn
+@c ZeroMQ functions zmq_unbind
+@c -----------------------------------------
+@subsection  zmq_unbind
+@cindex  zmq_unbind
+@deftypefn {Loadable Function} status =  zmq_unbind (@var{sock}, @var{endpoint})
+
+Unbind a previously bound zeromq socket from a endpoint.
+
+@var{sock} - the socket to unbind.
+
+@var{endpoint} - the endpoint string to unbind.
+
+On success, unbind will return a @var{status} of true 
+
+@xseealso { zmq_socket, zmq_bind }
+@end deftypefn
+@c ZeroMQ functions zmq_version
+@c -----------------------------------------
+@subsection  zmq_version
+@cindex  zmq_version
+@deftypefn {Loadable Function} [@var{major}, @var{minor}, @var{patch}] =
+zmq_version ()
+
+Get the ZeroMQ library version.
+
+Returns the @var{major}, @var{minor} and @var{patch} level version of the ZeroMQ library.
+
+@end deftypefn
+@c ZeroMQ functions zmq_z85_decode
+@c -----------------------------------------
+@subsection  zmq_z85_decode
+@cindex  zmq_z85_decode
+@deftypefn {Loadable Function} @var{data} =  zmq_z85_decode (@var{instr})
+
+Decode a z85 encoded string to a binary key.
+
+@var{instr} is a string encoded data
+
+@var{data} is uint8 decoded data
+
+
+@end deftypefn
+@c ZeroMQ functions zmq_z85_encode
+@c -----------------------------------------
+@subsection  zmq_z85_encode
+@cindex  zmq_z85_encode
+@deftypefn {Loadable Function} @var{dest} =  zmq_z85_encode (@var{data})
+
+Encode a binary key as Z85 printable text.
+
+@var{data} is uint8 data that must have a size divisible by 4.
+
+@var{dest} is a string encoded data
+
+@end deftypefn
+@c ---------------------------------------------------
+@node  ZeroMQ socket type constants
+@section  ZeroMQ socket type constants
+@cindex  ZeroMQ socket type constants
+@c ZeroMQ socket type constants ZMQ_DEALER
+@c -----------------------------------------
+@subsection  ZMQ_DEALER
+@cindex  ZMQ_DEALER
+ @deftypefn  {Command} {} ZMQ_DEALER
+
+ Constant for dealer socket type.
+
+ @xseealso{zmq_socket}
+ @end deftypefn
+@c ZeroMQ socket type constants ZMQ_PAIR
+@c -----------------------------------------
+@subsection  ZMQ_PAIR
+@cindex  ZMQ_PAIR
+ @deftypefn  {Command} {} ZMQ_PAIR
+
+ Constant for pair socket type.
+
+ @xseealso{zmq_socket}
+ @end deftypefn
+@c ZeroMQ socket type constants ZMQ_PUB
+@c -----------------------------------------
+@subsection  ZMQ_PUB
+@cindex  ZMQ_PUB
+ @deftypefn  {Command} {} ZMQ_PUB
+
+ Constant for publisher type.
+
+ @xseealso{zmq_socket}
+ @end deftypefn
+@c ZeroMQ socket type constants ZMQ_PULL
+@c -----------------------------------------
+@subsection  ZMQ_PULL
+@cindex  ZMQ_PULL
+ @deftypefn  {Command} {} ZMQ_PULL
+
+ Constant for pull socket type.
+
+ @xseealso{zmq_socket}
+ @end deftypefn
+@c ZeroMQ socket type constants ZMQ_PUSH
+@c -----------------------------------------
+@subsection  ZMQ_PUSH
+@cindex  ZMQ_PUSH
+ @deftypefn  {Command} {} ZMQ_PUSH
+
+ Constant for push socket type.
+
+ @xseealso{zmq_socket}
+ @end deftypefn
+@c ZeroMQ socket type constants ZMQ_REP
+@c -----------------------------------------
+@subsection  ZMQ_REP
+@cindex  ZMQ_REP
+ @deftypefn  {Command} {} ZMQ_REP
+
+ Constant for reply socket type.
+
+ @xseealso{zmq_socket}
+ @end deftypefn
+@c ZeroMQ socket type constants ZMQ_REQ
+@c -----------------------------------------
+@subsection  ZMQ_REQ
+@cindex  ZMQ_REQ
+ @deftypefn  {Command} {} ZMQ_REQ
+
+ Constant for request socket type.
+
+ @xseealso{zmq_socket}
+ @end deftypefn
+@c ZeroMQ socket type constants ZMQ_ROUTER
+@c -----------------------------------------
+@subsection  ZMQ_ROUTER
+@cindex  ZMQ_ROUTER
+ @deftypefn  {Command} {} ZMQ_ROUTER
+
+ Constant for router socket type.
+
+ @xseealso{zmq_socket}
+ @end deftypefn
+@c ZeroMQ socket type constants ZMQ_STREAM
+@c -----------------------------------------
+@subsection  ZMQ_STREAM
+@cindex  ZMQ_STREAM
+ @deftypefn  {Command} {} ZMQ_STREAM
+
+ Constant for stream socket type.
+
+ @xseealso{zmq_socket}
+ @end deftypefn
+@c ZeroMQ socket type constants ZMQ_SUB
+@c -----------------------------------------
+@subsection  ZMQ_SUB
+@cindex  ZMQ_SUB
+ @deftypefn  {Command} {} ZMQ_SUB
+
+ Constant for subscriber type.
+
+ @xseealso{zmq_socket}
+ @end deftypefn
+@c ZeroMQ socket type constants ZMQ_XPUB
+@c -----------------------------------------
+@subsection  ZMQ_XPUB
+@cindex  ZMQ_XPUB
+ @deftypefn  {Command} {} ZMQ_XPUB
+
+ Constant for publisher type.
+
+ @xseealso{zmq_socket}
+ @end deftypefn
+@c ZeroMQ socket type constants ZMQ_XSUB
+@c -----------------------------------------
+@subsection  ZMQ_XSUB
+@cindex  ZMQ_XSUB
+ @deftypefn  {Command} {} ZMQ_XSUB
+
+ Constant for subscriber type.
+
+ @xseealso{zmq_socket}
+ @end deftypefn
+@c ---------------------------------------------------
+@node  ZeroMQ get/setsockopt constants
+@section  ZeroMQ get/setsockopt constants
+@cindex  ZeroMQ get/setsockopt constants
+@c ZeroMQ get/setsockopt constants ZMQ_CONNECT_TIMEOUT
+@c -----------------------------------------
+@subsection  ZMQ_CONNECT_TIMEOUT
+@cindex  ZMQ_CONNECT_TIMEOUT
+ @deftypefn  {Command} {} ZMQ_CONNECT_TIMEOUT
+
+ Constant for get/setsockopt connect timeout value
+
+ @xseealso{zmq_getsockopt, zmq_setsockopt}
+ @end deftypefn
+@c ZeroMQ get/setsockopt constants ZMQ_CURVE_PUBLICKEY
+@c -----------------------------------------
+@subsection  ZMQ_CURVE_PUBLICKEY
+@cindex  ZMQ_CURVE_PUBLICKEY
+ @deftypefn  {Command} {} ZMQ_CURVE_PUBLICKEY
+
+ Constant for getsockopt and setsockopt CURVE_PUBLICKEY value option
+
+ @xseealso{zmq_getsockopt, zmq_setsockopt}
+ @end deftypefn
+@c ZeroMQ get/setsockopt constants ZMQ_CURVE_SECRETKEY
+@c -----------------------------------------
+@subsection  ZMQ_CURVE_SECRETKEY
+@cindex  ZMQ_CURVE_SECRETKEY
+ @deftypefn  {Command} {} ZMQ_CURVE_PRIVATEKEY
+
+ Constant for getsockopt and setsockopt CURVE_PRIVATEKEY value option
+
+ @xseealso{zmq_getsockopt, zmq_setsockopt}
+ @end deftypefn
+@c ZeroMQ get/setsockopt constants ZMQ_CURVE_SERVER
+@c -----------------------------------------
+@subsection  ZMQ_CURVE_SERVER
+@cindex  ZMQ_CURVE_SERVER
+ @deftypefn  {Command} {} ZMQ_CURVE_SERVER
+
+ Constant for getsockopt and setsockopt CURVE_SERVER value option
+
+ @xseealso{zmq_getsockopt, zmq_setsockopt}
+ @end deftypefn
+@c ZeroMQ get/setsockopt constants ZMQ_CURVE_SERVERKEY
+@c -----------------------------------------
+@subsection  ZMQ_CURVE_SERVERKEY
+@cindex  ZMQ_CURVE_SERVERKEY
+ @deftypefn  {Command} {} ZMQ_CURVE_SERVERKEY
+
+ Constant for getsockopt and setsockopt CURVE_SERVERKEY value option
+
+ @xseealso{zmq_getsockopt, zmq_setsockopt}
+ @end deftypefn
+@c ZeroMQ get/setsockopt constants ZMQ_EVENTS
+@c -----------------------------------------
+@subsection  ZMQ_EVENTS
+@cindex  ZMQ_EVENTS
+ @deftypefn  {Command} {} ZMQ_EVENTS
+
+ Constant for getsockopt EVENTS value option
+
+ @xseealso{zmq_getsockopt}
+ @end deftypefn
+@c ZeroMQ get/setsockopt constants ZMQ_GSSAPI_PLAINTEXT
+@c -----------------------------------------
+@subsection  ZMQ_GSSAPI_PLAINTEXT
+@cindex  ZMQ_GSSAPI_PLAINTEXT
+ @deftypefn  {Command} {} ZMQ_GSSAPI_PLAINTEXT
+
+ Constant for getsockopt and setsockopt GSSAPI_PLAINTEXT value option
+
+ @xseealso{zmq_getsockopt, zmq_setsockopt}
+ @end deftypefn
+@c ZeroMQ get/setsockopt constants ZMQ_GSSAPI_PRINCIPAL
+@c -----------------------------------------
+@subsection  ZMQ_GSSAPI_PRINCIPAL
+@cindex  ZMQ_GSSAPI_PRINCIPAL
+ @deftypefn  {Command} {} ZMQ_GSSAPI_PRINCIPAL
+
+ Constant for getsockopt and setsockopt GSSAPI_PRINCIPAL value option
+
+ @xseealso{zmq_getsockopt, zmq_setsockopt}
+ @end deftypefn
+@c ZeroMQ get/setsockopt constants ZMQ_GSSAPI_SERVER
+@c -----------------------------------------
+@subsection  ZMQ_GSSAPI_SERVER
+@cindex  ZMQ_GSSAPI_SERVER
+ @deftypefn  {Command} {} ZMQ_GSSAPI_SERVER
+
+ Constant for getsockopt and setsockopt GSSAPI_SERVER value option
+
+ @xseealso{zmq_getsockopt, zmq_setsockopt}
+ @end deftypefn
+@c ZeroMQ get/setsockopt constants ZMQ_GSSAPI_SERVICE_PRINCIPAL
+@c -----------------------------------------
+@subsection  ZMQ_GSSAPI_SERVICE_PRINCIPAL
+@cindex  ZMQ_GSSAPI_SERVICE_PRINCIPAL
+ @deftypefn  {Command} {} ZMQ_GSSAPI_SERVICE_PRINCIPAL
+
+ Constant for getsockopt and setsockopt GSSAPI_SERVICE_PRINCIPAL value option
+
+ @xseealso{zmq_getsockopt, zmq_setsockopt}
+ @end deftypefn
+@c ZeroMQ get/setsockopt constants ZMQ_IDENTITY
+@c -----------------------------------------
+@subsection  ZMQ_IDENTITY
+@cindex  ZMQ_IDENTITY
+ @deftypefn  {Command} {} ZMQ_IDENITY
+
+ Constant for getsockopt and setsockopt IDENTITY value option
+
+ @xseealso{zmq_getsockopt, zmq_setsockopt}
+ @end deftypefn
+@c ZeroMQ get/setsockopt constants ZMQ_LAST_ENDPOINT
+@c -----------------------------------------
+@subsection  ZMQ_LAST_ENDPOINT
+@cindex  ZMQ_LAST_ENDPOINT
+ @deftypefn  {Command} {} ZMQ_LAST_ENDPOINT
+
+ Constant for getsockopt last endpoint value option
+
+ @xseealso{zmq_getsockopt}
+ @end deftypefn
+@c ZeroMQ get/setsockopt constants ZMQ_MECHANISM
+@c -----------------------------------------
+@subsection  ZMQ_MECHANISM
+@cindex  ZMQ_MECHANISM
+ @deftypefn  {Command} {} ZMQ_MECHANISM
+
+ Constant for getsockopt and setsockopt MECHANISM value option
+
+ @xseealso{zmq_getsockopt, zmq_setsockopt}
+ @end deftypefn
+@c ZeroMQ get/setsockopt constants ZMQ_PLAIN_PASSWORD
+@c -----------------------------------------
+@subsection  ZMQ_PLAIN_PASSWORD
+@cindex  ZMQ_PLAIN_PASSWORD
+ @deftypefn  {Command} {} ZMQ_PLAIN_PASSWORD
+
+ Constant for getsockopt and setsockopt PLAIN_PASSWORD value option
+
+ @xseealso{zmq_getsockopt, zmq_setsockopt}
+ @end deftypefn
+@c ZeroMQ get/setsockopt constants ZMQ_PLAIN_SERVER
+@c -----------------------------------------
+@subsection  ZMQ_PLAIN_SERVER
+@cindex  ZMQ_PLAIN_SERVER
+ @deftypefn  {Command} {} ZMQ_PLAIN_SERVER
+
+ Constant for getsockopt and setsockopt PLAIN_SERVER value option
+
+ @xseealso{zmq_getsockopt, zmq_setsockopt}
+ @end deftypefn
+@c ZeroMQ get/setsockopt constants ZMQ_PLAIN_USERNAME
+@c -----------------------------------------
+@subsection  ZMQ_PLAIN_USERNAME
+@cindex  ZMQ_PLAIN_USERNAME
+ @deftypefn  {Command} {} ZMQ_PLAIN_USERNAME
+
+ Constant for getsockopt and setsockopt PLAIN_USERNAME value option
+
+ @xseealso{zmq_getsockopt, zmq_setsockopt}
+ @end deftypefn
+@c ZeroMQ get/setsockopt constants ZMQ_RCVMORE
+@c -----------------------------------------
+@subsection  ZMQ_RCVMORE
+@cindex  ZMQ_RCVMORE
+ @deftypefn  {Command} {} ZMQ_RCVMORE
+
+ Constant for getsockopt RCVMORE value option
+
+ @xseealso{zmq_getsockopt}
+ @end deftypefn
+@c ZeroMQ get/setsockopt constants ZMQ_SOCKS_PROXY
+@c -----------------------------------------
+@subsection  ZMQ_SOCKS_PROXY
+@cindex  ZMQ_SOCKS_PROXY
+ @deftypefn  {Command} {} ZMQ_SOCKS_PROXY
+
+ Constant for getsockopt and setsockopt SOCKS_PROXY value option
+
+ @xseealso{zmq_getsockopt, zmq_setsockopt}
+ @end deftypefn
+@c ZeroMQ get/setsockopt constants ZMQ_SUBSCRIBE
+@c -----------------------------------------
+@subsection  ZMQ_SUBSCRIBE
+@cindex  ZMQ_SUBSCRIBE
+ @deftypefn  {Command} {} ZMQ_SUBSCRIBE
+
+ Constant for setsockopt subscribe option
+
+ @xseealso{zmq_setsockopt, ZMQ_UNSUBSCRIBE}
+ @end deftypefn
+@c ZeroMQ get/setsockopt constants ZMQ_TYPE
+@c -----------------------------------------
+@subsection  ZMQ_TYPE
+@cindex  ZMQ_TYPE
+ @deftypefn  {Command} {} ZMQ_TYPE
+
+ Constant for getsockopt TYPE value option
+
+ @xseealso{zmq_getsockopt}
+ @end deftypefn
+@c ZeroMQ get/setsockopt constants ZMQ_UNSUBSCRIBE
+@c -----------------------------------------
+@subsection  ZMQ_UNSUBSCRIBE
+@cindex  ZMQ_UNSUBSCRIBE
+ @deftypefn  {Command} {} ZMQ_UNSUBSCRIBE
+
+ Constant for setsockopt unsubscribe option
+
+ @xseealso{zmq_setsockopt, ZMQ_SUBSCRIBE}
+ @end deftypefn
+@c ---------------------------------------------------
+@node  ZeroMQ ZMQ_EVENTS flags
+@section  ZeroMQ ZMQ_EVENTS flags
+@cindex  ZeroMQ ZMQ_EVENTS flags
+@c ZeroMQ ZMQ_EVENTS flags ZMQ_POLLIN
+@c -----------------------------------------
+@subsection  ZMQ_POLLIN
+@cindex  ZMQ_POLLIN
+ @deftypefn  {Command} {} ZMQ_POLLIN
+
+ Constant bitmask value for getsockopt EVENTS value option
+
+ @xseealso{zmq_getsockopt}
+ @end deftypefn
+@c ZeroMQ ZMQ_EVENTS flags ZMQ_POLLOUT
+@c -----------------------------------------
+@subsection  ZMQ_POLLOUT
+@cindex  ZMQ_POLLOUT
+ @deftypefn  {Command} {} ZMQ_POLLOUT
+
+ Constant bitmask value for getsockopt EVENTS value option
+
+ @xseealso{zmq_getsockopt}
+ @end deftypefn
+@c ---------------------------------------------------
+@node  ZeroMQ receive send options
+@section  ZeroMQ receive send options
+@cindex  ZeroMQ receive send options
+@c ZeroMQ receive send options ZMQ_DONTWAIT
+@c -----------------------------------------
+@subsection  ZMQ_DONTWAIT
+@cindex  ZMQ_DONTWAIT
+ @deftypefn  {Command} {} ZMQ_DONTWAIT
+
+ Constant for recv flag DONTWAIT
+
+ @xseealso{zmq_recv}
+ @end deftypefn
+@c ZeroMQ receive send options ZMQ_SNDMORE
+@c -----------------------------------------
+@subsection  ZMQ_SNDMORE
+@cindex  ZMQ_SNDMORE
+ @deftypefn  {Command} {} ZMQ_SNDMORE
+
+ Constant for send flag SNDMORE
+
+ @xseealso{zmq_send}
+ @end deftypefn
+@c ---------------------------------------------------
+@node  ZeroMQ ZMQ_MECHANISM values
+@section  ZeroMQ ZMQ_MECHANISM values
+@cindex  ZeroMQ ZMQ_MECHANISM values
+@c ZeroMQ ZMQ_MECHANISM values ZMQ_CURVE
+@c -----------------------------------------
+@subsection  ZMQ_CURVE
+@cindex  ZMQ_CURVE
+ @deftypefn  {Command} {} ZMQ_CURVE
+
+ Constant value for getsockopt MECHANISM value option
+
+ @xseealso{zmq_getsockopt}
+ @end deftypefn
+@c ZeroMQ ZMQ_MECHANISM values ZMQ_GSSAPI
+@c -----------------------------------------
+@subsection  ZMQ_GSSAPI
+@cindex  ZMQ_GSSAPI
+ @deftypefn  {Command} {} ZMQ_GSSAPI
+
+ Constant value for getsockopt MECHANISM value option
+
+ @xseealso{zmq_getsockopt}
+ @end deftypefn
+@c ZeroMQ ZMQ_MECHANISM values ZMQ_NULL
+@c -----------------------------------------
+@subsection  ZMQ_NULL
+@cindex  ZMQ_NULL
+ @deftypefn  {Command} {} ZMQ_NULL
+
+ Constant value for getsockopt MECHANISM value option
+
+ @xseealso{zmq_getsockopt}
+ @end deftypefn
+@c ZeroMQ ZMQ_MECHANISM values ZMQ_PLAIN
+@c -----------------------------------------
+@subsection  ZMQ_PLAIN
+@cindex  ZMQ_PLAIN
+ @deftypefn  {Command} {} ZMQ_PLAIN
+
+ Constant value for getsockopt MECHANISM value option
+
+ @xseealso{zmq_getsockopt}
+ @end deftypefn

@@ -1,0 +1,14 @@
+prefix=/scratch/build/mxe-octave-w64/release/usr/x86_64-w64-mingw32/qt5
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+host_bins=/scratch/build/mxe-octave-w64/release/usr/bin
+qt_config=shared shared release c++11 concurrent dbus stl
+
+Name: Qt5 Core
+Description: Qt Core module
+Version: 5.15.2
+Libs: -L${libdir} -lQt5Core 
+Cflags: -DQT_CORE_LIB -I${includedir}/QtCore -I${includedir}
+

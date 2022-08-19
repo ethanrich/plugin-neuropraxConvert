@@ -1,0 +1,336 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>leasqr (optim_doc)</title>
+
+<meta name="description" content="leasqr (optim_doc)">
+<meta name="keywords" content="leasqr (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Residual-optimization.html#Residual-optimization" rel="up" title="Residual optimization">
+<link href="pronyfit.html#pronyfit" rel="next" title="pronyfit">
+<link href="lsqlin.html#lsqlin" rel="prev" title="lsqlin">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="leasqr"></a>
+<div class="header">
+<p>
+Next: <a href="pronyfit.html#pronyfit" accesskey="n" rel="next">pronyfit</a>, Previous: <a href="lsqlin.html#lsqlin" accesskey="p" rel="prev">lsqlin</a>, Up: <a href="Residual-optimization.html#Residual-optimization" accesskey="u" rel="up">Residual optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="An-older-function-for-curve-fitting"></a>
+<h3 class="section">2.8 An older function for curve fitting</h3>
+<a name="index-leasqr-8"></a>
+
+<p>This was a popular function for curve fitting and has been enhanced to
+honour constraints.  <code>nonlin_curvefit</code> (
+see
+<a href="nonlin_005fcurvefit.html#nonlin_005fcurvefit">nonlin_curvefit</a>) does
+now the same job if used with the default backend, and should be
+prefered due to its more powerful interface.  The statistics returned by
+<code>leasqr</code> can also (and partially better) be computed with
+<code>curvefit_stat</code> (
+see
+<a href="curvefit_005fstat.html#curvefit_005fstat">curvefit_stat</a>).  There are currently two
+things which still only <code>leasqr</code> does:
+</p>
+<ul>
+<li> internally providing a function for plotting fits during
+      optimization,
+</li><li> returning a pre-computed matrix for determining confidence
+      regions.
+</li></ul>
+
+<a name="XREFleasqr"></a><dl>
+<dt><a name="index-leasqr"></a>Function File: <em></em> <strong>leasqr</strong> <em>(<var>x</var>, <var>y</var>, <var>pin</var>, <var>F</var>)</em></dt>
+<dt><a name="index-leasqr-1"></a>Function File: <em></em> <strong>leasqr</strong> <em>(<var>x</var>, <var>y</var>, <var>pin</var>, <var>F</var>, <var>stol</var>)</em></dt>
+<dt><a name="index-leasqr-2"></a>Function File: <em></em> <strong>leasqr</strong> <em>(<var>x</var>, <var>y</var>, <var>pin</var>, <var>F</var>, <var>stol</var>, <var>niter</var>)</em></dt>
+<dt><a name="index-leasqr-3"></a>Function File: <em></em> <strong>leasqr</strong> <em>(<var>x</var>, <var>y</var>, <var>pin</var>, <var>F</var>, <var>stol</var>, <var>niter</var>, <var>wt</var>)</em></dt>
+<dt><a name="index-leasqr-4"></a>Function File: <em></em> <strong>leasqr</strong> <em>(<var>x</var>, <var>y</var>, <var>pin</var>, <var>F</var>, <var>stol</var>, <var>niter</var>, <var>wt</var>, <var>dp</var>)</em></dt>
+<dt><a name="index-leasqr-5"></a>Function File: <em></em> <strong>leasqr</strong> <em>(<var>x</var>, <var>y</var>, <var>pin</var>, <var>F</var>, <var>stol</var>, <var>niter</var>, <var>wt</var>, <var>dp</var>, <var>dFdp</var>)</em></dt>
+<dt><a name="index-leasqr-6"></a>Function File: <em></em> <strong>leasqr</strong> <em>(<var>x</var>, <var>y</var>, <var>pin</var>, <var>F</var>, <var>stol</var>, <var>niter</var>, <var>wt</var>, <var>dp</var>, <var>dFdp</var>, <var>options</var>)</em></dt>
+<dt><a name="index-leasqr-7"></a>Function File: <em>[<var>f</var>, <var>p</var>, <var>cvg</var>, <var>iter</var>, <var>corp</var>, <var>covp</var>, <var>covr</var>, <var>stdresid</var>, <var>Z</var>, <var>r2</var>] =</em> <strong>leasqr</strong> <em>(&hellip;)</em></dt>
+<dd><p>Levenberg-Marquardt nonlinear regression.
+</p>
+<p>Input arguments:
+</p>
+<dl compact="compact">
+<dt><var>x</var></dt>
+<dd><p>Vector or matrix of independent variables.
+</p>
+</dd>
+<dt><var>y</var></dt>
+<dd><p>Vector or matrix of observed values.
+</p>
+</dd>
+<dt><var>pin</var></dt>
+<dd><p>Vector of initial parameters to be adjusted by leasqr.
+</p>
+</dd>
+<dt><var>F</var></dt>
+<dd><p>Name of function or function handle. The function must be of the form
+<code>y = f(x, p)</code>, with y, x, p of the form <var>y</var>, <var>x</var>, <var>pin</var>.
+</p>
+</dd>
+<dt><var>stol</var></dt>
+<dd><p>Scalar tolerance on fractional improvement in scalar sum of squares, i.e.,
+<code>sum ((<var>wt</var> .* (<var>y</var>-<var>f</var>))^2)</code>.  Set to 0.0001 if
+empty or not given;
+</p>
+</dd>
+<dt><var>niter</var></dt>
+<dd><p>Maximum number of iterations.  Set to 20 if empty or not given.
+</p>
+</dd>
+<dt><var>wt</var></dt>
+<dd><p>Statistical weights (same dimensions as <var>y</var>).  These should be
+set to be proportional to <code>sqrt (<var>y</var>) ^-1</code>, i.e., the
+covariance matrix of the data is assumed to be proportional to
+diagonal with diagonal equal to <code>(<var>wt</var>.^2)^-1</code>.  The constant of
+proportionality will be estimated.  Set to <code>ones (size
+(<var>y</var>))</code> if empty or not given.
+</p>
+</dd>
+<dt><var>dp</var></dt>
+<dd><p>Fractional increment of <var>p</var> for numerical partial derivatives.  Set
+to <code>0.001 * ones (size (<var>pin</var>))</code> if empty or not given.
+</p>
+<ul>
+<li> dp(j) &gt; 0 means central differences on j-th parameter p(j).
+</li><li> dp(j) &lt; 0 means one-sided differences on j-th parameter p(j).
+</li><li> dp(j) = 0 holds p(j) fixed, i.e., leasqr won&rsquo;t change initial guess: pin(j)
+</li></ul>
+
+</dd>
+<dt><var>dFdp</var></dt>
+<dd><p>Name of partial derivative function in quotes or function handle. If
+not given or empty, set to <code>dfdp</code>, a slow but general partial
+derivatives function. The function must be of the form <code>prt =
+dfdp (x, f, p, dp, F [,bounds])</code>.  For backwards compatibility, the
+function will only be called with an extra &rsquo;bounds&rsquo; argument if the
+&rsquo;bounds&rsquo; option is explicitly specified to leasqr (see dfdp.m).
+</p>
+</dd>
+<dt><var>options</var></dt>
+<dd><p>Structure with multiple options. The following fields are recognized:
+</p>
+<dl compact="compact">
+<dt><code>fract_prec</code></dt>
+<dd><p>Column vector (same length as <var>pin</var>)
+of desired fractional precisions in parameter estimates.
+Iterations are terminated if change in parameter vector (chg)
+relative to current parameter estimate is less than their
+corresponding elements in &rsquo;fract_prec&rsquo;, i.e.,
+<code>all (abs (chg) &lt; abs (options.fract_prec .* current_parm_est))</code> on two
+consecutive iterations. Defaults to <code>zeros (size (<var>pin</var>))</code>.
+</p>
+</dd>
+<dt><code>max_fract_change</code></dt>
+<dd><p>Column vector (same length as <var>pin</var>) of maximum fractional step
+changes in parameter vector.
+Fractional change in elements of parameter vector is constrained to
+be at most &rsquo;max_fract_change&rsquo; between sucessive iterations, i.e.,
+<code>abs (chg(i)) = abs (min([chg(i), options.max_fract_change(i) * current param estimate]))</code>.
+Defaults to <code>Inf * ones (size (<var>pin</var>))</code>.
+</p>
+</dd>
+<dt><code>inequc</code></dt>
+<dd><p>Cell-array containing up to four entries,
+two entries for linear inequality constraints and/or one or two
+entries for general inequality constraints.  Initial parameters
+must satisfy these constraints.  Either linear or general
+constraints may be the first entries, but the two entries for
+linear constraints must be adjacent and, if two entries are given
+for general constraints, they also must be adjacent.  The two
+entries for linear constraints are a matrix (say m) and a vector
+(say v), specifying linear inequality constraints of the form
+&lsquo;m.&rsquo; * parameters + v &gt;= 0&rsquo;. If the constraints are just bounds,
+it is suggested to specify them in &rsquo;options.bounds&rsquo; instead,
+since then some sanity tests are performed, and since the
+function &rsquo;dfdp.m&rsquo; is guarantied not to violate constraints during
+determination of the numeric gradient only for those constraints
+specified as &rsquo;bounds&rsquo; (possibly with violations due to a certain
+inaccuracy, however, except if no constraints except bounds are
+specified). The first entry for general constraints must be a
+differentiable vector valued function (say h), specifying general
+inequality constraints of the form &lsquo;h (p[, idx]) &gt;= 0&rsquo;; p is the
+column vector of optimized paraters and the optional argument idx
+is a logical index. h has to return the values of all constraints
+if idx is not given, and has to return only the indexed
+constraints if idx is given (so computation of the other
+constraints can be spared). If a second entry for general
+constraints is given, it must be a function (say dh) which
+returnes a matrix whos rows contain the gradients of the
+constraint function h with respect to the optimized parameters.
+It has the form jac_h = dh (vh, p, dp, h, idx[, bounds]); p is
+the column vector of optimized parameters, and idx is a logical
+index &mdash; only the rows indexed by idx must be returned (so
+computation of the others can be spared). The other arguments of
+dh are for the case that dh computes numerical gradients: vh is
+the column vector of the current values of the constraint
+function h, with idx already applied. h is a function h (p) to
+compute the values of the constraints for parameters p, it will
+return only the values indexed by idx. dp is a suggestion for
+relative step width, having the same value as the argument &rsquo;dp&rsquo;
+of leasqr above. If bounds were specified to leasqr, they are
+provided in the argument bounds of dh, to enable their
+consideration in determination of numerical gradients. If dh is
+not specified to leasqr, numerical gradients are computed in the
+same way as with &rsquo;dfdp.m&rsquo; (see above). If some constraints are
+linear, they should be specified as linear constraints (or
+bounds, if applicable) for reasons of performance, even if
+general constraints are also specified.
+</p>
+</dd>
+<dt><code>bounds</code></dt>
+<dd><p>Two-column-matrix, one row for each
+parameter in <var>pin</var>. Each row contains a minimal and maximal value
+for each parameter. Default: [-Inf, Inf] in each row. If this
+field is used with an existing user-side function for &rsquo;dFdp&rsquo;
+(see above) the functions interface might have to be changed.
+</p>
+</dd>
+<dt><code>equc</code></dt>
+<dd><p>Equality constraints, specified the same
+way as inequality constraints (see field &rsquo;options.inequc&rsquo;).
+Initial parameters must satisfy these constraints.
+Note that there is possibly a certain inaccuracy in honoring
+constraints, except if only bounds are specified.
+<em>Warning</em>: If constraints (or bounds) are set, returned guesses
+of <var>corp</var>, <var>covp</var>, and <var>Z</var> are generally invalid, even if
+no constraints
+are active for the final parameters. If equality constraints are
+specified, <var>corp</var>, <var>covp</var>, and <var>Z</var> are not guessed at all.
+</p>
+</dd>
+<dt><code>cpiv</code></dt>
+<dd><p>Function for complementary pivot algorithm
+for inequality constraints. Defaults to cpiv_bard.  No different
+function is supplied.
+</p>
+</dd>
+</dl>
+
+<p>For backwards compatibility, <var>options</var> can also be a matrix whose
+first and second column contains the values of <code>fract_prec</code> and
+<code>max_fract_change</code>, respectively.
+</p>
+</dd>
+</dl>
+
+<p>Output:
+</p>
+<dl compact="compact">
+<dt><var>f</var></dt>
+<dd><p>Column vector of values computed: f = F(x,p).
+</p>
+</dd>
+<dt><var>p</var></dt>
+<dd><p>Column vector trial or final parameters, i.e, the solution.
+</p>
+</dd>
+<dt><var>cvg</var></dt>
+<dd><p>Scalar: = 1 if convergence, = 0 otherwise.
+</p>
+</dd>
+<dt><var>iter</var></dt>
+<dd><p>Scalar number of iterations used.
+</p>
+</dd>
+<dt><var>corp</var></dt>
+<dd><p>Correlation matrix for parameters.
+</p>
+</dd>
+<dt><var>covp</var></dt>
+<dd><p>Covariance matrix of the parameters.
+</p>
+</dd>
+<dt><var>covr</var></dt>
+<dd><p>Diag(covariance matrix of the residuals).
+</p>
+</dd>
+<dt><var>stdresid</var></dt>
+<dd><p>Standardized residuals.
+</p>
+</dd>
+<dt><var>Z</var></dt>
+<dd><p>Matrix that defines confidence region (see comments in the source).
+</p>
+</dd>
+<dt><var>r2</var></dt>
+<dd><p>Coefficient of multiple determination, intercept form.
+</p>
+</dd>
+</dl>
+
+<p>Not suitable for non-real residuals.
+</p>
+<p>References:
+Bard, Nonlinear Parameter Estimation, Academic Press, 1974.
+Draper and Smith, Applied Regression Analysis, John Wiley and Sons, 1981.
+</p>
+</dd></dl>
+
+
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="pronyfit.html#pronyfit" accesskey="n" rel="next">pronyfit</a>, Previous: <a href="lsqlin.html#lsqlin" accesskey="p" rel="prev">lsqlin</a>, Up: <a href="Residual-optimization.html#Residual-optimization" accesskey="u" rel="up">Residual optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

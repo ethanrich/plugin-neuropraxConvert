@@ -1,0 +1,62 @@
+## DO NOT EDIT! Generated from mpfr_vector_sum_d.cc
+%!assert (mpfr_vector_sum_d (0, [eps, realmax, realmax, -realmax, -realmax], 2), eps)
+%!assert (mpfr_vector_sum_d (-inf, [eps/2, 1], 2), 1)
+%!assert (mpfr_vector_sum_d (+inf, [eps/2, 1], 2), 1 + eps)
+%!test
+%!  a = inf (infsup ("0X1.1111111111111P+100"));
+%!  b = inf (infsup ("0X1.1111111111111P+1"));
+%!  [s, e] = mpfr_vector_sum_d (0.5, [a, b], 2);
+%!  assert (s, a);
+%!  assert (e, b);
+%!test
+%!  a = inf (infsup ("0X1.1111111111111P+53"));
+%!  b = inf (infsup ("0X1.1111111111111P+1"));
+%!  c = inf (infsup ("0X1.1111111111112P+53"));
+%!  d = inf (infsup ("0X1.111111111111P-3"));
+%!  [s, e] = mpfr_vector_sum_d (0.5, [a, b], 2);
+%!  assert (s, c);
+%!  assert (e, d);
+%!test
+%!  a = inf (infsup ("0X1.1111111111111P+2"));
+%!  b = inf (infsup ("0X1.1111111111111P+1"));
+%!  c = inf (infsup ("0X1.999999999999AP+2"));
+%!  d = inf (infsup ("-0X1P-51"));
+%!  [s, e] = mpfr_vector_sum_d (0.5, [a, b], 2);
+%!  assert (s, c);
+%!  assert (e, d);
+%!test
+%!  for dim = 1:6
+%!    assert (mpfr_vector_sum_d (0.5, ones (1, 2, 3, 4, 5), dim), sum (ones (1, 2, 3, 4, 5), dim));
+%!  endfor
+%!shared testdata
+%! testdata = load (file_in_loadpath ("test/itl.mat"));
+%!test
+%! # Scalar evaluation
+%! testcases = testdata.NoSignal.double.sum_nearest;
+%! for testcase = [testcases]'
+%!   assert (isequaln (...
+%!     mpfr_vector_sum_d (0.5, testcase.in{1}, 2), ...
+%!     testcase.out));
+%! endfor
+%!test
+%! # Vector evaluation
+%! testcases = testdata.NoSignal.double.sum_nearest;
+%! in1 = vertcat (testcases.in);
+%! in1 = cell2mat (cellfun ("postpad", in1, {(max (cellfun ("numel", in1)))}, "UniformOutput", false));
+%! out = vertcat (testcases.out);
+%! assert (isequaln (mpfr_vector_sum_d (0.5, in1, 2), out));
+%!test
+%! # Scalar evaluation
+%! testcases = testdata.NoSignal.double.sum_abs_nearest;
+%! for testcase = [testcases]'
+%!   assert (isequaln (...
+%!     mpfr_vector_sum_d (0.5, abs (testcase.in{1}), 2), ...
+%!     testcase.out));
+%! endfor
+%!test
+%! # Vector evaluation
+%! testcases = testdata.NoSignal.double.sum_abs_nearest;
+%! in1 = vertcat (testcases.in);
+%! in1 = cell2mat (cellfun ("postpad", in1, {(max (cellfun ("numel", in1)))}, "UniformOutput", false));
+%! out = vertcat (testcases.out);
+%! assert (isequaln (mpfr_vector_sum_d (0.5, abs (in1), 2), out));

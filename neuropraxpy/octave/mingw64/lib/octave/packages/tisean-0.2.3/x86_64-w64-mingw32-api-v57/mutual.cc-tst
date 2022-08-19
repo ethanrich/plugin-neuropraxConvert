@@ -1,0 +1,12 @@
+## DO NOT EDIT! Generated from mutual.cc
+%!fail("mutual((1:10),0)");
+%!fail("mutual((1:10),-4,5)");
+%!fail("mutual([(1:10);(1:10)])");
+%!fail("[a,b,c,d] = mutual ((1:10),1)");
+%!test
+%! "'res' was created using 'mutual hen.dat' where from the TISEAN package.";
+%! "'hen.dat' was created using 'henon(10000)' from Tisean package in GNU Octave";
+%! res = [0, 2.684467e+00; 1, 1.362672e+00; 2, 1.054827e+00; 3, 8.300913e-01; 4, 6.421677e-01; 5, 4.650269e-01; 6, 3.409740e-01; 7, 2.485991e-01; 8, 1.621105e-01; 9, 1.144275e-01; 10, 9.430688e-02; 11, 6.796321e-02; 12, 6.181312e-02; 13, 4.369772e-02; 14, 3.566099e-02; 15, 2.923612e-02; 16, 2.354500e-02; 17, 1.924072e-02; 18, 1.999171e-02; 19, 1.887493e-02; 20, 1.464115e-02];
+%! hen = henon(10000);
+%! [a,b] = mutual (hen(:,1),-20);
+%! assert ([a,b], res, 1e-6);

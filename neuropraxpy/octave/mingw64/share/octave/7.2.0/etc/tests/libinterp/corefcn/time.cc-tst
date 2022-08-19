@@ -1,0 +1,68 @@
+## DO NOT EDIT!  Generated automatically from time.cc by Make.
+%!assert (time () > 0)
+%!error time (1)
+%!test
+%! ts = gmtime (time ());
+%! assert (isstruct (ts));
+%! assert (isfield (ts, "usec"));
+%! assert (isfield (ts, "year"));
+%! assert (isfield (ts, "mon"));
+%! assert (isfield (ts, "mday"));
+%! assert (isfield (ts, "sec"));
+%! assert (isfield (ts, "min"));
+%! assert (isfield (ts, "wday"));
+%! assert (isfield (ts, "hour"));
+%! assert (isfield (ts, "isdst"));
+%! assert (isfield (ts, "yday"));
+%!error gmtime ()
+%!error gmtime (1, 2)
+%!test
+%! ts = localtime (time ());
+%! assert (isstruct (ts));
+%! assert (isfield (ts, "usec"));
+%! assert (isfield (ts, "year"));
+%! assert (isfield (ts, "mon"));
+%! assert (isfield (ts, "mday"));
+%! assert (isfield (ts, "sec"));
+%! assert (isfield (ts, "min"));
+%! assert (isfield (ts, "wday"));
+%! assert (isfield (ts, "hour"));
+%! assert (isfield (ts, "isdst"));
+%! assert (isfield (ts, "yday"));
+%!error localtime ()
+%!error localtime (1, 2)
+%!test
+%! t = time ();
+%! assert (fix (mktime (localtime (t))) == fix (t));
+%!assert (datestr (datenum (1969, 1, 1), 0), "01-Jan-1969 00:00:00")
+%!assert (datestr (datenum (1901, 1, 1), 0), "01-Jan-1901 00:00:00")
+%!assert (datestr (datenum (1795, 1, 1), 0), "01-Jan-1795 00:00:00")
+%!error mktime ()
+%!error mktime (1)
+%!error mktime (1, 2, 3)
+%!error mktime (struct ("year", "foo"))
+%!assert (ischar (strftime ("%%%n%t%H%I%k%l", localtime (time ()))))
+%!assert (ischar (strftime ("%M%p%r%R%s%S%T", localtime (time ()))))
+%!assert (ischar (strftime ("%X%Z%z%a%A%b%B", localtime (time ()))))
+%!assert (ischar (strftime ("%c%C%d%e%D%h%j", localtime (time ()))))
+%!assert (ischar (strftime ("%m%U%w%W%x%y%Y", localtime (time ()))))
+%!error strftime ()
+%!error strftime ("foo", 1)
+%!error strftime ("foo", struct ("year", "foo"))
+%!error strftime ("foo", localtime (time ()), 1)
+%!test
+%! fmt = "%Y-%m-%d %H:%M:%S";
+%! s = strftime (fmt, localtime (time ()));
+%! ts = strptime  (s, fmt);
+%! assert (isstruct (ts));
+%! assert (isfield (ts, "usec"));
+%! assert (isfield (ts, "year"));
+%! assert (isfield (ts, "mon"));
+%! assert (isfield (ts, "mday"));
+%! assert (isfield (ts, "sec"));
+%! assert (isfield (ts, "min"));
+%! assert (isfield (ts, "wday"));
+%! assert (isfield (ts, "hour"));
+%! assert (isfield (ts, "isdst"));
+%! assert (isfield (ts, "yday"));
+%!error strptime ()

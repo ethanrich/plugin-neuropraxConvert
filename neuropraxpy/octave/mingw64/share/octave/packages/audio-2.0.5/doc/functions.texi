@@ -1,0 +1,620 @@
+@c ---------------------------------------------------
+@node MIDI Device Interface
+@section MIDI Device Interface
+@cindex MIDI Device Interface
+@c MIDI Device Interface @octave_midi/hasdata
+@c -----------------------------------------
+@subsection @@octave_midi/hasdata
+@cindex hasdata
+ @deftypefn {} {@var{tf} =} hasdata (@var{dev})
+ Return whether there is data available to read
+
+ @subsubheading Inputs
+ @var{dev} - a octave midi device opened using mididevice.@*
+
+ @subsubheading Outputs
+ @var{tf} - true if device has data available to read@*
+
+ @xseealso{mididevice}
+ @end deftypefn
+@c MIDI Device Interface mididevice
+@c -----------------------------------------
+@subsection mididevice
+@cindex mididevice
+ @deftypefn {} {@var{dev} =} mididevice (@var{mididev})
+ @deftypefnx {} {@var{dev} =} mididevice (@var{mididir}, @var{mididev})
+ @deftypefnx {} {@var{dev} =} mididevice ("input", @var{midiindev}, "output", @var{midioutdev})
+ Create a midi device using the input parameters.
+
+ When a single device name or id is provided, attempt to create the midi device using the same name for both input and output.
+
+ Otherwise, use the name or device id for the given input or output direction.
+
+ @subsubheading Inputs
+ @var{mididev} - name or id of device to load.@*
+ @var{mididir} - midi direction of "input" or "output"@*
+ @var{midiindev} - midi input name or id@*
+ @var{midioutdev} - midi output name or id
+
+ @subsubheading Outputs
+ @var{dev} - octave_midi class for opened device
+
+ @subsubheading Properties
+ @var{Input} - Input device name (read only).@*
+ @var{Output} - Output device name (read only).@*
+ @var{InputID} - Input device id (read only).@*
+ @var{OutputID} - Output device id (read only).@*
+
+ @subsubheading Examples
+ Open midi device with ID of 0.
+ @example
+ @command{>} dev = mididevice(0);
+
+  mididevice connected to
+    input: "SparkFun Pro Micro:SparkFun Pro Micro MIDI 1 20:0" (1)
+    output: "SparkFun Pro Micro:SparkFun Pro Micro MIDI 1 20:0" (0)
+ @end example
+
+ Open a named midi device:
+ @example
+ @command{>} dev = mididevice("SparkFun Pro Micro:SparkFun Pro Micro MIDI 1 20:0");
+
+  mididevice connected to
+    input: "SparkFun Pro Micro:SparkFun Pro Micro MIDI 1 20:0" (1)
+    output: "SparkFun Pro Micro:SparkFun Pro Micro MIDI 1 20:0" (0)
+ @end example
+
+ @xseealso{mididevinfo}
+ @end deftypefn
+@c MIDI Device Interface mididevinfo
+@c -----------------------------------------
+@subsection mididevinfo
+@cindex mididevinfo
+ @deftypefn {} {@var{devlist} =} mididevinfo ()
+ @deftypefnx {} {} mididevinfo ()
+ Retrieve the midi devices detected within the system.
+
+ The list will be stored with variable @var{devlist} as either a input or output device.
+ If no output variable is provided, the devices will be displayed.
+
+ @subsubheading Inputs
+ None
+
+ @subsubheading Outputs
+ @var{devlist} - a structure containing the midi device information
+
+ @subsubheading Examples
+ Display the known devices of the system.
+ @example
+ @command{>} mididevinfo
+
+ MIDI devices available
+ ID Direction Interface  Name
+  0 output    Alsa       Midi Through:Midi Through Port-0 14:0
+  1 output    Alsa       Ensoniq AudioPCI:ES1371 16:0
+  2 output    Alsa       SparkFun Pro Micro:SparkFun Pro Micro MIDI 1 20:0
+  3 input     Alsa       Midi Through:Midi Through Port-0 14:0
+  4 input     Alsa       Ensoniq AudioPCI:ES1371 16:0
+  5 input     Alsa       SparkFun Pro Micro:SparkFun Pro Micro MIDI 1 20:0
+ @end example
+
+ Assign variable @var{mididevices} with the values from the known devices
+ @example
+ @command{>} mididevices = mididevinfo
+
+ mididevices =
+  scalar structure containing the fields:
+    input =
+    @{
+      [1,1] =
+        scalar structure containing the fields:
+          Name = SparkFun Pro Micro:SparkFun Pro Micro MIDI 1 20:0
+          Interface = Alsa
+          ID =  0
+    @}
+    output =
+    @{
+      [1,1] =
+        scalar structure containing the fields:
+          Name = SparkFun Pro Micro:SparkFun Pro Micro MIDI 1 20:0
+          Interface = Alsa
+          ID =  1
+    @}
+ @end example
+
+ @xseealso{mididevice}
+ @end deftypefn
+@c MIDI Device Interface midiflush
+@c -----------------------------------------
+@subsection midiflush
+@cindex midiflush
+ @deftypefn {} {} midiflush (@var{dev})
+ Flush the receive buffers on a midi device
+
+ @subsubheading Inputs
+ @var{dev} - midi device opened using mididevice@*
+
+ @subsubheading Outputs
+ None
+
+ @subsubheading Examples
+ Flush a midi device
+ @example
+ midiflush(dev);
+ @end example
+
+ @xseealso{mididevice, midireceive}
+ @end deftypefn
+@c MIDI Device Interface midimsg
+@c -----------------------------------------
+@subsection midimsg
+@cindex midimsg
+ @deftypefn {} {@var{msg} =} midimsg (0)
+ @deftypefnx {} {@var{msg} =} midimsg (@var{type} ....)
+ @deftypefnx {} {@var{msg} =} midimsg ("note", @var{channel}, @var{note}, @var{velocity}, @var{duration}, @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("noteon", @var{channel}, @var{note}, @var{velocity}, @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("noteoff", @var{channel}, @var{note}, @var{velocity}, @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("programchange", @var{channel}, @var{prog}, @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("controlchange", @var{channel}, @var{ccnum}, @var{ccval}, @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("polykeypressure", @var{channel}, @var{note}, @var{keypressure}, @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("channelpressure", @var{channel}, @var{chanpressure}, @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("localcontrol", @var{channel}, @var{localcontrol}, @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("pitchbend", @var{channel}, @var{pitchchange}, @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("polyon", @var{channel}, @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("monoon", @var{channel}, @var{monochannels}, @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("omnion", @var{channel}, @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("omnioff", @var{channel}, @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("allsoundoff", @var{channel}, @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("allnotesoff", @var{channel}, @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("resetallcontrollers", @var{channel}, @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("start", @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("stop", @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("continue", @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("systemreset", @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("activesensing", @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("timingclock", @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("systemexclusive", @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("systemexclusive", @var{bytes}, @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("eox", @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("data", @var{bytes}, @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("songselect", @var{song}, @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("songpositionpointer", @var{songposition}, @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("tunerequest", @var{timestamp})
+ @deftypefnx {} {@var{msg} =} midimsg ("miditimecodequarterframe", @var{timeseq}, @var{timevalue}, @var{timestamp})
+ Create a midimsg object
+
+ If the input parameter is 0, create an empty midi message object
+ Otherwise the first variable is the type of message to create, followed by the additional
+ parameters for the message.
+
+ For each message type, the timestamp value is optional.
+
+ @subsubheading Inputs
+ @var{type} - string message type or a midimsgtype.@*
+ @var{timestamp} - optional seconds time stamp for the event@*
+ @var{channel} - the channel to use for the message (1..16)@*
+ @var{note} - the value of the note to play/stop@*
+ @var{velocity} - the velocity value for a note on/off, with 0 stopping a note from sounding.@*
+ @var{duration} - seconds between starting and stopping a note when created a 'note' message.@*
+ @var{prog} - program number when doing a program change message.@*
+ @var{ccnum} - control change control number.@*
+ @var{ccval} - control change control value.@*
+ @var{keypressure} - key pressure value when creating a key pressure message.@*
+ @var{chanpressure} - channel pressure value when creating a channelpressure message.@*
+ @var{pitchchange} - pitch change value when creating a pitch bend message.@*
+ @var{localcontrol} - boolean value when creating a localcontrol message.@*
+ @var{monochannels} - channels specified for a mono on message.@*
+ @var{bytes} - array of data in range of 0 to 127 specified as part of a data message or
+ system exclusive message.@*
+ @var{song} - song selection number for a song selection message.@*
+ @var{songposition} - song position value for a song position message.@*
+ @var{timeseq} - timecode sequence number for a miditimecodequarterframe message.@*
+ @var{timevalue} - timecode value number for a miditimecodequarterframe message.@*
+
+ @subsubheading Outputs
+ @var{msg} - a midimsg object containing the midi data of the message
+
+ @subsubheading Properties
+ @var{timestamp} - timestamp of the message, or an array or timestamps if the the message is a
+ compound message.@*
+ @var{msgbytes} - the raw message bytes that make up the MIDI message.@*
+ @var{nummsgbytes} - the number of message bytes that make up the MIDI message.@*
+ @var{type} - string or midimsgtype that represents the message type.@*
+ @var{channel} - the channel number for message.@*
+ @var{note} - the note value for message (Only valid for noteon/off and polykeypressure).@*
+ @var{velocity} - the velocity value for message (Only valid for noteon/off).@*
+ @var{keypressure} - the keypressure value for message (Only valid for polykeypressure).@*
+ @var{channelpressure} - the chanpressure value for message (Only valid for channelpressure).@*
+ @var{localcontrol} - the localcontrol value for message (Only valid for localcontrol messages).@*
+ @var{monochannels} - channels specified for a mono on message.@*
+ @var{program} - program number specified for a program change message.@*
+ @var{ccnumber} - control change number specified for a control change message.@*
+ @var{ccvalue} - control change value specified for a control change message.@*
+ @var{song} - song number for a song selection message.@*
+ @var{songposition} - song position value for a song position message.@*
+ @var{pitchchange} - pitch change value for a pitch bend message.@*
+ @var{timecodesequence} - timecode sequence number for a miditimecodequarterframe message.@*
+ @var{timecodevalue} - timecode value number for a miditimecodequarterframe message.@*
+
+ @subsubheading Examples
+ Create a note on/off pair with a duration of 1.5 seconds
+ @example
+ msg = midimsg('note', 1, 60, 100, 1.5)
+ @end example
+
+ Create a separate note on/off pair with a time between them of 1.5 seconds
+ @example
+ msg = [midimsg('noteon', 1, 60, 100, 0), midimsg('noteoff', 1, 60, 0, 1.5)]
+ @end example
+
+ Create a system reset message
+ @example
+ msg = midimsg('systemreset')
+ @end example
+
+ @xseealso{midifileread, midisend, midireceive, midimsgtype}
+ @end deftypefn
+@c MIDI Device Interface midireceive
+@c -----------------------------------------
+@subsection midireceive
+@cindex midireceive
+ @deftypefn {} {@var{midimsg} =} midireceive (@var{dev})
+ @deftypefnx {} {@var{midimsg} =} midireceive (@var{dev}, @var{maxmsg})
+ Attempt to receive midi messages from a midi device.
+
+ @subsubheading Inputs
+ @var{dev} - a octave midi device opened using mididevice.@*
+ @var{maxmsg} - Maximum number of messages to retrieve. If not specified, the function will attempt to get all pending.@*
+
+ @subsubheading Outputs
+ @var{midimsg} - a midimsg containing the messages retrieved from the device.@*
+ If no messages are available, @var{midimsg} will be empty.
+
+ @subsubheading Examples
+ Open device 0, and poll and display read messages
+ @example
+ dev = mididevice(0);
+ while true
+    mx = midireceive(dev);
+    if !isempty(mx)
+      % display message
+      mx
+    endif
+ endwhile
+ @end example
+
+ @xseealso{mididevice, midisend}
+ @end deftypefn
+@c MIDI Device Interface midisend
+@c -----------------------------------------
+@subsection midisend
+@cindex midisend
+ @deftypefn {} {} midisend (@var{dev}, @var{msg})
+ @deftypefnx {} {} midisend (@var{dev}, ...)
+ Send a midimsg to a midi device
+
+ @subsubheading Inputs
+ @var{dev} - midi device opened using mididevice@*
+ @var{msg} - a midi message class with messages to send to the midi device@*
+ If the msg isn't a midimsg class, the input data is expected to be in same format as the inputs to a midimsg object.
+
+ @subsubheading Outputs
+ None
+
+ @subsubheading Examples
+ Send a note on/off command to a opened midi device @var{dev}
+ @example
+ midisend(dev, midimsg("note", 1, 60, 100, 2.0));
+ @end example
+
+ @xseealso{midimsg, mididevice, midireceive}
+ @end deftypefn
+@c ---------------------------------------------------
+@node MIDI Controller Interface
+@section MIDI Controller Interface
+@cindex MIDI Controller Interface
+@c MIDI Controller Interface midicallback
+@c -----------------------------------------
+@subsection midicallback
+@cindex midicallback
+ @deftypefn {} {@var{oldhandle} =} midicallback (@var{midicontrolsObj}, @var{functionHandle})
+ @deftypefnx {} {@var{oldhandle} =} midicallback (@var{midicontrolsObj}, [])
+ @deftypefnx {} {@var{currhandle} =} midicallback (@var{midicontrolsObj})
+ Get, set or clear the midicontrol object callback.
+
+ @subsubheading Inputs
+ @var{midicontrolObj} - control object created using midicontrols.
+
+ @var{functionHandle} - function handle to set for call back. If it is [],
+ the callback function will be cleared.
+
+ @strong{NOTE}: currently anonymous functions will not work.
+
+ @strong{NOTE}: callbacks should be cleared before losing all references to the midicontrols
+ object.
+
+ @subsubheading Outputs
+ @var{oldhandle} The previously set midicallback function handle when setting a new callback.
+
+ @var{currhandle} The current set midicallback function handle.
+
+ @subsubheading Examples
+ Set a callback on a midicontrols object
+ @example
+ ctrl = midicontrols(2001)
+ function dispCallback(ctrl),disp(midiread(ctrl)),endfunction;
+ midicallback(ctrl, @@dispCallback);
+ @end example
+
+ Clear the callback on a midicontrols object
+ @example
+ ctrl = midicontrols(2001)
+ midicallback(ctrl, []);
+ @end example
+
+ Get the current callback on a midicontrols object
+ @example
+ ctrl = midicontrols(2001)
+ cb = midicallback(ctrl);
+ @end example
+
+ @xseealso{midicontrols, midisync, midiread}
+ @end deftypefn
+@c MIDI Controller Interface midicontrols
+@c -----------------------------------------
+@subsection midicontrols
+@cindex midicontrols
+ @deftypefn {} {@var{obj} =} midicontrols ()
+ @deftypefnx {} {@var{obj} =} midicontrols (@var{ctrlid})
+ @deftypefnx {} {@var{obj} =} midicontrols (@var{ctrlid}, @var{initialvalues})
+ @deftypefnx {} {@var{obj} =} midicontrols (__, @var{propertyname}, @var{propertyvalue})
+ Create a midi controls object
+
+ @subsubheading Inputs
+ @var{ctrlid} - single control id or array of control ids to monitor, or [] to use any controller.@*
+ @var{initialvalues} - initial values to use for controls. It should be the same size as @var{ctrlid}@*
+ @var{propertyname}, @var{propertyvalue} - properties to set on the controller. If a device is not specified
+ the value from getpref("midi", "DefaultDevice", 0) will be used.@*
+
+
+ Known properties are:
+ @table @asis
+ @item mididevice
+ name of the mididevice to monitor.
+ @item outputmode
+ the scaling mode for values: 'rawmidi' will return values between 0 .. 127,
+ 'normalized' will use values between 0 .. 1.
+ @end table
+
+ @subsubheading Outputs
+ @var{obj} - returns a midicontrols object
+
+ @subsubheading Examples
+ Create a midicontrols object monitoring control id 2001 on the default midi device
+ @example
+ ctrl = midicontrols(2001)
+ @end example
+
+ Create a midicontrols object monitoring control id 2001 on a a non default device
+ @example
+ ctrl = midicontrols(2001, 'mididevice', 1)
+ @end example
+
+ @xseealso{midiread, midisync}
+ @end deftypefn
+@c MIDI Controller Interface midiid
+@c -----------------------------------------
+@subsection midiid
+@cindex midiid
+ @deftypefn {} {[@var{ctrlid}, @var{dev}] =} midiid ()
+ Scan for control messages from midi devices to get the id of the device
+
+ Function will display a prompt for the user to move the midi control and return when
+ a control messages is detected or ctrl-C is pressed.
+
+ @subsubheading Inputs
+ None
+
+ @subsubheading Outputs
+ @var{ctrlid} - control id made from the controller channel * 1000 + controller number.@*
+ @var{dev} = name of the midi device the controller was detected on.
+
+ @subsubheading Examples
+ Monitor midi devices for first moving controller
+ @example
+ [ctrlid, devname] = midiid()
+ @end example
+
+ @xseealso{mididevinfo, midicontrols}
+ @end deftypefn
+@c MIDI Controller Interface midiread
+@c -----------------------------------------
+@subsection midiread
+@cindex midiread
+ @deftypefn {} {@var{val} =} midiread (@var{midicontrolsObj})
+ Read current values of midi controls
+
+ @subsubheading Inputs
+ @var{midicontrolObj} - control object created using midicontrols@*
+
+ @subsubheading Outputs
+ @var{val} single value or array of current values from the midi device.
+
+ @subsubheading Examples
+ Read current value of midicontrols with a ctrlid 2001 on the default midi device.
+ @example
+ ctrl = midicontrols(2001)
+ val = midiread(ctrl);
+ @end example
+
+ Read current value of midicontrols with a ctrlid 2001 on a non default midi device.
+ @example
+ ctrl = midicontrols(2001, 'mididevice', 1)
+ val = midiread(ctrl);
+ @end example
+
+ @xseealso{midicontrols, midisync}
+ @end deftypefn
+@c MIDI Controller Interface midisync
+@c -----------------------------------------
+@subsection midisync
+@cindex midisync
+ @deftypefn {} {} midisync (@var{midicontrolsObj})
+ @deftypefnx {} {} midisync (@var{midicontrolsObj}, @var{ctrlvalues})
+ Send the values of control object to the control, using @var{ctrlvalues} values
+ if specified instead
+
+ @subsubheading Inputs
+ @var{midicontrolObj} - control object created using midicontrols@*
+ @var{ctrlvalues} - values to send to the controls instead of initial values
+
+ @subsubheading Outputs
+ None
+
+ @subsubheading Examples
+ Send sync command to a midicontrols with a ctrlid 2001 to set a value of 1
+ @example
+ ctrl = midicontrols(2001)
+ midisync(ctrl, 1);
+ @end example
+
+ @xseealso{midicontrols}
+ @end deftypefn
+@c ---------------------------------------------------
+@node MIDI File I/O
+@section MIDI File I/O
+@cindex MIDI File I/O
+@c MIDI File I/O ismidifile
+@c -----------------------------------------
+@subsection ismidifile
+@cindex ismidifile
+ @deftypefn {} {@var{ismidi} =} ismidifile (@var{filename})
+ Check if @var{filename} is a midi file.
+
+ The function only checks whether it is an existing file and the
+ file starts with a valid 'MThd' header.
+
+ Non existing files, or files that do not meet the header criteria will return false.
+
+ @subsubheading Inputs
+ @var{filename} - filename of file to check.@*
+
+ @subsubheading Outputs
+ @var{ismidi} - true if it is a midi file, false otherwise
+
+ @xseealso{midifileread, midifilewrite}
+ @end deftypefn
+@c MIDI File I/O midifileinfo
+@c -----------------------------------------
+@subsection midifileinfo
+@cindex midifileinfo
+ @deftypefn {} {@var{info} =} midifileinfo (@var{filename})
+ Read MIDI file and display information about the tracks and data
+
+ @subsubheading Inputs
+ @var{filename} - filename of file to open.@*
+
+ @subsubheading Outputs
+ @var{info} - structure of the midi file data
+ with the following fields:@*
+ @table @asis
+ @item filename
+ the name of the file
+ @item header
+ The header block information
+ @item track
+ An array of tracks read from the file
+ @item other
+ An array of non-track midi blocks read from the file
+ @end table
+ @xseealso{midifileread}
+ @end deftypefn
+@c MIDI File I/O midifileread
+@c -----------------------------------------
+@subsection midifileread
+@cindex midifileread
+ @deftypefn {} {@var{msg} =} midifileread (@var{filename}, [propertyname, propertyvalue @dots{}])
+ Read MIDI file into a midimsg
+
+ @subsubheading Inputs
+ @var{filename} - filename of file to open.@*
+ @var{propertyname}, @var{properyvalue} - optional propertyname/value pairs.@*
+
+ Known property values are:
+ @table @asis
+ @item includemetaevents
+ A True/False value to include MetaEvents in the out message list.
+ @end table
+
+ @subsubheading Outputs
+ @var{msg} - a midimsg struct containing the messages read from the file@*
+ @xseealso{midifileinfo, midimsg}
+ @end deftypefn
+@c MIDI File I/O midifilewrite
+@c -----------------------------------------
+@subsection midifilewrite
+@cindex midifilewrite
+ @deftypefn {} {} midifilewrite (@var{filename}, @var{msgs})
+ @deftypefnx {} {} midifilewrite (@var{filename}, @var{msgs}, @var{optionname}, @var{optionvalue})
+ Write a midifile
+
+ @subsubheading Inputs
+ @var{filename} - filename of file to open.@*
+ @var{msg} - a midimsg struct or a cell array of midimsg containing data to write to file@*
+ @var{optionname}, @var{optionvalue} - option value/name pairs@*
+
+ Known options are:
+ @table @asis
+ @item format
+ MIDI file format number. (0 (default), 1, 2)
+ @end table
+
+ Where format is 0, if a cell array is passed to midifilewrite, the midimsg values will
+ be concatenated together before saving.
+
+ Were format is not 0, the cell array is treated as tracks of misimsg.
+
+ @subsubheading Outputs
+ None
+ @xseealso{midifileread, midimsg}
+ @end deftypefn
+@c ---------------------------------------------------
+@node Enumerations
+@section Enumerations
+@cindex Enumerations
+@c Enumerations midimsgtype
+@c -----------------------------------------
+@subsection midimsgtype
+@cindex midimsgtype
+ @deftypefn {} {} midimsgtype
+ A midimsg type enumeration for values of the midimsg type.
+
+ Enumeration values are:
+ @multitable @columnfractions .2 .4 .3
+ @item Data        @tab Stop            @tab SongPositionPointer
+ @item PolyOn      @tab PolyKeyPressure @tab NoteOff
+ @item EOX         @tab ActiveSensing   @tab SongSelect
+ @item MonoOn      @tab ChannelPressure @tab ControlChange
+ @item TimingClock @tab SystemReset     @tab AllSoundOff
+ @item OmniOn      @tab PitchBend       @tab ProgramChange
+ @item Start       @tab TuneRequest     @tab ResetAllControllers
+ @item OmniOff     @tab Undefined       @tab SystemExclusive
+ @item Continue    @tab MIDITimeCodeQuarterFrame @tab LocalControl
+ @item AllNotesOff @tab MetaEvent       @tab
+ @end multitable
+
+
+ The enumeration value can be used instead of a string in midimsg creation.
+
+ @subsubheading Examples
+ Use both a string and a midimsgtype for the type parameter of a midimsg.
+ @example
+ @code {
+ # both statements are equivalent
+ msg = midimsg('NoteOn', 1, 60, 100);
+ msg = midimsg(midimsgtype.NoteOn, 1, 60, 100);
+ }
+ @end example
+
+ @xseealso{midimsg}
+ @end deftypefn

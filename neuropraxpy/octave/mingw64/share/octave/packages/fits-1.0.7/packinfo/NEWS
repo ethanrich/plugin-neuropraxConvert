@@ -1,0 +1,34 @@
+Version 1.0.7, released 2015-06-10:
+===================================
+ * Allow for extension in read_fits_image( filename, extension ) being zero to read the 
+   first image of a file with multiple extension.
+   read_fits_image( filename, 0 ) is equivalent to read_fits_image( filename ) and
+   read_fits_image( filename[0] ).
+
+ 
+Version 1.0.6, released 2014-06-10:
+===================================
+ * Get cflags from pkg-config for compilation. No changes in module sources.
+
+
+Version 1.0.5, released 2014-04-26:
+===================================
+ * Don't duplicate data in save_fits_image_multi and save_fits_image_multi_ext
+
+
+Version 1.0.4, released 2014-03-11:
+===================================
+ * read_fits_image can now be compiled with Octave 3.0, 3.2, 3.4, 3.6, and 3.8
+
+
+Version 1.0.3, released 2013-07-03:
+===================================
+ * read_fits_image fixed crash if NAXIS=1
+
+
+Version 1.0.2, released 2012-07-24:
+===================================
+ * read_fits_image can now read images with more than 3 dimensions
+   (maximum NAXIS is now 999, was 3)
+ * read_fits_image can now be compiled with Octave 3.0, 3.2, 3.4, and 3.6
+

@@ -43,7 +43,7 @@ def call_octave_convert_files(local_octave="", file_to_convert="empty"):
     # when the environment variable is finally set, call octave to convert binary to .mat
     if 'octave' in os.environ['OCTAVE_EXECUTABLE']:
         # get the root directory for this repo
-        root = get_project_root() + '\\octave'
+        root = get_project_root() + '\\matlab_scripts'
         
         from oct2py import octave
         octave.addpath(root) # get the octave files from the repo folder

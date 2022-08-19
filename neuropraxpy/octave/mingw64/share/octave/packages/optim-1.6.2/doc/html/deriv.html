@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>deriv (optim_doc)</title>
+
+<meta name="description" content="deriv (optim_doc)">
+<meta name="keywords" content="deriv (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Gradient-functions.html#Gradient-functions" rel="up" title="Gradient functions">
+<link href="numgradient.html#numgradient" rel="next" title="numgradient">
+<link href="dfpdp.html#dfpdp" rel="prev" title="dfpdp">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="deriv"></a>
+<div class="header">
+<p>
+Next: <a href="numgradient.html#numgradient" accesskey="n" rel="next">numgradient</a>, Previous: <a href="dfpdp.html#dfpdp" accesskey="p" rel="prev">dfpdp</a>, Up: <a href="Gradient-functions.html#Gradient-functions" accesskey="u" rel="up">Gradient functions</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Higher-order-numerical-derivatives"></a>
+<h3 class="section">4.2 Higher order numerical derivatives</h3>
+<a name="index-deriv-4"></a>
+
+<a name="XREFderiv"></a><dl>
+<dt><a name="index-deriv"></a>Function File: <em><var>dx</var> =</em> <strong>deriv</strong> <em>(<var>f</var>, <var>x0</var>)</em></dt>
+<dt><a name="index-deriv-1"></a>Function File: <em><var>dx</var> =</em> <strong>deriv</strong> <em>(<var>f</var>, <var>x0</var>, <var>h</var>)</em></dt>
+<dt><a name="index-deriv-2"></a>Function File: <em><var>dx</var> =</em> <strong>deriv</strong> <em>(<var>f</var>, <var>x0</var>, <var>h</var>, <var>O</var>)</em></dt>
+<dt><a name="index-deriv-3"></a>Function File: <em><var>dx</var> =</em> <strong>deriv</strong> <em>(<var>f</var>, <var>x0</var>, <var>h</var>, <var>O</var>, <var>N</var>)</em></dt>
+<dd><p>Calculate derivate of function <var>f</var>.
+</p>
+<p><var>f</var> must be a function handle or the name of a function that takes <var>x0</var>
+and returns a variable of equal length and orientation. <var>x0</var> must be a
+numeric vector or scalar.
+</p>
+<p><var>h</var> defines the step taken for the derivative calculation. Defaults to 1e-7.
+</p>
+<p><var>O</var> defines the order of the calculation. Supported values are 2 (h^2 order)
+or 4 (h^4 order). Defaults to 2.
+</p>
+<p><var>N</var> defines the derivative order. Defaults to the 1st derivative of the
+function. Can be up to the 4th derivative.
+</p>
+<p>Reference: Numerical Methods for Mathematics, Science, and Engineering by
+John H. Mathews.
+</p></dd></dl>
+
+
+
+
+
+
+</body>
+</html>

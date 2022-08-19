@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- General documentation for the database package for Octave.
+
+Copyright (C) 2016-2018 Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.3, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>database_doc: pq_exec_params</title>
+
+<meta name="description" content="database_doc: pq_exec_params">
+<meta name="keywords" content="database_doc: pq_exec_params">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Data-exchange.html#Data-exchange" rel="up" title="Data exchange">
+<link href="pq_005fupdate_005ftypes.html#pq_005fupdate_005ftypes" rel="next" title="pq_update_types">
+<link href="Data-exchange.html#Data-exchange" rel="prev" title="Data exchange">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="pq_005fexec_005fparams"></a>
+<div class="header">
+<p>
+Next: <a href="pq_005fupdate_005ftypes.html#pq_005fupdate_005ftypes" accesskey="n" rel="next">pq_update_types</a>, Up: <a href="Data-exchange.html#Data-exchange" accesskey="u" rel="up">Data exchange</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Issuing-SQL-commands"></a>
+<h4 class="subsection">7.3.1 Issuing SQL commands</h4>
+<a name="index-pq_005fexec_005fparams"></a>
+
+<a name="XREFpq_005fexec_005fparams"></a><dl>
+<dt><a name="index-_0028connection_002c"></a>Function File: <em>pq_exec_params</em> <strong>(<var>connection</var>,</strong> <em><var>command</var>)</em></dt>
+<dt><a name="index-_0028connection_002c-1"></a>Loadable Function: <em>pq_exec_params</em> <strong>(<var>connection</var>,</strong> <em><var>command</var>, <var>params</var>)</em></dt>
+<dt><a name="index-_0028connection_002c-2"></a>Loadable Function: <em>pq_exec_params</em> <strong>(<var>connection</var>,</strong> <em><var>command</var>, <var>settings</var>)</em></dt>
+<dt><a name="index-_0028connection_002c-3"></a>Loadable Function: <em>pq_exec_params</em> <strong>(<var>connection</var>,</strong> <em><var>command</var>, <var>params</var>, <var>settings</var>)</em></dt>
+<dd>
+<p>Sends the string <var>command</var>, which must contain a single SQL
+command, over the connection <var>connection</var>. Parameters in
+<var>command</var> can be replaced by $1, $2, etc and their values given
+in the one-dimensional cell-array <var>params</var>. Parameters of
+composite type sent this way must have their type defined in the
+database. For typeconversions, the package maintains a notion of
+defined types, which should be refreshed with <code>pq_update_types</code>
+if types are defined or dropped after establishing the connection, or
+if the schema search path changes. <var>settings</var> is a structure of
+settings, it can be created by <code>setdbopts</code>.
+</p>
+<p>Settings currently understood by <code>pq_exec_params</code>:
+</p>
+<dl compact="compact">
+<dt><code>param_types</code></dt>
+<dd><p>One-dimensional cell-array with type specifications for parameters in
+<var>params</var>. If present, must have the same length as <var>params</var>.
+Entries may be empty if no specification is necessary (see below).
+Type specifications are strings corresponding to the entries returned
+by <code>SELECT typname FROM pg_type WHERE typarray != 0 OR typtype =
+'c';</code>, optionally having <code>[]</code> appended (without space) to
+indicate an array. Type specifications can be schema-qualified,
+otherwise they refer to the visible type with that name.
+</p></dd>
+<dt><code>copy_in_path, copy_out_path</code></dt>
+<dd><p>Path to files at the client side for <code>copy from stdin</code> and
+<code>copy to stdout</code>, respectively.
+</p></dd>
+<dt><code>copy_in_from_variable</code></dt>
+<dd><p>Logical scalar, default <code>false</code>. If <code>true</code>, <code>copy from
+stdin</code> uses data from an Octave variable instead of from a file.
+</p></dd>
+<dt><code>copy_in_data</code></dt>
+<dd><p>2-dimensional cell-array with columns of suitable type (see below) &ndash;
+will be used instead of a file as data for <code>copy from stdin</code> if
+<code>copy_in_from_variable</code> is <code>true</code>.
+</p></dd>
+<dt><code>copy_in_types</code></dt>
+<dd><p>If some columns in <code>copy_in_data</code> need a type specification (see
+below), <code>copy_in_types</code> has to be set to a cell-array with type
+specifications, with an entry (possibly empty) for each column.
+</p></dd>
+<dt><code>copy_in_with_oids</code></dt>
+<dd><p>If you want to copy in with oids when using data from an Octave
+variable, the first column of the data must contain the OIDs and
+<code>copy_in_with_oids</code> has to be set to <code>true</code> (default
+<code>false</code>); <code>with oids</code> should be specified together with
+<code>copy from stdin</code> in the command, otherwise Postgresql will
+ignore the copied oids.
+</p></dd>
+</dl>
+
+<p>There is no way to <code>copy to stdout</code> into an Octave variable, but
+a <code>select</code> command can be used for this purpose.
+</p>
+<p><code>copy from stdin</code> from an Octave variable is only supported in
+binary mode, so this has to be specified in the SQL command.
+</p>
+<p>The output depends on the type of command.
+</p><ul>
+<li> queries (commands potentially returning data):
+The output will be a structure with fields <code>data</code> (containing
+a cell array with the data, columns correspond to returned database
+columns, rows correspond to returned tuples), <code>columns</code>
+(containing the column headers), and <code>types</code> (a
+structure-vector with the postgresql data types of the columns,
+subfields <code>name</code> (string with typename), <code>is_array</code>
+(boolean), <code>is_composite</code> (boolean), <code>is_enum</code> (boolean),
+and <code>elements</code> (if <code>is_composite == true</code>,
+structure-vector of element types, containing fields corresponding
+to those of <code>types</code>)).
+</li><li> copy commands:
+Nothing is returned (this may change in the future).
+</li><li> other commands:
+The output will be the number of affected rows in the database.
+</li></ul>
+
+
+
+
+<p><strong>See also:</strong> <a href="pq_005fupdate_005ftypes.html#XREFpq_005fupdate_005ftypes">pq_update_types</a>, <a href="pq_005fconninfo.html#XREFpq_005fconninfo">pq_conninfo</a>.
+</p></dd></dl>
+
+
+<a name="Type-mapping"></a>
+<h4 class="subheading">Type mapping</h4>
+
+<p>For the mapping of currently implemented Postgresql types to Octave
+types,
+see
+<a href="Postgresql-data-types.html#Postgresql-data-types">Postgresql data types</a>.
+</p>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="pq_005fupdate_005ftypes.html#pq_005fupdate_005ftypes" accesskey="n" rel="next">pq_update_types</a>, Up: <a href="Data-exchange.html#Data-exchange" accesskey="u" rel="up">Data exchange</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

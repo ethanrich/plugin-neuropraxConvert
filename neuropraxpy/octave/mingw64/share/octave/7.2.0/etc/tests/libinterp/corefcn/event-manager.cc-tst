@@ -1,0 +1,4 @@
+## DO NOT EDIT!  Generated automatically from event-manager.cc by Make.
+%!error openvar ()
+%!error openvar ("a", "b")
+%!error <NAME must be a string> openvar (1:10)

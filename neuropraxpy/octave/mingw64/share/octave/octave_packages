@@ -1,0 +1,6298 @@
+# Created by pkg-install.py
+# name: global_packages
+# type: cell
+# rows: 1
+# columns: 49
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 8
+geometry
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.0.0
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+03-02-2020
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 122
+Juan Pablo Carbajal <ajuanpi+dev@gmail.com>, Philip Nienhuis <prnienhuis@users.sf.net>, Simeon Simeonov <sss41@cam.ac.uk>,
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 43
+Juan Pablo Carbajal <ajuanpi+dev@gmail.com>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 22
+Computational Geometry
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 44
+Library for extending MatGeom functionality.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 2
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.2.0
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 7
+matgeom
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.0.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 18
+GPLv3+, Boost v1.0
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 43
+__OH__/share/octave/packages/geometry-4.0.0
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 41
+__OH__/lib/octave/packages/geometry-4.0.0
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 5
+dicom
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+0.5.0
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2022-06-30
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 11
+Andy Buckle
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 13
+John Donoghue
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 48
+dicom: file io for medical images and other data
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 146
+Digital communications in medicine (DICOM) file io.   Depends on Grassroots DICOM (GDCM). This package is not available  in repos for all distros.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+3.8.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 22
+GPL version 3 or later
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 40
+__OH__/share/octave/packages/dicom-0.5.0
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 38
+__OH__/lib/octave/packages/dicom-0.5.0
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 13
+generate_html
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+0.3.3
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2022-05-03
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 45
+Søren Hauberg <soren@hauberg.org> and others
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 47
+Octave-Forge community <maintainers@octave.org>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 38
+Generate HTML web page from help texts
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 254
+This package provides functions for generating HTML pages that contain the help texts for a set of functions. The package is designed to be as general as possible, but also contains convenience functions for generating a set of pages for entire packages.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+3.2.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 48
+__OH__/share/octave/packages/generate_html-0.3.3
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 46
+__OH__/lib/octave/packages/generate_html-0.3.3
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 18
+instrument-control
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+0.8.0
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2022-07-21
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 108
+Andrius Sutas <andrius.sutas@gmail.com>, Stefan Mahr <dac922@gmx.de>, John Donoghue <john.donoghue@ieee.org>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 67
+Stefan Mahr <dac922@gmx.de>, John Donoghue <john.donoghue@ieee.org>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 18
+Instrument Control
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 100
+Low level I/O functions for serial, i2c, spi, parallel, tcp, gpib, vxi11, udp and usbtmc interfaces.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.0.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 53
+__OH__/share/octave/packages/instrument-control-0.8.0
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 51
+__OH__/lib/octave/packages/instrument-control-0.8.0
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 10
+quaternion
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+2.4.0
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2015-03-21
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 41
+Lukas Reichlin <lukas.reichlin@gmail.com>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 41
+Lukas Reichlin <lukas.reichlin@gmail.com>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 10
+Quaternion
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 88
+Quaternion package for GNU Octave, includes a quaternion class with overloaded operators
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+3.8.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 45
+__OH__/share/octave/packages/quaternion-2.4.0
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 43
+__OH__/lib/octave/packages/quaternion-2.4.0
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 6
+struct
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 6
+1.0.18
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2022-04-10
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 68
+Etienne Grossmann <etienne@egdn.net>, Olaf Till <i7tiol@t-online.de>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 30
+Olaf Till <i7tiol@t-online.de>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 19
+Structure Handling.
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 44
+Additional structure manipulation functions.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.0.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 42
+__OH__/share/octave/packages/struct-1.0.18
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 40
+__OH__/lib/octave/packages/struct-1.0.18
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 5
+image
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 6
+2.14.0
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2022-03-23
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 15
+various authors
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 87
+Carnë Draug <carandraug@octave.org>, Hartmut Gimpel <hg_code@gmx.de> and Avinoam Kalma
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 16
+Image Processing
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 248
+The Octave-forge Image package provides functions for processing images. The package also provides functions for feature extraction, image statistics, spatial and geometric transformations, morphological operations, linear filtering, and much more.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.2.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 41
+__OH__/share/octave/packages/image-2.14.0
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 39
+__OH__/lib/octave/packages/image-2.14.0
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 11
+optiminterp
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+0.3.7
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2021-11-12
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 91
+Alexander Barth <barth.alexander@gmail.com>, Aida Alvera-Azcárate <aalvera@marine.usf.edu>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 83
+Alexander Barth <barth.alexander@gmail.com>, John Donoghue <john.donoghue@ieee.org>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 11
+optiminterp
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 166
+An optimal interpolation toolbox for octave. This package provides functions to perform a n-dimensional optimal interpolations of arbitrarily distributed data points.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.0.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 46
+__OH__/share/octave/packages/optiminterp-0.3.7
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 44
+__OH__/lib/octave/packages/optiminterp-0.3.7
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 7
+splines
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.3.4
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2021-02-23
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 15
+various authors
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 38
+Nir Krakauer <splines@nirkrakauer.net>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 8
+Splines.
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 28
+Additional spline functions.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+3.6.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 21
+GPLv3+, public domain
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 42
+__OH__/share/octave/packages/splines-1.3.4
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 40
+__OH__/lib/octave/packages/splines-1.3.4
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 4
+lssa
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+0.1.4
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2020-10-18
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 28
+Ben Lewis <benjf5@gmail.com>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 68
+Ben Lewis <benjf5@gmail.com>, John Donoghue <john.donoghue@ieee.org>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 31
+Least squares spectral analysis
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 226
+A package implementing tools to compute spectral decompositions of irregularly-spaced time series.  Currently includes functions based off the Lomb-Scargle periodogram and Adolf Mathias' implementation for R and C (see URLs). 
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+3.6.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 39
+__OH__/share/octave/packages/lssa-0.1.4
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 37
+__OH__/lib/octave/packages/lssa-0.1.4
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 6
+zeromq
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.5.4
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2022-05-02
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 38
+John Donoghue <john.donoghue@ieee.org>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 38
+John Donoghue <john.donoghue@ieee.org>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 14
+ZeroMQ Toolbox
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 30
+ZeroMQ bindings for GNU Octave
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.0.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 41
+__OH__/share/octave/packages/zeromq-1.5.4
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 39
+__OH__/lib/octave/packages/zeromq-1.5.4
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 5
+audio
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+2.0.5
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2022-07-20
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 38
+John Donoghue <john.donoghue@ieee.org>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 38
+John Donoghue <john.donoghue@ieee.org>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 13
+Audio Toolbox
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 37
+Audio and MIDI Toolbox for GNU Octave
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.0.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 40
+__OH__/share/octave/packages/audio-2.0.5
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 38
+__OH__/lib/octave/packages/audio-2.0.5
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 19
+fuzzy-logic-toolkit
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+0.4.6
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2021-02-16
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 44
+L. Markowsky <lmarkov@users.sourceforge.net>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 44
+L. Markowsky <lmarkov@users.sourceforge.net>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 26
+Octave Fuzzy Logic Toolkit
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 58
+A mostly MATLAB-compatible fuzzy logic toolkit for Octave.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+3.2.4
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 54
+__OH__/share/octave/packages/fuzzy-logic-toolkit-0.4.6
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 52
+__OH__/lib/octave/packages/fuzzy-logic-toolkit-0.4.6
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 5
+video
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+2.0.2
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2021-11-28
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 60
+Andreas Weber <octave@josoansi.de> and the OpenCV developers
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 34
+Andreas Weber <octave@josoansi.de>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 15
+Video functions
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 64
+A wrapper for OpenCV's CvCapture_FFMPEG and CvVideoWriter_FFMPEG
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.4.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 60
+GPLv3 and 3-clause BSD (https://www.opencv.org/license.html)
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 40
+__OH__/share/octave/packages/video-2.0.2
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 38
+__OH__/lib/octave/packages/video-2.0.2
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 3
+tsa
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.6.3
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2021-07-26
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 41
+Alois Schloegl <alois.schloegl@ist.ac.at>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 14
+Alois Schloegl
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 29
+Time Series Analysis Toolbox 
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 72
+Stochastic concepts and maximum entropy methods for time series analysis
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 2
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+2.9.7
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 3
+nan
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 1
+>
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+3.0.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 38
+__OH__/share/octave/packages/tsa-4.6.3
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 36
+__OH__/lib/octave/packages/tsa-4.6.3
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 7
+mapping
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.4.2
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2022-02-20
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 15
+various authors
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 41
+Philip Nienhuis <prnienhuis@users.sf.net>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 17
+Mapping Functions
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 59
+Simple mapping and GIS .shp .dxf and raster file functions.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 3
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+5.2.0
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 2
+io
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+2.2.7
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 8
+geometry
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.0.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 42
+__OH__/share/octave/packages/mapping-1.4.2
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 40
+__OH__/lib/octave/packages/mapping-1.4.2
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 2
+io
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+2.6.4
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2021-12-30
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 15
+various authors
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 41
+Philip Nienhuis <prnienhuis@users.sf.net>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 12
+Input/Output
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 33
+Input/Output in external formats.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.2.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 22
+GPLv3+, simplified BSD
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 37
+__OH__/share/octave/packages/io-2.6.4
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 35
+__OH__/lib/octave/packages/io-2.6.4
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 14
+communications
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.2.4
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2022-01-19
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 15
+various authors
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 35
+Nir Krakauer <mail@nirkrakauer.net>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 14
+Communications
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 114
+Digital Communications, Error Correcting Codes (Channel Code), Source Code functions, Modulation and Galois Fields
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 2
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 3
+4.4
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+signal
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.1.3
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 49
+__OH__/share/octave/packages/communications-1.2.4
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 47
+__OH__/lib/octave/packages/communications-1.2.4
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 5
+optim
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.6.2
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2022-04-10
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 15
+various authors
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 30
+Olaf Till <i7tiol@t-online.de>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 13
+Optimization.
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 32
+Non-linear optimization toolkit.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 3
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.0.0
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+struct
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 6
+1.0.12
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 10
+statistics
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.4.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 35
+GPLv3+, modified BSD, public domain
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 40
+__OH__/share/octave/packages/optim-1.6.2
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 38
+__OH__/lib/octave/packages/optim-1.6.2
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 8
+interval
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+3.2.1
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2022-01-28
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 33
+Oliver Heimlich <oheim@posteo.de>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 33
+Oliver Heimlich <oheim@posteo.de>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 31
+Real-valued interval arithmetic
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 591
+The interval package for real-valued interval arithmetic allows one to evaluate functions over subsets of their domain.  All results are verified, because interval computations automatically keep track of any errors.  These concepts can be used to handle uncertainties, estimate arithmetic errors and produce reliable results.  Also it can be applied to computer-assisted proofs, constraint programming, and verified computing.  The implementation is based on interval boundaries represented by binary64 numbers and is conforming to IEEE Std 1788-2015, IEEE standard for interval arithmetic.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.2.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 8
+GPL-3.0+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 43
+__OH__/share/octave/packages/interval-3.2.1
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 41
+__OH__/lib/octave/packages/interval-3.2.1
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 3
+ocs
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+0.1.5
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 9
+2015-08-7
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 48
+Carlo de Falco, Culpo Massimiliano, Marco Merlin
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 34
+Carlo de Falco, Culpo Massimiliano
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 24
+Octave Circuit Simulator
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 66
+Package for solving DC and transient electrical circuit equations 
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.4.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv2+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 38
+__OH__/share/octave/packages/ocs-0.1.5
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 36
+__OH__/lib/octave/packages/ocs-0.1.5
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 10
+statistics
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.4.3
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2021-12-03
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 15
+various authors
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 47
+Octave-Forge community <maintainers@octave.org>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 10
+Statistics
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 43
+Additional statistics functions for Octave.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 2
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.0.0
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 2
+io
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 6
+1.0.18
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 21
+GPLv3+, public domain
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 45
+__OH__/share/octave/packages/statistics-1.4.3
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 43
+__OH__/lib/octave/packages/statistics-1.4.3
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 13
+miscellaneous
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.3.0
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2019-10-27
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 15
+various authors
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 57
+Octave-Forge community <octave-dev@lists.sourceforge.net>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 23
+Miscellaneous functions
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 50
+Miscellaneous tools that don't fit somewhere else.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+3.8.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 48
+__OH__/share/octave/packages/miscellaneous-1.3.0
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 46
+__OH__/lib/octave/packages/miscellaneous-1.3.0
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 7
+general
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+2.1.2
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2022-01-11
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 15
+various authors
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 47
+Octave-Forge community <maintainers@octave.org>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 7
+General
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 25
+General tools for Octave.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.0.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 35
+GPLv3+, modified BSD, public domain
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 42
+__OH__/share/octave/packages/general-2.1.2
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 40
+__OH__/lib/octave/packages/general-2.1.2
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 8
+database
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+2.4.4
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2019-03-13
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 30
+Olaf Till <i7tiol@t-online.de>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 30
+Olaf Till <i7tiol@t-online.de>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 9
+Database.
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 66
+Interface to SQL databases, currently only postgresql using libpq.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 2
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.0.0
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+struct
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 6
+1.0.12
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 43
+__OH__/share/octave/packages/database-2.4.4
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 41
+__OH__/lib/octave/packages/database-2.4.4
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 5
+nurbs
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.4.3
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2021-03-29
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 58
+Mark Spink, Daniel Claxton, Carlo de Falco, Rafael Vazquez
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 33
+Carlo de Falco and Rafael Vazquez
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 6
+Nurbs.
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 142
+Collection of routines for the creation, and manipulation of Non-Uniform Rational B-Splines (NURBS), based on the NURBS toolbox by Mark Spink.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 3
+5.1
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 40
+__OH__/share/octave/packages/nurbs-1.4.3
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 38
+__OH__/lib/octave/packages/nurbs-1.4.3
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 9
+sparsersb
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.0.9
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2021-09-21
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 54
+Michele Martone <michelemartone@users.sourceforge.net>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 54
+Michele Martone <michelemartone@users.sourceforge.net>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 74
+Interface to the librsb package implementing the RSB sparse matrix format.
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 124
+Interface to the librsb package implementing the RSB sparse matrix format for fast shared-memory sparse matrix computations.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.4.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 44
+__OH__/share/octave/packages/sparsersb-1.0.9
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 42
+__OH__/lib/octave/packages/sparsersb-1.0.9
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 8
+queueing
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.2.7
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2020-03-21
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 42
+Moreno Marzolla <moreno.marzolla@unibo.it>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 42
+Moreno Marzolla <moreno.marzolla@unibo.it>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 63
+Octave package for Queueing Networks and Markov chains analysis
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 590
+The queueing package provides functions for queueing networks and Markov chains analysis. This package can be used to compute steady-state performance measures for open, closed and mixed networks with single or multiple job classes. Mean Value Analysis (MVA), convolution, and various bounding techniques are implemented. Furthermore, several transient and steady-state performance measures for Markov chains can be computed, such as state occupancy probabilities, mean time to absorption, time-averaged sojourn times and so forth. Discrete- and continuous-time Markov chains are supported.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.0.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 43
+__OH__/share/octave/packages/queueing-1.2.7
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 41
+__OH__/lib/octave/packages/queueing-1.2.7
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 7
+strings
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.3.0
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2022-06-28
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 15
+various authors
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 38
+John Donoghue <john.donoghue@ieee.org>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 16
+String Handling.
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 62
+Additional functions for manipulation and analysis of strings.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+3.8.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 15
+GPLv3+, FreeBSD
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 42
+__OH__/share/octave/packages/strings-1.3.0
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 40
+__OH__/lib/octave/packages/strings-1.3.0
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 8
+symbolic
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+3.0.0
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2022-07-05
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 34
+Colin B. Macdonald <cbm@m.fsf.org>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 34
+Colin B. Macdonald <cbm@m.fsf.org>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 35
+Octave Symbolic Package using SymPy
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 299
+Adds symbolic calculation features to GNU Octave.  These include common Computer Algebra System tools such as algebraic operations, calculus, equation solving, Fourier and Laplace transforms, variable precision arithmetic and other features.  Compatibility with other symbolic toolboxes is intended.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 3
+5.1
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 16
+GPL-3.0-or-later
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 43
+__OH__/share/octave/packages/symbolic-3.0.0
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 41
+__OH__/lib/octave/packages/symbolic-3.0.0
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 7
+sockets
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.4.0
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2022-07-22
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 36
+John Swensen <jpswensen@comcast.net>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 47
+Octave-Forge community <maintainers@octave.org>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 7
+Sockets
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 51
+Socket functions for networking from within octave.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+3.6.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 42
+__OH__/share/octave/packages/sockets-1.4.0
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 40
+__OH__/lib/octave/packages/sockets-1.4.0
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 7
+control
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+3.4.0
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2022-01-16
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 41
+Lukas Reichlin <lukas.reichlin@gmail.com>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 123
+Alexander Wilms <f.alexander.wilms@gmail.com>, Doug Stewart <doug.dastew@gmail.com>, Torsten Lilge <ttl-octave@mailbox.org>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 36
+Computer-Aided Control System Design
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 101
+Computer-Aided Control System Design (CACSD) Tools for GNU Octave, based on the proven SLICOT Library
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.0.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 42
+__OH__/share/octave/packages/control-3.4.0
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 40
+__OH__/lib/octave/packages/control-3.4.0
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 7
+octproj
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+2.0.1
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2020-05-16
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 48
+José Luis García Pallero <jgpallero@gmail.com>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 48
+José Luis García Pallero <jgpallero@gmail.com>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 27
+GNU Octave bindings to PROJ
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 107
+This package allows to call functions of PROJ library for cartographic projections and CRS transformations.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+Octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+3.0.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 42
+__OH__/share/octave/packages/octproj-2.0.1
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 40
+__OH__/lib/octave/packages/octproj-2.0.1
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 3
+gsl
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+2.1.1
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2018-06-18
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 23
+Teemu Ikonen and others
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 47
+Octave-Forge community <maintainers@octave.org>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 23
+GNU Scientific Library.
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 45
+Octave bindings to the GNU Scientific Library
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+2.9.7
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 22
+GPL version 2 or later
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 38
+__OH__/share/octave/packages/gsl-2.1.1
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 36
+__OH__/lib/octave/packages/gsl-2.1.1
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 7
+matgeom
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.2.3
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2021-01-06
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 44
+David Legland <david.legland@nantes.inra.fr>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 43
+Juan Pablo Carbajal <ajuanpi+dev@gmail.com>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 22
+Computational Geometry
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 46
+Geometry toolbox for 2D/3D geometric computing
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.2.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 7
+FreeBSD
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 42
+__OH__/share/octave/packages/matgeom-1.2.3
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 40
+__OH__/lib/octave/packages/matgeom-1.2.3
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 4
+fits
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.0.7
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2015-06-10
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 12
+Dirk Schmidt
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 12
+Dirk Schmidt
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 65
+Reading and writing FITS (Flexible Image Transport System) files.
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 156
+The Octave-FITS package provides functions for reading, and writing FITS (Flexible Image Transport System) files.  This package uses the libcfitsio library.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+3.0.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 39
+__OH__/share/octave/packages/fits-1.0.7
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 37
+__OH__/lib/octave/packages/fits-1.0.7
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 9
+dataframe
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.2.0
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2017-08-14
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 13
+Pascal Dupuis
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 20
+The Octave Community
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 10
+Data Frame
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 49
+Data manipulation toolbox similar to R data.frame
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+3.4.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 44
+__OH__/share/octave/packages/dataframe-1.2.0
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 42
+__OH__/lib/octave/packages/dataframe-1.2.0
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 3
+stk
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+2.7.0
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2022-02-23
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 19
+See AUTHORS.md file
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 103
+Julien BECT <julien.bect@centralesupelec.fr> and Emmanuel VAZQUEZ <emmanuel.vazquez@centralesupelec.fr>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 32
+STK: A Small Toolbox for Kriging
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 618
+The STK is a (not so) Small Toolbox for Kriging. Its primary focus is on the interpolation/regression technique known as kriging, which is very closely related to Splines and Radial Basis Functions, and can be interpreted as a non-parametric Bayesian method using a Gaussian Process (GP) prior. The STK also provides tools for the sequential and non-sequential design of experiments. Even though it is, currently, mostly geared towards the Design and Analysis of Computer Experiments (DACE), the STK can be useful for other applications areas (such as Geostatistics, Machine Learning, Non-parametric Regression, etc.).
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.0.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 38
+__OH__/share/octave/packages/stk-2.7.0
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 36
+__OH__/lib/octave/packages/stk-2.7.0
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 2
+ga
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 6
+0.10.3
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2022-01-14
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 36
+Luca Favatella <slackydeb@gmail.com>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 47
+Octave-Forge community <maintainers@octave.org>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 17
+Genetic Algorithm
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 25
+Genetic optimization code
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.0.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 3
+yes
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 22
+GPL version 3 or later
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 38
+__OH__/share/octave/packages/ga-0.10.3
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 36
+__OH__/lib/octave/packages/ga-0.10.3
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 14
+data-smoothing
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.3.0
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2012-03-01
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 44
+Jonathan Stickel <jonathan.stickel@nrel.gov>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 44
+Jonathan Stickel <jonathan.stickel@nrel.gov>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 14
+Data smoothing
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 35
+Algorithms for smoothing noisy data
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 2
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+3.6.0
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 5
+optim
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.0.3
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 22
+GPL version 3 or later
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 49
+__OH__/share/octave/packages/data-smoothing-1.3.0
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 47
+__OH__/lib/octave/packages/data-smoothing-1.3.0
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 6
+signal
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.4.2
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2022-04-22
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 15
+various authors
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 33
+Mike Miller <mtmiller@octave.org>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 17
+Signal Processing
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 78
+Signal processing tools, including filtering, windowing and display functions.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 2
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 3
+3.8
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 7
+control
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 3
+2.4
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 21
+GPLv3+, public domain
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 41
+__OH__/share/octave/packages/signal-1.4.2
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 39
+__OH__/lib/octave/packages/signal-1.4.2
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 9
+financial
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+0.5.3
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2018-10-22
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 24
+Bill Denney, Kurt Hornik
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 47
+Parsiad Azimzadeh <parsiad.azimzadeh@gmail.com>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 9
+Financial
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 133
+Monte Carlo simulation, options pricing routines, financial  manipulation, plotting functions and additional date manipulation tools.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 3
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.4.0
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 2
+io
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 6
+2.4.11
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 10
+statistics
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.4.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 44
+__OH__/share/octave/packages/financial-0.5.3
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 42
+__OH__/lib/octave/packages/financial-0.5.3
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 6
+netcdf
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 6
+1.0.14
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2020-10-14
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 43
+Alexander Barth <barth.alexander@gmail.com>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 83
+Alexander Barth <barth.alexander@gmail.com>, John Donoghue <john.donoghue@ieee.org>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 6
+netcdf
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 29
+A NetCDF interface for Octave
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+3.8.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv2+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 42
+__OH__/share/octave/packages/netcdf-1.0.14
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 40
+__OH__/lib/octave/packages/netcdf-1.0.14
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 7
+windows
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.6.2
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2022-03-07
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 65
+Andy Adler <alder@ncf.ca>, John Donoghue <john.donoghue@ieee.org>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 38
+John Donoghue <john.donoghue@ieee.org>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 17
+Windows functions
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 62
+Provides COM interface and additional functionality on Windows
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+3.8.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 42
+__OH__/share/octave/packages/windows-1.6.2
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 40
+__OH__/lib/octave/packages/windows-1.6.2
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 14
+linear-algebra
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+2.2.3
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2019-11-08
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 15
+various authors
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 57
+Octave-Forge community <octave-dev@lists.sourceforge.net>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 15
+Linear algebra.
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 59
+Additional linear algebra code, including matrix functions.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.0.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 24
+GPLv3+, LGPLv3+, FreeBSD
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 49
+__OH__/share/octave/packages/linear-algebra-2.2.3
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 47
+__OH__/lib/octave/packages/linear-algebra-2.2.3
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 5
+ltfat
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+2.3.1
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 9
+2018-6-21
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 43
+Peter L. Soendergaard <peter@sonderport.dk>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 12
+Zdenek Prusa
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 41
+The Large Time-Frequency Analysis Toolbox
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 419
+The Large Time/Frequency Analysis Toolbox (LTFAT) is a Matlab/Octave toolbox for working with time-frequency analysis, wavelets and signal processing. It is intended both as an educational and a computational tool. The toolbox provides a large number of linear transforms including Gabor and wavelet transforms along with routines for constructing windows (filter prototypes) and routines for manipulating coefficients.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+3.8.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 40
+__OH__/share/octave/packages/ltfat-2.3.1
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 38
+__OH__/lib/octave/packages/ltfat-2.3.1
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 3
+nan
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+3.7.0
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2022-05-09
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 41
+Alois Schlögl <alois.schloegl@gmail.com>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 14
+Alois Schlögl
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 15
+The NaN-toolbox
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 78
+A statistics and machine learning toolbox for data with and w/o missing values
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.4.1
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 38
+__OH__/share/octave/packages/nan-3.7.0
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 36
+__OH__/lib/octave/packages/nan-3.7.0
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 6
+tisean
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+0.2.3
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2015-08-14
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 15
+various authors
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 29
+Piotr Held <pjheld@gmail.com>
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 31
+Nonlinear Time Series Analysis.
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 20
+Port of TISEAN 3.0.1
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 2
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+4.0.0
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+signal
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 2
+>=
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+1.3.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 2
+no
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 41
+__OH__/share/octave/packages/tisean-0.2.3
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 39
+__OH__/lib/octave/packages/tisean-0.2.3
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 13
+# name: name
+# type: sq_string
+# elements: 1
+# length: 6
+biosig
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+2.4.2
+
+
+# name: date
+# type: sq_string
+# elements: 1
+# length: 10
+2022-06-21
+
+
+# name: author
+# type: sq_string
+# elements: 1
+# length: 41
+Alois Schloegl <alois.schloegl@ist.ac.at>
+
+
+# name: maintainer
+# type: sq_string
+# elements: 1
+# length: 14
+Alois Schlögl
+
+
+# name: title
+# type: sq_string
+# elements: 1
+# length: 18
+The Biosig toolbox
+
+
+# name: description
+# type: sq_string
+# elements: 1
+# length: 142
+The Biosig package provides a number of tools   for biomedical signal processing, including importing of   about 50 different data formations.
+
+
+# name: depends
+# type: cell
+# rows: 1
+# columns: 1
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: package
+# type: sq_string
+# elements: 1
+# length: 6
+octave
+
+
+# name: operator
+# type: sq_string
+# elements: 1
+# length: 1
+>
+
+
+# name: version
+# type: sq_string
+# elements: 1
+# length: 5
+3.2.0
+
+
+
+
+
+
+# name: autoload
+# type: sq_string
+# elements: 1
+# length: 3
+yes
+
+
+# name: license
+# type: sq_string
+# elements: 1
+# length: 6
+GPLv3+
+
+
+# name: loaded
+# type: bool
+0
+
+
+# name: dir
+# type: sq_string
+# elements: 1
+# length: 41
+__OH__/share/octave/packages/biosig-2.4.2
+
+
+# name: archprefix
+# type: sq_string
+# elements: 1
+# length: 39
+__OH__/lib/octave/packages/biosig-2.4.2
+
+

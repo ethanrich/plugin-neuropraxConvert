@@ -1,0 +1,50 @@
+Summary of important user-visible changes for struct 1.0.18:
+-------------------------------------------------------------------
+
+ ** Installation fixes and adaption to changes in current development
+    version 8.0 of Octave.
+
+Summary of important user-visible changes for struct 1.0.17:
+-------------------------------------------------------------------
+
+ ** Build fixes and adaption to changes in Octave 6.1.
+
+Summary of important user-visible changes for struct 1.0.16:
+-------------------------------------------------------------------
+
+ ** Build fixes. Builds with Octave 5.1.
+
+Summary of important user-visible changes for struct 1.0.15:
+-------------------------------------------------------------------
+
+ ** Some build fixes. Builds with Octave 4.4.
+
+Summary of important user-visible changes for struct 1.0.14:
+-------------------------------------------------------------------
+
+ ** Some build fixes. Builds with Octave 4.2.
+
+Summary of important user-visible changes for struct 1.0.13:
+-------------------------------------------------------------------
+
+ ** Build fixes for new Octave versions.
+
+Summary of important user-visible changes for struct 1.0.12:
+-------------------------------------------------------------------
+
+ ** Make compatible with Octaves new exception-based error
+    handling. Compatibility with old error handling up to Octave-4.0
+    is retained.
+
+Summary of important user-visible changes for struct 1.0.11:
+-------------------------------------------------------------------
+
+ ** Compatible with Octave 4.0.
+
+Summary of important user-visible changes for struct 1.0.10:
+-------------------------------------------------------------------
+
+ ** The function `arefields' has been removed in favour of the octave
+    core function `isfield'.
+
+ ** Package is no longer automatically loaded.

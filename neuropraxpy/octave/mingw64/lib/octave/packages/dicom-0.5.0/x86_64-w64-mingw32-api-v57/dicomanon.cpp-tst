@@ -1,0 +1,48 @@
+## DO NOT EDIT! Generated from dicomanon.cpp
+%!shared testfile1, testfile2
+%! testfile1 = tempname();
+%! testfile2 = tempname();
+%! wdata = uint8 (10*rand (10,10));
+%! s.PatientName = "John";
+%! s.PatientAge = "20";
+%! dicomwrite (wdata, testfile1, s);
+%!fail ("dicomanon");
+%!fail ("dicomanon (1, 1)");
+%!fail ("dicomanon (testfile1, 1)");
+%!fail ("dicomanon (testfile1, testfile2, 'a')");
+%!test
+%! info = dicominfo(testfile1);
+%! assert (isfield(info, "PatientName"));
+%! assert (isfield(info, "PatientAge"));
+%! assert (info.PatientName, "John");
+%! assert (info.PatientAge, "20");
+%!test
+%! dicomanon(testfile1, testfile2);
+%! info2 = dicominfo(testfile2);
+%! assert (!isfield(info2, "PatientName"));
+%! assert (!isfield(info2, "PatientAge"));
+%!test
+%! dicomanon(testfile1, testfile2, "keep", {"PatientAge"});
+%! info3 = dicominfo(testfile2);
+%! assert (isfield(info3, "PatientAge"));
+%! assert (info3.PatientAge, "20");
+%! assert (!isfield(info3, "PatientName"));
+%!test
+%! attrs.PatientAge = "21";
+%! dicomanon(testfile1, testfile2, "update", attrs);
+%! info5 = dicominfo(testfile2);
+%! assert (info5.PatientAge, "21");
+%! assert (!isfield(info5, "PatientName"));
+%!test
+%! attrs.PatientAge = "21";
+%! dicomanon(testfile1, testfile2, "update", attrs, "keep", {'PatientName'});
+%! info6 = dicominfo(testfile2);
+%! assert (info6.PatientAge, "21");
+%! assert (isfield(info6, "PatientName"));
+%!test
+%! if exist (testfile1, 'file')
+%!   delete (testfile1);
+%! endif
+%! if exist (testfile2, 'file')
+%!   delete (testfile2);
+%! endif

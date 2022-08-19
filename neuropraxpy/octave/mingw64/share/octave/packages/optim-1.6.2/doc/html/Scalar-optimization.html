@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Scalar optimization (optim_doc)</title>
+
+<meta name="description" content="Scalar optimization (optim_doc)">
+<meta name="keywords" content="Scalar optimization (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="nonlin_005fmin.html#nonlin_005fmin" rel="next" title="nonlin_min">
+<link href="index.html#Top" rel="prev" title="Top">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="Scalar-optimization"></a>
+<div class="header">
+<p>
+Next: <a href="Residual-optimization.html#Residual-optimization" accesskey="n" rel="next">Residual optimization</a>, Previous: <a href="index.html#Top" accesskey="p" rel="prev">Top</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Functions-for-optimization-of-a-scalar-objective-function"></a>
+<h2 class="chapter">1 Functions for optimization of a scalar objective function</h2>
+<a name="index-scalar-optimization"></a>
+
+<table class="menu" border="0" cellspacing="0">
+<tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">Frontend
+</pre></th></tr><tr><td align="left" valign="top">&bull; <a href="nonlin_005fmin.html#nonlin_005fmin" accesskey="1">nonlin_min</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Interface for scalar non-linear
+                                 optimization.
+</td></tr>
+<tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
+Backends
+</pre></th></tr><tr><td align="left" valign="top">&bull; <a href="lm_005ffeasible.html#lm_005ffeasible" accesskey="2">lm_feasible</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">L/M-like optimizer, constraints met
+                                 throughout optimization.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="octave_005fsqp.html#octave_005fsqp" accesskey="3">octave_sqp</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">A wrapper to core Octaves sqp function.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="siman.html#siman" accesskey="4">siman</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Simulated annealing with constraints.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="samin.html#samin" accesskey="5">samin</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Simulated annealing covering a range.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="d2_005fmin.html#d2_005fmin" accesskey="6">d2_min</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Newton-like optimizer, no constraints.
+</td></tr>
+<tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
+Standalone functions
+</pre></th></tr><tr><td align="left" valign="top">&bull; <a href="mdsmax.html#mdsmax" accesskey="7">mdsmax</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">A multidirectional search algorithm.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="adsmax.html#adsmax" accesskey="8">adsmax</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">An alternating directions algorithm.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="nelder_005fmead_005fmin.html#nelder_005fmead_005fmin" accesskey="9">nelder_mead_min</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Another Nelder-Mead algorithm.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="powell.html#powell">powell</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Direction-set (Powell&rsquo;s) method.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="bfgsmin.html#bfgsmin">bfgsmin</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Unconstrained BFGS algorithm.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="nrm.html#nrm">nrm</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Newton-Raphson algorithm.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="cg_005fmin.html#cg_005fmin">cg_min</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">A conjugate gradient method.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="brent_005fline_005fmin.html#brent_005fline_005fmin">brent_line_min</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Linesearch, Brent method.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="line_005fmin.html#line_005fmin">line_min</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Linesearch (minimize a function along dx).
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="de_005fmin.html#de_005fmin">de_min</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">A differential evolution algorithm.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="battery.html#battery">battery</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Repeatedly call bfgsmin.
+</td></tr>
+</table>
+
+
+
+
+
+</body>
+</html>

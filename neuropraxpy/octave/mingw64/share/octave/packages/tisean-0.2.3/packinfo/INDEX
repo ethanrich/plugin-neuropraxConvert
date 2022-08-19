@@ -1,0 +1,46 @@
+tisean >> Nonlinear Time Series Analysis
+Generating time series
+  henon
+  ikeda
+Linear tools
+  spectrum
+Phase space representation
+  delay
+  false_nearest
+  mutual
+  pca
+  poincare
+Nonlinear noise reduction
+  lazy
+  ghkss
+Nonlinear prediction
+  upo
+  upoembed
+  lzo_gm
+  lzo_run
+  lzo_test
+  lfo_ar
+  lfo_run
+  lfo_test
+  polynom
+  rbf
+  xzero
+Lyapunov exponents
+  lyap_k
+  lyap_r
+  lyap_spec
+Dimensions and entropies
+  d2
+  av_d2
+  c2t
+  c2g
+  c1
+  c2d
+  boxcount
+Testing for nonlinearity
+  surrogates
+  endtoend
+  timerev
+Spike trains
+  spikeauto
+  spikespec

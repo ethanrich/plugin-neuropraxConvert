@@ -30,8 +30,11 @@ def main():
     # make a folder for the mat files
     make_new_dir(sub='matfiles')
     # send the matfiles to the folder (didn't work to just do it through octave for some reason)
-    for mat in mats:
-        os.rename(os.getcwd()+"\\"+mat, os.getcwd()+"\\matfiles\\"+mat)
+    try:
+        for mat in mats:
+            os.rename(os.getcwd()+"\\"+mat, os.getcwd()+"\\matfiles\\"+mat)
+    except:
+        print("Cannot move .mat files, as the destination already has them")
 
     
     click.echo("Finished with conversion to Python and all files pickled. Bitteschön.")

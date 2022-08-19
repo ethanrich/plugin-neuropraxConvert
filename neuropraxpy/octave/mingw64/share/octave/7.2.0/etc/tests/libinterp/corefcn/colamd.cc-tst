@@ -1,0 +1,9 @@
+## DO NOT EDIT!  Generated automatically from colamd.cc by Make.
+%!assert (etree (sparse ([1,2], [1,2], [1,1], 2, 2)), [0, 0])
+%!assert (etree (sparse ([1,2], [1,2], [true, true], 2, 2)), [0, 0])
+%!assert (etree (sparse ([1,2], [1,2], [i,i], 2, 2)), [0, 0])
+%!assert (etree (gallery ("poisson", 16)), [2:256, 0])
+%!error <Invalid call> etree ()
+%!error <Invalid call> etree (1, 2, 3)
+%!error <TYP must be a string> etree (speye (2), 3)
+%!error <is not square> etree (sprand (2, 4, .25))

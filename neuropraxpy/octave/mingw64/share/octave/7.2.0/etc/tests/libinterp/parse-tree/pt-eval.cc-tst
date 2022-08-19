@@ -1,0 +1,74 @@
+## DO NOT EDIT!  Generated automatically from pt-eval.cc by Make.
+%!test
+%! x = {".**", "power";
+%!      ".'", "transpose";
+%!      ".+", "plus";
+%!      ".-", "minus";
+%!      ".*", "times";
+%!      "./", "rdivide";
+%!      ".^", "power";
+%!      ".\\", "ldivide";
+%!      "<=", "le";
+%!      "==", "eq";
+%!      ">=", "ge";
+%!      "!=", "ne";
+%!      "~=", "ne";
+%!      "**", "mpower";
+%!      "~", "not";
+%!      "!", "not";
+%!      "\'", "ctranspose";
+%!      "+", "plus";
+%!      "-", "minus";
+%!      "*", "mtimes";
+%!      "/", "mrdivide";
+%!      "^", "mpower";
+%!      "\\", "mldivide";
+%!      "<", "lt";
+%!      ">", "gt";
+%!      "&", "and";
+%!      "|", "or"};
+%! for i = 1:rows (x)
+%!   assert (functions (str2func (x{i,1})).function, x{i,2});
+%! endfor
+%!test <*58830>
+%! fail ("__undef_sym__ (end)",
+%!       "invalid use of 'end': may only be used to index existing value");
+%!test <*58953>
+%! x = 1:10;
+%! assert (x(end), 10);
+%! assert (x(minus (end, 1)), 9);
+%! assert (x(minus (minus (end, 1), 1)), 8);
+%!test
+%! orig_val = max_recursion_depth ();
+%! old_val = max_recursion_depth (2*orig_val);
+%! assert (orig_val, old_val);
+%! assert (max_recursion_depth (), 2*orig_val);
+%! max_recursion_depth (orig_val);
+%! assert (max_recursion_depth (), orig_val);
+%!error max_recursion_depth (1, 2)
+%!test
+%! orig_val = silent_functions ();
+%! old_val = silent_functions (! orig_val);
+%! assert (orig_val, old_val);
+%! assert (silent_functions (), ! orig_val);
+%! silent_functions (orig_val);
+%! assert (silent_functions (), orig_val);
+%!error silent_functions (1, 2)
+%!shared orig_val, old_val
+%! orig_val = string_fill_char ();
+%! old_val  = string_fill_char ("X");
+%!test
+%! assert (orig_val, old_val);
+%! assert (string_fill_char (), "X");
+%! assert (["these"; "are"; "strings"], ["theseXX"; "areXXXX"; "strings"]);
+%! string_fill_char (orig_val);
+%! assert (string_fill_char (), orig_val);
+%!assert ( [ [], {1} ], {1} )
+%!error string_fill_char (1, 2)
+%!error echo ([])
+%!error echo (0)
+%!error echo ("")
+%!error echo ("Octave")
+%!error echo ("off", "invalid")
+%!error echo ("on", "invalid")
+%!error echo ("on", "all", "all")

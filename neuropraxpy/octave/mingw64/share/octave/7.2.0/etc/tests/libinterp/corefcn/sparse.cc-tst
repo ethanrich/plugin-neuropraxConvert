@@ -1,0 +1,33 @@
+## DO NOT EDIT!  Generated automatically from sparse.cc by Make.
+%!assert (issparse (sparse (1)), true)
+%!assert (issparse (1), false)
+%!assert (issparse (sparse (false)), true)
+%!assert (issparse (true), false)
+%!assert (issparse (sparse (single ([1 2]))), true)
+%!assert (issparse (single ([1, 2])), false)
+%!assert (issparse (sparse ([1+i, 2]')), true)
+%!assert (issparse ([1+i, 2]'), false)
+%!assert (issparse ([]), false)
+%!assert (issparse (sparse([])), true)
+%!assert (issparse ("test"), false)
+%!assert (issparse (struct ("one", {1})), false)
+%!assert (issparse (cell (1)), false)
+%!error issparse ()
+%!error issparse (1,2)
+%!assert (1)
+%!assert (issparse (spalloc (1,1)))
+%!assert (spalloc (1,1), sparse (1,1))
+%!test
+%! s = spalloc (1,1,5);
+%! assert (s, sparse (1,1));
+%! assert (nzmax (s), 5);
+%!assert (spalloc (1,2), sparse (1,2))
+%!assert (spalloc (1,2,2), sparse (1,2))
+%!assert (spalloc (2,1), sparse (2,1))
+%!assert (spalloc (2,1,2), sparse (2,1))
+%!error spalloc ()
+%!error spalloc (1)
+%!error spalloc (1,2,3,4)
+%!error <M, N, and NZ must be non-negative> spalloc (-1, 1, 1)
+%!error <M, N, and NZ must be non-negative> spalloc (1, -1, 1)
+%!error <M, N, and NZ must be non-negative> spalloc (1, 1, -1)

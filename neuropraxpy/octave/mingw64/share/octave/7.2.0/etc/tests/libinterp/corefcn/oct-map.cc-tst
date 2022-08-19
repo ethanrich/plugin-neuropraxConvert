@@ -1,0 +1,44 @@
+## DO NOT EDIT!  Generated automatically from oct-map.cc by Make.
+%!test
+%! x(1,1,1,1).d = 10;  x(3,5,1,7).a = "b";  x(2,4,1,7).f = 27;
+%! assert (fieldnames (squeeze (x)), {"d"; "a"; "f"});
+%!test
+%! x(1,1,1,1).d = 10;  x(3,5,1,7).a = "b";  x(2,4,1,7).f = 27;
+%! assert (fieldnames (permute (x, [3, 4, 1, 2])), {"d"; "a"; "f"});
+%!test
+%! x(1,1).d = 10;  x(3,5).a = "b";  x(2,4).f = 27;
+%! assert (fieldnames (transpose (x)), {"d"; "a"; "f"});
+%! assert (fieldnames (x'), {"d"; "a"; "f"});
+%! assert (fieldnames (x.'), {"d"; "a"; "f"});
+%!test
+%! x(1,1).d = 10;  x(4,6).a = "b";  x(2,4).f = 27;
+%! assert (fieldnames (reshape (x, 3, 8)), {"d"; "a"; "f"});
+%!test <*51634>
+%! x(1,1).d = 10;  x(4,6).a = "b";  x(2,4).f = 27;
+%! reshape (x, 3, 8, 1, 1);
+%!test <*46385>
+%! M = repmat (struct ('a', ones (100), 'b', true), 1, 2);
+%! M = repmat (M, 1, 2);
+%! assert (size (M), [1, 4]);
+%!test
+%! x(1, 1).d = 10;  x(4, 6).a = "b";  x(2, 4).f = 27;
+%! y(1, 6).f = 11;  y(1, 6).a = "c";  y(1, 6).d = 33;
+%! assert (fieldnames ([x; y]), {"d"; "a"; "f"});
+%!test
+%! s = struct ();
+%! sr = [s,s];
+%! sc = [s;s];
+%! sm = [s,s;s,s];
+%! assert (numfields (sr), 0);
+%! assert (numfields (sc), 0);
+%! assert (numfields (sm), 0);
+%! assert (size (sr), [1, 2]);
+%! assert (size (sc), [2, 1]);
+%! assert (size (sm), [2, 2]);
+%!test
+%! rhs.b = 1;
+%! a(3) = rhs;
+%! assert ({a.b}, {[], [], 1});
+%!test
+%! x(1, 1).d = 10;  x(4, 6).a = "b";  x(2, 4).f = 27;
+%! assert (fieldnames (x([1, 2], [2:5])), {"d"; "a"; "f"});

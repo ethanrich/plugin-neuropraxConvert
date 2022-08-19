@@ -1,0 +1,7 @@
+## Generated from serial.cc
+%!test
+%! if any(strcmp(instrhwinfo().SupportedInterfaces, "serial"))
+%!   fail ("serial ()", "Invalid call to serial");
+%! else
+%!   fail ("serial ()", "serial: Your system doesn't support the serial interface");
+%! endif

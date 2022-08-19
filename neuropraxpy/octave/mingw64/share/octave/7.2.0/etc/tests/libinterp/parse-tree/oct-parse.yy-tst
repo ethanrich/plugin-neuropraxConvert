@@ -1,0 +1,105 @@
+## DO NOT EDIT!  Generated automatically from oct-parse.yy by Make.
+%!shared x
+%! x = 1;
+%!assert (eval ("x"), 1)
+%!assert (eval ("x;"))
+%!assert (eval ("x;"), 1)
+%!test
+%! y = eval ("x");
+%! assert (y, 1);
+%!test
+%! y = eval ("x;");
+%! assert (y, 1);
+%!test
+%! eval ("x = 1;");
+%! assert (x,1);
+%!test
+%! eval ("flipud = 2;");
+%! assert (flipud, 2);
+%!function y = __f ()
+%!  eval ("flipud = 2;");
+%!  y = flipud;
+%!endfunction
+%!assert (__f(), 2)
+%!test <*35645>
+%! [a,] = gcd (1,2);
+%! [a,b,] = gcd (1, 2);
+%!error eval ("switch = 13;")
+%!shared str
+%! str = "disp ('hello');";
+%! str(:,:,2) = str(:,:,1);
+%!error <TRY must be a string> eval (1)
+%!error <TRY must be a string> eval (['a';'b'])
+%!error <TRY must be a string> eval (str)
+%!error <CATCH must be a string> eval (str(:,:,1), 1)
+%!error <CATCH must be a string> eval (str(:,:,1), ['a';'b'])
+%!error <CATCH must be a string> eval (str(:,:,1), str)
+%!error assignin ("base", "switch", "13")
+%!test
+%! [old_fmt, old_spacing] = format ();
+%! unwind_protect
+%!   format short;
+%!   str = evalc ("1");
+%!   assert (str, "ans = 1\n");
+%! unwind_protect_cleanup
+%!   format (old_fmt);
+%!   format (old_spacing);
+%! end_unwind_protect
+%!assert (evalc ("1;"), "")
+%!test
+%! [s, y] = evalc ("1");
+%! assert (s, "");
+%! assert (y, 1);
+%!test
+%! [s, y] = evalc ("1;");
+%! assert (s, "");
+%! assert (y, 1);
+%!test
+%! [old_fmt, old_spacing] = format ();
+%! unwind_protect
+%!   format short;
+%!   str = evalc ("y = 2");
+%!   assert (str, "y = 2\n");
+%!   assert (y, 2);
+%! unwind_protect_cleanup
+%!   format (old_fmt);
+%!   format (old_spacing);
+%! end_unwind_protect
+%!test
+%! assert (evalc ("y = 3;"), "");
+%! assert (y, 3);
+%!test
+%! [s, a, b] = evalc ("deal (1, 2)");
+%! assert (s, "");
+%! assert (a, 1);
+%! assert (b, 2);
+%!function [a, b] = __f_evalc ()
+%!  printf ("foo");
+%!  fprintf (stdout, "bar ");
+%!  disp (pi);
+%!  a = 1;
+%!  b = 2;
+%!endfunction
+%!test
+%! [old_fmt, old_spacing] = format ();
+%! unwind_protect
+%!   format short;
+%!   [s, a, b] = evalc ("__f_evalc ()");
+%!   assert (s, "foobar 3.1416\n");
+%!   assert (a, 1);
+%!   assert (b, 2);
+%! unwind_protect_cleanup
+%!   format (old_fmt);
+%!   format (old_spacing);
+%! end_unwind_protect
+%!error <foo> (evalc ("error ('foo')"))
+%!error <bar> (evalc ("error ('foo')", "error ('bar')"))
+%!test
+%! warning ("off", "quiet", "local");
+%! str = evalc ("warning ('foo')");
+%! assert (str(1:13), "warning: foo\n");
+%!test
+%! warning ("off", "quiet", "local");
+%! str = evalc ("error ('foo')", "warning ('bar')");
+%! assert (str(1:13), "warning: bar\n");
+%!error evalc ("switch = 13;")

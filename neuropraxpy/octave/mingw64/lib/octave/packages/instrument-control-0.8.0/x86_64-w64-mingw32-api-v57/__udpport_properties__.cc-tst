@@ -1,0 +1,44 @@
+## Generated from __udpport_properties__.cc
+%!test
+%! # test get
+%! a = udpport ();
+%! assert (__udpport_properties__ (a,"type"), "udpport");
+%! assert (__udpport_properties__ (a,"timeout"), -1);
+%! assert (__udpport_properties__ (a,"status"), "open");
+%! assert (__udpport_properties__ (a,"name"), "UDP-0.0.0.0");
+%! fail ("__udpport_properties__ (a,'invalid')", "invalid property name");
+%! clear a;
+%!test
+%! # test set
+%! a = udpport();
+%! __udpport_properties__ (a, 'name', "mytest");
+%! assert (__udpport_properties__ (a,"name"), "mytest");
+%! fail ("__udpport_properties__ (a,'invalid', 1)", "invalid property name");
+%! clear a;
+%!test
+%! # test flush
+%! a = udpport();
+%! __udpport_properties__ (a, 'flush', 0);
+%! __udpport_properties__ (a, 'flush', 1);
+%! __udpport_properties__ (a, 'flush', 2);
+%! fail ("__udpport_properties__ (a,'flush')", "invalid property name");
+%! clear a;
+%!test
+%! # test subsref and get/set
+%! a = udpport ();
+%! a.Name = "test1";
+%! assert (isa(a, "octave_udpport"));
+%! assert (a.Name, "test1");
+%! assert (get(a, 'Name'), "test1");
+%!
+%! set (a, "Name", "test2");
+%! assert (a.Name, "test2");
+%! assert (get(a, 'Name'), "test2");
+%! assert (__udpport_properties__ (a,"Name"), "test2");
+%! clear a
+%!error <wrong number of arguments> __udpport_properties__ ()
+%!error <wrong number of arguments> __udpport_properties__ (1)
+%!test
+%! a = udpport ();
+%! fail ("__udpport_properties__ (a, 'Name', 'test', 0)", "wrong number of arguments");
+%! clear a;

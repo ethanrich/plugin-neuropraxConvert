@@ -1,0 +1,1185 @@
+Summary of important user-visible changes for releases of the io package
+
+===============================================================================
+io-2.6.4   Release Date: 2021-12-30 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** Bug fixes:
+    - fromJSON.m, toJSON.m: some improvements for Java-based BIST
+    - make saving .ods/.xlsx files work again with OCT interface
+    - fix opening .xlsx files made using Google docs (bug #60830)
+    - allow other file extensions than .xls/.xlsx when saving to a different
+      file
+    - fix writing text strings in .ods files (bug (#60825)
+    - improve file extension processing
+
+*** Code improvements
+    - toJSON.m, fromJSON.m: made much more robust (credits to K.M. Patel)
+
+*** Deprecated function:
+    - object2json (superseded by toJSON
+
+===============================================================================
+io-2.6.3   Release Date: 2020-11-02 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** Bug fixes:
+    - xlsopen.m: don't wipe user selected reqinterface upon first call to
+      xlsopen after loading io package (bug #59273, bug #59277)
+    - Improve handling of POI interface, esp. OOXML support (bug #59273)
+    - Make reading .ods using OCT interface more reliable (bug #59273)
+
+*** Code improvements:
+    - Spreadsheet I/O interfaces echoed to screen when invoking test scripts
+      with "verbose flag.
+    - Significant speed improvements when reading .xlsx files with OCT
+      interface, thanks to Dennis Zeilstra (bug #59277)
+
+*** New functions
+    - toJSON and fromJSON: convert Octave objects into a JSON string and
+      vice versa, contributed by Ketan M. Patel (patch #9980).
+      Once Octave-7.x is released these functions will be superseded by core
+      jsonencode and jsondecode. Until then, and/or for users who can't or
+      won't upgrade to Octave-7.x (yet), tojSON and fromJSON will provide
+      JSON functionality.
+      Note: these functions are not fully Matlab-compatible; be careful with
+      ND-arrays.
+
+===============================================================================
+io-2.6.2   Release Date: 2020-10-10 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** Bug fixes:
+    - Fix Named range read errors for .ods files with OCT interface.
+    - dbfread.m: open files in little-endian mode (fix by Rafael Laboissière).
+    - xlsopen.m: improve filename extension checking (.xlsm, .xlsb and .sxc
+      were not recognized).
+    - xlsclose (private/__COM_spsh_close__.m): add missing output formats for
+      COM interface (esp. .ods; also .wk3 and .wk4).
+	  - xlsread.m: implement options argument (it *was* mentioned in the help
+      but didn't work)
+    - Improve character encoding for COM interface (bug #59203); credits to
+      Markus Mützel
+
+*** Code improvements:
+    - xlsfinfo.m: implement 'verbose' flag to echo used interface info.
+    - io_testscript.m: minimize delay, improve texinfo.
+    - csv2cell's maximum line length has been increased to 32768 characters
+      (bug #58618).
+    - Remove autotools (bootstrap, configure). Avoids potential problems and
+      makes code easier to maintain. Kudos to Kai Torben Ohlhus (bug 357081).
+    - Reintroduce xmlread and xmlwrite functions.
+      NOTE: xmlread may provoke Octave crashes on some Linux systems (see
+            bug #58004)
+
+===============================================================================
+io-2.6.1   Release Date: 2020-04-15 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** io-2.6.1 is meant to polish a few prominent bugs introduced unfortunately
+    in the coarse of code overhaul for io-2.6.0.
+
+*** Bug fixes:
+    - xlsopen: reinstate default OCT interface (reason that on systems w/o
+      Java or with non-matching Java bit width "no spreadsheet I/O support
+      was found" for .ods and .xlsx).
+    - ods*.m wrapper functions: properly implement output args (bug #58045).
+    - Wrong concatenation of indices when reading .xlsx with OCT interface.
+
+    Still no fix for the XML functions :-(
+
+===============================================================================
+io-2.6.0   Release Date: 2020-02-25 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** Bug fixes:
+    - Fixed some concealed bugs in getxmlattv.m & __OXS_spsh2oct__.m.
+    - dbfwrite.m: made more robust as regards heterogeneous data columns, just
+      skip them rather than abort.
+      Also fixed writing just one data row (bug #57669)
+    - read_namelist.m: fixed a minor typo.
+    - OCT interface: properly return negative values formatted as "(<value>)" 
+      (bug #57812).
+
+    - The XML functions xmlread.m and xmlwrite.m have been (temporarily)
+      removed (see bug #58004). Once that bug is fixed these functions will be
+      reinstated.
+
+*** Code improvements:
+    - Most user-visible spreadsheet I/O functions have been adapted such that:
+      * All supported spreadsheet formats / file types can be read and written
+        with the xls*.m functions. So it isn't required anymore to read
+        .xlsx/.xls with xlsread, and .ods with odsread, etc.
+      * The ods*.m functions still exist but now are mere wrappers for the
+        corresponding xls*.m functions. They are (softly) deprecated but will
+        be retained for a while (to at least somewhere in 2022 ?).
+        As they are mere wrappers they have all the functionality of the
+        corresponding xls*.m and previous ods*.m functions.
+      This has been done to cut down on code maintenance; it wasn't really
+      manageable to keep two separate function sets in sync that behind the
+      scenes provided close to 95 % overlapping internal functionality. The
+      choice for keeping xls*.m rather than ods*.m functions was made for
+      Matlab compatibility - that has no ods*.m functions.
+    - The xlsread.m help text now contains an extensive explanation of
+      spreadsheet I/O interfaces.
+    - The message indicating which interfaces were found is now silenced but
+      can be shown by adding an argument "verbose" to xlsread / xlsopen /
+      xlswrite. See the help for xlsread, xlsopen and xlswrite.
+
+*** Other changes
+    The previously separate READ-ODS.html and READ-XLS.html docs in the doc/
+    subdirectory have been replaced by a new combined html background document
+    rewritten from scratch: Spreadsheet-IO-in-Octave.html
+
+===============================================================================
+io-2.4.13   Release Date: 2019-10-15 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** Bug fixes:
+    - COM interface: restore writing formulas to spreadsheet
+    - OCT interface: ignore NA and NaN values when writing .ods and .gnumeric
+      (bug #56375)
+    - OCT interface: don't truncate arrays when using single cell-range input
+      with oct2ods and oct2xls functions (bug #56444)
+    - csv2cell: properly process leading tilde in file name (bug #53591)
+
+*** Code improvements:
+    - COM interface: better support for creating file formats other than .xlsx
+    - ditto for UNO interface
+    - Remove references to legacy Java package, as io depends on Octave >= 4.0
+      where core Octave should have built-in Java support anyway
+    - Replace calls to strmatch() with calls to str(n)cmp(i)()
+    - Replace calls to __octave_config_info__() and __have_feature__() by
+      javachk() (bug #47480)
+
+*** Various:
+    - The io package now needs Octave >= 4.0.0, due to dependence on javachk
+
+===============================================================================
+io-2.4.12   Release Date: 2018-10-28 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** Bug fixes:
+    - dbfwrite.m: avoid crash and vectorize writing data to file (bug #53899)
+      by Matthew Parkan
+    - dbfwrite.m: add unwind_protect block to be able to avoid dangling file
+      handles in case of errors; better checks on data column homogeneity;
+      texinfo (help) header fixes
+    - A little more robust Java check
+    - csv2cell: improper string indexing (bug #54407), fix by Orion Paplowski
+    -    "      process leading '~' in file names (bug #53591)
+
+*** Code improvements:
+    - POI interface: adapt to POI-4.0.0 (new getCelltype enums)
+    - POI: overhaul cell type handling when reading and writing
+    - dbfread.m: improve speed when reading a subset of data
+
+===============================================================================
+io-2.4.11   Release Date: 2018-04-18 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** Bug fixes:
+    - OCT interface: fix reading shared formula results (bug #52875)
+      credits to Radekivv
+    - OCT interface: fix a rare case of nested text cell XML with special
+      formatting attributes (bug # 53298)
+    - OCT interface: don't over-allocate memory when reading text cells in
+      xlsx (bug 533910, credits to Peter Giles
+    - OCT interface: return correct date values for .ods file (bug #53401)
+    - dbfwrite.m: don't prepend space before string values
+    - bug #53510: fix detection of Java version for Java > 8
+    - OCT interface: (part of) bug #53459, i.e. reading .xlsx files with a
+      more complex mix of chartsheets, macrosheets and worksheets, and
+      exploring such files with xlsfinfo. Writing to such files however
+      isn't guaranteed to be bug free. However, other interfaces (POI, UNO)
+      provide a workaround.
+    - COM interface: clearly distinguish between worksheets and e.g.,
+      chartsheets when referencing sheets by number.
+
+===============================================================================
+io-2.4.10   Release Date: 2018-01-09 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** Bug fixes:
+    - Remove leftover stanza in configure.ac (bug #52830)
+    - col2num: make input argument case-insensitive
+
+*** Code improvements:
+    - csv2cell: now reads files with varying number of fields per line. The
+      number of fields in the first line (assumed to contain column titles)
+      is assumed to be the nr. of columns in the file.
+      Thus csv2cell is supposed to correctly read most csv files w/o any
+      additional parameters (only the separator needs to be specified
+      if it isn't a comma)
+
+===============================================================================
+io-2.4.9   Release Date: 2018-01-03 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** Bug fixes:
+    - read_namelist.m: character sequences may contain a '/' character
+      (bug #52310, fix by Brice Davier)
+    - chk_spreadsheet_support: adapt to core cset 516437d2194d (don't allow
+      func parameters to be persistent)
+    - csv2cell: fix erroneous column header to column-number conversion
+
+*** Code improvements:
+
+===============================================================================
+io-2.4.8   Release Date: 2017-10-21 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** Bug fixes:
+    - csv2cell():    * Improve ignoring CR (char (13)) in csv files 
+                       (bugs #50979 and #50297)
+    - OCT interface: * More robust identification of worksheets (spreadsheets
+                       written with POI interface were misinterpreted)
+                     * Overhauled reading .xlsx files; catches more types:
+                       inlineString, Boolean, ... (with lot of assistance from
+                       Markus Muetzel, thx)
+    - read_namelist.m: improve reading when ending char is not fist on line
+                       (bug #52242, fix by Brice Davier) 
+
+*** Code improvements:
+    - Replace utf82unicode with native2unicode v.v. in Octave 4.4+ (thanks
+                       to Markus Mützel)
+    - If no filename extension is given, default to .xlsx rather than .xls
+    - xlsread.m and odsread.m now accept a function handle, an output options
+      struct and interface as arguments after the third (range) argument, in
+      any order.
+      See "help xlsread" or "help odsread" for more info.
+    - all spreadsheet I/O functions now accept an empty string as worksheet
+      name, implying the first worksheet.
+
+===============================================================================
+io-2.4.6, io-2.4.7   Release Date: 2017-03-03 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** Bug fixes:
+    - OCT interface: * fix erroneous empty cell assignment to cellstr array
+                       bug 49579)
+                     * correct XML double-quote translation
+                     * reading multi-line text cells in .ods files (bug #50200)
+                     * properly write multi-line cells in .ods files
+    - xlsread: initialize r_extnd (bug #49656)
+    - xlsfinfo, odsfinfo: error when no named range exists in .ods file
+                          (bug #49922)
+    - JOD interface: * avoid NPE when opening empty file
+                     * Remove "A" & "B" column headers in new sheets
+    - UNO interface: * avoid NPE when writing to new sheet
+    - csv2cell():    * warn that multi-line text fields (containing newline
+                       characters) are not allowed (bug #50224)
+                     * ignore CR (char (13)) in csv files (bug #50297)
+
+*** Code improvements:
+    - POI interface: * update support to POI 3.16a (add new java .jar)
+                     * better distinguish .xls and .xlsx support
+
+**** New features:
+  - csv2cell()       now accepts a spreadsheet-style range argument. That
+                     option allows reading .csv files with heterogeneous
+                     number of fields per line
+
+===============================================================================
+io-2.4.5   Release Date: 2016-11-08 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** Bug fixes:
+    - OCT interface: various fixes related to XML handling (bug 49510)
+    - Correctly handle sheet names containing spaces and quotes (bug 49558)
+
+*** Code improvements:
+    - xlswrite.m: arrays aren't truncated to 1x1 if a range of only one cell
+      is specified. It'll be now interpreted as topleft cell
+    - odswrite has always worked like above; it is now explicitly documented
+
+===============================================================================
+io-2.4.4   Release Date: 2016-10-23 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** Bug fixes:
+    - xmlread.m, xmlwrite.m: fix typo (bug 49095; credits to Andreas Weber)
+    - xmlwrite.m: properly close I/O stream (bug 49197; credits to Pantxo
+      Diribarne)
+    - POI, OXS interfaces: close I/O streams in case of errors (bug 49197)
+    - POI: fix fallback to JXL/UNO for BIFF5 files (Excel '95)
+    - (named ranges) pick first sheet in case of multiple matches with named
+      range (bug 49286)
+    - tidyxml.m: also preserve char(127)
+    - xl2oct.m, ods2oct.m, octls.m, oct2ods.m, tidyxml.m: supply an option
+      to convert UTF-8 characters to one-byte characters and back (thanks
+      to Markus Muetzel; bug 49222).
+    - Fix writing to another spreadsheet file upon closing spreadsheet pointer
+
+*** New features:
+    - New functions utf82unicode.m and unicode2utf8.m. These convert double-
+      byte UTF-8 strings into single-byte char strings and back, resp.
+    - When reading from / writing to spreadsheet files, text strings can be
+      converted from/to UTF8 encoding by specifying an option flag
+      "convert_utf" in calls to xls2oct.m / ods2oct.m / oct2xls.m / oct2ods.m.
+      This is probably *only* useful for systems where the Octave terminal
+      cannot support UTF-8 display (e.g., Windows 7 and below)
+
+===============================================================================
+io-2.4.3   Release Date: 2016-09-03 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** Bug fixes:
+    - COM interface: return proper used range in case of just 1 column of data
+    - JOD interface: temporary fix for reading numeric values (bug #48013) til
+      bug #48591 has been fixed
+
+*** Code improvements:
+    - io_xls_testscript.m, io_ods_testscript.m: return results rather than
+      bail out when hitting errors
+    - cell2csv: increase precision when writing double values (credits to
+      Martin Kunz)
+
+===============================================================================
+io-2.4.2   Release Date: 2016-07-04 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** Bug fixes:
+    - odsopen.m, xlsopen.m: do not allow writing to non-existent subdirs
+    - xlsread.m: return with error if file open failed, rather than trying
+      to proceed
+    - OCT interface: mention file creation errors verbosely rather than
+      silently
+    - OCT interface, OOXML: improved reading of cached values (but #47815)
+
+*** Code improvements:
+    - Swapped post-install.m hack to allow initialization of io package
+      for PKG_ADD/PKG_DEL directives; no more risk of affecting user space
+    - Changed several calls to (now deprecated) octave_config_info into 
+      calls to __have_feature__.m
+    - Add support for complex numbers in read_namelist.m and write_namelist.m
+      (credits to Ryusuke Numata)
+
+===============================================================================
+io-2.4.1   Release Date: 2016-03-09 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** Bug fixes:
+    - OCT interface: avoid reading/writing double-byte characters.
+      Excel and LibreOffice convert characters < 32 or > 126 to double-byte.
+      Octave cannot handle double-byte (unicode) characters (yet). The 
+      provisional solution is to simply strip those characters from text
+      strings before writing them to file, or strip them before handing the
+      just read raw output cell array to Octave.
+    - Convert illegal XML characters ('"><&) to XML escape sequences and back.
+    - Delete temporary files when processing .xlsx files (bug #47378)
+
+*** New features:
+    - New function tidyxml.m:  simply strips characters < 32 or > 126 from
+      character arrays or cell arrays (including mixed cell arrays).
+    - test_spsh.m now shows a nice summary of test results for each interface.
+
+*** Various changes
+    - Replace calls to deprecated sleep() with calls to pause().
+    - Adapt code to changes in octave_config_info in Octave development version.
+
+===============================================================================
+io-2.4.0   Release Date: 2015-12-23 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** Bug fixes:
+    - UNO interface: flag mismatching 64bit/32bit builds of Octave and LO/OOo.
+    - xlsopen.m/odsopen.m: avoid too many empty lines; improve output of 
+      interface detection.
+    - OTK interface: more reliable formula reading.
+    - Fix unneeded empty lines while detecting interfaces.
+
+*** Improvements
+    - Panxto Dixbarne has supplied xmlread.m and xmlwrite.m to replace the
+      undocumented, unsupported and unusable binary code by Laurent Mazet.
+      xmlread.m and xmlwrite.m depend on the Java Xerces library >= 2.11.0
+      These functions are now Matlab-compatible.
+
+*** Various:
+    - Remove duplicate code (checks on javaclasspath entries).
+    - Do not allow code to remove non-supported .jars from javaclasspath.
+    - Prepare for a 2.4.0 release now that xmlread/-write work properly.
+
+===============================================================================
+io-2.2.11   Release Date: 2015-10-22 Release Manager: Philip Nienhuis
+===============================================================================
+
+Primarily a bug fix release
+
+*** Bug fixes:
+    - More robust Named range code processing & code simplifications
+    - odsfinfo.m / gnumeric: fix errors when sheet has no Named ranges
+    - xlsopen.m: don't allow .xlsx to be opened by OXS interface (OpenXLS
+      .xlsx processing is immature while it works fine for plain .xls/BIFF8)
+    - odsfinfo.m: implement fformat and nmranges output arguments
+    - some cosmetic issues and spelling
+
+===============================================================================
+io-2.2.10   Release Date: 2015-09-24 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** New features:
+    - Support for Named Ranges.  If present in a spreadsheet file, a Named
+      Range can be entered instead of a spreadsheet-style range for xlsread,
+      xls2oct, odswrite, etc.  odsfinfo.m and xlsfinfo.m can be used to 
+      explore Named ranges in spreadsheet files.
+      Due to bugs in JExcelApi, jOpenDocument and ODF Toolkit, Named Ranges
+      do not work for the JXL, JOD and OTK interfaces.  Currently LibreOffice
+      invoked through the UNO interface can only use Named Ranges for .xls /
+      .xlsx files, not .ods files
+
+*** Bug fixes:
+    - Allow UNO to work with 64-bit LibreOffice
+    - Adapt UNO jar search to new Java class lib locations in LibreOffice 5+
+    - Improve PKG_ADD Libre-/OpenOffice search
+    - Two OCT .xlsx write bugs (#45915, #45916). The former is a workaround
+      for a (possible) LibreOffice incompatibility
+    - PKG_ADD: avoid uninstalled previous LO/OOo installations when searching
+      for LO/OOo on Windows
+    - Allow .ods to be read with xls2oct.m
+    - xls2oct.m: catch unsupported file formats for OCT interface
+
+*** Various:
+    Improve formula support and reading/writing logicals (BOOLEANS) with JOD
+    interface (jOpenDocument versions 1.3 and 1.4beta)
+
+===============================================================================
+io-2.2.9   Release Date: 2015-07-10 Release Manager: Philip Nienhuis
+===============================================================================
+
+This is a bug fix release.
+
+*** Bug fixes:
+    - Fix typo in duplicate sheet names check code (bug #45498)
+    - For the OCT interface, increase numeric write precision to 15 digits
+      (used to be just 6) and ensure that very large and small numbers can be
+      written (bug #45498)
+    - Fix wrong indexing when writing a new gnumeric file with wsh pointer > 1
+    - xlsopen.m (xlswrite): fix type preventing writing to ods
+
+*** Reminder: (hmm a bit moot as of early 2018)
+    This will be (one of) the last io package release(s) before the spreadsheet
+    I/O is moved into core Octave, so this version will only install in
+    Octave < 4.2.x (override using the -nodeps option with pkg.m)
+
+===============================================================================
+io-2.2.8   Release Date: 2015-06-21 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** Bug fixes:
+    - xlsread: properly fall back to dlmread when reading .csv files (don't
+      bother with COM (Excel) or UNO (LibreOffice) interfaces)
+    - private/__COM_spsh_open__.m: use entire given pathname to convert to 
+      full path, not just filename proper (bug #44642)
+    - Same for private/__UNO_spsh_open__.m
+    - xlsread.m/xls2oct.m using OCT interface: fix wrong worksheet reference
+      (bug #45303)
+
+*** This will be (one of) the last io package release(s) before the spreadsheet
+    I/O is moved into core Octave, so this version will only install in
+    Octave < 4.2.x (override using the -nodeps option with pkg.m)
+      
+===============================================================================
+io-2.2.7   Release Date: 2015-03-07 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** Bug fixes:
+    - dbfread: catch really empty (= spaces rather than zeros) date entries.
+    - xlsopen.m: Clarify error message about missing I/O with file extension.
+    - xlswrite.m: clarify supported file types/interfaces in texinfo header. 
+    - private/getxlsinterfaces.m: make COM interface detection more robust.
+    - csv2cell, cell2csv: fix SEP/PROT argument processing for 64-bit indexing
+      Octave
+    - num2col.cc: fix uninitialized variable bug that crashed Octave-3.9.1+
+      (wasn't exposed in earlier versions)
+
+*** Various:
+    - NEWS file scrutinized (formatting, typos) by Armin Mueller (thanks!)
+    - Replaced all occurrences of deprecated core function strmatch() with
+      find (strcmp ())  or  strfind()
+    - Silently create new spreadsheet files (there used to be a
+       "Creating file ..." message)
+    - Checked all Java-based interface support SW for newer versions. Results
+      are mentioned in the doc/...html files.
+
+===============================================================================
+io-2.2.6   Release Date: 2015-01-03 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** New features:
+    - dbfwrite.m: can write cell arrays to a .dbf file (provisionally v.III+)
+      For the time being dbfwrite (and dbfread) are considered experimental.
+
+*** Bug fixes:
+    - xlswrite: provide sheet name if empty string was supplied for sheet name
+    - dbfread: fix wrong indexing of logical values in output array.
+      Properly implement selecting data columns with cellstr headers.
+      Better dbf file version checks and memo field checks.
+
+===============================================================================
+io-2.2.5   Release Date: 2014-11-22 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** New features:
+    - On Windows, try to avoid using 32-bit UNO interface for 64-bit Octave.
+    - Added a first dbfread.m, to read dbase files. Needed a.o., for reading 
+      shapefiles etc. dbfread.m is considered experimental for the time being.
+
+*** Bug fixes:
+    - Enable writing formulas to OOXML (.xlsx) in OCT interface(bug #43321a).
+    - Fix creating new .ods file in OCT(bug #43321b).
+    - xlswrite: supply default data cellrange if no or empty cellrange argument
+      is supplied.
+    - OCT interface: make sure requested worksheet names are matched exactly
+      (bug #43353)
+    - OCT interface: make sure writing to relative paths works. Creating the 
+      intermediate subdir tree won't work (a zip / gzip limitation)
+    - Fix reading from sheets with some special names (bug #43331)
+    - Fix worksheet bookkeeping when adding new sheets (bug #43354)
+    - More robust code to read SharedStrings.xml (bug #43399)
+    - Oct2xls (OCT) fails when sheet names are being used (bug #43400)
+    - Invoke SaveCopyAs rather than SaveAs for new Excel files in COM interface
+
+*** Other changes
+    - First throw at restructuring to eliminate duplicate code:
+      . chk_spreadsheet_support.m: singled out checks for java class libs per
+        interface
+    - Checked odfdom-incubating 6.1 (odfdom-0.8.10): doesn't work properly
+    - Added checks for unsupported jar versions in chk_spreadsheet_support.
+      This function won't load unsupported .jar versions anymore and will even
+      remove them from the javaclasspath if it finds them. The only way that
+      unsupported .jar versions (spreadsheet Java class libs) can get in the
+      javaclasspath is if users manually add them.
+
+===============================================================================
+io-2.2.4   Release Date: 2014-09-11 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** New features:
+    - Add 'headerlines' parameter to csv2cell, to allow skipping a first number
+      of lines before reading actual data. See "help csv2cell".
+
+*** Bug fixes:
+    - Replace __num2char__ / __char2num__ (.mex files) by .oct versions num2col
+      & col2num as 64-bitOctave cannot compile mex files with int64_t.
+    - Add some delays (0.25 s) in OCT and UNO file open/close functions to give
+      zip and unpack some time to finish I/O operations (lazy write) on fast
+      systems.
+
+===============================================================================
+io-2.2.3   Release Date: 2014-08-14 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** Bug fixes:
+    - Replace canonicalize_file_name calls by make_absolute_filename to avoid
+      ActiveX/COM errors (due to changed canonicalize_file_name in 3.9.0+)
+    - More robust strrep code in OCT/xlsx write code (modifying access time)
+    - Fix handling empty cell range argument when writing .ods with OCT
+      interface (bug #43783)
+    - Better string detection when reading .xlsx with OCT interface
+    - Properly return a value of 0 after xlswrite/odswrite write errors
+
+===============================================================================
+io-2.2.2   Release Date: 2014-05-12 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** New features:
+    - Write support for gnumeric
+
+An updated overview of which interface can be used for what types of files
+(extensions):
+
+                                 Interface
+File extension       COM POI POI/OOXML JXL OXS UNO OTK JOD OCT
+--------------------------------------------------------------
+.xls (Excel95)        R                 R       R
+.xls (Excel97-2003)   +   +      +      +   +   +
+.xlsx (Excel2007+)    ~          +         (+)  R           +
+.xlsb, .xlsm          ~                     ?   R           R?
+.wk1                  +                         R
+.wks                  +                         R
+.dbf                  +                         +
+.ods                  ~                         +   +   +   +
+.sxc                                            +       +
+.fods                                           +
+.uos                                            +
+.dif                                            +
+.csv                  +                         R
+.gnumeric                                                   +
+--------------------------------------------------------------
+(~ = dependent on Excel/LO/OOo version;  + = read/write;  R = only reading)
+(+) unfortunately OOXML support in the OpenXLS Java library itself is too
+    buggy, so OOXML support for OXS has been disabled (but it is implemented)
+
+*** Docs (html) & texinfo help texts updated
+
+*** Bug fixes:
+    - UNO open/close: catch changed behavior of canonicalize_file_name in
+      Octave-3.9.0+
+    - odsfinfo.m, xlsfinfo.m: also check for leading period in file extension
+      switch statement
+    - Replace java_get (deprecated in Octave > 4.1.0) by __java_get__
+    - Catch rare Java exception in OTK interface under Octave-4.1.0+
+
+===============================================================================
+io-2.2.1   Release Date: 2014-04-26 Release Manager: Philip Nienhuis
+===============================================================================
+
+Bug fix release:
+
+*** Bug fixes:
+    - First check built-in Java support before further testing Java-based
+      interfaces (bug #42192)
+    - Invoke __char2num__/__num2char__ rather than __OCT_cc__ for spreadsheet
+      cell address translation in OCT interface funcs as well
+    - Fix wrong file handle refs. when updating app.xml in OOXML files
+
+===============================================================================
+io-2.2.0   Release Date: 2014-04-13 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** New features:
+    - Experimental write support w/o Java or ActiveX, just native Octave, for
+       ODS 1.2 (LibreOffice native format) and OOXML (Excel 2007+ .xlsx)
+    - (write support for gnumeric pending)
+
+An updated overview of which interface can be used for what types of files
+(extensions):
+(~ = dependent on Excel/LO/OOo version;  + = read/write;  R = only reading)
+                                 Interface
+File extension       COM POI POI/OOXML JXL OXS UNO OTK JOD OCT
+--------------------------------------------------------------
+.xls (Excel95)        R                 R       R
+.xls (Excel97-2003)   +   +      +      +   +   +
+.xlsx                 ~          +         (+)  R           +
+.xlsb, .xlsm          ~                     ?   R
+.wk1                  +                         R
+.wks                  +                         R
+.dbf                  +                         +
+.ods                  ~                         +   +   +   +
+.sxc                                            +       +
+.fods                                           +
+.uos                                            +
+.dif                                            +
+.csv                  +                         R
+.gnumeric                                                   R
+--------------------------------------------------------------
+
+*** Docs (html) & texinfo help texts updated
+
+*** Bug fixes:
+    - (gnumeric reading): Properly handle ValueFormat tags
+                          Fix older formats w/o Value* tags
+    - Restored UNO interface option in ods2oct.m
+    - (xlswrite) when truncating an array (sheet capacity, too small a range),
+      convey truncated range rather than topleft cell
+    - PKG_ADD: Fix case-sensitivity when searching for Libre/OpenOffice loc.
+               Do not automatically load Java class libs on *nix
+    - OCT: delete tmp dirs after closing spreadsheet files
+    - POI: return complete cell range for a.o., xlsfinfo
+
+===============================================================================
+io-2.1.x   Release Date: TBA Release Manager: Philip Nienhuis
+===============================================================================
+
+(unstable version)
+For changes see 2.2.0 (above)
+
+
+===============================================================================
+io-2.0.2   Release Date: 2014-01-09 Release Manager: Philip Nienhuis
+===============================================================================
+
+Another bug fix release
+
+*** Bug fixes:
+    - PKG_ADD, PKG_DEL: move into script dir to be sure they can be invoked
+      while loading / unloading io package
+
+*** New features:
+    - chk_spreadsheet_support: Remembers which javaclasspath entries it loaded,
+      can remove them too
+    - PKG_DEL: Removes all javaclasspath entries added by chk_spreadsheet-support
+      when unloading the io package
+    - PKG_ADD: Searches for OpenOffice.org / LibreOffice in some conventional
+      places to allow silent automatic loading of Java class libs &
+      directories required for OOo / LO
+
+===============================================================================
+io-2.0.1   Release Date: 2014-01-01 Release Manager: Philip Nienhuis
+===============================================================================
+
+Bug fix release
+
+*** Bug fixes:
+    - Fixed rfsearch error (empty subdirs) when loading package
+
+*** PKG_ADD: Also search user (%USERPROFILE%\Java or ~/Java) for Java
+             spreadsheet support .jar files; also add conventional Linux
+             place in search (usually /usr/share/java)
+
+===============================================================================
+io-2.0.0   Release Date: 2014-01-01 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** Some code simplifications & style fixes
+
+An updated overview of which interface can be used for what types of files
+(extension):
+(~ = dependent on Excel/LO/OOo version;  + = read/write;  R = only reading)
+
+                                 Interface
+File extension       COM POI POI/OOXML JXL OXS UNO OTK JOD OCT
+--------------------------------------------------------------
+.xls (Excel95)        R                 R       R
+.xls (Excel97-2003)   +   +      +      +   +   +
+.xlsx                 ~          +         (+)  R           R
+.xlsb, .xlsm          ~                     ?   R
+.wk1                  +                         R
+.wks                  +                         R
+.dbf                  +                         +
+.ods                  ~                         +   +   +   R
+.sxc                                            +       +
+.fods                                           +
+.uos                                            +
+.dif                                            +
+.csv                  +                         R
+.gnumeric                                                   R
+--------------------------------------------------------------
+
+For unsupported file types, UNO will write .ods whatever the actual file
+extension.
+
+*** Bug fixes:
+    - Fixed texinfo headers for the test scripts
+
+    - The UNO interface no longer writes ODS for all file extensions. An
+      updated list is shown above.
+
+*** Known issues:
+    - OOXML write/read support in OpenXLS (OXS) is a bit wonky. Doesn't
+      pass Octave OF-io's test script. Upstream has been informed of one
+      example bug.
+    - OpenXLS' OOXML depends on another .jar file (gwt-servlet-deps.jar).
+      Rip it from this archive (108+ MB download): gwt-2.5.1.zip,
+      available at:
+      http://www.gwtproject.org/download.html  ("Download GWT SDK")
+    - LibreOffice/OpenOffice.org (UNO interface) doesn't write .csv
+    - OTK interface (.ods) sometimes writes ridiculously wide columns.
+
+===============================================================================
+io-1.3.6   Release Date: 2013-TBA Release Manager: Philip Nienhuis
+===============================================================================
+
+*** OXS (OpenXLS) now has read/write support. AFAICS it is the fastest Java-
+    based interface. Provisionally .xls (BIFF8, Excel'97-2003) works fairly
+    reliably. OOXML works too but is unstable (see below, "Known issues").
+
+*** Some code simplifications & style fixes
+
+*** xlsread may fall back to csvread for .csv files when no Excel (COM) or
+    LibreOffice/OOo (UNO) interface is supported (bug #40993)
+
+An updated overview of which interface can be used for what types of files
+(extension):
+(~ = dependent on Excel version;  + = read/write;  R = only reading)
+
+                                 Interface
+File extension       COM POI POI/OOXML JXL OXS UNO OTK JOD OCT
+--------------------------------------------------------------
+.xls (Excel95)        R                 R       R
+.xls (Excel97-2003)   +   +      +      +   +   +
+.xlxx/xlsm            +          +         (+)  +           R
+.wk1                  +                         +
+.wks                  +                         +
+.dbf                  +                         +
+.ods                  ~                         +   +   +   R
+.sxc                                            +       +
+.fods                                           +
+.uos                                            +
+.dif                                            +
+.csv                  +                         +
+.gnumeric                                                   R
+--------------------------------------------------------------
+
+*** Bug fixes:
+    - post_install.m: seems unneeded, provisionally commented out all commands
+    - PKG_ADD: dropped all references to Java package, now just checks
+      octave_config_info("features").JAVA
+
+*** Known issues:
+    - OOXML write/read support in OpenXLS (OXS) is a bit wonky. Doesn't pass
+      Octave OF-io's test script. Upstream has been informed of one example bug.
+    - OpenXLS' OOXML depends on another .jar file (gwt-servlet-deps.jar). Rip
+      it from this archive (108+ MB download): gwt-2.5.1.zip, available at:
+      http://www.gwtproject.org/download.html  ("Download GWT SDK")
+
+===============================================================================
+io-1.3.5   Release Date: 2013-TBA Release Manager: Philip Nienhuis
+===============================================================================
+
+*** Merged in changes from io-1.2.5 (OCT interface)
+
+*** New spreadsheet test routine; improved existing routines to write with one
+    and read with some other interface (helped to uncover many concealed bugs)
+
+*** (pending) Cleaning up chk_spreadsheet_support.m
+
+*** Bug fixes:
+    - OCT: Replace fgetl calls by fread
+           Improved regexp's
+    - JOD: Wipe "A" and "B" in A1/B1 in new empty spreadsheets (a very old bug)
+    - POI: File extension checks improved
+
+===============================================================================
+io-1.3.4   Release Date: None (internal)
+===============================================================================
+
+*** chk_spreadsheet_support restyled from Matlab into Octave style
+         "   ,  introduced recursive subdir search for Java class libs (nice for
+                Fedora)
+    Added rfsearch.m, function to find files in subdirs
+
+===============================================================================
+io-1.3.3   Release Date: 2013-08-15   Release Manager: Philip Nienhuis
+===============================================================================
+
+Intermediate unofficial development version for Octave 3.7.x.
+Only released on patch tracker
+
+Changes: see section for version 1.2.3
+
+===============================================================================
+io-1.3.2   Release Date: 2013-06-18   Release Manager: Philip Nienhuis
+===============================================================================
+
+Intermediate unofficial development version for Octave 3.7.x.
+Only released on patch tracker
+
+** Bug fixes
+--- chk_spredsheet_support: better Java detection (bug #38725)
+
+--- xlsopen.m: .xlsx files are properly recognized
+
+--- Re-enabled OXS (only reading) and UNO
+
+** Created test_spsh.m test script
+--- This will find all supported spreadsheet interfaces and tests them one by one
+
+===============================================================================
+io-1.3.0, io-1.3.1  Release Date: -internal-   Release Manager: Philip Nienhuis
+===============================================================================
+
+Version 1.3.0 - 1.3.1 are intermediate development versions for Octave > 3.7.1
+with built-in Java support.
+They are largely untested; the built-in test scripts work for all tested interfaces
+except UNO and OXS (which consequently are disabled).
+
+===============================================================================
+io-1.2.5   Release Date: 2013-11-14 Release Manager: Philip Nienhuis
+===============================================================================
+
+*** - Added string/formula read support to xlsx/OCT. There's now full read
+      support for .xlsx (OOXML) files w/o requiring Java or COM
+    - Added requested range for .xlsx/OCT reading
+
+*** Bug fixes:
+    - Better filetype / file extension detection (bug #40490)
+
+    - Added unpack.m from dev core Octave as private/__unpack.m to avoid
+      unzip errors for .xlsx and .gnumeric
+
+    - Removed harmless but annoying error messages from Java detection
+
+    - Fix tablerow repeat counter bugs (affected reading ODS w. OCT interface)
+
+===============================================================================
+io-1.2.4   Release Date: 2013-11-05   Release Manager: Philip Nienhuis
+===============================================================================
+*** Added !experimental! OCT (native Octave) interface for reading .ods,
+    gnumeric, and xlsx. OCT doesn't need Java or COM/ActiveX; it works without
+    any support software. That independence does come at a price however:
+    - reading .ods is fully flexible like the other interfaces but a bit slow
+    - reading .xlsx is FAST but it only gives numeric data (no strings yet)
+    - reading gnumeric only reads "hard" data, no formula results. I'm afraid
+      this isn't gonna change (it's a gnumeric developer issue)
+    Markus Bergholz supplied the code for very fast reading of OOXML (at
+    present only numeric data) - Thanks very much Markus!
+
+An overview of what interface can be used for which types of files (extension)
+(~ = dependent on Excel version;  + = read/write;  R = only reading)
+
+                                 Interface
+File extension       COM POI POI/OOXML JXL OXS UNO OTK JOD OCT
+--------------------------------------------------------------
+.xls (Excel95)        R                 R       R
+.xls (Excel97-2003)   +   +      +      +   R   +
+.xlxx/xlsm            +          +              +           R
+.wk1                  +                         +
+.wks                  +                         +
+.dbf                  +                         +
+.ods                  ~                         +   +   +   R
+.sxc                                            +       +
+.fods                                           +
+.uos                                            +
+.dif                                            +
+.csv                  +                         +
+.gnumeric                                                   R
+--------------------------------------------------------------
+
+*** getxmlattv.m, getxmlnode.m: new functions (for support of OCT interface)
+
+*** xlsopen.m: suffixes for Excel filenames (.xls, .xlsx) need not be specified.
+               (But the files on disk do need these suffixes!)
+
+*** odsread.m, xlsread.m: No output arg required (output is sent to terminal
+                          if not output args specified)
+       ''          ''     Check if filename is a text string
+
+*** odsopen: Relax requirement of lower case filename extension
+
+** Bug fixes:
+--- xlsopen.m: Undue fallback to JXL for OOXML files hopefully fixed now
+       ''      Misinformation in error message about unsupported OXS & UNO fixed
+
+--- private/__POI_getusedrange__.m: Check return value of XSSF getFirstCellNum
+    method
+
+===============================================================================
+io-1.2.3   Release Date: 2013-08-15   Release Manager: Philip Nienhuis
+===============================================================================
+** Bug fixes:
+
+--- private/chk_jar_entries.m: trim multiple entries to avoid padded spaces
+
+*** private/getxlsinterfaces.m: add multiple jar entries for POI cf. Fedora
+    naming (actually a Fedora packaging complication)
+
+*** chk_spreadsheet_support.m: same as getxlsinterfaces.m
+
+*** Added logical types to object2json (by Keith Sheppard, bug #39429)
+
+*** Tested odfdom-0.6-incubator (odfdom-0.8.9): too buggy to support :-(
+    Updated doc/READ-ODS.html and added checks to chk_spreadsheet_support.m
+    and private/getodsinterfaces.m
+
+===============================================================================
+io-1.2.2   Release Date: 2013-05-21   Release Manager: Philip Nienhuis
+===============================================================================
+** Bug fixes:
+
+--- xlsopen.m: avoid fallback to JXL for OOXML files in some cases
+
+--- xlsopen.m, odsopen.m (actually silently fixed in 1.2.1): always re-read
+    javaclasspath when a Java spreadsheet interface is requested explicitly
+    (because between calls to xls-/odsopen new classes could be added to the
+    javaclasspath, this wasn't picked up properly)
+
+--- csv2cell(): Fix hanging when it encountered EOF w/o preceding EOL (#143
+    in former OctDev bug tracker)
+    csv2cell(): Fix inconsistent behavior when first field on a line is a
+    string protected by "" (see
+    http://octave.1599824.n4.nabble.com/csv2cell-inconsistent-tc4635817.html)
+
+--- __UNO_oct2spsh__.m: wrong assignment in code finding existing sheetnames
+
+--- Fix checks on xls or xls? suffix (due to Vermylen)
+
+--- Temporarily commented out tests in private subdir (bug #38755)
+
+** csv2cell(): Tests added for above bugs and proper SEP and PROT args
+
+** cell2csv(): Tests added incl. for proper SEP and PROT args
+
+** Added read_namelist.m and write_namelist.m, kindly contributed by
+   Darien Pardinas Diaz and Terry Duel
+
+===============================================================================
+io-1.2.1   Release Date: 2013-03-01   Release Manager: Philip Nienhuis
+===============================================================================
+** Bug fixes:
+--- post_install.m: fixed wrong format specifier in error message
+
+--- chk_spreadsheet_support: Java call to return JVM memory size returns
+    varying type dependent on Java version. Made this part of code more robust.
+    Also prepared for Octave-3.8 built-in Java support
+
+--- xlsopen.m, odsopen.m: improved matching file type to specific interfaces
+    (e.g., .sxc can only be read by JOD and UNO; .xlsx only by COM, POI-OOXML
+    and UNO)
+
+** moved common Java detection code from getods/getxlsinterfaces to separate
+   function
+
+** post_install: if PKG_ADD couldn't be removed from .oct file dir, inform user
+   to add spreadsheet Java class libs manually to the javaclasspath
+
+** Replaced all calls to to-be-deprecated java_new & java_invoke calls by
+   javaObject and javaMethod
+
+===============================================================================
+io-1.2.0   Release Date: 2012-12-27   Release Manager: Philip Nienhuis
+===============================================================================
+This will be the last major version that is "depending" on the separate Java
+package for most of the spreadsheet I/O. In a next major version this will be
+based on Octave's built-in Java support.
+Some of the spreadsheet support files in io-1.2.0 are expected not to work
+anymore in Octave-3.8+
+
+** Bug fixes:
+--- xls2oct(POI)/__POI_spsh2oct__: now correctly evaluates formulas (as far as
+    POI can handle cell formulas)
+--- Fixed sheet selection code for UNO and COM interfaces
+
+** Moved all interface-specific subfunctions and code into ./private subdir.
+   This allowed for elimination of a lot of duplicate code.
+
+** Moved functions parse_sp_range.m, spsh_chkrange.m & spsh_prstype.m into
+   ./private subdir
+
+** Support for POI 3.9 added
+
+===============================================================================
+io-1.0.20   Release Date: 2012-09-07   Release Manager: Philip Nienhuis
+===============================================================================
+
+** Bug fixes:
+--- xlsopen, xlsclose, odsopen, odsclose: replaced canonicalize_file_name call
+    with make_absolute_filename for non-windows systems (canonicalize_file_name
+    doesn't work with non-existent (new) files on *nix) (bug #36677);
+    Web addresses (URLs) only need two rather than three slashes;
+--- xlsopen: matching .jar names to javaclasspath entries worked the wrong way
+--- io_xls_testscript / io_ods_testscript: added small delay for UNO calls to
+    avoid lock-ups with recent LibreOffice (3.6.x)
+
+** The annoying flashing LibreOffice splash screens have been fixed upstream;
+   with LibreOffice 3.6.1 I didn't see them anymore
+
+** Extended file rename section in odsclose similar to that in xlsclose
+
+===============================================================================
+io-1.0.19   Release Date: 2012-06-08   Release Manager: Philip Nienhuis
+===============================================================================
+
+** Bug fixes:
+--- getusedrange subfunc getusedrange_jod: str2num applied to indices rather
+    than the substring. Must have been there for > 2 years, only surfaced
+    with jopendocument v 1.3b1
+--- oct2xls, oct2ods: cast all numeric types in input array to double as
+    spreadsheets have only double, boolean or character string type. This bug
+    has been there from the very beginning of the spreadsheet functions  >8-O
+
+--- Support for reading back formulas from .xls spreadsheets using ActiveX/COM
+
+** Compatible with jOpenDocument version 1.3b1
+   getUsedRange() method added (MUCH faster than the old hack)
+
+** Compatible with odfdom-java-0.8.8-incubator.jar (ODF Toolkit 0.5-incubating)
+
+** Compatible with Apache POI 3.8 final
+
+===============================================================================
+io-1.0.18   Release Date: 2012-03-22   Release Manager: Philip Nienhuis
+===============================================================================
+
+** The following functions have been imported from the miscellaneous package:
+      cell2csv    csvconcat     xmlread
+      csv2cell    csvexplode    xmlwrite
+   Their error messages and help messages have been cleaned up a bit.
+
+** Bug fixes:
+--- odsfinfo: fixed "wrong type argument `cell'" bug when run interactively.
+--- xlsopen, odsopen: fixed messed up screen output due to UNO usage warning.
+--- csv2cell: checks if file is empty and if so, return an empty cell.
+--- xlsopen: better Java detection logic, more informative error messages
+
+** Adapted to internal LibreOffice-3.5-final changes.
+   Some bugs (flashing LO screens) still have to be fixed upstream - see here:
+   https://bugs.freedesktop.org/show_bug.cgi?id=42470
+
+** Tried OpenXLS-6.0.7.jar. Reads OK, still unusable for writing .xls files.
+
+===============================================================================
+io-1.0.17   Release Date: 2012-02-27   Release Manager: Philip Nienhuis
+===============================================================================
+
+** Bug fixes:
+--- oct2ods, oct2xls, odswrite default range input arg. These functions may not
+    have worked properly for two years (!)
+
+** Fixed support for odfdom v.0.8.7 (ODS). Note: the OTK interface only works
+   well with xercesImpl.jar 2.9.1 (Sep 14, 2009)
+
+** Many small bug fixes & documentation updated to actual functionality.
+
+** Fixed "seealso" texinfo header string in almost all functions.
+
+** Added formal test scripts to "internal functions" section.
+
+===============================================================================
+io-1.0.16   Release Date: 2012-01-19   Release Manager: Philip Nienhuis
+===============================================================================
+
+** Bug fixing release
+
+** PKG_ADD now expects Java spreadsheet class libs (.jars) in /lib/java
+  (for MinGW)
+
+===============================================================================
+io-1.0.15   Release Date: 2011-10-02   Release Manager: Philip Nienhuis
+===============================================================================
+
+io-1.0.15 is primarily a bug fix release and a snapshot / wrap-up of current
+  development status (some still a bit experimental). It mainly comprises:
+
+** A number of bug fixes (incl. some serious ones, notably with .ods/OOo Calc);
+
+** Some mainly cosmetic improvements to existing code; less verbosity;
+
+** pch2mat (reading & transforming Nastran PCH files, contributed by
+  B. Oytun Peksel);
+
+** object2json.m (creating a json description string of objects, contributed
+  by Daniel Torre). This was already silently introduced in io-1.0.14;
+
+** A scripted troubleshooting / classpath setup tool for spreadsheet I/O
+  support (chk_spreadsheet_support.m);
+
+** Experimental OXS support (OpenXLS) for reading Excel xls (BIFF8).
+  OpenXLS is -let's say- a little bit lacking: For reading it is faster than
+  JXL. However, while OXS write support has been coded (and works) I had to
+  disable it as the OXS Java classes won't release the file handle so Octave
+  will hang upon closing :-(  I'm stuck with this so I just release it as-is;
+
+** Experimental UNO support, i.e. invoking OpenOffice.org (or clones like
+  LibreOffice) behind the scenes to read spreadsheet files, much like
+  ActiveX/COM for MS-Excel. This is also based on Java. The first time you
+  use UNO, OOo has to be loaded and you'll have to be patient, but once loaded
+  (and in the OS cache) you'll see the pros:
+  --* Very fast;
+  --* Much lower Java memory usage as OOo loads the spreadsheet in its own
+      memory chunk (not Octave's) => much bigger spreadsheet capacity;
+  --* You can read *all* formats supported by OOo: .ods, .xls, .csv, .xlsx,
+      .sxc, .dbf, Lotus wk1, Quattro Pro, ......; and it doesn't really matter
+      whether xlsopen of odsopen is used.
+  Of course all this wonderful stuff comes at a prize:
+  --* After closing the spreadsheet file (odsclose, xlsclose) ALL OOo
+      invocations will be closed, also those started outside Octave. This is
+      due to "the way OpenOffice works" (quoted from OOo dev forum), especially
+      through Java. There are other ways to close OOo but they'll hang Octave;
+  --* The Java UNO classes supplied with e.g. LibreOffice aren't kept quite
+      up-to-date with the main program. As a consequence, with e.g.,
+      LibreOffice 3.4 the main LO window will pop up (it can't be hidden). I
+      filed a bug report for this
+      (https://bugs.freedesktop.org/show_bug.cgi?id=40991) but I haven't seen
+      it being picked up yet. Another example: while LO 3.3.1's row capacity
+      was already > 10^6, it took until LO 3.4 before this capacity was
+      implemented in the Java UNO classes.
+  Like with OXS, I'm a bit stuck here - all this has to be fixed upstream.
+
+Hint:
+for older Octave versions (< 3.4.0) you can install io-1.0.15 using the -nodeps
+  flag. You'll then loose the old and buggy textread and csv/dlm-read/write
+  functions but I'd consider that as no big loss.
+
+  <please scroll up/back to see rest of io NEWS>

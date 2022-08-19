@@ -1,0 +1,307 @@
+optim 1.6.2
+-----------
+
+ ** `nonlin_min', `nonlin_residmin', `nonlin_curvefit',
+    `residmin_stat', `curvefit_stat': Newer Octave versions throw an
+    error if a user function which doesn't use 'varargin' is called
+    with more arguments than it explicitly accepts. For this reason,
+    some optional arguments to user functions are now only given if
+    the user function accepts them. This applies to the 2nd
+    (informational) argument of model/objective functions and
+    gradient/Jacobian functions and to the 2nd (index) and 3rd
+    (informational) argument of functions for general constraints and
+    their gradients.
+
+ ** Removed deprecated function `nmsmax' -- the same code is in
+    `fminsearch' in core Octave, with a slightly different interface.
+
+ ** Deprecated frontend function `fmins'.
+
+ ** Renamed `expfit' to `pronyfit'. Calling it with `expfit(...)'
+    still works, but is deprecated.
+
+ ** Various bug fixes and build fixes for current development version
+    8.0 of Octave.
+
+optim 1.6.1
+-----------
+
+ ** Bug fixes: `__qp__' invocation in `quadprog' (and so `lsqlin'),
+    handling of combined linear and non-linear constraints, handling
+    'fixed' parameters in `residmin_stat'.
+
+ ** `fmincon': Handle bound vectors which are too short as in Matlab.
+
+optim 1.6.0
+-----------
+
+ ** Build fixes for Octave 5.1 and some bug fixes.
+
+ ** With Octave from version 5.1 on, a parallel cluster established
+    with package `parallel' can be used for computation of gradients
+    with option `parallel_net'.
+
+ ** Compatibility frontend `fmincon' has been added.
+
+ ** `lsqnonlin' and `lsqcurvefit' now accept a problem structure as
+    single argument for compatibility.
+
+ ** `LinearRegression':
+
+    Corrected errors in computing variances of data and parameters.
+
+    Erroneous documentation of the 2nd output (`e_var', variances of
+    data) has been fixed.
+
+    The 5th output (previously `y_var'), which was erroneously
+    documented as the variances of dependent variables, has been
+    replaced by `fit_var', the variances of computed function values.
+
+ ** Removed deprecated function `samin'. The functionality is
+    available with the `samin' backend of function `nonlin_min'.
+
+optim 1.5.3:
+------------
+
+ ** Added dependency on statistics package.
+
+ ** Some bug fixes and build fixes for Octave 4.4.
+
+ ** Unit test for nlinfit is now reproducible.
+
+ ** Added unit tests in nonlin_residmin and nonlin_curvefit.
+
+ ** Default algorithm of `nonlin_min' is now more robust.
+
+ ** Standalone function `samin' is deprecated. The functionality has
+    been moved into a `samin' backend of function `nonlin_min'.
+
+optim 1.5.2:
+------------
+
+ ** Some build fixes. Builds with Octave 4.2.
+
+ ** Links to core Octave documentation work now in html version of
+    package documentation.
+
+optim 1.5.1:
+------------
+
+ ** Fixed treatment of one-parameter-functions in `jacobs'.
+
+ ** The sign of `lambda' returned for equality constraints by
+    `quadprog' has been changed for compatibility with Matlab.
+
+ ** Deprecated `nmsmax' -- the same code is in `fminsearch' in core
+    Octave, with a slightly different interface.
+ 
+ ** Fixed portability issue in building documentation.
+
+ ** Fixed bug which could break building oct-files.
+
+optim 1.5.0:
+------------
+
+ ** Compatible with Octaves new exception-based error
+    handling. Compatibility with old error handling up to Octave-4.0
+    is retained.
+
+ ** For parallel optimization, package `parallel' of at least version
+    3.0.4 is now required. This version of `parallel' attempts to
+    install its functions for local parallel computation even on
+    systems where its functions for parallel computation in clusters
+    cannot be installed; so `optim' should at least be able to perform
+    local parallel optimization even in this case.
+
+ ** A parallel cluster can be used for computation of
+    gradients. Currently needs a patched version of Octave.
+
+ ** New compatibility wrapper functions `lsqnonlin' and `lsqcurvefit',
+    calling the more general functions `nonlin_residmin' and
+    `nonlin_curvefit' iternally.
+
+ ** New compatibility wrapper function `nlinfit', calling
+    `nonlin_curvefit' and `curvefit_stat' internally. New functions
+    `statset' and `statget' for compatibility in handling options of
+    `nlinfit'.
+
+ ** New common frontend option 'TypicalX'. Additional common frontend
+    options 'FinDiffRelStep' and 'FinDiffType', to match usual option
+    names. 'diffp' and 'diff_onesided' are still available and can now
+    also be specified as scalars.
+
+ ** nonlin_residmin and nonlin_curvefit return determined Lagrange
+    multipliers of any constaints
+
+ ** New interface function `quadprog', similar to Octaves `qp'.
+
+ ** New function `lsqlin'.
+
+ ** Removed deprecated functions `minimize', `d2_min', and
+    `fmin'. Removed obsolete documentation `optim-mini-howto-2'.
+
+optim 1.4.1:
+------------
+
+ ** Made compatible with Octave 4.0.
+
+ ** Fixed bug #43699.
+
+optim 1.4.0:
+------------
+
+ ** There is now general package documentation in info format. To
+    display it, type `optim_doc ()' or `optim_doc (keyword)'.
+
+ ** Core Octaves `sqp' can now be used by the `nonlin_min' frontend.
+
+ ** New backend `d2_min' for `nonlin_min' frontend, the standalone
+    function `d2_min' is deprecated instead.
+
+ ** Introduced option `user_interaction' into frontends, `nonlin_min',
+    `nonlin_residmin', and `nonlin_curvefit'.
+
+ ** Package `optim' does not depend on package `miscellaneous'
+    anymore.
+
+ ** The frontend `minimize' has been deprecated. An alternative
+    frontend is `nonlin_min', released previously. The backends
+    `nelder_mead_min' and `bfgsmin' of `minimize' can also be called
+    directly, the backend `d2_min' is also deprecated and its
+    algorithm is now available as a backend to
+    `nonlin_min'. `poly_2_ex' is scheduled for removal from optim
+    since it is not related to optimization.
+
+optim 1.3.1:
+------------
+
+ ** Fixed parameter fixing issue in residmin_stat/curvefit_stat.
+
+ ** Simulated annealing backend of nonlin_min can save and recover
+    state, for interrupting and continuing long optimizations.
+
+ ** Having the parallel package loaded is now optional.
+
+ ** Simulated annealing backend of nonlin_min can do some parallel
+    computation.
+
+optim 1.3.0:
+------------
+
+ ** LinearRegression: Two demo codes added ad the confidence band 
+                      for the dependent variable can be estimated.
+
+ ** Bugfix in jacobs for functions of more than 2 variables.
+
+ ** Parallel computation of gradients supported by nonlin_residmin,
+    nonlin_curvefit, and nonlin_min for default and for complex step
+    gradient methods. Introduces dependency on parallel package.
+
+ ** In nonlin_residmin, nonlin_curvefit, nonlin_min, residmin_stat,
+    and curvefit_stat, the following names of optimset options had
+    to be changed to be consistent with interpretation of abbreviated
+    option names:
+
+      dfdp_pstruct            -> df_pstruct,
+      inequc_f_idx            -> f_inequc_idx,
+      inequc_df_idx           -> df_inequc_idxn,
+      equc_f_idx              -> f_equc_idx,
+      equc_df_idx             -> df_equc_idx,
+      objf_grad_pstruct       -> grad_objf_pstruct,
+      objf_hessian_pstruct    -> hessian_objf_pstruct,
+      objf                    -> objf_type,
+      complex_step_derivative -> complex_step_derivative_f.
+
+ ** The function fminsearch was removed from the optim package, since
+    it is available in Octave 3.8.0.
+
+ ** The depricated functions optimset_compat and fminunc_compat are
+    now removed.
+
+optim 1.2.2:
+------------
+
+ ** Bugfixes in nonlin_min and nonlin_residmin/nonlin_curvefit in
+    termination criteria, argument checking, and documentaion.
+
+ ** Bugfix in private/__lm_feasible__.m: Wrong parantheses in checking
+    of equality constraints for initial parameters (reported by Marcus
+    Schmidt).
+
+optim 1.2.1:
+------------
+
+ ** Bugfix in leasqr.m: errors when a function 'options' is in
+    namespace.
+
+Summary of important user-visible changes for optim 1.2.0:
+-------------------------------------------------------------------
+
+ ** Together with the new backend "lm_feasible" there is now a
+    complete suite of backends for optimization with linear and
+    general equality and inequality constraints, for scalar valued
+    objective functions and for array valued model function, which
+    features, a.o., honouring of constraints throughout optimization
+    and handling of structure-based parameters. The respective user
+    functions (frontends) are
+
+      nonlin_min nonlin_residmin nonlin_curvefit
+
+    together with a user function for statistics
+
+      residmin_stat
+
+ ** The requirement of nonlin_min, nonlin_residmin, and
+    nonlin_curvefit for the general constraint functions being able to
+    honour an index of constraints has been removed, the respective
+    feature is still available by setting some options.
+
+ ** Makefile fixed to work with non-standard linker options e.g on
+    Apple.
+
+
+Summary of important user-visible changes for optim 1.1.0:
+-------------------------------------------------------------------
+
+ ** The following functions are new optim 1.1.0:
+
+      powell cauchy nonlin_min
+
+ ** The following functions have been deprecated since they have been
+    implemented in Octave core:
+
+      fminunc_compat  optimset_compat
+
+ ** The function `fmin' has been deprecated in favour of using `fminbnd'
+    directly. If one really wishes to use the short version, one can
+    easily create an alias on an octaverc file (see `doc startup') with
+    the following code
+
+      function out=fmin(varargin) out=fminbnd(varargin{:}); endfunction
+
+ ** The package Makefile has been adapted for compatibility with Octave 3.6.0.
+
+ ** Bugfixes on the functions:
+
+      deriv   linprog
+
+ ** The function `line_min' has a configurable setpesize and max evals.
+
+ ** Added possibility to restrict a parameter to samin.
+
+ ** Package is no longer automatically loaded.
+
+
+Some important changes of the last versions of optim before 1.1.0:
+------------------------------------------------------------------
+
+ ** New functions:
+
+      jacobs: complex step derivative approximation
+
+      nonlin_residmin, nonlin_curvefit: Frontends with a general
+      interface for constrained residual-based optimization. They
+      allow a.o. optimization of structure-based named parameters or
+      parameter-arrays. A backend is included, which is derived from
+      the algorithm of leasqr, but enables feasible-path optimization
+      with linear and general constraints.

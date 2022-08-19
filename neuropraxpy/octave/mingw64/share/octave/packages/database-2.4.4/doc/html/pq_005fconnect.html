@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- General documentation for the database package for Octave.
+
+Copyright (C) 2016-2018 Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.3, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>database_doc: pq_connect</title>
+
+<meta name="description" content="database_doc: pq_connect">
+<meta name="keywords" content="database_doc: pq_connect">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Connection-functions.html#Connection-functions" rel="up" title="Connection functions">
+<link href="pq_005fclose.html#pq_005fclose" rel="next" title="pq_close">
+<link href="Connection-functions.html#Connection-functions" rel="prev" title="Connection functions">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="pq_005fconnect"></a>
+<div class="header">
+<p>
+Next: <a href="pq_005fclose.html#pq_005fclose" accesskey="n" rel="next">pq_close</a>, Up: <a href="Connection-functions.html#Connection-functions" accesskey="u" rel="up">Connection functions</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Connecting-to-a-Postgresql-database"></a>
+<h4 class="subsection">7.2.1 Connecting to a Postgresql database</h4>
+<a name="index-pq_005fconnect-1"></a>
+
+<a name="XREFpq_005fconnect"></a><dl>
+<dt><a name="index-pq_005fconnect"></a>Function File: <em><var>connection</var> =</em> <strong>pq_connect</strong> <em>(<var>settings</var>)</em></dt>
+<dd><p>Establishes a connection to a postgresql server according to
+<var>settings</var> and returns an <code>octave_pq_connection</code> object
+<var>connection</var> which can be passed to other functions of the
+package. There can be multiple connections. An
+<code>octave_pq_connection</code> object contains information on a
+connection and will be internally altered by the packages functions
+even though it is only passed as an argument, i.e. Octaves &rsquo;pass by
+value&rsquo; semantics are not adhered to in this case.
+</p>
+<p><var>settings</var> can be set by <code>setdbopts</code> (copied from Octaves
+<code>optimset</code>) and can contain (defaults depend on Postgresql):
+<code>host</code> (hostname), <code>hostaddr</code> (numeric host address),
+<code>port</code> (port to connect to), <code>dbname</code> (database to connect
+to), <code>user</code> (user name to connect as), <code>password</code>,
+<code>connect_timeout</code>, <code>options</code> (command-line options to send
+to the server at run-time, see Postgresql documentation),
+<code>sslmode</code> (<code>disable</code>, <code>allow</code>, <code>prefer</code>,
+<code>require</code>, <code>verify-ca</code>, or <code>verify-full</code>; see
+Postgresql documentation of SSL support), <code>sslcert</code> (file name
+of client SSL certificate), <code>sslkey</code> (location of secret key for
+client certificate, file name or external OpenSSL engine
+(colon-separated engine name and an engine-specific key identifier)),
+<code>sslrootcert</code> (file name of root SSL certificate), <code>sslcrl</code>
+(file name of SSL certificate revocation list), <code>krbsrvname</code>
+(kerberos service name), <code>service</code> (service name in
+pq_service.conf to use for additional parameters).
+</p>
+<p>All these settings are passed to the server as they are, so it may be
+better to consult the postgresql documentation for them, e.g. the
+documentation of the PQconnectdb function in libpq.
+</p>
+<p><strong>See also:</strong> <a href="pq_005fexec_005fparams.html#XREFpq_005fexec_005fparams">pq_exec_params</a>, <a href="pq_005fupdate_005ftypes.html#XREFpq_005fupdate_005ftypes">pq_update_types</a>.
+</p></dd></dl>
+
+
+
+
+
+
+</body>
+</html>

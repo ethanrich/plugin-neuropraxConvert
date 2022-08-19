@@ -1,0 +1,9 @@
+Name: GNU Octave
+Description: C++ interface to GNU Octave interpreter.
+URL: https://www.octave.org
+Version: 7.2.0
+Requires: octave = 7.2.0
+Requires.private:
+Libs: -L/usr/lib/octave/7.2.0 -loctinterp
+Libs.private:
+Cflags: -I/usr/include/octave-7.2.0/octave/..

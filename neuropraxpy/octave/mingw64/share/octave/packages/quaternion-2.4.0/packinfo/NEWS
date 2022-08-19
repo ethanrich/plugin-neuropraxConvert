@@ -1,0 +1,171 @@
+Summary of important user-visible changes for releases of the quaternion package
+
+===============================================================================
+quaternion-2.4.0   Release Date: 2015-03-21   Release Manager: Lukas Reichlin
+===============================================================================
+
+** q2rot
+   -- Vectorized code to support the input of multiple quaternions.
+   -- Return axis as a column vector.
+   -- Add test.
+
+** rot2q
+   -- Support for multiple rotation angles (vectorized code).
+   -- Improved error messages.
+   -- Add test.
+
+** The following functions are new:
+
+     rotm2q
+
+** The following functions are now overloaded for quaternions:
+
+     mean           numel
+     
+   (Thanks to Willem Atsma for all the changes above)
+
+** The quaternion package now depends on Octave version 3.8.0 or beyond.
+
+** In order to comply with modified Octave Forge rules, the package no longer
+   auto-loads.  See "help pkg" for details on auto-loading.
+
+
+===============================================================================
+quaternion-2.2.2   Release Date: 2014-07-20   Release Manager: Lukas Reichlin
+===============================================================================
+
+** q2rot
+   Fixed bug #42666.  <http://savannah.gnu.org/bugs/?42666>
+   The function no longer errors out.  The bug has been introduced with the
+   changes in quaternion-2.2.1.  (Thanks to Kjell Andersen)
+
+** The following functions are now overloaded for quaternions:
+
+     repmat
+
+
+===============================================================================
+quaternion-2.2.1   Release Date: 2014-05-05   Release Manager: Lukas Reichlin
+===============================================================================
+
+** The following functions are now overloaded for quaternions:
+
+     get            set
+   
+   While they offer no new editing features compared to subscripted assignment
+   and reference, they can display the types and dimensions of the quaternion's
+   components if called with one argument:
+   
+     get (q)
+     set (q)
+
+** subsasgn, subsref
+   -- Improved documentation.
+   -- Support assignment of scalar and vector part from other quaternions:
+
+        q1.v = q2   # assign components x, y and z, leave w untouched
+
+===============================================================================
+quaternion-2.2.0   Release Date: 2014-01-04   Release Manager: Lukas Reichlin
+===============================================================================
+
+** eq
+   Changed operator semantics of "==" to match those of complex numbers and
+   other built-in types.  Quaternion arrays are now compared element-wise.
+   The old behavior can be restored by the expression
+   
+     bool = size_equal (a, b) && all (eq (a, b)(:))
+
+** end
+   "end" indexing for quaternions works now as expected.
+
+** The following functions are now overloaded for quaternions:
+
+     arg            isempty         reshape
+     cast           isfinite        round
+     ceil           isinf           sparse
+     cumsum         isnan           squeeze
+     fix            isreal          sum
+     floor          length          tril
+     full           ndims           triu
+
+** The following operators are now overloaded for quaternions:
+
+     ge (>=)        le (<=)         ne (!=, ~=)
+     gt (>)         lt (<)
+
+   Since there is no ordering that makes quaternions an ordered field, several
+   definitions are possible.  The ordering chosen here is the lexicographic one.
+
+** quaternion
+   -- Allow logicals as quaternion components.
+   -- When called with one or three arguments, fill missing vector or scalar
+      part with zeros of the same class as the given arguments.  Before, always
+      doubles were used.
+
+
+===============================================================================
+quaternion-2.0.3   Release Date: 2013-10-28   Release Manager: Lukas Reichlin
+===============================================================================
+
+** Compatibility to GNU Octave 3.8
+   Replaced line continuation marker "\" by "..." to avoid deprecated syntax
+   warning.
+
+** q2rot
+   -- The rotation angle now lies in the interval [0, 2*pi].
+   -- Fixed bug #39521. (Thanks to Juan Pablo Carbajal and Max Katsev)
+      http://savannah.gnu.org/bugs/?39521
+
+
+===============================================================================
+quaternion-2.0.2   Release Date: 2012-10-25   Release Manager: Lukas Reichlin
+===============================================================================
+
+** eq
+   -- Fix typo bug which gave false positives for the k-component.
+   -- Avoid error if arguments are non-conformant.
+
+** size_equal
+   Add overloaded method because the built-in function gives false positives
+   for quaternions.
+
+** ldivide, mldivide, mpower
+   Show error message if the number of input arguments is not 2.
+
+
+===============================================================================
+quaternion-2.0.1   Release Date: 2012-10-14   Release Manager: Lukas Reichlin
+===============================================================================
+
+** inv
+   Support for the inversion of quaternion matrices.  Right and left division
+   operators (/ and \) profit from this change and support quaternion matrices
+   as well.
+
+** Check number of arguments when operators are called by their function names,
+   e.g. plus (q1, q2, q3).  Function plus supports now more than two arguments.
+
+** doc/quaternion.pdf
+   Revised PDF manual.  There is now a function index at the end of the manual.
+
+** The TeX-files  quaternion.tex  and  functions.texi  for generating
+   quaternion.pdf  are included in the doc folder, next to  quaternion.pdf.
+   Note that  functions.texi  is generated automatically by the scripts in the
+   quaternion/devel folder and the package generate_html.
+   They are not included in the quaternion package and can be found on the
+   OctaveForge SVN server.
+
+
+===============================================================================
+quaternion-2.0.0   Release Date: 2012-03-28   Release Manager: Lukas Reichlin
+===============================================================================
+
+** First official release.  Its main features are:
+   -- Matrices and n-dimensional arrays of quaternions.
+   -- Overloaded operators due to the use of classes.
+   -- Operator semantics similar to Octave’s built-in complex numbers.
+   -- Vectorized code for crunching large quaternion arrays in a speedy manner.
+
+
+===============================================================================

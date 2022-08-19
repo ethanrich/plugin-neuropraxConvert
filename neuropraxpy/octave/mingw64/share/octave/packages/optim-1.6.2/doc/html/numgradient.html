@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>numgradient (optim_doc)</title>
+
+<meta name="description" content="numgradient (optim_doc)">
+<meta name="keywords" content="numgradient (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Gradient-functions.html#Gradient-functions" rel="up" title="Gradient functions">
+<link href="numhessian.html#numhessian" rel="next" title="numhessian">
+<link href="deriv.html#deriv" rel="prev" title="deriv">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="numgradient"></a>
+<div class="header">
+<p>
+Next: <a href="numhessian.html#numhessian" accesskey="n" rel="next">numhessian</a>, Previous: <a href="deriv.html#deriv" accesskey="p" rel="prev">deriv</a>, Up: <a href="Gradient-functions.html#Gradient-functions" accesskey="u" rel="up">Gradient functions</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Another-numerical-gradient-function"></a>
+<h3 class="section">4.3 Another numerical gradient function</h3>
+<a name="index-numgradient"></a>
+
+<a name="Helptext_003a-12"></a>
+<h4 class="subheading">Helptext:</h4>
+
+<a name="XREFnumgradient"></a><pre class="verbatim">numgradient(f, {args}, minarg)
+
+Numeric central difference gradient of f with respect
+to argument &quot;minarg&quot;.
+* first argument: function name (string)
+* second argument: all arguments of the function (cell array)
+* third argument: (optional) the argument to differentiate w.r.t.
+        (scalar, default=1)
+
+&quot;f&quot; may be vector-valued. If &quot;f&quot; returns
+an n-vector, and the argument is a k-vector, the gradient
+will be an nxk matrix
+
+Example:
+function a = f(x);
+        a = [x'*x; 2*x];
+endfunction
+numgradient(&quot;f&quot;, {ones(2,1)})
+ans =
+
+  2.00000  2.00000
+  2.00000  0.00000
+  0.00000  2.00000
+
+
+
+</pre>
+
+
+
+
+</body>
+</html>

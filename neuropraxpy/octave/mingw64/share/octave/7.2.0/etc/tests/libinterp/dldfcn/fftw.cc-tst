@@ -1,0 +1,56 @@
+## DO NOT EDIT!  Generated automatically from fftw.cc by Make.
+%!testif HAVE_FFTW
+%! def_method = fftw ("planner");
+%! unwind_protect
+%!   method = "estimate";
+%!   fftw ("planner", method);
+%!   assert (fftw ("planner"), method);
+%!   method = "measure";
+%!   fftw ("planner", method);
+%!   assert (fftw ("planner"), method);
+%!   method = "patient";
+%!   fftw ("planner", method);
+%!   assert (fftw ("planner"), method);
+%!   method = "exhaustive";
+%!   fftw ("planner", method);
+%!   assert (fftw ("planner"), method);
+%!   method = "hybrid";
+%!   fftw ("planner", method);
+%!   assert (fftw ("planner"), method);
+%! unwind_protect_cleanup
+%!   fftw ("planner", def_method);
+%! end_unwind_protect
+%!testif HAVE_FFTW
+%! def_dwisdom = fftw ("dwisdom");
+%! def_swisdom = fftw ("swisdom");
+%! unwind_protect
+%!   wisdom = fftw ("dwisdom");
+%!   assert (ischar (wisdom));
+%!   fftw ("dwisdom", wisdom);
+%!   assert (fftw ("dwisdom"), wisdom);
+%!   wisdom = fftw ("swisdom");
+%!   assert (ischar (wisdom));
+%!   fftw ("swisdom", wisdom);
+%!   assert (fftw ("swisdom"), wisdom);
+%! unwind_protect_cleanup
+%!   fftw ("dwisdom", def_dwisdom);
+%!   fftw ("swisdom", def_swisdom);
+%! end_unwind_protect
+%!testif HAVE_FFTW3_THREADS
+%! n = fftw ("threads");
+%! unwind_protect
+%!   fftw ("threads", 3);
+%!   assert (fftw ("threads"), 3);
+%! unwind_protect_cleanup
+%!   fftw ("threads", n);
+%! end_unwind_protect
+%!error <Invalid call to fftw|was unavailable or disabled> fftw ()
+%!error <Invalid call to fftw|was unavailable or disabled> fftw ("planner", "estimate", "measure")
+%!error fftw (3)
+%!error fftw ("invalid")
+%!error fftw ("planner", "invalid")
+%!error fftw ("planner", 2)
+%!error fftw ("dwisdom", "invalid")
+%!error fftw ("swisdom", "invalid")
+%!error fftw ("threads", "invalid")
+%!error fftw ("threads", -3)

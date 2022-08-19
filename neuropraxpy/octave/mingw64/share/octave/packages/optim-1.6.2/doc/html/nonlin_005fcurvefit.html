@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>nonlin_curvefit (optim_doc)</title>
+
+<meta name="description" content="nonlin_curvefit (optim_doc)">
+<meta name="keywords" content="nonlin_curvefit (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Residual-optimization.html#Residual-optimization" rel="up" title="Residual optimization">
+<link href="lm_005fsvd_005ffeasible.html#lm_005fsvd_005ffeasible" rel="next" title="lm_svd_feasible">
+<link href="nonlin_005fresidmin.html#nonlin_005fresidmin" rel="prev" title="nonlin_residmin">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="nonlin_005fcurvefit"></a>
+<div class="header">
+<p>
+Next: <a href="lm_005fsvd_005ffeasible.html#lm_005fsvd_005ffeasible" accesskey="n" rel="next">lm_svd_feasible</a>, Previous: <a href="nonlin_005fresidmin.html#nonlin_005fresidmin" accesskey="p" rel="prev">nonlin_residmin</a>, Up: <a href="Residual-optimization.html#Residual-optimization" accesskey="u" rel="up">Residual optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Function-nonlin_005fcurvefit_0028_0029-for-curve-fitting"></a>
+<h3 class="section">2.2 Function nonlin_curvefit() for curve fitting</h3>
+<a name="index-nonlin_005fcurvefit-2"></a>
+
+<p>In curve fitting, the model function computes values from a constant set
+of &lsquo;independents&rsquo;, and the intention is to minimize the differences of
+these computed values to a constant set of &lsquo;observations&rsquo;. This can be
+done with <code>nonlin_residmin</code>, but it is more convenient to use
+<code>nonlin_curvefit</code>, which cares for passing the constant
+&lsquo;independents&rsquo; to the model function and for calculating the differences
+to the constant &lsquo;observations&rsquo;.
+</p>
+<p>However, if in some optimization problem you notice that you end up with
+passing dummy-values for the &lsquo;independents&rsquo; and zeros for the
+&lsquo;observations&rsquo;, you can more naturally use <code>nonlin_residmin</code>
+instead of <code>nonlin_curvefit</code>.
+</p>
+<a name="XREFnonlin_005fcurvefit"></a><dl>
+<dt><a name="index-nonlin_005fcurvefit"></a>Function File: <em>[<var>p</var>, <var>fy</var>, <var>cvg</var>, <var>outp</var>] =</em> <strong>nonlin_curvefit</strong> <em>(<var>f</var>, <var>pin</var>, <var>x</var>, <var>y</var>)</em></dt>
+<dt><a name="index-nonlin_005fcurvefit-1"></a>Function File: <em>[<var>p</var>, <var>fy</var>, <var>cvg</var>, <var>outp</var>] =</em> <strong>nonlin_curvefit</strong> <em>(<var>f</var>, <var>pin</var>, <var>x</var>, <var>y</var>, <var>settings</var>)</em></dt>
+<dd><p>Frontend for nonlinear fitting of values, computed by a model
+function, to observed values.
+</p>
+<p>Please refer to the description of <code>nonlin_residmin</code>. The
+differences to <code>nonlin_residmin</code> are the additional arguments
+<var>x</var> (independent values, mostly, but not necessarily, an array of
+the same dimensions or the same number of rows as <var>y</var>) and
+<var>y</var> (array of observations), the returned value <var>fy</var> (final
+guess for observed values) instead of <var>resid</var>, that the model
+function has a second obligatory argument which will be set to
+<var>x</var> and is supposed to return guesses for the observations (with
+the same dimensions), and that the possibly user-supplied function
+for the jacobian of the model function has also a second obligatory
+argument which will be set to <var>x</var>.
+</p>
+
+
+<p><strong>See also:</strong> <a href="nonlin_005fresidmin.html#XREFnonlin_005fresidmin">nonlin_residmin</a>.
+</p></dd></dl>
+
+
+<p>Also, if the setting <code>user_interaction</code> is given, additional
+information is passed to these functions,
+see
+<a href="Common-optimization-options.html#Common-optimization-options">Common optimization options</a>.
+</p>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="lm_005fsvd_005ffeasible.html#lm_005fsvd_005ffeasible" accesskey="n" rel="next">lm_svd_feasible</a>, Previous: <a href="nonlin_005fresidmin.html#nonlin_005fresidmin" accesskey="p" rel="prev">nonlin_residmin</a>, Up: <a href="Residual-optimization.html#Residual-optimization" accesskey="u" rel="up">Residual optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

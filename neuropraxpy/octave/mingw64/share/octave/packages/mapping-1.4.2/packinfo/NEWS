@@ -1,0 +1,287 @@
+Summary of important user-visible changes for mapping 1.4.2:
+-------------------------------------------------------------------
+
+ ** The following functions are new in mapping 1.4.2:
+      almanac
+      areaquad
+      auth2geo
+      con2geo
+      geo2auth
+      geo2con
+      geo2iso
+      geo2rect
+      geodeticarc
+      geodeticfwd
+      iso2geo
+      meridianfwd
+      rect2geo
+      referenceSphere
+      sph_chk
+      vincenty
+      vincentyDirect
+
+ ** Bug fixes
+    - referenceEllipsoid.m: express semimajor axis of Everest 1830 in
+      meters rather than the original 'Indian feet'
+    - kmlread.m: fix typo when reading Point data
+    - shapedraw.m: fix erratic (0, 0) coordinates occurring in plots
+    - shaperead.m: improve reading attributes (bug #61757)
+
+ ** Code improvements
+    - referenceEllipsoid: return no output to screen if called with
+      just 0 (zero) and an output is requested.  Abbreviations for a
+      few ellipsoids were added.
+    - replace validation of input reference ellipsoids by calls to
+      sph_chk.m in several tens of geodesy functions. This makes for
+      a big code reduction but also adds flexibility for inputting
+      reference ellipsoids and/or reference sphere.
+
+
+Summary of important user-visible changes for mapping 1.4.1:
+-------------------------------------------------------------------
+
+ ** The following functions are new in mapping 1.4.1:
+
+      angl2str
+      angltostr
+      departure
+      ecef2aer
+      ecef2enu
+      ecef2enuv
+      ecef2ned
+      ecef2nedv
+      egm96geoid
+      enu2geodetic
+      enu2ecef
+      enu2ecefv
+      gc2sc
+      gcxgc
+      gcxsc
+      geodetic2aer
+      geodetic2enu
+      geodetic2ned
+      ned2aer
+      ned2ecef
+      ned2ecefv
+      ned2geodetic
+      scxsc
+      str2angle
+
+ ** Bug fixes:
+      * gpxread.m  (bug #58701):
+        - read milliseconds in Time nodes in Tracks, if present.
+          Time fields in Waypoint sections are still ignored.
+        - Various other fixes (missing Ele(vation) and Time nodes,
+          texinfo help text).
+      * kmlread.m (bug #58854):
+        - Accept various mixed time formats.
+        - Be more flexible regarding missing fields.
+        Note: kmlread.m is still considered experimental.
+        Thanks to Geoff Warne for supplying numerous .gpx and .kml
+        test files and aid in diagnosing issues.
+      * roundn.m: much improved Matlab-compatibility
+      * angl2str.m: ditto, thanks to Ricardo Fantin da Costa
+      * shapedraw: fix some Point geometry plotting logic, return
+        empty file handle in case of empty shapes
+
+ ** Code improvements
+      * distance.m: improve accuracy for small distances
+
+
+Summary of important user-visible changes for mapping 1.4.0:
+-------------------------------------------------------------------
+
+ ** The mapping package now depends on the geometry and io packages. The
+    (suggested) dependency on the octclip package has been removed.
+
+ ** The following functions are new in mapping 1.4.0:
+
+      aer2ecef
+      aer2enu
+      aer2geodetic
+      aer2ned
+      axes2ecc
+      antipode
+      closePolygonParts
+      deg2nm
+      deg2sm
+      dxfdraw
+      dxfparse
+      dxfread
+      earthRadius
+      ecc2flat
+      ecc2n
+      ecef2geodetic
+      enu2aer
+      enu2uvw
+      flat2ecc
+      geodetic2ecef
+      geocentricLatitude
+      geodeticLatitudeFromGeocentric
+      geodeticLatitudeFromParametric
+      gmlread
+      gpxread
+      isShapeMultipart
+      kmlread
+      kmzread
+      majaxis
+      meridianarc
+      minaxis
+      n2ecc
+      parametricLatitude
+      polycut
+      rad2nm
+      rad2sm
+      rasterclip
+      rcurve
+      referenceEllipsoid
+      utmzone
+      wgs84Ellipsoid
+
+ ** Bug fixes:
+      shapedraw.m:  * Fix color arg. bug when drawing (poly)line
+                      geometries.
+                    * Restore input check order.
+                    * Do not connect multipoint shapes.
+      shaperead.m:  * Fix reading 'line' geometries.
+                    * Ignore shapes with (almost) infinite
+                      coordinates.
+                    * Fix .shx file usage.
+                    * Move file existence check to start of function.
+                    * Fix reading MultiPoint shapefiles.
+                    * Provision for absent M-values in M and Z
+                      shapetypes.
+                    * More robust input validation.
+                    * Properly process BoundingBox limits.
+                    * Fix incompatible dimensions bug when reading Multipoint files.
+                    * Fix reading selected attributes.
+      shapewrite.m: * Various fixes (credits to a.o., Martin Kunz, M.Parkan).
+                    * Properly write missing M-values.
+                    * Fix OOM error when writing large Point type files.
+                    * Fix and overhaul writing requested attributes.
+                    Fixes for bug #53422:
+                    * Unconditionally write .dbf file.
+                    * Fix record lengths for all Point types.
+                    * Fix XY coordinate write order for all Multipoint types.
+                    * Update .shx header as well.
+       rasterinfo.m: Show nr. of bands and bounding box.
+
+ ** Code improvements
+      shaperead.m:  * Invoke the Clipper library for clipping polylines
+                      and polygons, leading to much improved performance
+                      when invoking the BoundingBox option together with
+                      the Clip option. To use this feature the Octave-
+                      Forge geometry package >= 4.0.0 must be installed
+                      and loaded.
+
+ ** New features
+      shapewrite.m: * Allow writing M & Z shape types (Matlab-incompatible
+                      types, yet supported by Octave).
+
+Summary of important user-visible changes for mapping 1.2.1:
+-------------------------------------------------------------------
+
+ ** The following functions are new in mapping 1.2.1:
+
+      rasterread
+      rasterinfo
+      rasterdraw
+      gdalread
+      wrapToPi
+      wrapTo2Pi
+      wrapTo180
+      wrapTo360
+
+ ** New features
+      Reading GIS raster data:  A first go is provided using
+      functions rasterread.m and rasterinfo.m.  Both invoke binary
+      function gdalread() of which an initial version was provided
+      by Shashank Khare.  rasterread.m and rasterinfo.m can read
+      and return info on any raster data type that the underlying
+      GDAL library can read.  As such, separate functions for e.g.,
+      GeoTIFF and ArcGrid etc. are not required.
+      To make use of these functions the GDAL library must be
+      present on your system => GDAL is a suggested dependency.
+
+      mapshow.m: drawing raster data is now supported.
+
+      shapedraw.m: drawing speed of filled polygons and multipatches
+      is much improved
+
+      wrapTo180.m, wrapTo360.m, wrapToPi.m, wrapTo2Pi.m:  Provided
+      by Oscar Monerris Belda and turned into their present versions
+      with help of a.o., Andreas Weber
+                   
+ ** Bug fixes:
+      shapewrite.m: correct Lat/Lon mix-up
+                    update overall BoundingBox for Point type
+      shaperead.m:  improve reading Nr. of parts (of Polylines/-gons)
+
+ ** To avoid shadowing core functions rad2deg and deg2rad, these
+      functions are only copied into place if Octave (< 4.2) does not
+      have them.
+
+      
+Summary of important user-visible changes for mapping 1.2.0:
+-------------------------------------------------------------------
+
+ ** The following functions are new in mapping 1.2.0:
+
+      deg2km
+      degtorad
+      degrees2dm
+      degrees2dms
+      dm2degrees
+      dms2degrees
+      extractfield
+      fromDegrees
+      fromRadians
+      geoshow
+      km2deg
+      km2rad
+      km2nm
+      km2sm
+      makesymbolspec
+      mapshow
+      nm2km
+      nm2sm
+      nm2rad
+      nm2deg
+      radtodeg
+      rad2km
+      removeExtraNanSeparators
+      roundn
+      shapedraw
+      shapeinfo
+      shaperead
+      shapewrite
+      sm2km
+      sm2nm
+      sm2rad
+      sm2deg
+      toDegrees
+      toRadians
+      unitsratio
+      validateLengthUnit
+
+ ** The function `distance' has been greatly improved with more options
+    including calculating the azimuth between points and support different
+    angle units.
+
+ ** The function km2deg can accept an optional radius or the name of some
+    Solar System objects.
+
+ ** Test functions for deg2rad, km2deg and rad2deg have been added.
+ 
+ ** Functions shapeinfo, shaperead, shapewrite and shapedraw are meant to
+    process ArcGIS shape files. Functions mapshow and geoshow are simple
+    Matlab-compatible wrappers for shapedraw. A basic implementation of
+    makesymbolspec is also present.
+    For some functionality of shaperead.m, shapewrite.m and shapedraw.m 
+    the Octave-Forge geometry, io and octclip packages are required.
+
+    The shape* functions are considered experimental yet. Only projected
+    data files can be drawn and several limitations apply. On the other
+    hand some functionality is present that supersedes ML compatibility.
+    See the help for each function.
+ 

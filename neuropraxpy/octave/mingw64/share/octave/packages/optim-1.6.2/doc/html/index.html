@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Top (optim_doc)</title>
+
+<meta name="description" content="Top (optim_doc)">
+<meta name="keywords" content="Top (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="../dir/index.html" rel="up" title="(dir)">
+<link href="Scalar-optimization.html#Scalar-optimization" rel="next" title="Scalar optimization">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<h1 class="settitle" align="center">optim_doc</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a name="Top"></a>
+<div class="header">
+<p>
+Next: <a href="Scalar-optimization.html#Scalar-optimization" accesskey="n" rel="next">Scalar optimization</a>, Up: <a href="../dir/index.html" accesskey="u" rel="up">(dir)</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Additional-documentation-for-the-optim-package-for-Octave"></a>
+<h1 class="top">Additional documentation for the optim package for Octave</h1>
+
+<p>The info version of this document is accessible, after package
+installation, from the Octave commandline with <code>optim_doc()</code>.
+</p>
+<p>This documentation applies to version 1.6.2 of the optim
+package.
+</p>
+<p>The optim package is a collection of additional functions related to
+numerical optimization.  For Octaves core optimization functions (not
+contained in this package)
+see
+<a href="https://www.gnu.org/software/octave/doc/interpreter/Optimization.html#Optimization">(octave)Optimization</a>.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">Types of functions in the optim package
+</pre></th></tr><tr><td align="left" valign="top">&bull; <a href="Scalar-optimization.html#Scalar-optimization" accesskey="1">Scalar optimization</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Functions for optimization of a scalar
+                                  objective function.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Residual-optimization.html#Residual-optimization" accesskey="2">Residual optimization</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Functions for optimization of a model
+                                  function returning an array.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Zero-finders.html#Zero-finders" accesskey="3">Zero finders</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Functions for finding the zero of a
+                                  scalar or array valued nonlinear user
+                                  function.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Gradient-functions.html#Gradient-functions" accesskey="4">Gradient functions</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Functions for numerical approximation of
+                                  gradients and Hessians.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Helper-functions.html#Helper-functions" accesskey="5">Helper functions</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Functions for algebraic tasks common to
+                                  optimization problems.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Documentation.html#Documentation" accesskey="6">Documentation</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Function optim_doc to view documentation.
+</td></tr>
+<tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
+</pre></th></tr><tr><td align="left" valign="top">&bull; <a href="Compatibility-functions.html#Compatibility-functions" accesskey="7">Compatibility functions</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Functions with traditional names and
+                                  arguments which provide a subset of
+                                  the functionality of other functions.
+</td></tr>
+<tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
+Configuration
+</pre></th></tr><tr><td align="left" valign="top">&bull; <a href="Common-frontend-options.html#Common-frontend-options" accesskey="8">Common frontend options</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Options common to all frontends.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Common-optimization-options.html#Common-optimization-options" accesskey="9">Common optimization options</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Options common to all optimization
+                                  frontends.
+</td></tr>
+<tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
+</pre></th></tr><tr><td align="left" valign="top">&bull; <a href="Parameter-structures.html#Parameter-structures">Parameter structures</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Handling of structures of optimized
+                                  parameters.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Additional-parameters.html#Additional-parameters">Additional parameters</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Passing additional parameters to user
+                                  functions.
+</td></tr>
+<tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
+Indices
+</pre></th></tr><tr><td align="left" valign="top">&bull; <a href="Function-index.html#Function-index">Function index</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Index of functions in optim.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Concept-index.html#Concept-index">Concept index</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Concept index.
+</td></tr>
+</table>
+
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Scalar-optimization.html#Scalar-optimization" accesskey="n" rel="next">Scalar optimization</a>, Up: <a href="../dir/index.html" accesskey="u" rel="up">(dir)</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

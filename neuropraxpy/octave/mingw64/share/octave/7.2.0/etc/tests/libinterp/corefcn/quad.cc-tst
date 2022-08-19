@@ -1,0 +1,58 @@
+## DO NOT EDIT!  Generated automatically from quad.cc by Make.
+%!function y = __f (x)
+%!  y = x + 1;
+%!endfunction
+%!test
+%! [v, ier, nfun, err] = quad ("__f", 0, 5);
+%! assert (ier, 0);
+%! assert (v, 17.5, sqrt (eps));
+%! assert (nfun > 0);
+%! assert (err < sqrt (eps));
+%!test
+%! [v, ier, nfun, err] = quad ("__f", single (0), single (5));
+%! assert (ier, 0);
+%! assert (v, 17.5, sqrt (eps ("single")));
+%! assert (nfun > 0);
+%! assert (err < sqrt (eps ("single")));
+%!function y = __f (x)
+%!  y = x .* sin (1 ./ x) .* sqrt (abs (1 - x));
+%!endfunction
+%!test
+%!  [v, ier, nfun, err] = quad ("__f", 0.001, 3);
+%! assert (ier == 0 || ier == 1);
+%! assert (v, 1.98194120273598, sqrt (eps));
+%! assert (nfun > 0);
+%!test
+%!  [v, ier, nfun, err] = quad (@__f, 0.001, 3);
+%! assert (ier == 0 || ier == 1);
+%! assert (v, 1.98194120273598, sqrt (eps));
+%! assert (nfun > 0);
+%!test
+%!  fstr = "x .* sin (1 ./ x) .* sqrt (abs (1 - x))";
+%!  [v, ier, nfun, err] = quad (fstr, 0.001, 3);
+%! assert (ier == 0 || ier == 1);
+%! assert (v, 1.98194120273598, sqrt (eps));
+%! assert (nfun > 0);
+%!test
+%!  anon_fcn = @(x) x .* sin (1 ./ x) .* sqrt (abs (1 - x));
+%!  [v, ier, nfun, err] = quad (anon_fcn, 0.001, 3);
+%! assert (ier == 0 || ier == 1);
+%! assert (v, 1.98194120273598, sqrt (eps));
+%! assert (nfun > 0);
+%!test
+%!  inline_fcn = inline ("x .* sin (1 ./ x) .* sqrt (abs (1 - x))", "x");
+%!  [v, ier, nfun, err] = quad (inline_fcn, 0.001, 3);
+%! assert (ier == 0 || ier == 1);
+%! assert (v, 1.98194120273598, sqrt (eps));
+%! assert (nfun > 0);
+%!test
+%!  [v, ier, nfun, err] = quad ("__f", single (0.001), single (3));
+%! assert (ier == 0 || ier == 1);
+%! assert (v, 1.98194120273598, sqrt (eps ("single")));
+%! assert (nfun > 0);
+%!error quad ()
+%!error quad ("__f", 1, 2, 3, 4, 5)
+%!test
+%! quad_options ("absolute tolerance", eps);
+%! assert (quad_options ("absolute tolerance") == eps);
+%!error quad_options (1, 2, 3)

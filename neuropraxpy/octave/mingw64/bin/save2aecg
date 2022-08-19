@@ -1,0 +1,6 @@
+#!/bin/sh
+# SAVE2AECG converts short-term ECG format
+# into XML-based HL7v3 Annotated ECG format
+#
+save2gdf -f=HL7 $@
+

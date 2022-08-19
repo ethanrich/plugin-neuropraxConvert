@@ -1,0 +1,4 @@
+## DO NOT EDIT! Generated from cyclpoly.cc
+%!error cyclpoly ()
+%!error cyclpoly (1)
+%!error cyclpoly (1, 2, 3, 4, 5)

@@ -1,0 +1,4 @@
+## Generated from __instr_hwinfo__.cc
+%!test
+%! a = __instr_hwinfo__();
+%! assert (! isempty (a));

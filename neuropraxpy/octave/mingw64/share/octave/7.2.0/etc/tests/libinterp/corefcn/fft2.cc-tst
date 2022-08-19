@@ -1,0 +1,67 @@
+## DO NOT EDIT!  Generated automatically from fft2.cc by Make.
+%!testif HAVE_FFTW
+%! M = 16;
+%! N = 8;
+%!
+%! m = 5;
+%! n = 3;
+%!
+%! x = 2*pi*(0:1:M-1)/M;
+%! y = 2*pi*(0:1:N-1)/N;
+%! sx = cos (m*x);
+%! sy = sin (n*y);
+%! s = kron (sx',sy);
+%! S = fft2 (s);
+%! answer = kron (fft (sx)', fft (sy));
+%! assert (S, answer, 4*M*N*eps);
+%!testif HAVE_FFTW
+%! M = 12;
+%! N = 7;
+%!
+%! m = 3;
+%! n = 2;
+%!
+%! x = 2*pi*(0:1:M-1)/M;
+%! y = 2*pi*(0:1:N-1)/N;
+%!
+%! sx = cos (m*x);
+%! sy = cos (n*y);
+%!
+%! S = kron (fft (sx)', fft (sy));
+%! answer = kron (sx', sy);
+%! s = ifft2 (S);
+%!
+%! assert (s, answer, 30*eps);
+%!testif HAVE_FFTW
+%! M = 16;
+%! N = 8;
+%!
+%! m = 5;
+%! n = 3;
+%!
+%! x = 2*pi*(0:1:M-1)/M;
+%! y = 2*pi*(0:1:N-1)/N;
+%! sx = single (cos (m*x));
+%! sy = single (sin (n*y));
+%! s = kron (sx', sy);
+%! S = fft2 (s);
+%! answer = kron (fft (sx)', fft (sy));
+%! assert (S, answer, 4*M*N*eps ("single"));
+%!testif HAVE_FFTW
+%! M = 12;
+%! N = 7;
+%!
+%! m = 3;
+%! n = 2;
+%!
+%! x = single (2*pi*(0:1:M-1)/M);
+%! y = single (2*pi*(0:1:N-1)/N);
+%!
+%! sx = cos (m*x);
+%! sy = cos (n*y);
+%!
+%! S = kron (fft (sx)', fft (sy));
+%! answer = kron (sx', sy);
+%! s = ifft2 (S);
+%!
+%! assert (s, answer, 30*eps ("single"));

@@ -1,0 +1,136 @@
+## DO NOT EDIT!  Generated automatically from ordqz.cc by Make.
+%!shared A, B, AA, BB, QQ, ZZ, AC, BC, AAC, BBC, QQC, ZZC, select, selectc
+%! A = [ -1.03428  0.24929  0.43205 -0.12860;
+%!        1.16228  0.27870  2.12954  0.69250;
+%!       -0.51524 -0.34939 -0.77820  2.13721;
+%!       -1.32941  2.11870  0.72005  1.00835 ];
+%! B = [  1.407302 -0.632956 -0.360628  0.068534;
+%!        0.149898  0.298248  0.991777  0.023652;
+%!        0.169281 -0.405205 -1.775834  1.511730;
+%!        0.717770  1.291390 -1.766607 -0.531352 ];
+%! AC = [ 0.4577 + 0.7199i   0.1476 + 0.6946i   0.6202 + 0.2092i   0.7559 + 0.2759i;
+%!        0.5868 + 0.7275i   0.9174 + 0.8781i   0.6741 + 0.1985i   0.4320 + 0.7023i;
+%!        0.2408 + 0.6359i   0.2959 + 0.8501i   0.3904 + 0.5613i   0.5000 + 0.1428i;
+%!        0.8177 + 0.8581i   0.2583 + 0.8970i   0.7706 + 0.5451i   0.1068 + 0.1650i];
+%! BC = [ 0.089898 + 0.209257i   0.157769 + 0.311387i   0.018926 + 0.622517i   0.058825 + 0.374647i;
+%!        0.009367 + 0.098211i   0.736087 + 0.095797i   0.973192 + 0.583765i   0.434018 + 0.461909i;
+%!        0.880784 + 0.868215i   0.032839 + 0.569461i   0.873437 + 0.266081i   0.739426 + 0.362017i;
+%!        0.121649 + 0.115111i   0.426695 + 0.492222i   0.247670 + 0.034414i   0.771629 + 0.078153i];
+%! [AA, BB, QQ, ZZ] = qz (A, B);
+%! [AAC, BBC, QQC, ZZC] = qz (AC, BC);
+%! select = [0 0 1 1];
+%! selectc = [0 0 0 1];
+%!test
+%! [AAX, BBX, QQX, ZZX] = ordqz (AA, BB, QQ, ZZ, "rhp");
+%! assert (all (real (eig (AAX(1:3,1:3), BBX(1:3,1:3))) >= 0));
+%! assert (all (real (eig (AAX(4:4,4:4), BBX(4:4,4:4))) < 0));
+%! assert (norm (QQX'*AAX*ZZX' - A, "fro"), 0, 1e-12);
+%! assert (norm (QQX'*BBX*ZZX' - B, "fro"), 0, 1e-12);
+%!test
+%! [AAX, BBX, QQX, ZZX] = ordqz (AA, BB, QQ, ZZ, "+");
+%! assert (all (real (eig (AAX(1:3,1:3), BBX(1:3,1:3))) >= 0));
+%! assert (all (real (eig (AAX(4:4,4:4), BBX(4:4,4:4))) < 0));
+%!test
+%! [AAX, BBX, QQX, ZZX] = ordqz (AA, BB, QQ, ZZ, "lhp");
+%! assert (all (real (eig (AAX(2:4,2:4), BBX(2:4,2:4))) >= 0));
+%! assert (all (real (eig (AAX(1:1,1:1), BBX(1:1,1:1))) < 0));
+%! assert (norm (QQX'*AAX*ZZX' - A, "fro"), 0, 1e-12);
+%! assert (norm (QQX'*BBX*ZZX' - B, "fro"), 0, 1e-12);
+%!test
+%! [AAX, BBX, QQX, ZZX] = ordqz (AA, BB, QQ, ZZ, "-");
+%! assert (all (real (eig (AAX(2:4,2:4), BBX(2:4,2:4))) >= 0));
+%! assert (all (real (eig (AAX(1:1,1:1), BBX(1:1,1:1))) < 0));
+%!test
+%! [AAX, BBX, QQX, ZZX] = ordqz (AA, BB, QQ, ZZ, "udi");
+%! assert (all (abs (eig (AAX(1:1,1:1), BBX(1:1,1:1))) < 1));
+%! assert (all (abs (eig (AAX(2:4,2:4), BBX(2:4,2:4))) > 1));
+%! assert (norm (QQX'*AAX*ZZX' - A, "fro"), 0, 1e-12);
+%! assert (norm (QQX'*BBX*ZZX' - B, "fro"), 0, 1e-12);
+%!test
+%! [AAX, BBX, QQX, ZZX] = ordqz (AA, BB, QQ, ZZ, "S");
+%! assert (all (abs (eig (AAX(1:1,1:1), BBX(1:1,1:1))) < 1));
+%! assert (all (abs (eig (AAX(2:4,2:4), BBX(2:4,2:4))) > 1));
+%!test
+%! [AAX, BBX, QQX, ZZX] = ordqz (AA, BB, QQ, ZZ, "udo");
+%! assert (all (abs (eig (AAX(1:3,1:3), BBX(1:3,1:3))) >= 1));
+%! assert (all (abs (eig (AAX(4:4,4:4), BBX(4:4,4:4))) < 1));
+%! assert (norm (QQX'*AAX*ZZX' - A, "fro"), 0, 1e-12);
+%! assert (norm (QQX'*BBX*ZZX' - B, "fro"), 0, 1e-12);
+%!test
+%! [AAX, BBX, QQX, ZZX] = ordqz (AA, BB, QQ, ZZ, "B");
+%! assert (all (abs (eig (AAX(1:3,1:3), BBX(1:3,1:3))) >= 1));
+%! assert (all (abs (eig (AAX(4:4,4:4), BBX(4:4,4:4))) < 1));
+%!test
+%! [AAX, BBX, QQX, ZZX] = ordqz (AA, BB, QQ, ZZ, select);
+%! assert (all (iscomplex (eig (AAX(1:2,1:2), BBX(1:2,1:2)))));
+%! assert (norm (QQX'*AAX*ZZX' - A, "fro"), 0, 1e-12);
+%! assert (norm (QQX'*BBX*ZZX' - B, "fro"), 0, 1e-12);
+%!test
+%! [AACX, BBCX, QQCX, ZZCX] = ordqz (AAC, BBC, QQC, ZZC, "rhp");
+%! assert (all (real (eig (AACX(1:2,1:2), BBCX(1:2,1:2))) >= 0));
+%! assert (all (real (eig (AACX(3:4,3:4), BBCX(3:4,3:4))) < 0));
+%! assert (norm (QQCX'*AACX*ZZCX' - AC, "fro"), 0, 1e-12);
+%! assert (norm (QQCX'*BBCX*ZZCX' - BC, "fro"), 0, 1e-12);
+%!test
+%! [AACX, BBCX, QQCX, ZZCX] = ordqz (AAC, BBC, QQC, ZZC, "lhp");
+%! assert (all (real (eig (AACX(1:2,1:2), BBCX(1:2,1:2))) < 0));
+%! assert (all (real (eig (AACX(3:4,3:4), BBCX(3:4,3:4))) >= 0));
+%! assert (norm (QQCX'*AACX*ZZCX' - AC, "fro"), 0, 1e-12);
+%! assert (norm (QQCX'*BBCX*ZZCX' - BC, "fro"), 0, 1e-12);
+%!test
+%! [AACX, BBCX, QQCX, ZZCX] = ordqz (AAC, BBC, QQC, ZZC, "udi");
+%! assert (all (abs (eig (AACX(1:2,1:2), BBCX(1:2,1:2))) < 1));
+%! assert (all (abs (eig (AACX(3:4,3:4), BBCX(3:4,3:4))) >= 1));
+%! assert (norm (QQCX'*AACX*ZZCX' - AC, "fro"), 0, 1e-12);
+%! assert (norm (QQCX'*BBCX*ZZCX' - BC, "fro"), 0, 1e-12);
+%!test
+%! [AACX, BBCX, QQCX, ZZCX] = ordqz (AAC, BBC, QQC, ZZC, "udo");
+%! assert (all (abs (eig (AACX(1:2,1:2), BBCX(1:2,1:2))) >= 1));
+%! assert (all (abs (eig (AACX(3:4,3:4), BBCX(3:4,3:4))) < 1));
+%! assert (norm (QQCX'*AACX*ZZCX' - AC, "fro"), 0, 1e-12);
+%! assert (norm (QQCX'*BBCX*ZZCX' - BC, "fro"), 0,  1e-12);
+%!test
+%! [AACX, BBCX, QQCX, ZZCX] = ordqz (AAC, BBC, QQC, ZZC, selectc);
+%! ev = abs (eig (AACX(1:1,1:1), BBCX(1:1,1:1)));
+%! assert(ev > 0.6 && ev < 0.7);
+%! assert (norm (QQCX'*AACX*ZZCX' - AC, "fro"), 0, 1e-12);
+%! assert (norm (QQCX'*BBCX*ZZCX' - BC, "fro"), 0, 1e-12);
+%!test
+%! A = toeplitz ([1,2,3,4]);
+%! [B, A] = qr (A);
+%! B = B';
+%! [AA, BB, Q, Z] = qz (A, B);
+%! [AAS, BBS, QS, ZS] = ordqz (AA, BB, Q, Z, "lhp");
+%! E2 = ordeig (AAS, BBS);
+%! ECOMP = [-3.414213562373092; -1.099019513592784;
+%!          -0.5857864376269046; 9.099019513592784];
+%! assert (norm (ECOMP - E2, "Inf"), 0, 1e-8);
+%!error <Invalid call> ordqz ()
+%!error <Invalid call> ordqz (eye (2))
+%!error <Invalid call> ordqz (eye (2), eye (2))
+%!error <Invalid call> ordqz (eye (2), eye (2), eye (2))
+%!error <Invalid call> ordqz (eye (2), eye (2), eye (2), eye (2))
+%!error id=Octave:ordqz:unknown-keyword
+%! ordqz (eye (2), eye (2), eye (2), eye (2), "foobar");
+%!error id=Octave:ordqz:select-not-vector
+%! ordqz (eye (2), eye (2), eye (2), eye (2), eye (2));
+%!error id=Octave:ordqz:unknown-arg
+%! ordqz (eye (2), eye (2), eye (2), eye (2), {"foobar"});
+%!error id=Octave:ordqz:nargout
+%! [a,b,c,d,e] = ordqz (eye (2), eye (2), eye (2), eye (2), "udi");
+%!warning <A: argument is empty matrix> ordqz ([], [], [], [], "udi");
+%!error <A must be a square matrix> ordqz (ones (1,2), [], [], [], "udi");
+%!error <nonconformant matrices>
+%! ordqz (eye (3), eye (2), eye (2), eye (2), "udi");
+%!error <nonconformant matrices>
+%! ordqz (eye (2), eye (3), eye (2), eye (2), "udi");
+%!error <nonconformant matrices>
+%! ordqz (eye (2), eye (2), eye (3), eye (2), "udi");
+%!error <nonconformant matrices>
+%! ordqz (eye (2), eye (2), eye (2), eye (3), "udi");
+%!error <SELECT vector .* wrong number of elements>
+%! ordqz (eye (2), eye (2), eye (2), eye (2), ones (1,5));
+%!error <quasi upper triangular matrices are not allowed with complex data>
+%! AA = zeros (2, 2);
+%! AA(2,1) = i;
+%! ordqz (AA, eye (2), eye (2), eye (2), "udi");

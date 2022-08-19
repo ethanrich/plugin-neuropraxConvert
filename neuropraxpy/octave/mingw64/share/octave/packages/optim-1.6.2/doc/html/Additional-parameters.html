@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Additional parameters (optim_doc)</title>
+
+<meta name="description" content="Additional parameters (optim_doc)">
+<meta name="keywords" content="Additional parameters (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="Function-index.html#Function-index" rel="next" title="Function index">
+<link href="Non_002dscalar-parameters.html#Non_002dscalar-parameters" rel="prev" title="Non-scalar parameters">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="Additional-parameters"></a>
+<div class="header">
+<p>
+Next: <a href="Function-index.html#Function-index" accesskey="n" rel="next">Function index</a>, Previous: <a href="Parameter-structures.html#Parameter-structures" accesskey="p" rel="prev">Parameter structures</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Passing-additional-parameters-to-user-functions"></a>
+<h2 class="chapter">11 Passing additional parameters to user functions</h2>
+<a name="index-additional-parameters"></a>
+
+<p>Optimizers often require the user to supply functions (<abbr>e.g.</abbr>
+objective functions, model functions, constraint functions).  The
+interface of these functions &mdash; arguments and returned values &mdash; is
+defined by the optimizer.  Often, a user function needs additional
+arguments, not covered by the defined interface, which are constant
+throughout the optimization.  These can be supplied by wrapping the user
+function into an anonymous function.  See <a href="https://www.gnu.org/software/octave/doc/interpreter/Anonymous-Functions.html#Anonymous-Functions">(octave)Anonymous
+Functions</a>, for further explanation and examples.
+</p>
+<p>There are also some older optimizers in the optim package, written when
+anonymous functions were not available in Octave.  Some of these offer
+an interface to user functions which is itself able to pass additional
+constant variables in arbitrary argument positions.  Newer optimizers
+should not be written this way, since this is an unnecessary
+complication.
+</p>
+<p>Though it is possible to use global variables to pass additional data to
+user functions, this is not recommended since it introduces the
+possibility of name conflicts within the pool of global variables.
+</p>
+
+
+
+
+
+</body>
+</html>

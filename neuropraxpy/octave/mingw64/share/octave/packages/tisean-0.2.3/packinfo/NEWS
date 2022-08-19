@@ -1,0 +1,112 @@
+===============================================================================
+tisean-0.2.3   Release Date: 2015-08-14  Release Manager: Piotr Held
+===============================================================================
+
+** Added functions:
+
+      spikespec
+      spikeauto
+
+** Modified all isnumeric to isreal since only real values are accepted by
+   the TISEAN package.
+
+===============================================================================
+tisean-0.2.2   Release Date: 2015-08-11  Release Manager: Piotr Held
+===============================================================================
+
+** Added functions:
+
+      surrogates
+      timerev
+      endtoend
+
+===============================================================================
+tisean-0.2.1   Release Date: 2015-07-03  Release Manager: Piotr Held
+===============================================================================
+
+** Removed deprecated functions:
+
+      addnoise
+      project
+
+===============================================================================
+tisean-0.2.0   Release Date: 2015-07-03  Release Manager: Piotr Held
+===============================================================================
+
+** Added new functions:
+
+      d2              c2d
+      av_d2           c2g
+      c2t             c1
+      boxcount
+
+** Minor types of improvements on rest of code.
+
+===============================================================================
+tisean-0.1.1   Release Date: 2015-06-16  Release Manager: Piotr Held
+===============================================================================
+
+** Added new functions:
+
+      lyap_k
+      lyap_r
+      lyap_spec
+
+** delay
+   Fixed minor bug.
+
+** Minor typos and code style improvements.
+
+===============================================================================
+tisean-0.1.0   Release Date: 2015-06-09  Release Manager: Piotr Held
+===============================================================================
+
+** Added new functions:
+
+      ikeda           poincare
+      false_nearest   ghkss
+      upo             upoembed
+      lzo_gm          lzo_run
+      lzo_test        lfo_ar
+      lfo_run         lfo_test
+      polynom         xzero
+      rbf
+
+** General maintenance changes
+   Removed compile time warnings, and change most of data allocation to
+   OCTAVE_LOCAL_BUFFER.
+
+** The following have been deprecated:
+
+      project
+
+===============================================================================
+tisean-0.0.1   Release Date: 2015-05-15  Release Manager: Piotr Held
+===============================================================================
+
+** Added new functions:
+
+     mutual
+     spectrum
+     lazy
+     delay
+     pca
+
+** addnoise
+   This function is now deprecated. It is no longer needed. But will be left 
+   in the package for now.
+
+** project
+   -- Bugfix: improved argument checking and documenation.
+   -- Wrote demo to show how this function works.
+
+** henon
+   Optimized henon to run about 10 times faster.
+
+===============================================================================
+tisean-0.0.0   Release Date:   Release Manager: 
+===============================================================================
+Summary of important user-visible changes for tisiean 0.0.0:
+
+** First package version, to get started
+----------------------------------------------------------

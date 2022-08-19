@@ -1,0 +1,36 @@
+## Generated from __tcp_properties__.cc
+%!shared ip
+%! ip = resolvehost("www.octave.org", "address");
+%!test
+%! # test get
+%! a = tcp (ip, 80);
+%! assert (__tcp_properties__ (a,"type"), "tcp");
+%! assert (__tcp_properties__ (a,"remoteport"), 80);
+%! assert (__tcp_properties__ (a,"remotehost"), ip);
+%! assert (__tcp_properties__ (a,"timeout"), -1);
+%! assert (__tcp_properties__ (a,"status"), "open");
+%! assert (__tcp_properties__ (a,"name"), ["TCP-" ip]);
+%! fail ("__tcp_properties__ (a,'invalid')", "invalid property name");
+%! tcp_close (a);
+%! assert (__tcp_properties__ (a,"status"), "closed");
+%!test
+%! # test set
+%! a = tcp(ip, 80);
+%! __tcp_properties__ (a, 'name', "mytest");
+%! assert (__tcp_properties__ (a,"name"), "mytest");
+%! fail ("__tcp_properties__ (a,'invalid', 1)", "invalid property name");
+%! tcp_close (a);
+%!test
+%! # test flush
+%! a = tcp(ip, 80);
+%! __tcp_properties__ (a, 'flush', 0);
+%! __tcp_properties__ (a, 'flush', 1);
+%! __tcp_properties__ (a, 'flush', 2);
+%! fail ("__tcp_properties__ (a,'flush')", "invalid property name");
+%! tcp_close (a);
+%!error <wrong number of arguments> __tcp_properties__ ()
+%!error <wrong number of arguments> __tcp_properties__ (1)
+%!test
+%! a = tcp (ip, 80);
+%! fail ("__tcp_properties__ (a, 'name', 'test', 0)", "wrong number of arguments");
+%! tcp_close (a);

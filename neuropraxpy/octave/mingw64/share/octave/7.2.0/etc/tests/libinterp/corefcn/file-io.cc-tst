@@ -1,0 +1,723 @@
+## DO NOT EDIT!  Generated automatically from file-io.cc by Make.
+%!test   # Uses hardcoded value of 1 for stdout
+%! [name, mode, arch, encoding] = fopen (1);
+%! assert (name, "stdout");
+%! assert (mode, "w");
+%! assert (encoding, "utf-8");
+%!test   # Query of non-existent stream returns all ""
+%! [name, mode, arch] = fopen (-1);
+%! assert (name, "");
+%! assert (mode, "");
+%! assert (arch, "");
+%!test <*56396>
+%! [val, count, errmsg, nextpos] = sscanf ('1234a6', '%2d', 3);
+%! assert (val, [12; 34]);
+%! assert (count, 2);
+%! assert (errmsg, "sscanf: format failed to match");
+%! assert (nextpos, 5);
+%!test
+%! str = "1,  2,  3,  4\n 5,  ,  ,  8\n 9, 10, 11, 12";
+%! fmtstr = "%f %d %f %s";
+%! c = textscan (str, fmtstr, 2, "delimiter", ",", "emptyvalue", -Inf);
+%! assert (c{1}, [1;5]);
+%! assert (c{3}, [3; -Inf]);
+%! assert (iscellstr (c{4}));
+%!test
+%! b = [10:10:100];
+%! b = [b; 8*b/5];
+%! str = sprintf ("%g miles/hr = %g kilometers/hr\n", b);
+%! fmt = "%f miles/hr = %f kilometers/hr";
+%! c = textscan (str, fmt);
+%! assert (c{1}, b(1,:)', 1e-5);
+%! assert (c{2}, b(2,:)', 1e-5);
+%!test
+%! str = "13, -, NA, str1, -25\r\n// Middle line\r\n36, na, 05, str3, 6";
+%! c = textscan (str, "%d %n %f %s %n", "delimiter", ",",
+%!                    "treatAsEmpty", {"NA", "na", "-"}, "commentStyle", "//");
+%! assert (c{1}, int32 ([13; 36]));
+%! assert (c{2}, [NaN; NaN]);
+%! assert (c{3}, [NaN; 5]);
+%! assert (c{4}, {"str1"; "str3"});
+%! assert (c{5}, [-25; 6]);
+%!test
+%! str = "Km:10 = hhhBjjj miles16hour\r\n";
+%! str = [str "Km:15 = hhhJjjj miles241hour\r\n"];
+%! str = [str "Km:2 = hhhRjjj miles3hour\r\n"];
+%! str = [str "Km:25 = hhhZ\r\n"];
+%! fmt = "Km:%d = hhh%1sjjj miles%dhour";
+%! c = textscan (str, fmt, "delimiter", " ");
+%! assert (c{1}', int32 ([10, 15, 2, 25]));
+%! assert (c{2}', {'B' 'J' 'R' 'Z'});
+%! assert (c{3}', int32 ([16, 241, 3, 0]));
+%!test
+%! c = textscan ("L1\nL2", "%s");
+%! assert (c{:}, {"L1"; "L2"});
+%!test
+%! c = textscan ("L1\nL2", "%s", "endofline", "");
+%! assert (int8 ([c{:}{:}]), int8 ([76, 49, 10, 76, 50]));
+%!#test
+%! ## No delimiters at all besides EOL.  Skip fields, even empty fields
+%! str = "Text1Text2Text\nTextText4Text\nText57Text";
+%! c = textscan (str, "Text%*dText%dText");
+%! assert (c{1}, int32 ([2; 4; 0]));
+%!test
+%! b = [10:10:100];
+%! b = [b; 8*b/5; 8*b*1000/5];
+%! str = sprintf ("%g miles/hr = %g (%g) kilometers (meters)/hr\n", b);
+%! fmt = "%f miles%s %s %f (%f) kilometers %*s";
+%! c = textscan (str, fmt, "collectoutput", 1);
+%! assert (size (c{3}), [10, 2]);
+%! assert (size (c{2}), [10, 2]);
+%!test
+%! b = [10:10:100];
+%! b = [b; 8*b/5; 8*b*1000/5];
+%! str = sprintf ("%g miles/hr = %g (%g) kilometers (meters)/hr\n", b);
+%! str = [str "110 miles/hr"];
+%! fmt = "%f miles%s %s %f (%f) kilometers %*s";
+%! c = textscan (str, fmt, "collectoutput", 1);
+%! assert (size (c{1}), [11, 1]);
+%! assert (size (c{3}), [11, 2]);
+%! assert (size (c{2}), [11, 2]);
+%! assert (c{3}(end), NaN);
+%! assert (c{2}{11, 1}, "/hr");
+%! assert (isempty (c{2}{11, 2}), true);
+%!test
+%! str = 'First    "the second called ""the middle""" third';
+%! fmt = "%q";
+%! c = textscan (str, fmt);
+%! assert (c{1}, {"First"; 'the second called "the middle"'; "third"});
+%!test
+%! c = textscan ("a first, \n second, third", "%s %c %11c", "delimiter", " ,");
+%! assert (c{1}, {"a"; "ond"});
+%! assert (c{2}, {"f"; "t"});
+%! assert (c{3}, {"irst, \n sec"; "hird"});
+%!test
+%! str = "12;34;123456789;7";
+%! c = textscan (str, "%4d %4d", "delimiter", ";", "collectOutput", 1);
+%! assert (c, {[12, 34; 1234, 5678; 9, 7]});
+%!test
+%! str = "12;34;123456789;7";
+%! c = textscan (str, "%4f %f", "delimiter", ";", "collectOutput", 1);
+%! assert (c, {[12, 34; 1234, 56789; 7, NaN]});
+%!#test
+%! str = "12.234e+2,34, \n12345.789-9876j,78\n,10|3";
+%! c = textscan (str, "%10.2f %f", "delimiter", ",", "collectOutput", 1,
+%!                    "expChars", "e|");
+%! assert (c, {[1223, 34; 12345.79-9876j, 78; NaN, 10000]}, 1e-6);
+%!test
+%! str = "99end2 space88gap 4564";
+%! c = textscan (str, "%d %s", "delimiter", {"end", "gap", "space"});
+%! assert (c{1}, int32 ([99; 88]));
+%! assert (c{2}, {"2 "; "4564"});
+%!#test
+%! str = "12 R&D & 7";
+%! c = textscan (str, "%f R&D %f", "delimiter", "&", "collectOutput", 1,
+%!                    "EmptyValue", -99);
+%! assert (c, {[12, -99; 7, -99]});
+%!#test
+%! str = "12 & R&D 7";
+%! c = textscan (str, "%f R&D %f", "delimiter", "&", "collectOutput", 1);
+%! assert (c, {[12 7]});
+%!test
+%! f = tempname ();
+%! fid = fopen (f, "w+");
+%! fprintf (fid, "1\n2\n3\n4\n5\n6");
+%! fseek (fid, 0, "bof");
+%! c = textscan (fid, "%f %f", 2);
+%! E = feof (fid);
+%! fclose (fid);
+%! unlink (f);
+%! assert (c, {1, 2});
+%! assert (! E);
+%!test
+%! f = tempname ();
+%! fid = fopen (f, "w+");
+%! fprintf (fid, "1\r\n2\r3\n4\r\n5\n6");
+%! fseek (fid, 0, "bof");
+%! c = textscan (fid, "%f %f", 4);
+%! fclose (fid);
+%! unlink (f);
+%! assert (c, {[1;3], [2;4]});
+%!test
+%! f = tempname ();
+%! fid = fopen (f, "w+");
+%! fprintf (fid, "1-\r\n-2\r3-\n-4\r\n5\n6");
+%! fseek (fid, 0, "bof");
+%! c = textscan (fid, "%f %f", 4, "delimiter", "-", "multipleDelimsAsOne", 1);
+%! fclose (fid);
+%! unlink (f);
+%! assert (c, {[1;3], [2;4]});
+%!test
+%! f = tempname ();
+%! fid = fopen (f, "w+");
+%! str = "1 2 3\n4 s 6";
+%! fprintf (fid, str);
+%! fseek (fid, 0, "bof");
+%! c = textscan (fid, "%f %f %f", "ReturnOnError", 1);
+%! fseek (fid, 0, "bof");
+%! fclose (fid);
+%! unlink (f);
+%! u = textscan (str, "%f %f %f", "ReturnOnError", 1);
+%! assert (c, {[1;4], [2], [3]});
+%! assert (u, {[1;4], [2], [3]});
+%! ## Check ReturnOnError (2)
+%!test
+%! f = tempname ();
+%! fid = fopen (f, "w+");
+%! str = "1 2 3\n4 s 6\n";
+%! fprintf (fid, str);
+%! fseek (fid, 0, "bof");
+%! c = textscan (fid, "%f %f %f", "ReturnOnError", 1);
+%! fseek (fid, 0, "bof");
+%! fclose (fid);
+%! unlink (f);
+%! u = textscan (str, "%f %f %f", "ReturnOnError", 1);
+%! assert (c, {[1;4], 2, 3});
+%! assert (u, {[1;4], 2, 3});
+%!error <Read error in field 2 of row 2>
+%! textscan ("1 2 3\n4 s 6", "%f %f %f", "ReturnOnError", 0);
+%!test
+%! f = tempname ();
+%! fid = fopen (f, "w+");
+%! fprintf (fid, "1 s 3\n4 5 6");
+%! fseek (fid, 0, "bof");
+%! c = textscan (fid, "", "ReturnOnError", 1);
+%! fseek (fid, 0, "bof");
+%! fclose (fid);
+%! unlink (f);
+%! assert (c, {1});
+%!test
+%! c = textscan ("1,,3\n4,5,6", "", "Delimiter", ",", "ReturnOnError", 1);
+%! assert (c, {[1;4], [NaN;5], [3;6]});
+%!test
+%! c = textscan ("1,,3\n4,5,6", "%f %f %f", "Delimiter", ",",
+%!               "ReturnOnError", 1);
+%! assert (c, {[1;4], [NaN;5], [3;6]});
+%!test
+%! c = textscan ("1 2 3\ns 5 6", "", "ReturnOnError", 1);
+%! assert (c, {1, 2, 3});
+%!#test
+%! R = textscan (['Empty1' char(10)], 'Empty%d %f');
+%! assert (R{1}, int32 (1));
+%! assert (isempty (R{2}), true);
+%!test <*37023>
+%! data = textscan ("   1. 1 \n 2 3\n", '%f %f');
+%! assert (data{1}, [1; 2], 1e-15);
+%! assert (data{2}, [1; 3], 1e-15);
+%!test <*37333>
+%! tc{1, 1} = "C:/code;";
+%! tc{1, end+1} = "C:/code/meas;";
+%! tc{1, end+1} = " C:/code/sim;";
+%! tc{1, end+1} = "C:/code/utils;";
+%! string = [tc{:}];
+%! c = textscan (string, "%s", "delimiter", ";");
+%! for k = 1:max (numel (c{1}), numel (tc))
+%!   lh = c{1}{k};
+%!   rh = tc{k};
+%!   rh(rh == ";") = "";
+%!   rh = strtrim (rh);
+%!   assert (strcmp (lh, rh));
+%! endfor
+%!test <*37333>
+%! tc{1, 1} = "C:/code;";
+%! tc{1, end+1} = " C:/code/meas;";
+%! tc{1, end+1} = "C:/code/sim;;";
+%! tc{1, end+1} = "C:/code/utils;";
+%! string = [tc{:}];
+%! c = textscan (string, "%s", "delimiter", ";", "multipleDelimsAsOne", 1);
+%! for k = 1:max (numel (c{1}), numel (tc))
+%!   lh = c{1}{k};
+%!   rh = tc{k};
+%!   rh(rh == ";") = "";
+%!   rh = strtrim (rh);
+%!   assert (strcmp (lh, rh));
+%! endfor
+%!test <*37333>
+%! tc{1, 1} = "C:/code;";
+%! tc{1, end+1} = " C:/code/meas;";
+%! tc{1, end+1} = "C:/code/sim;;";
+%! tc{1, end+1} = "";
+%! tc{1, end+1} = "C:/code/utils;";
+%! string = [tc{:}];
+%! c = textscan (string, "%s", "delimiter", ";", "multipleDelimsAsOne", 0);
+%! for k = 1:max (numel (c{1}), numel (tc))
+%!   lh = c{1}{k};
+%!   rh = tc{k};
+%!   rh(rh == ";") = "";
+%!   rh = strtrim (rh);
+%!   assert (strcmp (lh, rh));
+%! endfor
+%!test <*37333>
+%! tc{1, 1} = "C:/code;";
+%! tc{1, end+1} = " C:/code/meas;";
+%! tc{1, end+1} = "C:/code/sim;";
+%! tc{1, end+1} = "C:/code/utils;";
+%! string = [tc{:}];
+%! c = textscan (string, "%s", "delimiter", ";", "whitespace", "");
+%! for k = 1:max (numel (c{1}), numel (tc))
+%!   lh = c{1}{k};
+%!   rh = tc{k};
+%!   rh(rh == ";") = "";
+%!   assert (strcmp (lh, rh));
+%! endfor
+%!test <*37333>
+%! tc{1, 1} = "C:/code;";
+%! tc{1, end+1} = " C:/code/meas;";
+%! tc{1, end+1} = "C:/code/sim;";
+%! tc{1, end+1} = "C:/code/utils;";
+%! string = [tc{:}];
+%! c = textscan (string, "%s", "delimiter", ";", "whitespace", " ");
+%! for k = 1:max (numel (c{1}), numel (tc))
+%!   lh = c{1}{k};
+%!   rh = tc{k};
+%!   rh(rh == ";") = "";
+%!   rh = strtrim (rh);
+%!   assert (strcmp (lh, rh));
+%! endfor
+%!test
+%! f = tempname ();
+%! fid = fopen (f, "w+");
+%! fprintf (fid, " 1 2 3 4\n5 6 7 8");
+%! fseek (fid, 0, "bof");
+%! C = textscan (fid, "");
+%! E = feof (fid);
+%! fclose (fid);
+%! unlink (f);
+%! assert (C{1}, [1 ; 5], 1e-6);
+%! assert (C{2}, [2 ; 6], 1e-6);
+%! assert (C{3}, [3 ; 7], 1e-6);
+%! assert (C{4}, [4 ; 8], 1e-6);
+%! assert (E);
+%!test
+%! f = tempname ();
+%! fid = fopen (f, "w+");
+%! fprintf (fid, "1,2\n3,4\n");
+%! fseek (fid, 0, "bof");
+%! C = textscan (fid, "%s %f", 2, "Delimiter", ",");
+%! E = ftell (fid);
+%! fclose (fid);
+%! unlink (f);
+%! assert (E, 8);
+%!test
+%! f = tempname ();
+%! fid = fopen (f, "w+");
+%! fprintf (fid, " ,2,,4\n5,6");
+%! fseek (fid, 0, "bof");
+%! C = textscan (fid, "", "delimiter", ",", "EmptyValue", 999,
+%!                    "CollectOutput" , 1);
+%! fclose (fid);
+%! unlink (f);
+%! assert (C{1}, [999, 2, 999, 4; 5, 6, 999, 999], 1e-6);
+%!test
+%! f = tempname ();
+%! fid = fopen (f, "w+");
+%! msg1 = "textscan: 1 parameters given, but only 0 values";
+%! try
+%!   C = textscan (fid, "", "headerlines");
+%! end_try_catch;
+%! assert (! feof (fid));
+%! fclose (fid);
+%! unlink (f);
+%! assert (msg1, lasterr);
+%!test
+%! f = tempname ();
+%! fid = fopen (f, "w+");
+%! msg1 = "textscan: HeaderLines must be numeric";
+%! try
+%!   C = textscan (fid, "", "headerlines", "hh");
+%! end_try_catch;
+%! fclose (fid);
+%! unlink (f);
+%! assert (msg1, lasterr);
+%!test
+%! C = textscan ("field 1  field2\n 1 2\n3 4", "", "headerlines", 1,
+%!               "collectOutput", 1);
+%! assert (C, {[1 2; 3 4]});
+%!test
+%! C = textscan ("field 1  field2\r 1 2\r3 4", "", "headerlines", 2,
+%!               "collectOutput", 1, "EndOfLine", '\r');
+%! assert (C, {[3 4]});
+%!test
+%! f = tempname ();
+%! fid = fopen (f, "w+");
+%! fprintf (fid,"some_string");
+%! fseek (fid, 0, "bof");
+%! msg1 = "textscan: EndOfLine must be at most one character or '\\r\\n'";
+%! try
+%!   C = textscan (fid, "%f", "EndOfLine", "\n\r");
+%! end_try_catch;
+%! fclose (fid);
+%! unlink (f);
+%! assert (msg1, lasterr);
+%!test
+%! f = tempname ();
+%! fid = fopen (f, "w+");
+%! fprintf (fid,"some_string");
+%! fseek (fid, 0, "bof");
+%! msg1 = "textscan: EndOfLine must be at most one character or '\\r\\n'";
+%! try
+%!   C = textscan (fid, "%f", "EndOfLine", 33);
+%! end_try_catch;
+%! fclose (fid);
+%! unlink (f);
+%! assert (msg1, lasterr);
+%!assert <*41824> (textscan ("123", "", "whitespace", " "){:}, 123);
+%!assert <*42343> (textscan (",NaN", "", "delimiter", "," ,"emptyValue" ,Inf),
+%!                {Inf, NaN})
+%!test <*42343>
+%! c = textscan (",1,,4\nInf,  ,NaN\n", "", "delimiter", ",",
+%!               "emptyvalue", -10);
+%! assert (cell2mat (c), [-10, 1, -10, 4; Inf, -10, NaN, -10]);
+%!test <*42528>
+%! assert (textscan ("1i", ""){1},  0+1i);
+%! C = textscan ("3, 2-4i, NaN\n -i, 1, 23.4+2.2i\n 1+1 1+1j", "",
+%!               "delimiter", ",");
+%! assert (cell2mat (C), [3+0i, 2-4i, NaN+0i; 0-i,  1+0i, 23.4+2.2i; 1 1 1+1i]);
+%!test
+%! ## TreatAsEmpty
+%! C = textscan ("1,2,3,NN,5,6\n", "%d%d%d%f", "delimiter", ",",
+%!               "TreatAsEmpty", "NN");
+%! assert (C{3}(1), int32 (3));
+%! assert (C{4}(1), NaN);
+%!test
+%! str = "11, 12, 13,, 15\n21,, 23, 24, 25\n,, 33, 34, 35\n";
+%! C = textscan (str, "%f %f %f %f", "delimiter", ",",
+%!                    "multipledelimsasone", 1, "endofline", "\n");
+%! assert (C{1}', [11, 21, 33]);
+%! assert (C{2}', [12, 23, 34]);
+%! assert (C{3}', [13, 24, 35]);
+%! assert (C{4}', [15, 25, NaN]);
+%!test
+%! str = "11\t12\t13\r21\t22\t23";
+%! c = textscan (str, "", "delimiter", '\t', "EndOfLine", '\r');
+%! assert (c{1}', [11, 21]);
+%! assert (c{2}', [12, 22]);
+%! assert (c{3}', [13, 23]);
+%!test <*44750>
+%! c = textscan ("/home/foo/", "%s", "delimiter", "/",
+%!               "MultipleDelimsAsOne", 1);
+%! assert (c{1}, {"home"; "foo"});
+%!#test
+%! C = textscan ("abcxyz51\nxyz83\n##xyz101", "%s xyz %d");
+%! assert (C{1}([1 3]), {"abc"; "##"});
+%! assert (isempty (C{1}{2}), true);
+%! assert (C{2}, int32 ([51; 83; 101]));
+%!test
+%! c = textscan ("Total: 32.5 % (of cm values)",
+%!               "Total: %f %% (of cm values)");
+%! assert (c{1}, 32.5, 1e-5);
+%!test <*45712>
+%! str = "14 :1 z:2 z:3 z:5 z:11";
+%! C = textscan (str, "%f %s %*s %3s %*3s %f", "delimiter", ":");
+%! assert (C, {14, {"1 z"}, {"3 z"}, 11});
+%!test
+%! str2 = "123456789012345 ";
+%! str2 = [str2 str2 str2 str2 str2 str2 str2 str2];
+%! str2 = [str2 "123456789.01234 1234567890.1234 12345.678901234 12345.678901234"];
+%! pttrn = "%3u8%*s %5u16%*s %10u32%*s %15u64 %3d8%*s %5d16%*s %10d32%*s %15d64 %9f32%*s %14f64%*s %10.2f32%*s %12.2f64%*s";
+%! C = textscan (str2, pttrn, "delimiter", " ");
+%! assert (C{1}, uint8 (123));
+%! assert (C{2}, uint16 (12345));
+%! assert (C{3}, uint32 (1234567890));
+%! assert (C{4}, uint64 (123456789012345));
+%! assert (C{5}, int8 (123));
+%! assert (C{6}, int16 (12345));
+%! assert (C{7}, int32 (1234567890));
+%! assert (C{8}, int64 (123456789012345));
+%! assert (C{9}, single (123456789), 1e-12);
+%! assert (C{10}, double (1234567890.123), 1e-15);
+%! assert (C{11}, single (12345.68), 1e-5);
+%! assert (C{12}, double (12345.68), 1e-11);
+%!test
+%! str2 = "123456789012345 ";
+%! str2 = [str2 str2 "123456789.01234"];
+%! pttrn = "%3u8 %5u16 %10u32 %3d8 %5d16 %10d32 %9f32 %9f";
+%! C = textscan (str2, pttrn, "delimiter", " ");
+%! assert (C{1}, uint8 (123));
+%! assert (C{2}, uint16 (45678));
+%! assert (C{3}, uint32 (9012345));
+%! assert (C{4}, int8 (123));
+%! assert (C{5}, int16 (45678));
+%! assert (C{6}, int32 (9012345));
+%! assert (C{7}, single (123456789), 1e-12);
+%! assert (C{8}, double (0.01234), 1e-12);
+%!test
+%! C = textscan ("123.123", "%2f %3f %3f");
+%! assert (C{1}, 12);
+%! assert (C{2}, 3.1, 1e-11);
+%! assert (C{3}, 23);
+%!test
+%! C = textscan ("123.123", "%3f %3f %3f");
+%! assert (C{1}, 123);
+%! assert (C{2}, 0.12, 1e-11);
+%! assert (C{3}, 3);
+%!test
+%! C = textscan ("123.123", "%4f %3f");
+%! assert (C{1}, 123);
+%! assert (C{2}, 123);
+%!test
+%! assert (textscan ("12e12",  "%4f"), {[120;  2]});
+%! assert (textscan ("12e+12", "%5f"), {[120;  2]});
+%! assert (textscan ("125e-12","%6f"), {[12.5; 2]});
+%!test
+%! ar = "abcdefguvwxAny\nacegxyzTrailing\nJunk";
+%! C = textscan (ar, "%[abcdefg] %*[uvwxyz] %s");
+%! assert (C{1}, {"abcdefg"; "aceg"; ""});
+%! assert (C{2}, {"Any"; "Trailing"; "Junk"});
+%!test
+%! assert (textscan ("A2 B2 C3", "%*[ABC]%d", 3), {int32([2; 2; 3])});
+%!test
+%! br = "abcdefguvwx1Any\nacegxyz2Trailing\n3Junk";
+%! C = textscan (br, "%[abcdefg] %*[^0123456789] %s");
+%! assert (C{1}, {"abcdefg"; "aceg"; ""});
+%! assert (C{2}, {"1Any"; "2Trailing"; "3Junk"});
+%!test
+%! cr = "ab cd efguv wx1Any\na ce gx yz2Trailing\n   3Junk";
+%! C = textscan (cr, "%[ abcdefg] %*[^0123456789] %s", "delimiter", " \n",
+%!                   "whitespace", "");
+%! assert (C{1}, {"ab cd efg"; "a ce g"; "   "});
+%! assert (C{2}, {"1Any"; "2Trailing"; "3Junk"});
+%!assert <*36464> (textscan ("1 2 3 4 5 6", "%*n%n%*[^\n]"){1}, 2);
+%!test
+%! assert (textscan ("345]", "%*[123456]%[]]"){1}{1}, "]");
+%! assert (textscan ("345]", "%*[^]]%s"){1}{1}, "]");
+%!test
+%! C = textscan ("-i -in -inf -infinity", "%f %f%s %f %f %s");
+%! assert (C, {-i, -i, {"n"}, -Inf, -Inf, {"inity"}});
+%!test
+%! C = textscan ("+i +in +inf +infinity", "%f %f%s %f %f %s", "ExpChars", "eE");
+%! assert (C, {i, i, {"n"}, Inf, Inf, {"inity"}});
+%!test
+%! C = textscan ("1 2\t3 4", '%f %[^\t] %f %f');
+%! assert (C, {1, {"2"}, 3, 4});
+%!test
+%! C = textscan ("Empty\n", "Empty%f %f");
+%! assert (C, { NaN, NaN });
+%!test
+%! a = "-1e90 ";
+%! b = "1e90 ";
+%! fmt = "%d8 %d16 %d32 %d64 %u8 %u16 %u32 %u64 ";
+%! C = textscan ([a a a a a a a a b b b b b b b b], fmt);
+%! assert (C{1}, int8 ([-128; 127]));
+%! assert (C{2}, int16 ([-32768; 32767]));
+%! assert (C{3}, int32 ([-2147483648; 2147483647]));
+%! assert (C{4}, int64 ([-9223372036854775808; 9223372036854775807]));
+%! assert (C{5}, uint8 ([0; 255]));
+%! assert (C{6}, uint16 ([0; 65535]));
+%! assert (C{7}, uint32 ([0; 4294967295]));
+%! assert (C{8}, uint64 ([0; 18446744073709551615]));
+%!test
+%! f = tempname ();
+%! fid = fopen (f, "w+");
+%! fprintf (fid,"09/12/2005 Level1 12.34 45 1.23e10 inf Nan Yes 5.1+3i\n");
+%! fprintf (fid,"10/12/2005 Level2 23.54 60 9e19 -inf  0.001 No 2.2-.5i\n");
+%! fprintf (fid,"11/12/2005 Level3 34.90 12 2e5   10  100   No 3.1+.1i\n");
+%! fseek (fid, 0, "bof");
+%! C = textscan (fid,"%s %s %f32 %d8 %u %f %f %s %f");
+%! %assert (C{1}, {"09/12/2005";"10/12/2005";"11/12/2005"});
+%! assert (C{2}, {"Level1";"Level2";"Level3"});
+%! assert (C{3}, [single(12.34);single(23.54);single(34.90)]);
+%! assert (C{4}, [int8(45);int8(60);int8(12)]);
+%! assert (C{5}, [uint32(4294967295);uint32(4294967295);uint32(200000)]);
+%! assert (C{6}, [inf;-inf;10]);
+%! assert (C{7}, [NaN;0.001;100], eps);
+%! assert (C{8}, {"Yes";"No";"No"});
+%! assert (C{9}, [5.1+3i;2.2-0.5i;3.1+0.1i]);
+%! fseek (fid, 0, "bof");
+%! C = textscan (fid,"%s Level%d %f32 %d8 %u %f %f %s %f");
+%! assert (C{2}, [int32(1);int32(2);int32(3)]);
+%! assert (C{3}, [single(12.34);single(23.54);single(34.90)]);
+%! fseek (fid, 0, "bof");
+%! C = textscan (fid, '%s %*[^\n]');
+%! fclose (fid);
+%! unlink (f);
+%! assert (C, {{"09/12/2005";"10/12/2005";"11/12/2005"}});
+%!test
+%! f = tempname ();
+%! fid = fopen (f, "w+");
+%! fprintf (fid,"1,  2,  3,  4,   ,  6\n");
+%! fprintf (fid,"7,  8,  9,   , 11, 12\n");
+%! fseek (fid, 0, "bof");
+%! C = textscan (fid,"%f %f %f %f %u8 %f", "Delimiter",",","EmptyValue",-Inf);
+%! fclose (fid);
+%! unlink (f);
+%! assert (C{4}, [4; -Inf]);
+%! assert (C{5}, uint8 ([0; 11]));
+%!test
+%! f = tempname ();
+%! fid = fopen (f, "w+");
+%! fprintf (fid,"abc, 2, NA, 3, 4\n");
+%! fprintf (fid,"// Comment Here\n");
+%! fprintf (fid,"def, na, 5, 6, 7\n");
+%! fseek (fid, 0, "bof");
+%! C = textscan (fid, "%s %n %n %n %n", "Delimiter", ",",
+%!                    "TreatAsEmpty", {"NA","na"}, "CommentStyle", "//");
+%! fclose (fid);
+%! unlink (f);
+%! assert (C{1}, {"abc";"def"});
+%! assert (C{2}, [2; NaN]);
+%! assert (C{3}, [NaN; 5]);
+%! assert (C{4}, [3; 6]);
+%! assert (C{5}, [4; 7]);
+%!#test
+%! c = textscan ("1 / 2 // 3", "%n %s %u8", "CommentStyle", {"//"});
+%! assert (c(1), {1, "/", 2});
+%!assert (textscan (["1 2 3 4"; "5 6 7 8"], "%f"), {[15; 26; 37; 48]})
+%!assert (textscan ("1e-3|42", "%f", "delimiter", "|"), {[1e-3; 42]})
+%!test <*52479>
+%! str = "\t\ta\tb\tc\n";
+%! ret = textscan (str, "%s", "delimiter", "\t");
+%! assert (ret, { {''; ''; 'a'; 'b'; 'c'} });
+%!test <*52479>
+%! str = "\t\ta\tb\tc\n";
+%! ret = textscan (str, "%s", "delimiter", {"\t"});
+%! assert (ret, { {''; ''; 'a'; 'b'; 'c'} });
+%!test <*52550>
+%! str = ",,1,2,3\n";
+%! obs = textscan (str, "%d", "delimiter", ",");
+%! assert (obs, { [0; 0; 1; 2; 3] });
+%! obs = textscan (str, "%d", "delimiter", {","});
+%! assert (obs, { [0; 0; 1; 2; 3] });
+%!test <*52550>
+%! str = " , ,1,2,3\n";
+%! obs = textscan (str, "%d", "delimiter", ",");
+%! assert (obs, { [0; 0; 1; 2; 3] });
+%! textscan (str, "%d", "delimiter", {","});
+%! assert (obs, { [0; 0; 1; 2; 3] });
+%!test <*52550>
+%! str = " 0 , 5+6j , -INF+INFj ,NaN,3\n";
+%! obs = textscan (str, "%f", "delimiter", ",");
+%! assert (obs, { [0; 5+6i; complex(-Inf,Inf); NaN; 3] });
+%! obs = textscan (str, "%f", "delimiter", {","});
+%! assert (obs, { [0; 5+6i; complex(-Inf,Inf); NaN; 3] });
+%!test <*52550>
+%! str = " 0;,;,1;,2;,3\n";
+%! assert (textscan (str, "%f", "delimiter", {";,"}), { [0; NaN; 1; 2; 3] });
+%!test <*52550>
+%! str = " 0 ;1 , $ 2 ;3\n";
+%! obs = textscan (str, "%f", "delimiter", ",;$");
+%! assert (obs, { [0; 1; NaN; 2; 3] });
+%! obs = textscan (str, "%f", "delimiter", {",",";","$"});
+%! assert (obs, { [0; 1; NaN; 2; 3] });
+%!test
+%! f = tempname ();
+%! fid = fopen (f, "w+", "n", "iso-8859-1");
+%! unwind_protect
+%!   fprintf (fid, "abc,äöü\n");
+%!   fseek (fid, 0, "bof");
+%!   obs = textscan (fid, "%s", "delimiter", ",");
+%!   fclose (fid);
+%!   assert (obs, { {"abc"; "äöü"} });
+%! unwind_protect_cleanup
+%!   unlink (f);
+%! end_unwind_protect
+%!test <*56917>
+%! str = '"a,b","c"';
+%! obs = textscan (str, "%q", "delimiter", ",");
+%! assert (obs, { { "a,b"; "c" } });
+%!test <*58008>
+%! txt = sprintf ('literal_other_1_1;literal_other_1_2\nliteral_other_2_1;literal_other_2_2\nliteral_other_3_1;literal_other_3_2');
+%! nm1 = textscan (txt, 'literal%s literal%s', 'Delimiter', ';');
+%! assert (nm1{1}, {"_other_1_1" ; "_other_2_1" ; "_other_3_1"});
+%! assert (nm1{2}, {"_other_1_2" ; "_other_2_2" ; "_other_3_2"});
+%! nm2 = textscan (txt, 'literal%s;literal%s', 'Delimiter', ';');
+%! assert (nm1, nm2);
+%!test <*57612>
+%! str = sprintf (['101,' '\n' '201,']);
+%! C = textscan (str, '%s%q', 'Delimiter', ',');
+%! assert (size (C), [1, 2]);
+%! assert (C{1}, { "101"; "201" });
+%! assert (C{2}, { ""; "" });
+%!test <*57612>
+%! str = sprintf (['101,' '\n' '201,']);
+%! C = textscan (str, '%s%f', 'Delimiter', ',');
+%! assert (size (C), [1, 2]);
+%! assert (C{1}, { "101"; "201" });
+%! assert (C{2}, [ NaN; NaN ]);
+%!test <*57612>
+%! str = sprintf (['101,' '\n' '201,']);
+%! C = textscan (str, '%s%d', 'Delimiter', ',');
+%! assert (size (C), [1, 2]);
+%! assert (C{1}, { "101"; "201" });
+%! assert (C{2}, int32 ([ 0; 0 ]));
+%!test <*51093>
+%! str = sprintf ('a\t\tb\tc');
+%! C = textscan (str, '%s', 'Delimiter', '\t', 'MultipleDelimsAsOne', false);
+%! assert (C{1}, {'a'; ''; 'b'; 'c'});
+%!test <50743>
+%! C = textscan ('5973459727478852968', '%u64');
+%! assert (C{1}, uint64 (5973459727478852968));
+%!test
+%! c = textscan ("1 2 /* half comment", "%n %u8", "CommentStyle", {"/*", "*/"});
+%! assert (c, {1, 2});
+%!test
+%! f = tempname ();
+%! fid = fopen (f, "w+");
+%! d = rand (1, 4);
+%! fprintf (fid, "  %f %f /* comment */  %f  %f ", d);
+%! fseek (fid, 0, "bof");
+%! A = textscan (fid, "%f %f", "CommentStyle", {"/*", "*/"});
+%! E = feof (fid);
+%! fclose (fid);
+%! unlink (f);
+%! assert (A{1}, [d(1); d(3)], 1e-6);
+%! assert (A{2}, [d(2); d(4)], 1e-6);
+%! assert (E);
+%!error textscan ()
+%!error <file id must be> textscan (single (4))
+%!error <file id must be> textscan ({4})
+%!error <must be a string> textscan ("Hello World", 2)
+%!error <at most one character or>
+%! textscan ("Hello World", "%s", "EndOfLine", 3);
+%!error <'%z' is not a valid format specifier> textscan ("1.0", "%z")
+%!error <no valid format conversion specifiers> textscan ("1.0", "foo")
+%!test
+%! envvar = {"TMPDIR", "TMP"};
+%! envdir = cellfun (@(x) getenv (x), envvar, "uniformoutput", false);
+%! unwind_protect
+%!   cellfun (@(x) unsetenv (x), envvar);
+%!   envname = "TMPDIR";
+%!   def_tmpdir = P_tmpdir;
+%!   ## Strip trailing file separators from P_tmpdir
+%!   while (length (def_tmpdir) > 2 && any (def_tmpdir(end) == filesep ("all")))
+%!     def_tmpdir(end) = [];
+%!   endwhile
+%!
+%!   ## Test 0-argument form
+%!   fname = tempname ();
+%!   [tmpdir, tmpfname] = fileparts (fname);
+%!   assert (tmpdir, def_tmpdir);
+%!   assert (tmpfname (1:4), "oct-");
+%!   ## Test 1-argument form
+%!   tmp_tmpdir = [def_tmpdir filesep() substr(tmpfname, -5)];
+%!   mkdir (tmp_tmpdir) || error ("Unable to create tmp dir");
+%!   setenv (envname, def_tmpdir);
+%!   fname = tempname (tmp_tmpdir);
+%!   [tmpdir, tmpfname] = fileparts (fname);
+%!   assert (tmpdir, tmp_tmpdir);
+%!   assert (tmpfname (1:4), "oct-");
+%!   ## Test 1-argument form w/null tmpdir
+%!   fname = tempname ("");
+%!   [tmpdir, tmpfname] = fileparts (fname);
+%!   assert (tmpdir, def_tmpdir);
+%!   assert (tmpfname (1:4), "oct-");
+%!   ## Test 2-argument form
+%!   fname = tempname (tmp_tmpdir, "pfx-");
+%!   [tmpdir, tmpfname] = fileparts (fname);
+%!   assert (tmpdir, tmp_tmpdir);
+%!   assert (tmpfname (1:4), "pfx-");
+%!   ## Test 2-argument form w/null prefix
+%!   fname = tempname (tmp_tmpdir, "");
+%!   [tmpdir, tmpfname] = fileparts (fname);
+%!   assert (tmpdir, tmp_tmpdir);
+%!   assert (tmpfname (1:4), "file");
+%! unwind_protect_cleanup
+%!   sts = rmdir (tmp_tmpdir);
+%!   for i = 1:numel (envvar)
+%!     if (isempty (envdir{i}))
+%!       unsetenv (envvar{i});
+%!     else
+%!       setenv (envvar{i}, envdir{i});
+%!     endif
+%!   endfor
+%! end_unwind_protect

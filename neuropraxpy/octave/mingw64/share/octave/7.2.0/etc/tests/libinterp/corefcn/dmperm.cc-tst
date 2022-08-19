@@ -1,0 +1,18 @@
+## DO NOT EDIT!  Generated automatically from dmperm.cc by Make.
+%!testif HAVE_CXSPARSE
+%! n = 20;
+%! a = speye (n,n);
+%! a = a(randperm (n),:);
+%! assert (a(dmperm (a),:), speye (n));
+%!testif HAVE_CXSPARSE
+%! n = 20;
+%! d = 0.2;
+%! a = tril (sprandn (n,n,d), -1) + speye (n,n);
+%! a = a(randperm (n), randperm (n));
+%! [p,q,r,s] = dmperm (a);
+%! assert (tril (a(p,q), -1), sparse (n, n));
+%!testif HAVE_CXSPARSE
+%! assert (sprank (speye (20)), 20);
+%!testif HAVE_CXSPARSE
+%! assert (sprank ([1,0,2,0;2,0,4,0]), 2);
+%!error sprank (1,2)

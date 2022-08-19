@@ -1,0 +1,12 @@
+## DO NOT EDIT!  Generated automatically from input.cc by Make.
+%!assert (ischar (completion_matches ("")))
+%!assert (ischar (completion_matches ("a")))
+%!assert (ischar (completion_matches (" ")))
+%!assert (isempty (completion_matches (" ")))
+%!assert (any (strcmp ("abs", deblank (cellstr (completion_matches (""))))))
+%!assert (any (strcmp ("abs", deblank (cellstr (completion_matches ("a"))))))
+%!assert (any (strcmp ("abs", deblank (cellstr (completion_matches ("ab"))))))
+%!assert (any (strcmp ("abs", deblank (cellstr (completion_matches ("abs"))))))
+%!assert (! any (strcmp ("abs", deblank (cellstr (completion_matches ("absa"))))))
+%!error completion_matches ()
+%!error completion_matches (1, 2)

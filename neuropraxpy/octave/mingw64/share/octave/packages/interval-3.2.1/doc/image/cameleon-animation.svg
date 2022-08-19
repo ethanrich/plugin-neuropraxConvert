@@ -1,0 +1,5682 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="680"
+   height="450"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="cameleon-animation.svg">
+  <title
+     id="title5594">Cameleon Problem, Transition Animation</title>
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lend"
+       style="overflow:visible">
+      <path
+         id="path3830"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.979899"
+     inkscape:cx="332.67012"
+     inkscape:cy="158.56798"
+     inkscape:document-units="in"
+     inkscape:current-layer="layer3"
+     showgrid="false"
+     inkscape:window-width="1680"
+     inkscape:window-height="986"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:snap-global="true"
+     objecttolerance="10000"
+     inkscape:snap-bbox="true"
+     inkscape:snap-page="true"
+     fit-margin-top="0.5"
+     fit-margin-left="0.5"
+     fit-margin-right="0.5"
+     fit-margin-bottom="0.5"
+     units="px"
+     inkscape:bbox-nodes="true"
+     inkscape:object-nodes="true" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Cameleon Problem, Transition Animation</dc:title>
+        <cc:license
+           rdf:resource="http://www.gnu.org/licenses/gpl-3.0.html" />
+        <dc:date>2016-03-29</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Oliver Heimlich</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Oliver Heimlich</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:source>own work</dc:source>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Start"
+     style="opacity:0.6;display:inline">
+    <g
+       id="g3004"
+       style="fill:#859900;fill-opacity:1;visibility:hidden">
+      <path
+         inkscape:connector-curvature="0"
+         id="rect2985"
+         d="m 163.19291,-0.46191177 0,144.00001177 -144.000009,0 0,-90.000019 90.000009,0 0,36 -17.999999,0 0,18.000019 36.000009,0 0,-72.000019 -126.0000262,0 0,126.000009 180.0000162,0 0,-162.00000177 z"
+         style="fill:#859900;fill-opacity:1;stroke:none">
+        <animateTransform
+           begin="playing.begin"
+           id="r950"
+           attributeName="transform"
+           type="rotate"
+           dur="0.083008s"
+           from="3.13336 0 162"
+           to="3.13336 0 162" />
+        <animateTransform
+           begin="r950.end"
+           id="r948"
+           attributeName="transform"
+           type="rotate"
+           dur="0.18816s"
+           from="3.13336 0 162"
+           to="-0.537148 0 162" />
+        <animateTransform
+           begin="r948.end"
+           id="r947"
+           attributeName="transform"
+           type="rotate"
+           dur="0.72632s"
+           from="-0.537148 0 162"
+           to="-0.537148 0 162" />
+        <animateTransform
+           begin="r947.end"
+           id="r938"
+           attributeName="transform"
+           type="rotate"
+           dur="0.193797s"
+           from="-0.537148 0 162"
+           to="-4.20766 0 162" />
+        <animateTransform
+           begin="r938.end"
+           id="r937"
+           attributeName="transform"
+           type="rotate"
+           dur="0.36939s"
+           from="-4.20766 0 162"
+           to="-11.5487 0 162" />
+        <animateTransform
+           begin="r937.end"
+           id="r936"
+           attributeName="transform"
+           type="rotate"
+           dur="0.230869s"
+           from="-11.5487 0 162"
+           to="-16.1368 0 162" />
+        <animateTransform
+           begin="r936.end"
+           id="r935"
+           attributeName="transform"
+           type="rotate"
+           dur="0.020752s"
+           from="-16.1368 0 162"
+           to="-16.1368 0 162" />
+        <animateTransform
+           begin="r935.end"
+           id="r933"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="-16.1368 0 162"
+           to="-17.0544 0 162" />
+        <animateTransform
+           begin="r933.end"
+           id="r932"
+           attributeName="transform"
+           type="rotate"
+           dur="0.015564s"
+           from="-17.0544 0 162"
+           to="-17.0544 0 162" />
+        <animateTransform
+           begin="r932.end"
+           id="r931"
+           attributeName="transform"
+           type="rotate"
+           dur="0.115434s"
+           from="-17.0544 0 162"
+           to="-19.3485 0 162" />
+        <animateTransform
+           begin="r931.end"
+           id="r930"
+           attributeName="transform"
+           type="rotate"
+           dur="0.010376s"
+           from="-19.3485 0 162"
+           to="-19.3485 0 162" />
+        <animateTransform
+           begin="r930.end"
+           id="r928"
+           attributeName="transform"
+           type="rotate"
+           dur="0.02352s"
+           from="-19.3485 0 162"
+           to="-19.8073 0 162" />
+        <animateTransform
+           begin="r928.end"
+           id="r927"
+           attributeName="transform"
+           type="rotate"
+           dur="0.070038s"
+           from="-19.8073 0 162"
+           to="-19.8073 0 162" />
+        <animateTransform
+           begin="r927.end"
+           id="r920"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="-19.8073 0 162"
+           to="-20.725 0 162" />
+        <animateTransform
+           begin="r920.end"
+           id="r919"
+           attributeName="transform"
+           type="rotate"
+           dur="0.015564s"
+           from="-20.725 0 162"
+           to="-20.725 0 162" />
+        <animateTransform
+           begin="r919.end"
+           id="r918"
+           attributeName="transform"
+           type="rotate"
+           dur="0.115434s"
+           from="-20.725 0 162"
+           to="-23.019 0 162" />
+        <animateTransform
+           begin="r918.end"
+           id="r917"
+           attributeName="transform"
+           type="rotate"
+           dur="0.00518799s"
+           from="-23.019 0 162"
+           to="-23.019 0 162" />
+        <animateTransform
+           begin="r917.end"
+           id="r916"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0242247s"
+           from="-23.019 0 162"
+           to="-23.4778 0 162" />
+        <animateTransform
+           begin="r916.end"
+           id="r915"
+           attributeName="transform"
+           type="rotate"
+           dur="0.072632s"
+           from="-23.4778 0 162"
+           to="-23.4778 0 162" />
+        <animateTransform
+           begin="r915.end"
+           id="r908"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="-23.4778 0 162"
+           to="-24.3955 0 162" />
+        <animateTransform
+           begin="r908.end"
+           id="r907"
+           attributeName="transform"
+           type="rotate"
+           dur="0.036316s"
+           from="-24.3955 0 162"
+           to="-24.3955 0 162" />
+        <animateTransform
+           begin="r907.end"
+           id="r905"
+           attributeName="transform"
+           type="rotate"
+           dur="0.138521s"
+           from="-24.3955 0 162"
+           to="-27.1484 0 162" />
+        <animateTransform
+           begin="r905.end"
+           id="r904"
+           attributeName="transform"
+           type="rotate"
+           dur="0.010376s"
+           from="-27.1484 0 162"
+           to="-27.1484 0 162" />
+        <animateTransform
+           begin="r904.end"
+           id="r903"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0692607s"
+           from="-27.1484 0 162"
+           to="-28.5248 0 162" />
+        <animateTransform
+           begin="r903.end"
+           id="r902"
+           attributeName="transform"
+           type="rotate"
+           dur="0.00518799s"
+           from="-28.5248 0 162"
+           to="-28.5248 0 162" />
+        <animateTransform
+           begin="r902.end"
+           id="r901"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0242247s"
+           from="-28.5248 0 162"
+           to="-28.9836 0 162" />
+        <animateTransform
+           begin="r901.end"
+           id="r900"
+           attributeName="transform"
+           type="rotate"
+           dur="0.010376s"
+           from="-28.9836 0 162"
+           to="-28.9836 0 162" />
+        <animateTransform
+           begin="r900.end"
+           id="r899"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0692607s"
+           from="-28.9836 0 162"
+           to="-30.36 0 162" />
+        <animateTransform
+           begin="r899.end"
+           id="r898"
+           attributeName="transform"
+           type="rotate"
+           dur="0.025940s"
+           from="-30.36 0 162"
+           to="-30.36 0 162" />
+        <animateTransform
+           begin="r898.end"
+           id="r893"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0242247s"
+           from="-30.36 0 162"
+           to="-30.8189 0 162" />
+        <animateTransform
+           begin="r893.end"
+           id="r892"
+           attributeName="transform"
+           type="rotate"
+           dur="0.072632s"
+           from="-30.8189 0 162"
+           to="-30.8189 0 162" />
+        <animateTransform
+           begin="r892.end"
+           id="r885"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-30.8189 0 162"
+           to="-31.7365 0 162" />
+        <animateTransform
+           begin="r885.end"
+           id="r884"
+           attributeName="transform"
+           type="rotate"
+           dur="0.115434s"
+           from="-31.7365 0 162"
+           to="-34.0306 0 162" />
+        <animateTransform
+           begin="r884.end"
+           id="r883"
+           attributeName="transform"
+           type="rotate"
+           dur="0.02352s"
+           from="-34.0306 0 162"
+           to="-34.4894 0 162" />
+        <animateTransform
+           begin="r883.end"
+           id="r882"
+           attributeName="transform"
+           type="rotate"
+           dur="0.070038s"
+           from="-34.4894 0 162"
+           to="-34.4894 0 162" />
+        <animateTransform
+           begin="r882.end"
+           id="r875"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-34.4894 0 162"
+           to="-35.407 0 162" />
+        <animateTransform
+           begin="r875.end"
+           id="r874"
+           attributeName="transform"
+           type="rotate"
+           dur="0.020752s"
+           from="-35.407 0 162"
+           to="-35.407 0 162" />
+        <animateTransform
+           begin="r874.end"
+           id="r873"
+           attributeName="transform"
+           type="rotate"
+           dur="0.138521s"
+           from="-35.407 0 162"
+           to="-38.1599 0 162" />
+        <animateTransform
+           begin="r873.end"
+           id="r872"
+           attributeName="transform"
+           type="rotate"
+           dur="0.051880s"
+           from="-38.1599 0 162"
+           to="-38.1599 0 162" />
+        <animateTransform
+           begin="r872.end"
+           id="r867"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-38.1599 0 162"
+           to="-39.0775 0 162" />
+        <animateTransform
+           begin="r867.end"
+           id="r866"
+           attributeName="transform"
+           type="rotate"
+           dur="0.020752s"
+           from="-39.0775 0 162"
+           to="-39.0775 0 162" />
+        <animateTransform
+           begin="r866.end"
+           id="r865"
+           attributeName="transform"
+           type="rotate"
+           dur="0.138521s"
+           from="-39.0775 0 162"
+           to="-41.8304 0 162" />
+        <animateTransform
+           begin="r865.end"
+           id="r864"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0692607s"
+           from="-41.8304 0 162"
+           to="-43.2068 0 162" />
+        <animateTransform
+           begin="r864.end"
+           id="r863"
+           attributeName="transform"
+           type="rotate"
+           dur="0.00518799s"
+           from="-43.2068 0 162"
+           to="-43.2068 0 162" />
+        <animateTransform
+           begin="r863.end"
+           id="r862"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0242247s"
+           from="-43.2068 0 162"
+           to="-43.6657 0 162" />
+        <animateTransform
+           begin="r862.end"
+           id="r861"
+           attributeName="transform"
+           type="rotate"
+           dur="0.020752s"
+           from="-43.6657 0 162"
+           to="-43.6657 0 162" />
+        <animateTransform
+           begin="r861.end"
+           id="r859"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0692607s"
+           from="-43.6657 0 162"
+           to="-45.0421 0 162" />
+        <animateTransform
+           begin="r859.end"
+           id="r858"
+           attributeName="transform"
+           type="rotate"
+           dur="0.010376s"
+           from="-45.0421 0 162"
+           to="-45.0421 0 162" />
+        <animateTransform
+           begin="r858.end"
+           id="r856"
+           attributeName="transform"
+           type="rotate"
+           dur="0.02352s"
+           from="-45.0421 0 162"
+           to="-45.5009 0 162" />
+        <animateTransform
+           begin="r856.end"
+           id="r855"
+           attributeName="transform"
+           type="rotate"
+           dur="0.028534s"
+           from="-45.5009 0 162"
+           to="-45.5009 0 162" />
+        <animateTransform
+           begin="r855.end"
+           id="r852"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0692607s"
+           from="-45.5009 0 162"
+           to="-46.8773 0 162" />
+        <animateTransform
+           begin="r852.end"
+           id="r851"
+           attributeName="transform"
+           type="rotate"
+           dur="0.00518799s"
+           from="-46.8773 0 162"
+           to="-46.8773 0 162" />
+        <animateTransform
+           begin="r851.end"
+           id="r850"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0242247s"
+           from="-46.8773 0 162"
+           to="-47.3362 0 162" />
+        <animateTransform
+           begin="r850.end"
+           id="r849"
+           attributeName="transform"
+           type="rotate"
+           dur="0.010376s"
+           from="-47.3362 0 162"
+           to="-47.3362 0 162" />
+        <animateTransform
+           begin="r849.end"
+           id="r848"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0692607s"
+           from="-47.3362 0 162"
+           to="-48.7126 0 162" />
+        <animateTransform
+           begin="r848.end"
+           id="r847"
+           attributeName="transform"
+           type="rotate"
+           dur="0.00518799s"
+           from="-48.7126 0 162"
+           to="-48.7126 0 162" />
+        <animateTransform
+           begin="r847.end"
+           id="r846"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0461738s"
+           from="-48.7126 0 162"
+           to="-49.6302 0 162" />
+        <animateTransform
+           begin="r846.end"
+           id="r845"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0692607s"
+           from="-49.6302 0 162"
+           to="-51.0067 0 162" />
+        <animateTransform
+           begin="r845.end"
+           id="r844"
+           attributeName="transform"
+           type="rotate"
+           dur="0.072632s"
+           from="-51.0067 0 162"
+           to="-51.0067 0 162" />
+        <animateTransform
+           begin="r844.end"
+           id="r837"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-51.0067 0 162"
+           to="-50.089 0 162" />
+        <animateTransform
+           begin="r837.end"
+           id="r836"
+           attributeName="transform"
+           type="rotate"
+           dur="0.16602s"
+           from="-50.089 0 162"
+           to="-50.089 0 162" />
+        <animateTransform
+           begin="r836.end"
+           id="r828"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0968987s"
+           from="-50.089 0 162"
+           to="-48.2538 0 162" />
+        <animateTransform
+           begin="r828.end"
+           id="r827"
+           attributeName="transform"
+           type="rotate"
+           dur="0.11414s"
+           from="-48.2538 0 162"
+           to="-48.2538 0 162" />
+        <animateTransform
+           begin="r827.end"
+           id="r824"
+           attributeName="transform"
+           type="rotate"
+           dur="0.09408s"
+           from="-48.2538 0 162"
+           to="-46.4185 0 162" />
+        <animateTransform
+           begin="r824.end"
+           id="r823"
+           attributeName="transform"
+           type="rotate"
+           dur="0.138521s"
+           from="-46.4185 0 162"
+           to="-43.6657 0 162" />
+        <animateTransform
+           begin="r823.end"
+           id="r822"
+           attributeName="transform"
+           type="rotate"
+           dur="0.010376s"
+           from="-43.6657 0 162"
+           to="-43.6657 0 162" />
+        <animateTransform
+           begin="r822.end"
+           id="r821"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-43.6657 0 162"
+           to="-42.748 0 162" />
+        <animateTransform
+           begin="r821.end"
+           id="r820"
+           attributeName="transform"
+           type="rotate"
+           dur="0.20752s"
+           from="-42.748 0 162"
+           to="-42.748 0 162" />
+        <animateTransform
+           begin="r820.end"
+           id="r810"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0968987s"
+           from="-42.748 0 162"
+           to="-40.9128 0 162" />
+        <animateTransform
+           begin="r810.end"
+           id="r809"
+           attributeName="transform"
+           type="rotate"
+           dur="0.20752s"
+           from="-40.9128 0 162"
+           to="-40.9128 0 162" />
+        <animateTransform
+           begin="r809.end"
+           id="r804"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0968987s"
+           from="-40.9128 0 162"
+           to="-39.0775 0 162" />
+        <animateTransform
+           begin="r804.end"
+           id="r803"
+           attributeName="transform"
+           type="rotate"
+           dur="0.22827s"
+           from="-39.0775 0 162"
+           to="-39.0775 0 162" />
+        <animateTransform
+           begin="r803.end"
+           id="r792"
+           attributeName="transform"
+           type="rotate"
+           dur="0.184695s"
+           from="-39.0775 0 162"
+           to="-35.407 0 162" />
+        <animateTransform
+           begin="r792.end"
+           id="r791"
+           attributeName="transform"
+           type="rotate"
+           dur="0.09408s"
+           from="-35.407 0 162"
+           to="-33.5717 0 162" />
+        <animateTransform
+           begin="r791.end"
+           id="r790"
+           attributeName="transform"
+           type="rotate"
+           dur="0.32166s"
+           from="-33.5717 0 162"
+           to="-33.5717 0 162" />
+        <animateTransform
+           begin="r790.end"
+           id="r782"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0968987s"
+           from="-33.5717 0 162"
+           to="-31.7365 0 162" />
+        <animateTransform
+           begin="r782.end"
+           id="r781"
+           attributeName="transform"
+           type="rotate"
+           dur="0.37354s"
+           from="-31.7365 0 162"
+           to="-31.7365 0 162" />
+        <animateTransform
+           begin="r781.end"
+           id="r763"
+           attributeName="transform"
+           type="rotate"
+           dur="0.184695s"
+           from="-31.7365 0 162"
+           to="-28.066 0 162" />
+        <animateTransform
+           begin="r763.end"
+           id="r762"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0968987s"
+           from="-28.066 0 162"
+           to="-26.2307 0 162" />
+        <animateTransform
+           begin="r762.end"
+           id="r761"
+           attributeName="transform"
+           type="rotate"
+           dur="0.44617s"
+           from="-26.2307 0 162"
+           to="-26.2307 0 162" />
+        <animateTransform
+           begin="r761.end"
+           id="r750"
+           attributeName="transform"
+           type="rotate"
+           dur="0.09408s"
+           from="-26.2307 0 162"
+           to="-24.3955 0 162" />
+        <animateTransform
+           begin="r750.end"
+           id="r749"
+           attributeName="transform"
+           type="rotate"
+           dur="0.31128s"
+           from="-24.3955 0 162"
+           to="-24.3955 0 162" />
+        <animateTransform
+           begin="r749.end"
+           id="r734"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-24.3955 0 162"
+           to="-23.4778 0 162" />
+        <animateTransform
+           begin="r734.end"
+           id="r733"
+           attributeName="transform"
+           type="rotate"
+           dur="0.010376s"
+           from="-23.4778 0 162"
+           to="-23.4778 0 162" />
+        <animateTransform
+           begin="r733.end"
+           id="r732"
+           attributeName="transform"
+           type="rotate"
+           dur="0.138521s"
+           from="-23.4778 0 162"
+           to="-20.725 0 162" />
+        <animateTransform
+           begin="r732.end"
+           id="r731"
+           attributeName="transform"
+           type="rotate"
+           dur="0.036316s"
+           from="-20.725 0 162"
+           to="-20.725 0 162" />
+        <animateTransform
+           begin="r731.end"
+           id="r729"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="-20.725 0 162"
+           to="-19.8073 0 162" />
+        <animateTransform
+           begin="r729.end"
+           id="r728"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0923475s"
+           from="-19.8073 0 162"
+           to="-17.9721 0 162" />
+        <animateTransform
+           begin="r728.end"
+           id="r727"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="-17.9721 0 162"
+           to="-17.0544 0 162" />
+        <animateTransform
+           begin="r727.end"
+           id="r726"
+           attributeName="transform"
+           type="rotate"
+           dur="0.036316s"
+           from="-17.0544 0 162"
+           to="-17.0544 0 162" />
+        <animateTransform
+           begin="r726.end"
+           id="r724"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-17.0544 0 162"
+           to="-16.1368 0 162" />
+        <animateTransform
+           begin="r724.end"
+           id="r723"
+           attributeName="transform"
+           type="rotate"
+           dur="0.031128s"
+           from="-16.1368 0 162"
+           to="-16.1368 0 162" />
+        <animateTransform
+           begin="r723.end"
+           id="r720"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0923475s"
+           from="-16.1368 0 162"
+           to="-14.3016 0 162" />
+        <animateTransform
+           begin="r720.end"
+           id="r719"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="-14.3016 0 162"
+           to="-13.3839 0 162" />
+        <animateTransform
+           begin="r719.end"
+           id="r718"
+           attributeName="transform"
+           type="rotate"
+           dur="0.036316s"
+           from="-13.3839 0 162"
+           to="-13.3839 0 162" />
+        <animateTransform
+           begin="r718.end"
+           id="r716"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-13.3839 0 162"
+           to="-12.4663 0 162" />
+        <animateTransform
+           begin="r716.end"
+           id="r715"
+           attributeName="transform"
+           type="rotate"
+           dur="0.041504s"
+           from="-12.4663 0 162"
+           to="-12.4663 0 162" />
+        <animateTransform
+           begin="r715.end"
+           id="r711"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0923475s"
+           from="-12.4663 0 162"
+           to="-10.6311 0 162" />
+        <animateTransform
+           begin="r711.end"
+           id="r710"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-10.6311 0 162"
+           to="-9.71343 0 162" />
+        <animateTransform
+           begin="r710.end"
+           id="r709"
+           attributeName="transform"
+           type="rotate"
+           dur="0.036316s"
+           from="-9.71343 0 162"
+           to="-9.71343 0 162" />
+        <animateTransform
+           begin="r709.end"
+           id="r707"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="-9.71343 0 162"
+           to="-8.7958 0 162" />
+        <animateTransform
+           begin="r707.end"
+           id="r706"
+           attributeName="transform"
+           type="rotate"
+           dur="0.05188s"
+           from="-8.7958 0 162"
+           to="-8.7958 0 162" />
+        <animateTransform
+           begin="r706.end"
+           id="r701"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0923475s"
+           from="-8.7958 0 162"
+           to="-6.96054 0 162" />
+        <animateTransform
+           begin="r701.end"
+           id="r700"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-6.96054 0 162"
+           to="-6.04291 0 162" />
+        <animateTransform
+           begin="r700.end"
+           id="r699"
+           attributeName="transform"
+           type="rotate"
+           dur="0.041504s"
+           from="-6.04291 0 162"
+           to="-6.04291 0 162" />
+        <animateTransform
+           begin="r699.end"
+           id="r697"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-6.04291 0 162"
+           to="-5.12529 0 162" />
+        <animateTransform
+           begin="r697.end"
+           id="r696"
+           attributeName="transform"
+           type="rotate"
+           dur="0.05188s"
+           from="-5.12529 0 162"
+           to="-5.12529 0 162" />
+        <animateTransform
+           begin="r696.end"
+           id="r691"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0923475s"
+           from="-5.12529 0 162"
+           to="-3.29003 0 162" />
+        <animateTransform
+           begin="r691.end"
+           id="r690"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="-3.29003 0 162"
+           to="-2.3724 0 162" />
+        <animateTransform
+           begin="r690.end"
+           id="r689"
+           attributeName="transform"
+           type="rotate"
+           dur="0.057068s"
+           from="-2.3724 0 162"
+           to="-2.3724 0 162" />
+        <animateTransform
+           begin="r689.end"
+           id="r686"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-2.3724 0 162"
+           to="-1.45478 0 162" />
+        <animateTransform
+           begin="r686.end"
+           id="r685"
+           attributeName="transform"
+           type="rotate"
+           dur="0.062256s"
+           from="-1.45478 0 162"
+           to="-1.45478 0 162" />
+        <animateTransform
+           begin="r685.end"
+           id="r679"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0923475s"
+           from="-1.45478 0 162"
+           to="0.38048 0 162" />
+        <animateTransform
+           begin="r679.end"
+           id="r678"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="0.38048 0 162"
+           to="1.29811 0 162" />
+        <animateTransform
+           begin="r678.end"
+           id="r677"
+           attributeName="transform"
+           type="rotate"
+           dur="0.057068s"
+           from="1.29811 0 162"
+           to="1.29811 0 162" />
+        <animateTransform
+           begin="r677.end"
+           id="r674"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="1.29811 0 162"
+           to="2.21574 0 162" />
+        <animateTransform
+           begin="r674.end"
+           id="r673"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0692607s"
+           from="2.21574 0 162"
+           to="3.59218 0 162" />
+        <animateTransform
+           begin="r673.end"
+           id="r672"
+           attributeName="transform"
+           type="rotate"
+           dur="0.02352s"
+           from="3.59218 0 162"
+           to="4.05099 0 162" />
+        <animateTransform
+           begin="r672.end"
+           id="r671"
+           attributeName="transform"
+           type="rotate"
+           dur="0.090790s"
+           from="4.05099 0 162"
+           to="4.05099 0 162" />
+        <animateTransform
+           begin="r671.end"
+           id="r662"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="4.05099 0 162"
+           to="4.96862 0 162" />
+        <animateTransform
+           begin="r662.end"
+           id="r661"
+           attributeName="transform"
+           type="rotate"
+           dur="0.036316s"
+           from="4.96862 0 162"
+           to="4.96862 0 162" />
+        <animateTransform
+           begin="r661.end"
+           id="r659"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="4.96862 0 162"
+           to="5.88625 0 162" />
+        <animateTransform
+           begin="r659.end"
+           id="r658"
+           attributeName="transform"
+           type="rotate"
+           dur="0.020752s"
+           from="5.88625 0 162"
+           to="5.88625 0 162" />
+        <animateTransform
+           begin="r658.end"
+           id="r656"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0692607s"
+           from="5.88625 0 162"
+           to="7.26269 0 162" />
+        <animateTransform
+           begin="r656.end"
+           id="r655"
+           attributeName="transform"
+           type="rotate"
+           dur="0.02352s"
+           from="7.26269 0 162"
+           to="7.7215 0 162" />
+        <animateTransform
+           begin="r655.end"
+           id="r654"
+           attributeName="transform"
+           type="rotate"
+           dur="0.10117s"
+           from="7.7215 0 162"
+           to="7.7215 0 162" />
+        <animateTransform
+           begin="r654.end"
+           id="r644"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="7.7215 0 162"
+           to="8.63913 0 162" />
+        <animateTransform
+           begin="r644.end"
+           id="r643"
+           attributeName="transform"
+           type="rotate"
+           dur="0.031128s"
+           from="8.63913 0 162"
+           to="8.63913 0 162" />
+        <animateTransform
+           begin="r643.end"
+           id="r641"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="8.63913 0 162"
+           to="9.55676 0 162" />
+        <animateTransform
+           begin="r641.end"
+           id="r640"
+           attributeName="transform"
+           type="rotate"
+           dur="0.041504s"
+           from="9.55676 0 162"
+           to="9.55676 0 162" />
+        <animateTransform
+           begin="r640.end"
+           id="r636"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0692607s"
+           from="9.55676 0 162"
+           to="10.9332 0 162" />
+        <animateTransform
+           begin="r636.end"
+           id="r635"
+           attributeName="transform"
+           type="rotate"
+           dur="0.02352s"
+           from="10.9332 0 162"
+           to="11.392 0 162" />
+        <animateTransform
+           begin="r635.end"
+           id="r634"
+           attributeName="transform"
+           type="rotate"
+           dur="0.11154s"
+           from="11.392 0 162"
+           to="11.392 0 162" />
+        <animateTransform
+           begin="r634.end"
+           id="r623"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="11.392 0 162"
+           to="12.3096 0 162" />
+        <animateTransform
+           begin="r623.end"
+           id="r622"
+           attributeName="transform"
+           type="rotate"
+           dur="0.015564s"
+           from="12.3096 0 162"
+           to="12.3096 0 162" />
+        <animateTransform
+           begin="r622.end"
+           id="r621"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="12.3096 0 162"
+           to="13.2273 0 162" />
+        <animateTransform
+           begin="r621.end"
+           id="r620"
+           attributeName="transform"
+           type="rotate"
+           dur="0.010376s"
+           from="13.2273 0 162"
+           to="13.2273 0 162" />
+        <animateTransform
+           begin="r620.end"
+           id="r619"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0692607s"
+           from="13.2273 0 162"
+           to="14.6037 0 162" />
+        <animateTransform
+           begin="r619.end"
+           id="r618"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0461738s"
+           from="14.6037 0 162"
+           to="15.5213 0 162" />
+        <animateTransform
+           begin="r618.end"
+           id="r617"
+           attributeName="transform"
+           type="rotate"
+           dur="0.00518799s"
+           from="15.5213 0 162"
+           to="15.5213 0 162" />
+        <animateTransform
+           begin="r617.end"
+           id="r616"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0692607s"
+           from="15.5213 0 162"
+           to="16.8978 0 162" />
+        <animateTransform
+           begin="r616.end"
+           id="r615"
+           attributeName="transform"
+           type="rotate"
+           dur="0.010376s"
+           from="16.8978 0 162"
+           to="16.8978 0 162" />
+        <animateTransform
+           begin="r615.end"
+           id="r614"
+           attributeName="transform"
+           type="rotate"
+           dur="0.138521s"
+           from="16.8978 0 162"
+           to="19.6507 0 162" />
+        <animateTransform
+           begin="r614.end"
+           id="r613"
+           attributeName="transform"
+           type="rotate"
+           dur="0.062256s"
+           from="19.6507 0 162"
+           to="19.6507 0 162" />
+        <animateTransform
+           begin="r613.end"
+           id="r610"
+           attributeName="transform"
+           type="rotate"
+           dur="0.461738s"
+           from="19.6507 0 162"
+           to="28.8269 0 162" />
+        <animateTransform
+           begin="r610.end"
+           id="r609"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0622559s"
+           from="28.8269 0 162"
+           to="28.8269 0 162" />
+        <animateTransform
+           begin="r609.end"
+           id="r608"
+           attributeName="transform"
+           type="rotate"
+           dur="0.18816s"
+           from="28.8269 0 162"
+           to="32.4974 0 162" />
+        <animateTransform
+           begin="r608.end"
+           id="r607"
+           attributeName="transform"
+           type="rotate"
+           dur="0.554085s"
+           from="32.4974 0 162"
+           to="43.509 0 162" />
+        <animateTransform
+           begin="r607.end"
+           id="r606"
+           attributeName="transform"
+           type="rotate"
+           dur="0.66406s"
+           from="43.509 0 162"
+           to="43.509 0 162" />
+        <animateTransform
+           begin="r606.end"
+           id="r598"
+           attributeName="transform"
+           type="rotate"
+           dur="0.193797s"
+           from="43.509 0 162"
+           to="47.1795 0 162" />
+        <animateTransform
+           begin="r598.end"
+           id="r597"
+           attributeName="transform"
+           type="rotate"
+           dur="0.44617s"
+           from="47.1795 0 162"
+           to="47.1795 0 162" />
+        <animateTransform
+           begin="r597.end"
+           id="r586"
+           attributeName="transform"
+           type="rotate"
+           dur="0.09408s"
+           from="47.1795 0 162"
+           to="49.0147 0 162" />
+        <animateTransform
+           begin="r586.end"
+           id="r585"
+           attributeName="transform"
+           type="rotate"
+           dur="0.14526s"
+           from="49.0147 0 162"
+           to="49.0147 0 162" />
+        <animateTransform
+           begin="r585.end"
+           id="r578"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="49.0147 0 162"
+           to="49.9324 0 162" />
+        <animateTransform
+           begin="r578.end"
+           id="r577"
+           attributeName="transform"
+           type="rotate"
+           dur="0.020752s"
+           from="49.9324 0 162"
+           to="49.9324 0 162" />
+        <animateTransform
+           begin="r577.end"
+           id="r575"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0923475s"
+           from="49.9324 0 162"
+           to="51.7676 0 162" />
+        <animateTransform
+           begin="r575.end"
+           id="r574"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0923475s"
+           from="51.7676 0 162"
+           to="53.6029 0 162" />
+        <animateTransform
+           begin="r574.end"
+           id="r573"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0242247s"
+           from="53.6029 0 162"
+           to="54.0617 0 162" />
+        <animateTransform
+           begin="r573.end"
+           id="r572"
+           attributeName="transform"
+           type="rotate"
+           dur="0.00518799s"
+           from="54.0617 0 162"
+           to="54.0617 0 162" />
+        <animateTransform
+           begin="r572.end"
+           id="r571"
+           attributeName="transform"
+           type="rotate"
+           dur="0.115434s"
+           from="54.0617 0 162"
+           to="56.3558 0 162" />
+        <animateTransform
+           begin="r571.end"
+           id="r570"
+           attributeName="transform"
+           type="rotate"
+           dur="0.22827s"
+           from="56.3558 0 162"
+           to="56.3558 0 162" />
+        <animateTransform
+           begin="r570.end"
+           id="r559"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0968987s"
+           from="56.3558 0 162"
+           to="58.191 0 162" />
+        <animateTransform
+           begin="r559.end"
+           id="r558"
+           attributeName="transform"
+           type="rotate"
+           dur="0.372293s"
+           from="58.191 0 162"
+           to="65.532 0 162" />
+        <animateTransform
+           begin="r558.end"
+           id="r557"
+           attributeName="transform"
+           type="rotate"
+           dur="2.4072s"
+           from="65.532 0 162"
+           to="65.532 0 162" />
+        <animateTransform
+           begin="r557.end"
+           id="r542"
+           attributeName="transform"
+           type="rotate"
+           dur="0.37632s"
+           from="65.532 0 162"
+           to="58.191 0 162" />
+        <animateTransform
+           begin="r542.end"
+           id="r541"
+           attributeName="transform"
+           type="rotate"
+           dur="0.74707s"
+           from="58.191 0 162"
+           to="58.191 0 162" />
+        <animateTransform
+           begin="r541.end"
+           id="r532"
+           attributeName="transform"
+           type="rotate"
+           dur="0.193797s"
+           from="58.191 0 162"
+           to="61.8615 0 162" />
+        <animateTransform
+           begin="r532.end"
+           id="r531"
+           attributeName="transform"
+           type="rotate"
+           dur="0.87158s"
+           from="61.8615 0 162"
+           to="61.8615 0 162" />
+        <animateTransform
+           begin="r531.end"
+           id="r510"
+           attributeName="transform"
+           type="rotate"
+           dur="0.210826s"
+           from="61.8615 0 162"
+           to="65.532 0 162" />
+        <animateTransform
+           begin="r510.end"
+           id="r509"
+           attributeName="transform"
+           type="rotate"
+           dur="1.9922s"
+           from="65.532 0 162"
+           to="65.532 0 162" />
+        <animateTransform
+           begin="r509.end"
+           id="r497"
+           attributeName="transform"
+           type="rotate"
+           dur="0.75264s"
+           from="65.532 0 162"
+           to="50.85 0 162" />
+        <animateTransform
+           begin="r497.end"
+           id="r496"
+           attributeName="transform"
+           type="rotate"
+           dur="0.249023s"
+           from="50.85 0 162"
+           to="50.85 0 162" />
+        <animateTransform
+           begin="r496.end"
+           id="r495"
+           attributeName="transform"
+           type="rotate"
+           dur="1.66226s"
+           from="50.85 0 162"
+           to="17.8154 0 162" />
+        <animateTransform
+           begin="r495.end"
+           id="r494"
+           attributeName="transform"
+           type="rotate"
+           dur="0.083008s"
+           from="17.8154 0 162"
+           to="17.8154 0 162" />
+        <animateTransform
+           begin="r494.end"
+           id="r492"
+           attributeName="transform"
+           type="rotate"
+           dur="0.18816s"
+           from="17.8154 0 162"
+           to="14.1449 0 162" />
+        <animateTransform
+           begin="r492.end"
+           id="r491"
+           attributeName="transform"
+           type="rotate"
+           dur="0.64331s"
+           from="14.1449 0 162"
+           to="14.1449 0 162" />
+        <animateTransform
+           begin="r491.end"
+           id="r483"
+           attributeName="transform"
+           type="rotate"
+           dur="0.387595s"
+           from="14.1449 0 162"
+           to="6.80387 0 162" />
+        <animateTransform
+           begin="r483.end"
+           id="r482"
+           attributeName="transform"
+           type="rotate"
+           dur="1.3281s"
+           from="6.80387 0 162"
+           to="6.80387 0 162" />
+        <animateTransform
+           begin="r482.end"
+           id="r474"
+           attributeName="transform"
+           type="rotate"
+           dur="0.775189s"
+           from="6.80387 0 162"
+           to="-7.87817 0 162" />
+        <animateTransform
+           begin="r474.end"
+           id="r473"
+           attributeName="transform"
+           type="rotate"
+           dur="1.56991s"
+           from="-7.87817 0 162"
+           to="-39.0775 0 162" />
+        <animateTransform
+           begin="r473.end"
+           id="r472"
+           attributeName="transform"
+           type="rotate"
+           dur="0.18677s"
+           from="-39.0775 0 162"
+           to="-39.0775 0 162" />
+        <animateTransform
+           begin="r472.end"
+           id="r463"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0968987s"
+           from="-39.0775 0 162"
+           to="-40.9128 0 162" />
+        <animateTransform
+           begin="r463.end"
+           id="r462"
+           attributeName="transform"
+           type="rotate"
+           dur="0.207782s"
+           from="-40.9128 0 162"
+           to="-45.0421 0 162" />
+        <animateTransform
+           begin="r462.end"
+           id="r461"
+           attributeName="transform"
+           type="rotate"
+           dur="0.010376s"
+           from="-45.0421 0 162"
+           to="-45.0421 0 162" />
+        <animateTransform
+           begin="r461.end"
+           id="r459"
+           attributeName="transform"
+           type="rotate"
+           dur="0.02352s"
+           from="-45.0421 0 162"
+           to="-45.5009 0 162" />
+        <animateTransform
+           begin="r459.end"
+           id="r458"
+           attributeName="transform"
+           type="rotate"
+           dur="0.080414s"
+           from="-45.5009 0 162"
+           to="-45.5009 0 162" />
+        <animateTransform
+           begin="r458.end"
+           id="r450"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-45.5009 0 162"
+           to="-46.4185 0 162" />
+        <animateTransform
+           begin="r450.end"
+           id="r449"
+           attributeName="transform"
+           type="rotate"
+           dur="0.16602s"
+           from="-46.4185 0 162"
+           to="-46.4185 0 162" />
+        <animateTransform
+           begin="r449.end"
+           id="r441"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0968987s"
+           from="-46.4185 0 162"
+           to="-48.2538 0 162" />
+        <animateTransform
+           begin="r441.end"
+           id="r440"
+           attributeName="transform"
+           type="rotate"
+           dur="0.36939s"
+           from="-48.2538 0 162"
+           to="-55.5948 0 162" />
+        <animateTransform
+           begin="r440.end"
+           id="r439"
+           attributeName="transform"
+           type="rotate"
+           dur="0.277043s"
+           from="-55.5948 0 162"
+           to="-61.1006 0 162" />
+        <animateTransform
+           begin="r439.end"
+           id="r438"
+           attributeName="transform"
+           type="rotate"
+           dur="0.020752s"
+           from="-61.1006 0 162"
+           to="-61.1006 0 162" />
+        <animateTransform
+           begin="r438.end"
+           id="r437"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0968987s"
+           from="-61.1006 0 162"
+           to="-62.9358 0 162" />
+        <animateTransform
+           begin="r437.end"
+           id="r436"
+           attributeName="transform"
+           type="rotate"
+           dur="0.083008s"
+           from="-62.9358 0 162"
+           to="-62.9358 0 162" />
+        <animateTransform
+           begin="r436.end"
+           id="r434"
+           attributeName="transform"
+           type="rotate"
+           dur="0.277043s"
+           from="-62.9358 0 162"
+           to="-68.4416 0 162" />
+        <animateTransform
+           begin="r434.end"
+           id="r433"
+           attributeName="transform"
+           type="rotate"
+           dur="0.09408s"
+           from="-68.4416 0 162"
+           to="-70.2769 0 162" />
+        <animateTransform
+           begin="r433.end"
+           id="r432"
+           attributeName="transform"
+           type="rotate"
+           dur="0.11414s"
+           from="-70.2769 0 162"
+           to="-70.2769 0 162" />
+        <animateTransform
+           begin="r432.end"
+           id="r429"
+           attributeName="transform"
+           type="rotate"
+           dur="0.277043s"
+           from="-70.2769 0 162"
+           to="-75.7826 0 162" />
+        <animateTransform
+           begin="r429.end"
+           id="r428"
+           attributeName="transform"
+           type="rotate"
+           dur="0.020752s"
+           from="-75.7826 0 162"
+           to="-75.7826 0 162" />
+        <animateTransform
+           begin="r428.end"
+           id="r427"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0968987s"
+           from="-75.7826 0 162"
+           to="-77.6179 0 162" />
+        <animateTransform
+           begin="r427.end"
+           id="r426"
+           attributeName="transform"
+           type="rotate"
+           dur="0.230869s"
+           from="-77.6179 0 162"
+           to="-82.206 0 162" />
+        <animateTransform
+           begin="r426.end"
+           id="r425"
+           attributeName="transform"
+           type="rotate"
+           dur="0.010376s"
+           from="-82.206 0 162"
+           to="-82.206 0 162" />
+        <animateTransform
+           begin="r425.end"
+           id="r424"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-82.206 0 162"
+           to="-83.1236 0 162" />
+        <animateTransform
+           begin="r424.end"
+           id="r423"
+           attributeName="transform"
+           type="rotate"
+           dur="0.14526s"
+           from="-83.1236 0 162"
+           to="-83.1236 0 162" />
+        <animateTransform
+           begin="r423.end"
+           id="r416"
+           attributeName="transform"
+           type="rotate"
+           dur="0.09408s"
+           from="-83.1236 0 162"
+           to="-84.9589 0 162" />
+        <animateTransform
+           begin="r416.end"
+           id="r415"
+           attributeName="transform"
+           type="rotate"
+           dur="0.28015s"
+           from="-84.9589 0 162"
+           to="-84.9589 0 162" />
+        <animateTransform
+           begin="r415.end"
+           id="r408"
+           attributeName="transform"
+           type="rotate"
+           dur="0.18816s"
+           from="-84.9589 0 162"
+           to="-88.6294 0 162" />
+        <animateTransform
+           begin="r408.end"
+           id="r407"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0622559s"
+           from="-88.6294 0 162"
+           to="-88.6294 0 162" />
+        <animateTransform
+           begin="r407.end"
+           id="r406"
+           attributeName="transform"
+           type="rotate"
+           dur="0.415564s"
+           from="-88.6294 0 162"
+           to="-96.8881 0 162" />
+        <animateTransform
+           begin="r406.end"
+           id="r405"
+           attributeName="transform"
+           type="rotate"
+           dur="0.041504s"
+           from="-96.8881 0 162"
+           to="-96.8881 0 162" />
+        <animateTransform
+           begin="r405.end"
+           id="r401"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="-96.8881 0 162"
+           to="-97.8057 0 162" />
+        <animateTransform
+           begin="r401.end"
+           id="r400"
+           attributeName="transform"
+           type="rotate"
+           dur="0.20233s"
+           from="-97.8057 0 162"
+           to="-97.8057 0 162" />
+        <animateTransform
+           begin="r400.end"
+           id="r390"
+           attributeName="transform"
+           type="rotate"
+           dur="0.09408s"
+           from="-97.8057 0 162"
+           to="-99.6409 0 162" />
+        <animateTransform
+           begin="r390.end"
+           id="r389"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0311279s"
+           from="-99.6409 0 162"
+           to="-99.6409 0 162" />
+        <animateTransform
+           begin="r389.end"
+           id="r388"
+           attributeName="transform"
+           type="rotate"
+           dur="0.207782s"
+           from="-99.6409 0 162"
+           to="-103.77 0 162" />
+        <animateTransform
+           begin="r388.end"
+           id="r387"
+           attributeName="transform"
+           type="rotate"
+           dur="0.036316s"
+           from="-103.77 0 162"
+           to="-103.77 0 162" />
+        <animateTransform
+           begin="r387.end"
+           id="r380"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0242247s"
+           from="-103.77 0 162"
+           to="-104.229 0 162" />
+        <animateTransform
+           begin="r380.end"
+           id="r379"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0923475s"
+           from="-104.229 0 162"
+           to="-106.064 0 162" />
+        <animateTransform
+           begin="r379.end"
+           id="r378"
+           attributeName="transform"
+           type="rotate"
+           dur="0.049286s"
+           from="-106.064 0 162"
+           to="-106.064 0 162" />
+        <animateTransform
+           begin="r378.end"
+           id="r373"
+           attributeName="transform"
+           type="rotate"
+           dur="0.02352s"
+           from="-106.064 0 162"
+           to="-106.523 0 162" />
+        <animateTransform
+           begin="r373.end"
+           id="r372"
+           attributeName="transform"
+           type="rotate"
+           dur="0.115434s"
+           from="-106.523 0 162"
+           to="-108.817 0 162" />
+        <animateTransform
+           begin="r372.end"
+           id="r371"
+           attributeName="transform"
+           type="rotate"
+           dur="0.24384s"
+           from="-108.817 0 162"
+           to="-108.817 0 162" />
+        <animateTransform
+           begin="r371.end"
+           id="r359"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="-108.817 0 162"
+           to="-109.735 0 162" />
+        <animateTransform
+           begin="r359.end"
+           id="r358"
+           attributeName="transform"
+           type="rotate"
+           dur="0.138521s"
+           from="-109.735 0 162"
+           to="-112.488 0 162" />
+        <animateTransform
+           begin="r358.end"
+           id="r357"
+           attributeName="transform"
+           type="rotate"
+           dur="0.10376s"
+           from="-112.488 0 162"
+           to="-112.488 0 162" />
+        <animateTransform
+           begin="r357.end"
+           id="r352"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0968987s"
+           from="-112.488 0 162"
+           to="-114.323 0 162" />
+        <animateTransform
+           begin="r352.end"
+           id="r351"
+           attributeName="transform"
+           type="rotate"
+           dur="0.12451s"
+           from="-114.323 0 162"
+           to="-114.323 0 162" />
+        <animateTransform
+           begin="r351.end"
+           id="r348"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0968987s"
+           from="-114.323 0 162"
+           to="-116.158 0 162" />
+        <animateTransform
+           begin="r348.end"
+           id="r347"
+           attributeName="transform"
+           type="rotate"
+           dur="0.041504s"
+           from="-116.158 0 162"
+           to="-116.158 0 162" />
+        <animateTransform
+           begin="r347.end"
+           id="r345"
+           attributeName="transform"
+           type="rotate"
+           dur="0.138521s"
+           from="-116.158 0 162"
+           to="-118.911 0 162" />
+        <animateTransform
+           begin="r345.end"
+           id="r344"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="-118.911 0 162"
+           to="-119.829 0 162" />
+        <animateTransform
+           begin="r344.end"
+           id="r343"
+           attributeName="transform"
+           type="rotate"
+           dur="0.38910s"
+           from="-119.829 0 162"
+           to="-119.829 0 162" />
+        <animateTransform
+           begin="r343.end"
+           id="r324"
+           attributeName="transform"
+           type="rotate"
+           dur="0.09408s"
+           from="-119.829 0 162"
+           to="-121.664 0 162" />
+        <animateTransform
+           begin="r324.end"
+           id="r323"
+           attributeName="transform"
+           type="rotate"
+           dur="0.062256s"
+           from="-121.664 0 162"
+           to="-121.664 0 162" />
+        <animateTransform
+           begin="r323.end"
+           id="r321"
+           attributeName="transform"
+           type="rotate"
+           dur="0.09408s"
+           from="-121.664 0 162"
+           to="-123.499 0 162" />
+        <animateTransform
+           begin="r321.end"
+           id="r320"
+           attributeName="transform"
+           type="rotate"
+           dur="0.31128s"
+           from="-123.499 0 162"
+           to="-123.499 0 162" />
+        <animateTransform
+           begin="r320.end"
+           id="r305"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-123.499 0 162"
+           to="-124.417 0 162" />
+        <animateTransform
+           begin="r305.end"
+           id="r304"
+           attributeName="transform"
+           type="rotate"
+           dur="0.22827s"
+           from="-124.417 0 162"
+           to="-124.417 0 162" />
+        <animateTransform
+           begin="r304.end"
+           id="r282"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="-124.417 0 162"
+           to="-123.499 0 162" />
+        <animateTransform
+           begin="r282.end"
+           id="r281"
+           attributeName="transform"
+           type="rotate"
+           dur="0.14008s"
+           from="-123.499 0 162"
+           to="-123.499 0 162" />
+        <animateTransform
+           begin="r281.end"
+           id="r274"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-123.499 0 162"
+           to="-122.582 0 162" />
+        <animateTransform
+           begin="r274.end"
+           id="r273"
+           attributeName="transform"
+           type="rotate"
+           dur="0.10376s"
+           from="-122.582 0 162"
+           to="-122.582 0 162" />
+        <animateTransform
+           begin="r273.end"
+           id="r263"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0923475s"
+           from="-122.582 0 162"
+           to="-120.746 0 162" />
+        <animateTransform
+           begin="r263.end"
+           id="r262"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-120.746 0 162"
+           to="-119.829 0 162" />
+        <animateTransform
+           begin="r262.end"
+           id="r261"
+           attributeName="transform"
+           type="rotate"
+           dur="0.11932s"
+           from="-119.829 0 162"
+           to="-119.829 0 162" />
+        <animateTransform
+           begin="r261.end"
+           id="r255"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="-119.829 0 162"
+           to="-118.911 0 162" />
+        <animateTransform
+           begin="r255.end"
+           id="r254"
+           attributeName="transform"
+           type="rotate"
+           dur="0.020752s"
+           from="-118.911 0 162"
+           to="-118.911 0 162" />
+        <animateTransform
+           begin="r254.end"
+           id="r252"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0923475s"
+           from="-118.911 0 162"
+           to="-117.076 0 162" />
+        <animateTransform
+           begin="r252.end"
+           id="r251"
+           attributeName="transform"
+           type="rotate"
+           dur="0.00778198s"
+           from="-117.076 0 162"
+           to="-117.076 0 162" />
+        <animateTransform
+           begin="r251.end"
+           id="r250"
+           attributeName="transform"
+           type="rotate"
+           dur="0.02352s"
+           from="-117.076 0 162"
+           to="-116.617 0 162" />
+        <animateTransform
+           begin="r250.end"
+           id="r249"
+           attributeName="transform"
+           type="rotate"
+           dur="0.036316s"
+           from="-116.617 0 162"
+           to="-116.617 0 162" />
+        <animateTransform
+           begin="r249.end"
+           id="r242"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0461738s"
+           from="-116.617 0 162"
+           to="-115.699 0 162" />
+        <animateTransform
+           begin="r242.end"
+           id="r241"
+           attributeName="transform"
+           type="rotate"
+           dur="0.015564s"
+           from="-115.699 0 162"
+           to="-115.699 0 162" />
+        <animateTransform
+           begin="r241.end"
+           id="r238"
+           attributeName="transform"
+           type="rotate"
+           dur="0.02352s"
+           from="-115.699 0 162"
+           to="-115.241 0 162" />
+        <animateTransform
+           begin="r238.end"
+           id="r237"
+           attributeName="transform"
+           type="rotate"
+           dur="0.025940s"
+           from="-115.241 0 162"
+           to="-115.241 0 162" />
+        <animateTransform
+           begin="r237.end"
+           id="r234"
+           attributeName="transform"
+           type="rotate"
+           dur="0.02352s"
+           from="-115.241 0 162"
+           to="-114.782 0 162" />
+        <animateTransform
+           begin="r234.end"
+           id="r233"
+           attributeName="transform"
+           type="rotate"
+           dur="0.07782s"
+           from="-114.782 0 162"
+           to="-114.782 0 162" />
+        <animateTransform
+           begin="r233.end"
+           id="r218"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0461738s"
+           from="-114.782 0 162"
+           to="-113.864 0 162" />
+        <animateTransform
+           begin="r218.end"
+           id="r217"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0242247s"
+           from="-113.864 0 162"
+           to="-113.405 0 162" />
+        <animateTransform
+           begin="r217.end"
+           id="r216"
+           attributeName="transform"
+           type="rotate"
+           dur="0.072632s"
+           from="-113.405 0 162"
+           to="-113.405 0 162" />
+        <animateTransform
+           begin="r216.end"
+           id="r209"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0242247s"
+           from="-113.405 0 162"
+           to="-112.947 0 162" />
+        <animateTransform
+           begin="r209.end"
+           id="r208"
+           attributeName="transform"
+           type="rotate"
+           dur="0.020752s"
+           from="-112.947 0 162"
+           to="-112.947 0 162" />
+        <animateTransform
+           begin="r208.end"
+           id="r204"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0461738s"
+           from="-112.947 0 162"
+           to="-112.029 0 162" />
+        <animateTransform
+           begin="r204.end"
+           id="r203"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0242247s"
+           from="-112.029 0 162"
+           to="-111.57 0 162" />
+        <animateTransform
+           begin="r203.end"
+           id="r202"
+           attributeName="transform"
+           type="rotate"
+           dur="0.12451s"
+           from="-111.57 0 162"
+           to="-111.57 0 162" />
+        <animateTransform
+           begin="r202.end"
+           id="r190"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0242247s"
+           from="-111.57 0 162"
+           to="-111.111 0 162" />
+        <animateTransform
+           begin="r190.end"
+           id="r189"
+           attributeName="transform"
+           type="rotate"
+           dur="0.00518799s"
+           from="-111.111 0 162"
+           to="-111.111 0 162" />
+        <animateTransform
+           begin="r189.end"
+           id="r188"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0692607s"
+           from="-111.111 0 162"
+           to="-109.735 0 162" />
+        <animateTransform
+           begin="r188.end"
+           id="r187"
+           attributeName="transform"
+           type="rotate"
+           dur="0.062256s"
+           from="-109.735 0 162"
+           to="-109.735 0 162" />
+        <animateTransform
+           begin="r187.end"
+           id="r181"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="-109.735 0 162"
+           to="-108.817 0 162" />
+        <animateTransform
+           begin="r181.end"
+           id="r180"
+           attributeName="transform"
+           type="rotate"
+           dur="0.057068s"
+           from="-108.817 0 162"
+           to="-108.817 0 162" />
+        <animateTransform
+           begin="r180.end"
+           id="r177"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-108.817 0 162"
+           to="-107.9 0 162" />
+        <animateTransform
+           begin="r177.end"
+           id="r176"
+           attributeName="transform"
+           type="rotate"
+           dur="0.010376s"
+           from="-107.9 0 162"
+           to="-107.9 0 162" />
+        <animateTransform
+           begin="r176.end"
+           id="r175"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0692607s"
+           from="-107.9 0 162"
+           to="-106.523 0 162" />
+        <animateTransform
+           begin="r175.end"
+           id="r174"
+           attributeName="transform"
+           type="rotate"
+           dur="0.02352s"
+           from="-106.523 0 162"
+           to="-106.064 0 162" />
+        <animateTransform
+           begin="r174.end"
+           id="r173"
+           attributeName="transform"
+           type="rotate"
+           dur="0.090790s"
+           from="-106.064 0 162"
+           to="-106.064 0 162" />
+        <animateTransform
+           begin="r173.end"
+           id="r164"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-106.064 0 162"
+           to="-105.147 0 162" />
+        <animateTransform
+           begin="r164.end"
+           id="r163"
+           attributeName="transform"
+           type="rotate"
+           dur="0.062256s"
+           from="-105.147 0 162"
+           to="-105.147 0 162" />
+        <animateTransform
+           begin="r163.end"
+           id="r160"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-105.147 0 162"
+           to="-104.229 0 162" />
+        <animateTransform
+           begin="r160.end"
+           id="r159"
+           attributeName="transform"
+           type="rotate"
+           dur="0.083008s"
+           from="-104.229 0 162"
+           to="-104.229 0 162" />
+        <animateTransform
+           begin="r159.end"
+           id="r151"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0923475s"
+           from="-104.229 0 162"
+           to="-102.394 0 162" />
+        <animateTransform
+           begin="r151.end"
+           id="r150"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-102.394 0 162"
+           to="-101.476 0 162" />
+        <animateTransform
+           begin="r150.end"
+           id="r149"
+           attributeName="transform"
+           type="rotate"
+           dur="0.062256s"
+           from="-101.476 0 162"
+           to="-101.476 0 162" />
+        <animateTransform
+           begin="r149.end"
+           id="r146"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-101.476 0 162"
+           to="-100.559 0 162" />
+        <animateTransform
+           begin="r146.end"
+           id="r145"
+           attributeName="transform"
+           type="rotate"
+           dur="0.072632s"
+           from="-100.559 0 162"
+           to="-100.559 0 162" />
+        <animateTransform
+           begin="r145.end"
+           id="r138"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0923475s"
+           from="-100.559 0 162"
+           to="-98.7233 0 162" />
+        <animateTransform
+           begin="r138.end"
+           id="r137"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="-98.7233 0 162"
+           to="-97.8057 0 162" />
+        <animateTransform
+           begin="r137.end"
+           id="r136"
+           attributeName="transform"
+           type="rotate"
+           dur="0.057068s"
+           from="-97.8057 0 162"
+           to="-97.8057 0 162" />
+        <animateTransform
+           begin="r136.end"
+           id="r133"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-97.8057 0 162"
+           to="-96.8881 0 162" />
+        <animateTransform
+           begin="r133.end"
+           id="r132"
+           attributeName="transform"
+           type="rotate"
+           dur="0.072632s"
+           from="-96.8881 0 162"
+           to="-96.8881 0 162" />
+        <animateTransform
+           begin="r132.end"
+           id="r125"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0923475s"
+           from="-96.8881 0 162"
+           to="-95.0528 0 162" />
+        <animateTransform
+           begin="r125.end"
+           id="r124"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="-95.0528 0 162"
+           to="-94.1352 0 162" />
+        <animateTransform
+           begin="r124.end"
+           id="r123"
+           attributeName="transform"
+           type="rotate"
+           dur="0.072632s"
+           from="-94.1352 0 162"
+           to="-94.1352 0 162" />
+        <animateTransform
+           begin="r123.end"
+           id="r119"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="-94.1352 0 162"
+           to="-93.2175 0 162" />
+        <animateTransform
+           begin="r119.end"
+           id="r118"
+           attributeName="transform"
+           type="rotate"
+           dur="0.062256s"
+           from="-93.2175 0 162"
+           to="-93.2175 0 162" />
+        <animateTransform
+           begin="r118.end"
+           id="r112"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0923475s"
+           from="-93.2175 0 162"
+           to="-91.3823 0 162" />
+        <animateTransform
+           begin="r112.end"
+           id="r111"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="-91.3823 0 162"
+           to="-90.4647 0 162" />
+        <animateTransform
+           begin="r111.end"
+           id="r110"
+           attributeName="transform"
+           type="rotate"
+           dur="0.057068s"
+           from="-90.4647 0 162"
+           to="-90.4647 0 162" />
+        <animateTransform
+           begin="r110.end"
+           id="r107"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-90.4647 0 162"
+           to="-89.547 0 162" />
+        <animateTransform
+           begin="r107.end"
+           id="r106"
+           attributeName="transform"
+           type="rotate"
+           dur="0.031128s"
+           from="-89.547 0 162"
+           to="-89.547 0 162" />
+        <animateTransform
+           begin="r106.end"
+           id="r103"
+           attributeName="transform"
+           type="rotate"
+           dur="0.230869s"
+           from="-89.547 0 162"
+           to="-84.9589 0 162" />
+        <animateTransform
+           begin="r103.end"
+           id="r102"
+           attributeName="transform"
+           type="rotate"
+           dur="0.072632s"
+           from="-84.9589 0 162"
+           to="-84.9589 0 162" />
+        <animateTransform
+           begin="r102.end"
+           id="r100"
+           attributeName="transform"
+           type="rotate"
+           dur="0.09408s"
+           from="-84.9589 0 162"
+           to="-83.1236 0 162" />
+        <animateTransform
+           begin="r100.end"
+           id="r99"
+           attributeName="transform"
+           type="rotate"
+           dur="0.461738s"
+           from="-83.1236 0 162"
+           to="-73.9474 0 162" />
+        <animateTransform
+           begin="r99.end"
+           id="r98"
+           attributeName="transform"
+           type="rotate"
+           dur="0.73878s"
+           from="-73.9474 0 162"
+           to="-59.2653 0 162" />
+        <animateTransform
+           begin="r98.end"
+           id="r97"
+           attributeName="transform"
+           type="rotate"
+           dur="0.387595s"
+           from="-59.2653 0 162"
+           to="-51.9243 0 162" />
+        <animateTransform
+           begin="r97.end"
+           id="r96"
+           attributeName="transform"
+           type="rotate"
+           dur="0.166016s"
+           from="-51.9243 0 162"
+           to="-51.9243 0 162" />
+        <animateTransform
+           begin="r96.end"
+           id="r95"
+           attributeName="transform"
+           type="rotate"
+           dur="0.387595s"
+           from="-51.9243 0 162"
+           to="-44.5833 0 162" />
+        <animateTransform
+           begin="r95.end"
+           id="r94"
+           attributeName="transform"
+           type="rotate"
+           dur="0.49805s"
+           from="-44.5833 0 162"
+           to="-44.5833 0 162" />
+        <animateTransform
+           begin="r94.end"
+           id="r88"
+           attributeName="transform"
+           type="rotate"
+           dur="0.193797s"
+           from="-44.5833 0 162"
+           to="-40.9128 0 162" />
+        <animateTransform
+           begin="r88.end"
+           id="r87"
+           attributeName="transform"
+           type="rotate"
+           dur="0.24902s"
+           from="-40.9128 0 162"
+           to="-40.9128 0 162" />
+        <animateTransform
+           begin="r87.end"
+           id="r81"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0968987s"
+           from="-40.9128 0 162"
+           to="-39.0775 0 162" />
+        <animateTransform
+           begin="r81.end"
+           id="r80"
+           attributeName="transform"
+           type="rotate"
+           dur="0.020752s"
+           from="-39.0775 0 162"
+           to="-39.0775 0 162" />
+        <animateTransform
+           begin="r80.end"
+           id="r79"
+           attributeName="transform"
+           type="rotate"
+           dur="0.461738s"
+           from="-39.0775 0 162"
+           to="-29.9012 0 162" />
+        <animateTransform
+           begin="r79.end"
+           id="r78"
+           attributeName="transform"
+           type="rotate"
+           dur="0.193797s"
+           from="-29.9012 0 162"
+           to="-26.2307 0 162" />
+        <animateTransform
+           begin="r78.end"
+           id="r77"
+           attributeName="transform"
+           type="rotate"
+           dur="0.24902s"
+           from="-26.2307 0 162"
+           to="-26.2307 0 162" />
+        <animateTransform
+           begin="r77.end"
+           id="r71"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0968987s"
+           from="-26.2307 0 162"
+           to="-24.3955 0 162" />
+        <animateTransform
+           begin="r71.end"
+           id="r70"
+           attributeName="transform"
+           type="rotate"
+           dur="0.14526s"
+           from="-24.3955 0 162"
+           to="-24.3955 0 162" />
+        <animateTransform
+           begin="r70.end"
+           id="r63"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-24.3955 0 162"
+           to="-23.4778 0 162" />
+        <animateTransform
+           begin="r63.end"
+           id="r62"
+           attributeName="transform"
+           type="rotate"
+           dur="0.031128s"
+           from="-23.4778 0 162"
+           to="-23.4778 0 162" />
+        <animateTransform
+           begin="r62.end"
+           id="r59"
+           attributeName="transform"
+           type="rotate"
+           dur="0.230869s"
+           from="-23.4778 0 162"
+           to="-18.8897 0 162" />
+        <animateTransform
+           begin="r59.end"
+           id="r58"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0968987s"
+           from="-18.8897 0 162"
+           to="-17.0544 0 162" />
+        <animateTransform
+           begin="r58.end"
+           id="r57"
+           attributeName="transform"
+           type="rotate"
+           dur="0.14008s"
+           from="-17.0544 0 162"
+           to="-17.0544 0 162" />
+        <animateTransform
+           begin="r57.end"
+           id="r50"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="-17.0544 0 162"
+           to="-16.1368 0 162" />
+        <animateTransform
+           begin="r50.end"
+           id="r49"
+           attributeName="transform"
+           type="rotate"
+           dur="0.072632s"
+           from="-16.1368 0 162"
+           to="-16.1368 0 162" />
+        <animateTransform
+           begin="r49.end"
+           id="r42"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0242247s"
+           from="-16.1368 0 162"
+           to="-15.678 0 162" />
+        <animateTransform
+           begin="r42.end"
+           id="r41"
+           attributeName="transform"
+           type="rotate"
+           dur="0.025940s"
+           from="-15.678 0 162"
+           to="-15.678 0 162" />
+        <animateTransform
+           begin="r41.end"
+           id="r36"
+           attributeName="transform"
+           type="rotate"
+           dur="0.115434s"
+           from="-15.678 0 162"
+           to="-13.3839 0 162" />
+        <animateTransform
+           begin="r36.end"
+           id="r35"
+           attributeName="transform"
+           type="rotate"
+           dur="0.0484493s"
+           from="-13.3839 0 162"
+           to="-12.4663 0 162" />
+        <animateTransform
+           begin="r35.end"
+           id="r34"
+           attributeName="transform"
+           type="rotate"
+           dur="0.070038s"
+           from="-12.4663 0 162"
+           to="-12.4663 0 162" />
+        <animateTransform
+           begin="r34.end"
+           id="r27"
+           attributeName="transform"
+           type="rotate"
+           dur="0.02352s"
+           from="-12.4663 0 162"
+           to="-12.0075 0 162" />
+        <animateTransform
+           begin="r27.end"
+           id="r26"
+           attributeName="transform"
+           type="rotate"
+           dur="0.115434s"
+           from="-12.0075 0 162"
+           to="-9.71343 0 162" />
+        <animateTransform
+           begin="r26.end"
+           id="r25"
+           attributeName="transform"
+           type="rotate"
+           dur="0.26459s"
+           from="-9.71343 0 162"
+           to="-9.71343 0 162" />
+        <animateTransform
+           begin="r25.end"
+           id="r12"
+           attributeName="transform"
+           type="rotate"
+           dur="0.04704s"
+           from="-9.71343 0 162"
+           to="-8.7958 0 162" />
+        <animateTransform
+           begin="r12.end"
+           id="r11"
+           attributeName="transform"
+           type="rotate"
+           dur="0.041504s"
+           from="-8.7958 0 162"
+           to="-8.7958 0 162" />
+        <animateTransform
+           begin="r11.end"
+           id="r7"
+           attributeName="transform"
+           type="rotate"
+           dur="0.415564s"
+           from="-8.7958 0 162"
+           to="-0.537148 0 162" />
+        <animateTransform
+           begin="r7.end"
+           id="r6"
+           attributeName="transform"
+           type="rotate"
+           dur="0.24902s"
+           from="-0.537148 0 162"
+           to="-0.537148 0 162" />
+        <animateTransform
+           begin="r6.end"
+           id="r3"
+           attributeName="transform"
+           type="rotate"
+           dur="0.193797s"
+           from="-0.537148 0 162"
+           to="3.13336 0 162" />
+        <animateTransform
+           begin="r3.end"
+           id="r2"
+           attributeName="transform"
+           type="rotate"
+           dur="0.083008s"
+           from="3.13336 0 162"
+           to="3.13336 0 162" />
+      </path>
+      <animateTransform
+         begin="playing.begin"
+         id="t353"
+         attributeName="transform"
+         type="translate"
+         dur="0.0830078s"
+         from="164.653 117.75"
+         to="167.641 117.75" />
+      <animateTransform
+         begin="t353.end"
+         id="t352"
+         attributeName="transform"
+         type="translate"
+         dur="0.18816s"
+         from="167.641 117.75"
+         to="169.135 117.75" />
+      <animateTransform
+         begin="t352.end"
+         id="t351"
+         attributeName="transform"
+         type="translate"
+         dur="0.726318s"
+         from="169.135 117.75"
+         to="195.283 117.75" />
+      <animateTransform
+         begin="t351.end"
+         id="t350"
+         attributeName="transform"
+         type="translate"
+         dur="0.193797s"
+         from="195.283 117.75"
+         to="197.524 117.75" />
+      <animateTransform
+         begin="t350.end"
+         id="t349"
+         attributeName="transform"
+         type="translate"
+         dur="0.600259s"
+         from="197.524 117.75"
+         to="199.952 117.75" />
+      <animateTransform
+         begin="t349.end"
+         id="t348"
+         attributeName="transform"
+         type="translate"
+         dur="0.020752s"
+         from="199.952 117.75"
+         to="200.699 117.75" />
+      <animateTransform
+         begin="t348.end"
+         id="t347"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="200.699 117.75"
+         to="201.072 117.75" />
+      <animateTransform
+         begin="t347.end"
+         id="t346"
+         attributeName="transform"
+         type="translate"
+         dur="0.015564s"
+         from="201.072 117.75"
+         to="201.633 117.75" />
+      <animateTransform
+         begin="t346.end"
+         id="t345"
+         attributeName="transform"
+         type="translate"
+         dur="0.115434s"
+         from="201.633 117.75"
+         to="202.1 117.75" />
+      <animateTransform
+         begin="t345.end"
+         id="t344"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="202.1 117.75"
+         to="202.286 117.75" />
+      <animateTransform
+         begin="t344.end"
+         id="t343"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="202.286 117.75"
+         to="202.473 117.75" />
+      <animateTransform
+         begin="t343.end"
+         id="t342"
+         attributeName="transform"
+         type="translate"
+         dur="0.02352s"
+         from="202.473 117.75"
+         to="202.66 117.75" />
+      <animateTransform
+         begin="t342.end"
+         id="t341"
+         attributeName="transform"
+         type="translate"
+         dur="0.070038s"
+         from="202.66 117.75"
+         to="205.181 117.75" />
+      <animateTransform
+         begin="t341.end"
+         id="t340"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="205.181 117.75"
+         to="205.555 117.75" />
+      <animateTransform
+         begin="t340.end"
+         id="t339"
+         attributeName="transform"
+         type="translate"
+         dur="0.015564s"
+         from="205.555 117.75"
+         to="206.115 117.75" />
+      <animateTransform
+         begin="t339.end"
+         id="t338"
+         attributeName="transform"
+         type="translate"
+         dur="0.115434s"
+         from="206.115 117.75"
+         to="206.582 117.75" />
+      <animateTransform
+         begin="t338.end"
+         id="t337"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="206.582 117.75"
+         to="206.769 117.75" />
+      <animateTransform
+         begin="t337.end"
+         id="t336"
+         attributeName="transform"
+         type="translate"
+         dur="0.0242247s"
+         from="206.769 117.75"
+         to="207.049 117.75" />
+      <animateTransform
+         begin="t336.end"
+         id="t335"
+         attributeName="transform"
+         type="translate"
+         dur="0.072632s"
+         from="207.049 117.75"
+         to="209.664 117.75" />
+      <animateTransform
+         begin="t335.end"
+         id="t334"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="209.664 117.75"
+         to="210.037 117.75" />
+      <animateTransform
+         begin="t334.end"
+         id="t333"
+         attributeName="transform"
+         type="translate"
+         dur="0.036316s"
+         from="210.037 117.75"
+         to="211.345 117.75" />
+      <animateTransform
+         begin="t333.end"
+         id="t332"
+         attributeName="transform"
+         type="translate"
+         dur="0.138521s"
+         from="211.345 117.75"
+         to="211.905 117.75" />
+      <animateTransform
+         begin="t332.end"
+         id="t331"
+         attributeName="transform"
+         type="translate"
+         dur="0.010376s"
+         from="211.905 117.75"
+         to="212.278 117.75" />
+      <animateTransform
+         begin="t331.end"
+         id="t330"
+         attributeName="transform"
+         type="translate"
+         dur="0.0692607s"
+         from="212.278 117.75"
+         to="212.559 117.75" />
+      <animateTransform
+         begin="t330.end"
+         id="t329"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="212.559 117.75"
+         to="212.745 117.75" />
+      <animateTransform
+         begin="t329.end"
+         id="t328"
+         attributeName="transform"
+         type="translate"
+         dur="0.0242247s"
+         from="212.745 117.75"
+         to="213.025 117.75" />
+      <animateTransform
+         begin="t328.end"
+         id="t327"
+         attributeName="transform"
+         type="translate"
+         dur="0.010376s"
+         from="213.025 117.75"
+         to="213.399 117.75" />
+      <animateTransform
+         begin="t327.end"
+         id="t326"
+         attributeName="transform"
+         type="translate"
+         dur="0.0692607s"
+         from="213.399 117.75"
+         to="213.679 117.75" />
+      <animateTransform
+         begin="t326.end"
+         id="t325"
+         attributeName="transform"
+         type="translate"
+         dur="0.010376s"
+         from="213.679 117.75"
+         to="214.053 117.75" />
+      <animateTransform
+         begin="t325.end"
+         id="t324"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="214.053 117.75"
+         to="214.239 117.75" />
+      <animateTransform
+         begin="t324.end"
+         id="t323"
+         attributeName="transform"
+         type="translate"
+         dur="0.010376s"
+         from="214.239 117.75"
+         to="214.613 117.75" />
+      <animateTransform
+         begin="t323.end"
+         id="t322"
+         attributeName="transform"
+         type="translate"
+         dur="0.0242247s"
+         from="214.613 117.75"
+         to="214.893 117.75" />
+      <animateTransform
+         begin="t322.end"
+         id="t321"
+         attributeName="transform"
+         type="translate"
+         dur="0.072632s"
+         from="214.893 117.75"
+         to="217.508 117.75" />
+      <animateTransform
+         begin="t321.end"
+         id="t320"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="217.508 117.75"
+         to="218.068 117.75" />
+      <animateTransform
+         begin="t320.end"
+         id="t319"
+         attributeName="transform"
+         type="translate"
+         dur="0.115434s"
+         from="218.068 117.75"
+         to="218.535 117.75" />
+      <animateTransform
+         begin="t319.end"
+         id="t318"
+         attributeName="transform"
+         type="translate"
+         dur="0.02352s"
+         from="218.535 117.75"
+         to="218.722 117.75" />
+      <animateTransform
+         begin="t318.end"
+         id="t317"
+         attributeName="transform"
+         type="translate"
+         dur="0.070038s"
+         from="218.722 117.75"
+         to="221.243 117.75" />
+      <animateTransform
+         begin="t317.end"
+         id="t316"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="221.243 117.75"
+         to="221.804 117.75" />
+      <animateTransform
+         begin="t316.end"
+         id="t315"
+         attributeName="transform"
+         type="translate"
+         dur="0.020752s"
+         from="221.804 117.75"
+         to="222.551 117.75" />
+      <animateTransform
+         begin="t315.end"
+         id="t314"
+         attributeName="transform"
+         type="translate"
+         dur="0.138521s"
+         from="222.551 117.75"
+         to="223.111 117.75" />
+      <animateTransform
+         begin="t314.end"
+         id="t313"
+         attributeName="transform"
+         type="translate"
+         dur="0.05188s"
+         from="223.111 117.75"
+         to="224.979 117.75" />
+      <animateTransform
+         begin="t313.end"
+         id="t312"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="224.979 117.75"
+         to="225.539 117.75" />
+      <animateTransform
+         begin="t312.end"
+         id="t311"
+         attributeName="transform"
+         type="translate"
+         dur="0.020752s"
+         from="225.539 117.75"
+         to="226.286 117.75" />
+      <animateTransform
+         begin="t311.end"
+         id="t310"
+         attributeName="transform"
+         type="translate"
+         dur="0.207782s"
+         from="226.286 117.75"
+         to="227.126 117.75" />
+      <animateTransform
+         begin="t310.end"
+         id="t309"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="227.126 117.75"
+         to="227.313 117.75" />
+      <animateTransform
+         begin="t309.end"
+         id="t308"
+         attributeName="transform"
+         type="translate"
+         dur="0.0242247s"
+         from="227.313 117.75"
+         to="227.593 117.75" />
+      <animateTransform
+         begin="t308.end"
+         id="t307"
+         attributeName="transform"
+         type="translate"
+         dur="0.020752s"
+         from="227.593 117.75"
+         to="228.34 117.75" />
+      <animateTransform
+         begin="t307.end"
+         id="t306"
+         attributeName="transform"
+         type="translate"
+         dur="0.0692607s"
+         from="228.34 117.75"
+         to="228.621 117.75" />
+      <animateTransform
+         begin="t306.end"
+         id="t305"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="228.621 117.75"
+         to="228.807 117.75" />
+      <animateTransform
+         begin="t305.end"
+         id="t304"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="228.807 117.75"
+         to="228.994 117.75" />
+      <animateTransform
+         begin="t304.end"
+         id="t303"
+         attributeName="transform"
+         type="translate"
+         dur="0.02352s"
+         from="228.994 117.75"
+         to="229.181 117.75" />
+      <animateTransform
+         begin="t303.end"
+         id="t302"
+         attributeName="transform"
+         type="translate"
+         dur="0.028534s"
+         from="229.181 117.75"
+         to="230.208 117.75" />
+      <animateTransform
+         begin="t302.end"
+         id="t301"
+         attributeName="transform"
+         type="translate"
+         dur="0.0692607s"
+         from="230.208 117.75"
+         to="230.488 117.75" />
+      <animateTransform
+         begin="t301.end"
+         id="t300"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="230.488 117.75"
+         to="230.675 117.75" />
+      <animateTransform
+         begin="t300.end"
+         id="t299"
+         attributeName="transform"
+         type="translate"
+         dur="0.0242247s"
+         from="230.675 117.75"
+         to="230.955 117.75" />
+      <animateTransform
+         begin="t299.end"
+         id="t298"
+         attributeName="transform"
+         type="translate"
+         dur="0.010376s"
+         from="230.955 117.75"
+         to="231.329 117.75" />
+      <animateTransform
+         begin="t298.end"
+         id="t297"
+         attributeName="transform"
+         type="translate"
+         dur="0.0692607s"
+         from="231.329 117.75"
+         to="231.609 117.75" />
+      <animateTransform
+         begin="t297.end"
+         id="t296"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="231.609 117.75"
+         to="231.796 117.75" />
+      <animateTransform
+         begin="t296.end"
+         id="t295"
+         attributeName="transform"
+         type="translate"
+         dur="0.0461738s"
+         from="231.796 117.75"
+         to="231.982 117.75" />
+      <animateTransform
+         begin="t295.end"
+         id="t294"
+         attributeName="transform"
+         type="translate"
+         dur="0.0692607s"
+         from="231.982 117.75"
+         to="231.702 117.75" />
+      <animateTransform
+         begin="t294.end"
+         id="t293"
+         attributeName="transform"
+         type="translate"
+         dur="0.072632s"
+         from="231.702 117.75"
+         to="229.088 117.75" />
+      <animateTransform
+         begin="t293.end"
+         id="t292"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="229.088 117.75"
+         to="228.527 117.75" />
+      <animateTransform
+         begin="t292.end"
+         id="t291"
+         attributeName="transform"
+         type="translate"
+         dur="0.166016s"
+         from="228.527 117.75"
+         to="222.551 117.75" />
+      <animateTransform
+         begin="t291.end"
+         id="t290"
+         attributeName="transform"
+         type="translate"
+         dur="0.0968987s"
+         from="222.551 117.75"
+         to="221.43 117.75" />
+      <animateTransform
+         begin="t290.end"
+         id="t289"
+         attributeName="transform"
+         type="translate"
+         dur="0.114136s"
+         from="221.43 117.75"
+         to="217.321 117.75" />
+      <animateTransform
+         begin="t289.end"
+         id="t288"
+         attributeName="transform"
+         type="translate"
+         dur="0.09408s"
+         from="217.321 117.75"
+         to="216.574 117.75" />
+      <animateTransform
+         begin="t288.end"
+         id="t287"
+         attributeName="transform"
+         type="translate"
+         dur="0.138521s"
+         from="216.574 117.75"
+         to="216.014 117.75" />
+      <animateTransform
+         begin="t287.end"
+         id="t286"
+         attributeName="transform"
+         type="translate"
+         dur="0.010376s"
+         from="216.014 117.75"
+         to="215.64 117.75" />
+      <animateTransform
+         begin="t286.end"
+         id="t285"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="215.64 117.75"
+         to="215.08 117.75" />
+      <animateTransform
+         begin="t285.end"
+         id="t284"
+         attributeName="transform"
+         type="translate"
+         dur="0.20752s"
+         from="215.08 117.75"
+         to="207.609 117.75" />
+      <animateTransform
+         begin="t284.end"
+         id="t283"
+         attributeName="transform"
+         type="translate"
+         dur="0.0968987s"
+         from="207.609 117.75"
+         to="206.489 117.75" />
+      <animateTransform
+         begin="t283.end"
+         id="t282"
+         attributeName="transform"
+         type="translate"
+         dur="0.20752s"
+         from="206.489 117.75"
+         to="199.018 117.75" />
+      <animateTransform
+         begin="t282.end"
+         id="t281"
+         attributeName="transform"
+         type="translate"
+         dur="0.0968987s"
+         from="199.018 117.75"
+         to="197.897 117.75" />
+      <animateTransform
+         begin="t281.end"
+         id="t280"
+         attributeName="transform"
+         type="translate"
+         dur="0.228272s"
+         from="197.897 117.75"
+         to="189.68 117.75" />
+      <animateTransform
+         begin="t280.end"
+         id="t279"
+         attributeName="transform"
+         type="translate"
+         dur="0.184695s"
+         from="189.68 117.75"
+         to="188.932 117.75" />
+      <animateTransform
+         begin="t279.end"
+         id="t278"
+         attributeName="transform"
+         type="translate"
+         dur="0.09408s"
+         from="188.932 117.75"
+         to="188.185 117.75" />
+      <animateTransform
+         begin="t278.end"
+         id="t277"
+         attributeName="transform"
+         type="translate"
+         dur="0.321655s"
+         from="188.185 117.75"
+         to="176.606 117.75" />
+      <animateTransform
+         begin="t277.end"
+         id="t276"
+         attributeName="transform"
+         type="translate"
+         dur="0.0968987s"
+         from="176.606 117.75"
+         to="175.485 117.75" />
+      <animateTransform
+         begin="t276.end"
+         id="t275"
+         attributeName="transform"
+         type="translate"
+         dur="0.373536s"
+         from="175.485 117.75"
+         to="162.038 117.75" />
+      <animateTransform
+         begin="t275.end"
+         id="t274"
+         attributeName="transform"
+         type="translate"
+         dur="0.184695s"
+         from="162.038 117.75"
+         to="161.291 117.75" />
+      <animateTransform
+         begin="t274.end"
+         id="t273"
+         attributeName="transform"
+         type="translate"
+         dur="0.0968987s"
+         from="161.291 117.75"
+         to="160.17 117.75" />
+      <animateTransform
+         begin="t273.end"
+         id="t272"
+         attributeName="transform"
+         type="translate"
+         dur="0.446167s"
+         from="160.17 117.75"
+         to="144.108 117.75" />
+      <animateTransform
+         begin="t272.end"
+         id="t271"
+         attributeName="transform"
+         type="translate"
+         dur="0.09408s"
+         from="144.108 117.75"
+         to="143.361 117.75" />
+      <animateTransform
+         begin="t271.end"
+         id="t270"
+         attributeName="transform"
+         type="translate"
+         dur="0.31128s"
+         from="143.361 117.75"
+         to="132.155 117.75" />
+      <animateTransform
+         begin="t270.end"
+         id="t269"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="132.155 117.75"
+         to="131.595 117.75" />
+      <animateTransform
+         begin="t269.end"
+         id="t268"
+         attributeName="transform"
+         type="translate"
+         dur="0.010376s"
+         from="131.595 117.75"
+         to="131.221 117.75" />
+      <animateTransform
+         begin="t268.end"
+         id="t267"
+         attributeName="transform"
+         type="translate"
+         dur="0.138521s"
+         from="131.221 117.75"
+         to="130.661 117.75" />
+      <animateTransform
+         begin="t267.end"
+         id="t266"
+         attributeName="transform"
+         type="translate"
+         dur="0.036316s"
+         from="130.661 117.75"
+         to="129.354 117.75" />
+      <animateTransform
+         begin="t266.end"
+         id="t265"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="129.354 117.75"
+         to="128.98 117.75" />
+      <animateTransform
+         begin="t265.end"
+         id="t264"
+         attributeName="transform"
+         type="translate"
+         dur="0.0923475s"
+         from="128.98 117.75"
+         to="128.607 117.75" />
+      <animateTransform
+         begin="t264.end"
+         id="t263"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="128.607 117.75"
+         to="128.233 117.75" />
+      <animateTransform
+         begin="t263.end"
+         id="t262"
+         attributeName="transform"
+         type="translate"
+         dur="0.036316s"
+         from="128.233 117.75"
+         to="126.926 117.75" />
+      <animateTransform
+         begin="t262.end"
+         id="t261"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="126.926 117.75"
+         to="126.365 117.75" />
+      <animateTransform
+         begin="t261.end"
+         id="t260"
+         attributeName="transform"
+         type="translate"
+         dur="0.031128s"
+         from="126.365 117.75"
+         to="125.245 117.75" />
+      <animateTransform
+         begin="t260.end"
+         id="t259"
+         attributeName="transform"
+         type="translate"
+         dur="0.0923475s"
+         from="125.245 117.75"
+         to="124.871 117.75" />
+      <animateTransform
+         begin="t259.end"
+         id="t258"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="124.871 117.75"
+         to="124.498 117.75" />
+      <animateTransform
+         begin="t258.end"
+         id="t257"
+         attributeName="transform"
+         type="translate"
+         dur="0.036316s"
+         from="124.498 117.75"
+         to="123.19 117.75" />
+      <animateTransform
+         begin="t257.end"
+         id="t256"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="123.19 117.75"
+         to="122.63 117.75" />
+      <animateTransform
+         begin="t256.end"
+         id="t255"
+         attributeName="transform"
+         type="translate"
+         dur="0.041504s"
+         from="122.63 117.75"
+         to="121.136 117.75" />
+      <animateTransform
+         begin="t255.end"
+         id="t254"
+         attributeName="transform"
+         type="translate"
+         dur="0.0923475s"
+         from="121.136 117.75"
+         to="120.762 117.75" />
+      <animateTransform
+         begin="t254.end"
+         id="t253"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="120.762 117.75"
+         to="120.202 117.75" />
+      <animateTransform
+         begin="t253.end"
+         id="t252"
+         attributeName="transform"
+         type="translate"
+         dur="0.036316s"
+         from="120.202 117.75"
+         to="118.895 117.75" />
+      <animateTransform
+         begin="t252.end"
+         id="t251"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="118.895 117.75"
+         to="118.521 117.75" />
+      <animateTransform
+         begin="t251.end"
+         id="t250"
+         attributeName="transform"
+         type="translate"
+         dur="0.05188s"
+         from="118.521 117.75"
+         to="116.653 117.75" />
+      <animateTransform
+         begin="t250.end"
+         id="t249"
+         attributeName="transform"
+         type="translate"
+         dur="0.0923475s"
+         from="116.653 117.75"
+         to="116.28 117.75" />
+      <animateTransform
+         begin="t249.end"
+         id="t248"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="116.28 117.75"
+         to="115.72 117.75" />
+      <animateTransform
+         begin="t248.end"
+         id="t247"
+         attributeName="transform"
+         type="translate"
+         dur="0.041504s"
+         from="115.72 117.75"
+         to="114.225 117.75" />
+      <animateTransform
+         begin="t247.end"
+         id="t246"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="114.225 117.75"
+         to="113.665 117.75" />
+      <animateTransform
+         begin="t246.end"
+         id="t245"
+         attributeName="transform"
+         type="translate"
+         dur="0.05188s"
+         from="113.665 117.75"
+         to="111.797 117.75" />
+      <animateTransform
+         begin="t245.end"
+         id="t244"
+         attributeName="transform"
+         type="translate"
+         dur="0.0923475s"
+         from="111.797 117.75"
+         to="111.424 117.75" />
+      <animateTransform
+         begin="t244.end"
+         id="t243"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="111.424 117.75"
+         to="111.05 117.75" />
+      <animateTransform
+         begin="t243.end"
+         id="t242"
+         attributeName="transform"
+         type="translate"
+         dur="0.057068s"
+         from="111.05 117.75"
+         to="108.996 117.75" />
+      <animateTransform
+         begin="t242.end"
+         id="t241"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="108.996 117.75"
+         to="108.436 117.75" />
+      <animateTransform
+         begin="t241.end"
+         id="t240"
+         attributeName="transform"
+         type="translate"
+         dur="0.062256s"
+         from="108.436 117.75"
+         to="106.194 117.75" />
+      <animateTransform
+         begin="t240.end"
+         id="t239"
+         attributeName="transform"
+         type="translate"
+         dur="0.0923475s"
+         from="106.194 117.75"
+         to="105.821 117.75" />
+      <animateTransform
+         begin="t239.end"
+         id="t238"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="105.821 117.75"
+         to="105.261 117.75" />
+      <animateTransform
+         begin="t238.end"
+         id="t237"
+         attributeName="transform"
+         type="translate"
+         dur="0.057068s"
+         from="105.261 117.75"
+         to="103.206 117.75" />
+      <animateTransform
+         begin="t237.end"
+         id="t236"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="103.206 117.75"
+         to="102.833 117.75" />
+      <animateTransform
+         begin="t236.end"
+         id="t235"
+         attributeName="transform"
+         type="translate"
+         dur="0.0692607s"
+         from="102.833 117.75"
+         to="102.552 117.75" />
+      <animateTransform
+         begin="t235.end"
+         id="t234"
+         attributeName="transform"
+         type="translate"
+         dur="0.02352s"
+         from="102.552 117.75"
+         to="102.366 117.75" />
+      <animateTransform
+         begin="t234.end"
+         id="t233"
+         attributeName="transform"
+         type="translate"
+         dur="0.09079s"
+         from="102.366 117.75"
+         to="99.0973 117.75" />
+      <animateTransform
+         begin="t233.end"
+         id="t232"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="99.0973 117.75"
+         to="98.537 117.75" />
+      <animateTransform
+         begin="t232.end"
+         id="t231"
+         attributeName="transform"
+         type="translate"
+         dur="0.036316s"
+         from="98.537 117.75"
+         to="97.2296 117.75" />
+      <animateTransform
+         begin="t231.end"
+         id="t230"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="97.2296 117.75"
+         to="96.8561 117.75" />
+      <animateTransform
+         begin="t230.end"
+         id="t229"
+         attributeName="transform"
+         type="translate"
+         dur="0.020752s"
+         from="96.8561 117.75"
+         to="96.109 117.75" />
+      <animateTransform
+         begin="t229.end"
+         id="t228"
+         attributeName="transform"
+         type="translate"
+         dur="0.0692607s"
+         from="96.109 117.75"
+         to="95.8288 117.75" />
+      <animateTransform
+         begin="t228.end"
+         id="t227"
+         attributeName="transform"
+         type="translate"
+         dur="0.02352s"
+         from="95.8288 117.75"
+         to="95.6421 117.75" />
+      <animateTransform
+         begin="t227.end"
+         id="t226"
+         attributeName="transform"
+         type="translate"
+         dur="0.101166s"
+         from="95.6421 117.75"
+         to="92.0001 117.75" />
+      <animateTransform
+         begin="t226.end"
+         id="t225"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="92.0001 117.75"
+         to="91.6266 117.75" />
+      <animateTransform
+         begin="t225.end"
+         id="t224"
+         attributeName="transform"
+         type="translate"
+         dur="0.031128s"
+         from="91.6266 117.75"
+         to="90.506 117.75" />
+      <animateTransform
+         begin="t224.end"
+         id="t223"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="90.506 117.75"
+         to="90.1324 117.75" />
+      <animateTransform
+         begin="t223.end"
+         id="t222"
+         attributeName="transform"
+         type="translate"
+         dur="0.041504s"
+         from="90.1324 117.75"
+         to="88.6383 117.75" />
+      <animateTransform
+         begin="t222.end"
+         id="t221"
+         attributeName="transform"
+         type="translate"
+         dur="0.0692607s"
+         from="88.6383 117.75"
+         to="88.3581 117.75" />
+      <animateTransform
+         begin="t221.end"
+         id="t220"
+         attributeName="transform"
+         type="translate"
+         dur="0.02352s"
+         from="88.3581 117.75"
+         to="88.1714 117.75" />
+      <animateTransform
+         begin="t220.end"
+         id="t219"
+         attributeName="transform"
+         type="translate"
+         dur="0.111542s"
+         from="88.1714 117.75"
+         to="84.1559 117.75" />
+      <animateTransform
+         begin="t219.end"
+         id="t218"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="84.1559 117.75"
+         to="83.5956 117.75" />
+      <animateTransform
+         begin="t218.end"
+         id="t217"
+         attributeName="transform"
+         type="translate"
+         dur="0.015564s"
+         from="83.5956 117.75"
+         to="83.0353 117.75" />
+      <animateTransform
+         begin="t217.end"
+         id="t216"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="83.0353 117.75"
+         to="82.6617 117.75" />
+      <animateTransform
+         begin="t216.end"
+         id="t215"
+         attributeName="transform"
+         type="translate"
+         dur="0.010376s"
+         from="82.6617 117.75"
+         to="82.2882 117.75" />
+      <animateTransform
+         begin="t215.end"
+         id="t214"
+         attributeName="transform"
+         type="translate"
+         dur="0.0692607s"
+         from="82.2882 117.75"
+         to="82.008 117.75" />
+      <animateTransform
+         begin="t214.end"
+         id="t213"
+         attributeName="transform"
+         type="translate"
+         dur="0.0461738s"
+         from="82.008 117.75"
+         to="82.1948 117.75" />
+      <animateTransform
+         begin="t213.end"
+         id="t212"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="82.1948 117.75"
+         to="82.3816 117.75" />
+      <animateTransform
+         begin="t212.end"
+         id="t211"
+         attributeName="transform"
+         type="translate"
+         dur="0.0692607s"
+         from="82.3816 117.75"
+         to="82.6617 117.75" />
+      <animateTransform
+         begin="t211.end"
+         id="t210"
+         attributeName="transform"
+         type="translate"
+         dur="0.010376s"
+         from="82.6617 117.75"
+         to="83.0353 117.75" />
+      <animateTransform
+         begin="t210.end"
+         id="t209"
+         attributeName="transform"
+         type="translate"
+         dur="0.138521s"
+         from="83.0353 117.75"
+         to="83.5956 117.75" />
+      <animateTransform
+         begin="t209.end"
+         id="t208"
+         attributeName="transform"
+         type="translate"
+         dur="0.062256s"
+         from="83.5956 117.75"
+         to="85.8368 117.75" />
+      <animateTransform
+         begin="t208.end"
+         id="t207"
+         attributeName="transform"
+         type="translate"
+         dur="0.461738s"
+         from="85.8368 117.75"
+         to="87.7045 117.75" />
+      <animateTransform
+         begin="t207.end"
+         id="t206"
+         attributeName="transform"
+         type="translate"
+         dur="0.0622559s"
+         from="87.7045 117.75"
+         to="89.9457 117.75" />
+      <animateTransform
+         begin="t206.end"
+         id="t205"
+         attributeName="transform"
+         type="translate"
+         dur="0.18816s"
+         from="89.9457 117.75"
+         to="91.4398 117.75" />
+      <animateTransform
+         begin="t205.end"
+         id="t204"
+         attributeName="transform"
+         type="translate"
+         dur="0.554085s"
+         from="91.4398 117.75"
+         to="93.681 117.75" />
+      <animateTransform
+         begin="t204.end"
+         id="t203"
+         attributeName="transform"
+         type="translate"
+         dur="0.664062s"
+         from="93.681 117.75"
+         to="117.587 117.75" />
+      <animateTransform
+         begin="t203.end"
+         id="t202"
+         attributeName="transform"
+         type="translate"
+         dur="0.193797s"
+         from="117.587 117.75"
+         to="119.828 117.75" />
+      <animateTransform
+         begin="t202.end"
+         id="t201"
+         attributeName="transform"
+         type="translate"
+         dur="0.446167s"
+         from="119.828 117.75"
+         to="135.89 117.75" />
+      <animateTransform
+         begin="t201.end"
+         id="t200"
+         attributeName="transform"
+         type="translate"
+         dur="0.09408s"
+         from="135.89 117.75"
+         to="136.638 117.75" />
+      <animateTransform
+         begin="t200.end"
+         id="t199"
+         attributeName="transform"
+         type="translate"
+         dur="0.145264s"
+         from="136.638 117.75"
+         to="141.867 117.75" />
+      <animateTransform
+         begin="t199.end"
+         id="t198"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="141.867 117.75"
+         to="142.427 117.75" />
+      <animateTransform
+         begin="t198.end"
+         id="t197"
+         attributeName="transform"
+         type="translate"
+         dur="0.020752s"
+         from="142.427 117.75"
+         to="143.174 117.75" />
+      <animateTransform
+         begin="t197.end"
+         id="t196"
+         attributeName="transform"
+         type="translate"
+         dur="0.184695s"
+         from="143.174 117.75"
+         to="143.921 117.75" />
+      <animateTransform
+         begin="t196.end"
+         id="t195"
+         attributeName="transform"
+         type="translate"
+         dur="0.0242247s"
+         from="143.921 117.75"
+         to="144.202 117.75" />
+      <animateTransform
+         begin="t195.end"
+         id="t194"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="144.202 117.75"
+         to="144.388 117.75" />
+      <animateTransform
+         begin="t194.end"
+         id="t193"
+         attributeName="transform"
+         type="translate"
+         dur="0.115434s"
+         from="144.388 117.75"
+         to="144.855 117.75" />
+      <animateTransform
+         begin="t193.end"
+         id="t192"
+         attributeName="transform"
+         type="translate"
+         dur="0.228272s"
+         from="144.855 117.75"
+         to="153.073 117.75" />
+      <animateTransform
+         begin="t192.end"
+         id="t191"
+         attributeName="transform"
+         type="translate"
+         dur="0.0968987s"
+         from="153.073 117.75"
+         to="154.194 117.75" />
+      <animateTransform
+         begin="t191.end"
+         id="t190"
+         attributeName="transform"
+         type="translate"
+         dur="0.372293s"
+         from="154.194 117.75"
+         to="156.435 117.75" />
+      <animateTransform
+         begin="t190.end"
+         id="t189"
+         attributeName="transform"
+         type="translate"
+         dur="2.40723s"
+         from="156.435 117.75"
+         to="243.095 117.75" />
+      <animateTransform
+         begin="t189.end"
+         id="t188"
+         attributeName="transform"
+         type="translate"
+         dur="0.37632s"
+         from="243.095 117.75"
+         to="246.083 117.75" />
+      <animateTransform
+         begin="t188.end"
+         id="t187"
+         attributeName="transform"
+         type="translate"
+         dur="0.74707s"
+         from="246.083 117.75"
+         to="272.978 117.75" />
+      <animateTransform
+         begin="t187.end"
+         id="t186"
+         attributeName="transform"
+         type="translate"
+         dur="0.193797s"
+         from="272.978 117.75"
+         to="275.219 117.75" />
+      <animateTransform
+         begin="t186.end"
+         id="t185"
+         attributeName="transform"
+         type="translate"
+         dur="0.871582s"
+         from="275.219 117.75"
+         to="306.596 117.75" />
+      <animateTransform
+         begin="t185.end"
+         id="t184"
+         attributeName="transform"
+         type="translate"
+         dur="0.210826s"
+         from="306.596 117.75"
+         to="310.331 117.75" />
+      <animateTransform
+         begin="t184.end"
+         id="t183"
+         attributeName="transform"
+         type="translate"
+         dur="1.99219s"
+         from="310.331 117.75"
+         to="382.05 117.75" />
+      <animateTransform
+         begin="t183.end"
+         id="t182"
+         attributeName="transform"
+         type="translate"
+         dur="0.75264s"
+         from="382.05 117.75"
+         to="388.027 117.75" />
+      <animateTransform
+         begin="t182.end"
+         id="t181"
+         attributeName="transform"
+         type="translate"
+         dur="0.249023s"
+         from="388.027 117.75"
+         to="396.992 117.75" />
+      <animateTransform
+         begin="t181.end"
+         id="t180"
+         attributeName="transform"
+         type="translate"
+         dur="1.66226s"
+         from="396.992 117.75"
+         to="403.715 117.75" />
+      <animateTransform
+         begin="t180.end"
+         id="t179"
+         attributeName="transform"
+         type="translate"
+         dur="0.0830078s"
+         from="403.715 117.75"
+         to="406.703 117.75" />
+      <animateTransform
+         begin="t179.end"
+         id="t178"
+         attributeName="transform"
+         type="translate"
+         dur="0.18816s"
+         from="406.703 117.75"
+         to="408.198 117.75" />
+      <animateTransform
+         begin="t178.end"
+         id="t177"
+         attributeName="transform"
+         type="translate"
+         dur="0.643311s"
+         from="408.198 117.75"
+         to="431.357 117.75" />
+      <animateTransform
+         begin="t177.end"
+         id="t176"
+         attributeName="transform"
+         type="translate"
+         dur="0.387595s"
+         from="431.357 117.75"
+         to="435.839 117.75" />
+      <animateTransform
+         begin="t176.end"
+         id="t175"
+         attributeName="transform"
+         type="translate"
+         dur="1.32813s"
+         from="435.839 117.75"
+         to="483.652 117.75" />
+      <animateTransform
+         begin="t175.end"
+         id="t174"
+         attributeName="transform"
+         type="translate"
+         dur="0.775189s"
+         from="483.652 117.75"
+         to="492.617 117.75" />
+      <animateTransform
+         begin="t174.end"
+         id="t173"
+         attributeName="transform"
+         type="translate"
+         dur="1.56991s"
+         from="492.617 117.75"
+         to="498.967 117.75" />
+      <animateTransform
+         begin="t173.end"
+         id="t172"
+         attributeName="transform"
+         type="translate"
+         dur="0.186768s"
+         from="498.967 117.75"
+         to="505.69 117.75" />
+      <animateTransform
+         begin="t172.end"
+         id="t171"
+         attributeName="transform"
+         type="translate"
+         dur="0.0968987s"
+         from="505.69 117.75"
+         to="506.811 117.75" />
+      <animateTransform
+         begin="t171.end"
+         id="t170"
+         attributeName="transform"
+         type="translate"
+         dur="0.207782s"
+         from="506.811 117.75"
+         to="507.651 117.75" />
+      <animateTransform
+         begin="t170.end"
+         id="t169"
+         attributeName="transform"
+         type="translate"
+         dur="0.010376s"
+         from="507.651 117.75"
+         to="508.025 117.75" />
+      <animateTransform
+         begin="t169.end"
+         id="t168"
+         attributeName="transform"
+         type="translate"
+         dur="0.02352s"
+         from="508.025 117.75"
+         to="508.212 117.75" />
+      <animateTransform
+         begin="t168.end"
+         id="t167"
+         attributeName="transform"
+         type="translate"
+         dur="0.080414s"
+         from="508.212 117.75"
+         to="511.107 117.75" />
+      <animateTransform
+         begin="t167.end"
+         id="t166"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="511.107 117.75"
+         to="511.667 117.75" />
+      <animateTransform
+         begin="t166.end"
+         id="t165"
+         attributeName="transform"
+         type="translate"
+         dur="0.166016s"
+         from="511.667 117.75"
+         to="517.643 117.75" />
+      <animateTransform
+         begin="t165.end"
+         id="t164"
+         attributeName="transform"
+         type="translate"
+         dur="0.0968987s"
+         from="517.643 117.75"
+         to="518.764 117.75" />
+      <animateTransform
+         begin="t164.end"
+         id="t163"
+         attributeName="transform"
+         type="translate"
+         dur="0.646433s"
+         from="518.764 117.75"
+         to="521.379 117.75" />
+      <animateTransform
+         begin="t163.end"
+         id="t162"
+         attributeName="transform"
+         type="translate"
+         dur="0.020752s"
+         from="521.379 117.75"
+         to="522.126 117.75" />
+      <animateTransform
+         begin="t162.end"
+         id="t161"
+         attributeName="transform"
+         type="translate"
+         dur="0.0968987s"
+         from="522.126 117.75"
+         to="523.246 117.75" />
+      <animateTransform
+         begin="t161.end"
+         id="t160"
+         attributeName="transform"
+         type="translate"
+         dur="0.0830078s"
+         from="523.246 117.75"
+         to="526.235 117.75" />
+      <animateTransform
+         begin="t160.end"
+         id="t159"
+         attributeName="transform"
+         type="translate"
+         dur="0.277043s"
+         from="526.235 117.75"
+         to="527.355 117.75" />
+      <animateTransform
+         begin="t159.end"
+         id="t158"
+         attributeName="transform"
+         type="translate"
+         dur="0.09408s"
+         from="527.355 117.75"
+         to="528.102 117.75" />
+      <animateTransform
+         begin="t158.end"
+         id="t157"
+         attributeName="transform"
+         type="translate"
+         dur="0.114136s"
+         from="528.102 117.75"
+         to="532.211 117.75" />
+      <animateTransform
+         begin="t157.end"
+         id="t156"
+         attributeName="transform"
+         type="translate"
+         dur="0.277043s"
+         from="532.211 117.75"
+         to="533.332 117.75" />
+      <animateTransform
+         begin="t156.end"
+         id="t155"
+         attributeName="transform"
+         type="translate"
+         dur="0.020752s"
+         from="533.332 117.75"
+         to="534.079 117.75" />
+      <animateTransform
+         begin="t155.end"
+         id="t154"
+         attributeName="transform"
+         type="translate"
+         dur="0.0968987s"
+         from="534.079 117.75"
+         to="535.2 117.75" />
+      <animateTransform
+         begin="t154.end"
+         id="t153"
+         attributeName="transform"
+         type="translate"
+         dur="0.230869s"
+         from="535.2 117.75"
+         to="536.133 117.75" />
+      <animateTransform
+         begin="t153.end"
+         id="t152"
+         attributeName="transform"
+         type="translate"
+         dur="0.010376s"
+         from="536.133 117.75"
+         to="536.507 117.75" />
+      <animateTransform
+         begin="t152.end"
+         id="t151"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="536.507 117.75"
+         to="537.067 117.75" />
+      <animateTransform
+         begin="t151.end"
+         id="t150"
+         attributeName="transform"
+         type="translate"
+         dur="0.145264s"
+         from="537.067 117.75"
+         to="542.297 117.75" />
+      <animateTransform
+         begin="t150.end"
+         id="t149"
+         attributeName="transform"
+         type="translate"
+         dur="0.09408s"
+         from="542.297 117.75"
+         to="543.044 117.75" />
+      <animateTransform
+         begin="t149.end"
+         id="t148"
+         attributeName="transform"
+         type="translate"
+         dur="0.280151s"
+         from="543.044 117.75"
+         to="553.129 117.75" />
+      <animateTransform
+         begin="t148.end"
+         id="t147"
+         attributeName="transform"
+         type="translate"
+         dur="0.18816s"
+         from="553.129 117.75"
+         to="554.623 117.75" />
+      <animateTransform
+         begin="t147.end"
+         id="t146"
+         attributeName="transform"
+         type="translate"
+         dur="0.0622559s"
+         from="554.623 117.75"
+         to="556.865 117.75" />
+      <animateTransform
+         begin="t146.end"
+         id="t145"
+         attributeName="transform"
+         type="translate"
+         dur="0.415564s"
+         from="556.865 117.75"
+         to="558.546 117.75" />
+      <animateTransform
+         begin="t145.end"
+         id="t144"
+         attributeName="transform"
+         type="translate"
+         dur="0.041504s"
+         from="558.546 117.75"
+         to="560.04 117.75" />
+      <animateTransform
+         begin="t144.end"
+         id="t143"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="560.04 117.75"
+         to="560.413 117.75" />
+      <animateTransform
+         begin="t143.end"
+         id="t142"
+         attributeName="transform"
+         type="translate"
+         dur="0.202332s"
+         from="560.413 117.75"
+         to="567.697 117.75" />
+      <animateTransform
+         begin="t142.end"
+         id="t141"
+         attributeName="transform"
+         type="translate"
+         dur="0.09408s"
+         from="567.697 117.75"
+         to="568.444 117.75" />
+      <animateTransform
+         begin="t141.end"
+         id="t140"
+         attributeName="transform"
+         type="translate"
+         dur="0.0311279s"
+         from="568.444 117.75"
+         to="569.565 117.75" />
+      <animateTransform
+         begin="t140.end"
+         id="t139"
+         attributeName="transform"
+         type="translate"
+         dur="0.207782s"
+         from="569.565 117.75"
+         to="570.405 117.75" />
+      <animateTransform
+         begin="t139.end"
+         id="t138"
+         attributeName="transform"
+         type="translate"
+         dur="0.015564s"
+         from="570.405 117.75"
+         to="570.966 117.75" />
+      <animateTransform
+         begin="t138.end"
+         id="t137"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="570.966 117.75"
+         to="571.152 117.75" />
+      <animateTransform
+         begin="t137.end"
+         id="t136"
+         attributeName="transform"
+         type="translate"
+         dur="0.015564s"
+         from="571.152 117.75"
+         to="571.713 117.75" />
+      <animateTransform
+         begin="t136.end"
+         id="t135"
+         attributeName="transform"
+         type="translate"
+         dur="0.0242247s"
+         from="571.713 117.75"
+         to="571.993 117.75" />
+      <animateTransform
+         begin="t135.end"
+         id="t134"
+         attributeName="transform"
+         type="translate"
+         dur="0.0923475s"
+         from="571.993 117.75"
+         to="571.619 117.75" />
+      <animateTransform
+         begin="t134.end"
+         id="t133"
+         attributeName="transform"
+         type="translate"
+         dur="0.049286s"
+         from="571.619 117.75"
+         to="569.845 117.75" />
+      <animateTransform
+         begin="t133.end"
+         id="t132"
+         attributeName="transform"
+         type="translate"
+         dur="0.02352s"
+         from="569.845 117.75"
+         to="569.658 117.75" />
+      <animateTransform
+         begin="t132.end"
+         id="t131"
+         attributeName="transform"
+         type="translate"
+         dur="0.115434s"
+         from="569.658 117.75"
+         to="569.191 117.75" />
+      <animateTransform
+         begin="t131.end"
+         id="t130"
+         attributeName="transform"
+         type="translate"
+         dur="0.243836s"
+         from="569.191 117.75"
+         to="560.413 117.75" />
+      <animateTransform
+         begin="t130.end"
+         id="t129"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="560.413 117.75"
+         to="560.04 117.75" />
+      <animateTransform
+         begin="t129.end"
+         id="t128"
+         attributeName="transform"
+         type="translate"
+         dur="0.138521s"
+         from="560.04 117.75"
+         to="559.479 117.75" />
+      <animateTransform
+         begin="t128.end"
+         id="t127"
+         attributeName="transform"
+         type="translate"
+         dur="0.10376s"
+         from="559.479 117.75"
+         to="555.744 117.75" />
+      <animateTransform
+         begin="t127.end"
+         id="t126"
+         attributeName="transform"
+         type="translate"
+         dur="0.0968987s"
+         from="555.744 117.75"
+         to="554.623 117.75" />
+      <animateTransform
+         begin="t126.end"
+         id="t125"
+         attributeName="transform"
+         type="translate"
+         dur="0.124512s"
+         from="554.623 117.75"
+         to="550.141 117.75" />
+      <animateTransform
+         begin="t125.end"
+         id="t124"
+         attributeName="transform"
+         type="translate"
+         dur="0.0968987s"
+         from="550.141 117.75"
+         to="549.02 117.75" />
+      <animateTransform
+         begin="t124.end"
+         id="t123"
+         attributeName="transform"
+         type="translate"
+         dur="0.041504s"
+         from="549.02 117.75"
+         to="547.526 117.75" />
+      <animateTransform
+         begin="t123.end"
+         id="t122"
+         attributeName="transform"
+         type="translate"
+         dur="0.138521s"
+         from="547.526 117.75"
+         to="546.966 117.75" />
+      <animateTransform
+         begin="t122.end"
+         id="t121"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="546.966 117.75"
+         to="546.592 117.75" />
+      <animateTransform
+         begin="t121.end"
+         id="t120"
+         attributeName="transform"
+         type="translate"
+         dur="0.3891s"
+         from="546.592 117.75"
+         to="532.585 117.75" />
+      <animateTransform
+         begin="t120.end"
+         id="t119"
+         attributeName="transform"
+         type="translate"
+         dur="0.09408s"
+         from="532.585 117.75"
+         to="531.838 117.75" />
+      <animateTransform
+         begin="t119.end"
+         id="t118"
+         attributeName="transform"
+         type="translate"
+         dur="0.0622558s"
+         from="531.838 117.75"
+         to="529.597 117.75" />
+      <animateTransform
+         begin="t118.end"
+         id="t117"
+         attributeName="transform"
+         type="translate"
+         dur="0.09408s"
+         from="529.597 117.75"
+         to="528.849 117.75" />
+      <animateTransform
+         begin="t117.end"
+         id="t116"
+         attributeName="transform"
+         type="translate"
+         dur="0.31128s"
+         from="528.849 117.75"
+         to="517.643 117.75" />
+      <animateTransform
+         begin="t116.end"
+         id="t115"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="517.643 117.75"
+         to="517.083 117.75" />
+      <animateTransform
+         begin="t115.end"
+         id="t114"
+         attributeName="transform"
+         type="translate"
+         dur="0.228272s"
+         from="517.083 117.75"
+         to="508.865 117.75" />
+      <animateTransform
+         begin="t114.end"
+         id="t113"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="508.865 117.75"
+         to="508.492 117.75" />
+      <animateTransform
+         begin="t113.end"
+         id="t112"
+         attributeName="transform"
+         type="translate"
+         dur="0.140076s"
+         from="508.492 117.75"
+         to="503.449 117.75" />
+      <animateTransform
+         begin="t112.end"
+         id="t111"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="503.449 117.75"
+         to="502.889 117.75" />
+      <animateTransform
+         begin="t111.end"
+         id="t110"
+         attributeName="transform"
+         type="translate"
+         dur="0.10376s"
+         from="502.889 117.75"
+         to="499.153 117.75" />
+      <animateTransform
+         begin="t110.end"
+         id="t109"
+         attributeName="transform"
+         type="translate"
+         dur="0.0923475s"
+         from="499.153 117.75"
+         to="498.78 117.75" />
+      <animateTransform
+         begin="t109.end"
+         id="t108"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="498.78 117.75"
+         to="498.22 117.75" />
+      <animateTransform
+         begin="t108.end"
+         id="t107"
+         attributeName="transform"
+         type="translate"
+         dur="0.119324s"
+         from="498.22 117.75"
+         to="493.924 117.75" />
+      <animateTransform
+         begin="t107.end"
+         id="t106"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="493.924 117.75"
+         to="493.55 117.75" />
+      <animateTransform
+         begin="t106.end"
+         id="t105"
+         attributeName="transform"
+         type="translate"
+         dur="0.020752s"
+         from="493.55 117.75"
+         to="492.803 117.75" />
+      <animateTransform
+         begin="t105.end"
+         id="t104"
+         attributeName="transform"
+         type="translate"
+         dur="0.0923475s"
+         from="492.803 117.75"
+         to="492.43 117.75" />
+      <animateTransform
+         begin="t104.end"
+         id="t103"
+         attributeName="transform"
+         type="translate"
+         dur="0.00778198s"
+         from="492.43 117.75"
+         to="492.15 117.75" />
+      <animateTransform
+         begin="t103.end"
+         id="t102"
+         attributeName="transform"
+         type="translate"
+         dur="0.02352s"
+         from="492.15 117.75"
+         to="491.963 117.75" />
+      <animateTransform
+         begin="t102.end"
+         id="t101"
+         attributeName="transform"
+         type="translate"
+         dur="0.010376s"
+         from="491.963 117.75"
+         to="491.589 117.75" />
+      <animateTransform
+         begin="t101.end"
+         id="t100"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="491.589 117.75"
+         to="491.403 117.75" />
+      <animateTransform
+         begin="t100.end"
+         id="t99"
+         attributeName="transform"
+         type="translate"
+         dur="0.015564s"
+         from="491.403 117.75"
+         to="490.842 117.75" />
+      <animateTransform
+         begin="t99.end"
+         id="t98"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="490.842 117.75"
+         to="490.656 117.75" />
+      <animateTransform
+         begin="t98.end"
+         id="t97"
+         attributeName="transform"
+         type="translate"
+         dur="0.0461738s"
+         from="490.656 117.75"
+         to="490.469 117.75" />
+      <animateTransform
+         begin="t97.end"
+         id="t96"
+         attributeName="transform"
+         type="translate"
+         dur="0.015564s"
+         from="490.469 117.75"
+         to="489.908 117.75" />
+      <animateTransform
+         begin="t96.end"
+         id="t95"
+         attributeName="transform"
+         type="translate"
+         dur="0.02352s"
+         from="489.908 117.75"
+         to="489.722 117.75" />
+      <animateTransform
+         begin="t95.end"
+         id="t94"
+         attributeName="transform"
+         type="translate"
+         dur="0.02594s"
+         from="489.722 117.75"
+         to="488.788 117.75" />
+      <animateTransform
+         begin="t94.end"
+         id="t93"
+         attributeName="transform"
+         type="translate"
+         dur="0.02352s"
+         from="488.788 117.75"
+         to="488.601 117.75" />
+      <animateTransform
+         begin="t93.end"
+         id="t92"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="488.601 117.75"
+         to="488.414 117.75" />
+      <animateTransform
+         begin="t92.end"
+         id="t91"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="488.414 117.75"
+         to="488.228 117.75" />
+      <animateTransform
+         begin="t91.end"
+         id="t90"
+         attributeName="transform"
+         type="translate"
+         dur="0.020752s"
+         from="488.228 117.75"
+         to="487.48 117.75" />
+      <animateTransform
+         begin="t90.end"
+         id="t89"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="487.48 117.75"
+         to="487.294 117.75" />
+      <animateTransform
+         begin="t89.end"
+         id="t88"
+         attributeName="transform"
+         type="translate"
+         dur="0.015564s"
+         from="487.294 117.75"
+         to="486.733 117.75" />
+      <animateTransform
+         begin="t88.end"
+         id="t87"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="486.733 117.75"
+         to="486.547 117.75" />
+      <animateTransform
+         begin="t87.end"
+         id="t86"
+         attributeName="transform"
+         type="translate"
+         dur="0.015564s"
+         from="486.547 117.75"
+         to="485.986 117.75" />
+      <animateTransform
+         begin="t86.end"
+         id="t85"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="485.986 117.75"
+         to="485.8 117.75" />
+      <animateTransform
+         begin="t85.end"
+         id="t84"
+         attributeName="transform"
+         type="translate"
+         dur="0.0461738s"
+         from="485.8 117.75"
+         to="485.613 117.75" />
+      <animateTransform
+         begin="t84.end"
+         id="t83"
+         attributeName="transform"
+         type="translate"
+         dur="0.0242247s"
+         from="485.613 117.75"
+         to="485.333 117.75" />
+      <animateTransform
+         begin="t83.end"
+         id="t82"
+         attributeName="transform"
+         type="translate"
+         dur="0.072632s"
+         from="485.333 117.75"
+         to="482.718 117.75" />
+      <animateTransform
+         begin="t82.end"
+         id="t81"
+         attributeName="transform"
+         type="translate"
+         dur="0.0242247s"
+         from="482.718 117.75"
+         to="482.438 117.75" />
+      <animateTransform
+         begin="t81.end"
+         id="t80"
+         attributeName="transform"
+         type="translate"
+         dur="0.015564s"
+         from="482.438 117.75"
+         to="481.877 117.75" />
+      <animateTransform
+         begin="t80.end"
+         id="t79"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="481.877 117.75"
+         to="481.691 117.75" />
+      <animateTransform
+         begin="t79.end"
+         id="t78"
+         attributeName="transform"
+         type="translate"
+         dur="0.0461738s"
+         from="481.691 117.75"
+         to="481.504 117.75" />
+      <animateTransform
+         begin="t78.end"
+         id="t77"
+         attributeName="transform"
+         type="translate"
+         dur="0.0242247s"
+         from="481.504 117.75"
+         to="481.224 117.75" />
+      <animateTransform
+         begin="t77.end"
+         id="t76"
+         attributeName="transform"
+         type="translate"
+         dur="0.124512s"
+         from="481.224 117.75"
+         to="476.741 117.75" />
+      <animateTransform
+         begin="t76.end"
+         id="t75"
+         attributeName="transform"
+         type="translate"
+         dur="0.0242247s"
+         from="476.741 117.75"
+         to="476.461 117.75" />
+      <animateTransform
+         begin="t75.end"
+         id="t74"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="476.461 117.75"
+         to="476.274 117.75" />
+      <animateTransform
+         begin="t74.end"
+         id="t73"
+         attributeName="transform"
+         type="translate"
+         dur="0.0692607s"
+         from="476.274 117.75"
+         to="475.994 117.75" />
+      <animateTransform
+         begin="t73.end"
+         id="t72"
+         attributeName="transform"
+         type="translate"
+         dur="0.062256s"
+         from="475.994 117.75"
+         to="473.753 117.75" />
+      <animateTransform
+         begin="t72.end"
+         id="t71"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="473.753 117.75"
+         to="473.38 117.75" />
+      <animateTransform
+         begin="t71.end"
+         id="t70"
+         attributeName="transform"
+         type="translate"
+         dur="0.057068s"
+         from="473.38 117.75"
+         to="471.325 117.75" />
+      <animateTransform
+         begin="t70.end"
+         id="t69"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="471.325 117.75"
+         to="470.765 117.75" />
+      <animateTransform
+         begin="t69.end"
+         id="t68"
+         attributeName="transform"
+         type="translate"
+         dur="0.010376s"
+         from="470.765 117.75"
+         to="470.391 117.75" />
+      <animateTransform
+         begin="t68.end"
+         id="t67"
+         attributeName="transform"
+         type="translate"
+         dur="0.0692607s"
+         from="470.391 117.75"
+         to="470.111 117.75" />
+      <animateTransform
+         begin="t67.end"
+         id="t66"
+         attributeName="transform"
+         type="translate"
+         dur="0.02352s"
+         from="470.111 117.75"
+         to="469.924 117.75" />
+      <animateTransform
+         begin="t66.end"
+         id="t65"
+         attributeName="transform"
+         type="translate"
+         dur="0.09079s"
+         from="469.924 117.75"
+         to="466.656 117.75" />
+      <animateTransform
+         begin="t65.end"
+         id="t64"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="466.656 117.75"
+         to="466.096 117.75" />
+      <animateTransform
+         begin="t64.end"
+         id="t63"
+         attributeName="transform"
+         type="translate"
+         dur="0.062256s"
+         from="466.096 117.75"
+         to="463.854 117.75" />
+      <animateTransform
+         begin="t63.end"
+         id="t62"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="463.854 117.75"
+         to="463.294 117.75" />
+      <animateTransform
+         begin="t62.end"
+         id="t61"
+         attributeName="transform"
+         type="translate"
+         dur="0.083008s"
+         from="463.294 117.75"
+         to="460.306 117.75" />
+      <animateTransform
+         begin="t61.end"
+         id="t60"
+         attributeName="transform"
+         type="translate"
+         dur="0.0923475s"
+         from="460.306 117.75"
+         to="459.932 117.75" />
+      <animateTransform
+         begin="t60.end"
+         id="t59"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="459.932 117.75"
+         to="459.372 117.75" />
+      <animateTransform
+         begin="t59.end"
+         id="t58"
+         attributeName="transform"
+         type="translate"
+         dur="0.062256s"
+         from="459.372 117.75"
+         to="457.131 117.75" />
+      <animateTransform
+         begin="t58.end"
+         id="t57"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="457.131 117.75"
+         to="456.57 117.75" />
+      <animateTransform
+         begin="t57.end"
+         id="t56"
+         attributeName="transform"
+         type="translate"
+         dur="0.072632s"
+         from="456.57 117.75"
+         to="453.956 117.75" />
+      <animateTransform
+         begin="t56.end"
+         id="t55"
+         attributeName="transform"
+         type="translate"
+         dur="0.0923475s"
+         from="453.956 117.75"
+         to="453.582 117.75" />
+      <animateTransform
+         begin="t55.end"
+         id="t54"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="453.582 117.75"
+         to="453.209 117.75" />
+      <animateTransform
+         begin="t54.end"
+         id="t53"
+         attributeName="transform"
+         type="translate"
+         dur="0.057068s"
+         from="453.209 117.75"
+         to="451.154 117.75" />
+      <animateTransform
+         begin="t53.end"
+         id="t52"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="451.154 117.75"
+         to="450.594 117.75" />
+      <animateTransform
+         begin="t52.end"
+         id="t51"
+         attributeName="transform"
+         type="translate"
+         dur="0.072632s"
+         from="450.594 117.75"
+         to="447.979 117.75" />
+      <animateTransform
+         begin="t51.end"
+         id="t50"
+         attributeName="transform"
+         type="translate"
+         dur="0.0923475s"
+         from="447.979 117.75"
+         to="447.606 117.75" />
+      <animateTransform
+         begin="t50.end"
+         id="t49"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="447.606 117.75"
+         to="447.232 117.75" />
+      <animateTransform
+         begin="t49.end"
+         id="t48"
+         attributeName="transform"
+         type="translate"
+         dur="0.072632s"
+         from="447.232 117.75"
+         to="444.617 117.75" />
+      <animateTransform
+         begin="t48.end"
+         id="t47"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="444.617 117.75"
+         to="444.244 117.75" />
+      <animateTransform
+         begin="t47.end"
+         id="t46"
+         attributeName="transform"
+         type="translate"
+         dur="0.062256s"
+         from="444.244 117.75"
+         to="442.003 117.75" />
+      <animateTransform
+         begin="t46.end"
+         id="t45"
+         attributeName="transform"
+         type="translate"
+         dur="0.0923475s"
+         from="442.003 117.75"
+         to="441.629 117.75" />
+      <animateTransform
+         begin="t45.end"
+         id="t44"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="441.629 117.75"
+         to="441.255 117.75" />
+      <animateTransform
+         begin="t44.end"
+         id="t43"
+         attributeName="transform"
+         type="translate"
+         dur="0.057068s"
+         from="441.255 117.75"
+         to="439.201 117.75" />
+      <animateTransform
+         begin="t43.end"
+         id="t42"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="439.201 117.75"
+         to="438.641 117.75" />
+      <animateTransform
+         begin="t42.end"
+         id="t41"
+         attributeName="transform"
+         type="translate"
+         dur="0.031128s"
+         from="438.641 117.75"
+         to="437.52 117.75" />
+      <animateTransform
+         begin="t41.end"
+         id="t40"
+         attributeName="transform"
+         type="translate"
+         dur="0.230869s"
+         from="437.52 117.75"
+         to="436.586 117.75" />
+      <animateTransform
+         begin="t40.end"
+         id="t39"
+         attributeName="transform"
+         type="translate"
+         dur="0.0726318s"
+         from="436.586 117.75"
+         to="433.972 117.75" />
+      <animateTransform
+         begin="t39.end"
+         id="t38"
+         attributeName="transform"
+         type="translate"
+         dur="0.09408s"
+         from="433.972 117.75"
+         to="433.224 117.75" />
+      <animateTransform
+         begin="t38.end"
+         id="t37"
+         attributeName="transform"
+         type="translate"
+         dur="1.20052s"
+         from="433.224 117.75"
+         to="428.369 117.75" />
+      <animateTransform
+         begin="t37.end"
+         id="t36"
+         attributeName="transform"
+         type="translate"
+         dur="0.387595s"
+         from="428.369 117.75"
+         to="423.886 117.75" />
+      <animateTransform
+         begin="t36.end"
+         id="t35"
+         attributeName="transform"
+         type="translate"
+         dur="0.166016s"
+         from="423.886 117.75"
+         to="417.91 117.75" />
+      <animateTransform
+         begin="t35.end"
+         id="t34"
+         attributeName="transform"
+         type="translate"
+         dur="0.387595s"
+         from="417.91 117.75"
+         to="413.427 117.75" />
+      <animateTransform
+         begin="t34.end"
+         id="t33"
+         attributeName="transform"
+         type="translate"
+         dur="0.498047s"
+         from="413.427 117.75"
+         to="395.497 117.75" />
+      <animateTransform
+         begin="t33.end"
+         id="t32"
+         attributeName="transform"
+         type="translate"
+         dur="0.193797s"
+         from="395.497 117.75"
+         to="393.256 117.75" />
+      <animateTransform
+         begin="t32.end"
+         id="t31"
+         attributeName="transform"
+         type="translate"
+         dur="0.249023s"
+         from="393.256 117.75"
+         to="384.291 117.75" />
+      <animateTransform
+         begin="t31.end"
+         id="t30"
+         attributeName="transform"
+         type="translate"
+         dur="0.0968987s"
+         from="384.291 117.75"
+         to="383.171 117.75" />
+      <animateTransform
+         begin="t30.end"
+         id="t29"
+         attributeName="transform"
+         type="translate"
+         dur="0.020752s"
+         from="383.171 117.75"
+         to="382.424 117.75" />
+      <animateTransform
+         begin="t29.end"
+         id="t28"
+         attributeName="transform"
+         type="translate"
+         dur="0.461738s"
+         from="382.424 117.75"
+         to="380.556 117.75" />
+      <animateTransform
+         begin="t28.end"
+         id="t27"
+         attributeName="transform"
+         type="translate"
+         dur="0.193797s"
+         from="380.556 117.75"
+         to="378.315 117.75" />
+      <animateTransform
+         begin="t27.end"
+         id="t26"
+         attributeName="transform"
+         type="translate"
+         dur="0.249023s"
+         from="378.315 117.75"
+         to="369.35 117.75" />
+      <animateTransform
+         begin="t26.end"
+         id="t25"
+         attributeName="transform"
+         type="translate"
+         dur="0.0968987s"
+         from="369.35 117.75"
+         to="368.229 117.75" />
+      <animateTransform
+         begin="t25.end"
+         id="t24"
+         attributeName="transform"
+         type="translate"
+         dur="0.145264s"
+         from="368.229 117.75"
+         to="363 117.75" />
+      <animateTransform
+         begin="t24.end"
+         id="t23"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="363 117.75"
+         to="362.44 117.75" />
+      <animateTransform
+         begin="t23.end"
+         id="t22"
+         attributeName="transform"
+         type="translate"
+         dur="0.031128s"
+         from="362.44 117.75"
+         to="361.319 117.75" />
+      <animateTransform
+         begin="t22.end"
+         id="t21"
+         attributeName="transform"
+         type="translate"
+         dur="0.230869s"
+         from="361.319 117.75"
+         to="360.385 117.75" />
+      <animateTransform
+         begin="t21.end"
+         id="t20"
+         attributeName="transform"
+         type="translate"
+         dur="0.0968987s"
+         from="360.385 117.75"
+         to="359.265 117.75" />
+      <animateTransform
+         begin="t20.end"
+         id="t19"
+         attributeName="transform"
+         type="translate"
+         dur="0.140076s"
+         from="359.265 117.75"
+         to="354.222 117.75" />
+      <animateTransform
+         begin="t19.end"
+         id="t18"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="354.222 117.75"
+         to="353.848 117.75" />
+      <animateTransform
+         begin="t18.end"
+         id="t17"
+         attributeName="transform"
+         type="translate"
+         dur="0.072632s"
+         from="353.848 117.75"
+         to="351.234 117.75" />
+      <animateTransform
+         begin="t17.end"
+         id="t16"
+         attributeName="transform"
+         type="translate"
+         dur="0.0242247s"
+         from="351.234 117.75"
+         to="350.953 117.75" />
+      <animateTransform
+         begin="t16.end"
+         id="t15"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="350.953 117.75"
+         to="350.767 117.75" />
+      <animateTransform
+         begin="t15.end"
+         id="t14"
+         attributeName="transform"
+         type="translate"
+         dur="0.015564s"
+         from="350.767 117.75"
+         to="350.206 117.75" />
+      <animateTransform
+         begin="t14.end"
+         id="t13"
+         attributeName="transform"
+         type="translate"
+         dur="0.00518799s"
+         from="350.206 117.75"
+         to="350.02 117.75" />
+      <animateTransform
+         begin="t13.end"
+         id="t12"
+         attributeName="transform"
+         type="translate"
+         dur="0.115434s"
+         from="350.02 117.75"
+         to="349.553 117.75" />
+      <animateTransform
+         begin="t12.end"
+         id="t11"
+         attributeName="transform"
+         type="translate"
+         dur="0.0484493s"
+         from="349.553 117.75"
+         to="348.992 117.75" />
+      <animateTransform
+         begin="t11.end"
+         id="t10"
+         attributeName="transform"
+         type="translate"
+         dur="0.070038s"
+         from="348.992 117.75"
+         to="346.471 117.75" />
+      <animateTransform
+         begin="t10.end"
+         id="t9"
+         attributeName="transform"
+         type="translate"
+         dur="0.02352s"
+         from="346.471 117.75"
+         to="346.284 117.75" />
+      <animateTransform
+         begin="t9.end"
+         id="t8"
+         attributeName="transform"
+         type="translate"
+         dur="0.115434s"
+         from="346.284 117.75"
+         to="345.817 117.75" />
+      <animateTransform
+         begin="t8.end"
+         id="t7"
+         attributeName="transform"
+         type="translate"
+         dur="0.264588s"
+         from="345.817 117.75"
+         to="336.292 117.75" />
+      <animateTransform
+         begin="t7.end"
+         id="t6"
+         attributeName="transform"
+         type="translate"
+         dur="0.04704s"
+         from="336.292 117.75"
+         to="335.919 117.75" />
+      <animateTransform
+         begin="t6.end"
+         id="t5"
+         attributeName="transform"
+         type="translate"
+         dur="0.041504s"
+         from="335.919 117.75"
+         to="334.424 117.75" />
+      <animateTransform
+         begin="t5.end"
+         id="t4"
+         attributeName="transform"
+         type="translate"
+         dur="0.415564s"
+         from="334.424 117.75"
+         to="332.744 117.75" />
+      <animateTransform
+         begin="t4.end"
+         id="t3"
+         attributeName="transform"
+         type="translate"
+         dur="0.249023s"
+         from="332.744 117.75"
+         to="323.779 117.75" />
+      <animateTransform
+         begin="t3.end"
+         id="t2"
+         attributeName="transform"
+         type="translate"
+         dur="0.193797s"
+         from="323.779 117.75"
+         to="321.537 117.75" />
+      <animateTransform
+         begin="t2.end"
+         id="t1"
+         attributeName="transform"
+         type="translate"
+         dur="0.0830078s"
+         from="321.537 117.75"
+         to="318.549 117.75" />
+      <set
+         id="show-while-playing"
+         begin="playing.begin"
+         end="t1.end"
+         attributeName="visibility"
+         to="visible" />
+    </g>
+    <path
+       style="fill:none;stroke:#002b36;stroke-width:1.79999995;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       d="m 236.88954,189.74505 27,0"
+       id="path3787"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3789"
+       d="m 389.88954,189.74505 27,0"
+       style="fill:none;stroke:#002b36;stroke-width:1.79999995;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline" />
+    <text
+       style="fill:#d70000;fill-opacity:1;font-family:'Roboto Condensed',sans-serif;font-weight:bold"
+       xml:space="preserve"
+       x="0"
+       y="436"
+       id="text3682"
+       sodipodi:linespacing="125%">
+      <tspan
+         sodipodi:role="line"
+         id="tspan3684"
+         x="0"
+         y="436">Hover/click to start animation</tspan>
+      <set
+           id="playing"
+           begin="svg2.mouseover;svg2.click;svg2.activate"
+           dur="48s"
+           restart="whenNotActive"
+           attributeName="visibility"
+           to="hidden" />
+    </text>
+  </g>
+</svg>

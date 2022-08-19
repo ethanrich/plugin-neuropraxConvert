@@ -1,0 +1,7 @@
+## Generated from gpib.cc
+%!test
+%! if any(strcmp(instrhwinfo().SupportedInterfaces, "gpib"))
+%!   fail ("gpib ()", "Invalid call to gpib");
+%! else
+%!   fail ("gpib ()", "gpib: Your system doesn't support the GPIB interface");
+%! endif

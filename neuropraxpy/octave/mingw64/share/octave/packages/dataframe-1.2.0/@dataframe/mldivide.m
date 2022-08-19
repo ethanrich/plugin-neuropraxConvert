@@ -1,0 +1,32 @@
+function resu = mldivide(A, B);
+
+  %# function resu = mldivide(A, B)
+  %# Implements the '\' operator when at least one argument is a dataframe.
+
+  %% Copyright (C) 2009-2017 Pascal Dupuis <cdemills@gmail.com>
+  %%
+  %% This file is part of the dataframe package for Octave.
+  %%
+  %% This package is free software; you can redistribute it and/or
+  %% modify it under the terms of the GNU General Public
+  %% License as published by the Free Software Foundation;
+  %% either version 3, or (at your option) any later version.
+  %%
+  %% This package is distributed in the hope that it will be useful,
+  %% but WITHOUT ANY WARRANTY; without even the implied
+  %% warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+  %% PURPOSE.  See the GNU General Public License for more
+  %% details.
+  %%
+  %% You should have received a copy of the GNU General Public
+  %% License along with this package; see the file COPYING.  If not,
+  %% see <http://www.gnu.org/licenses/>.
+  
+  try
+    resu = df_func (@mldivide, A, B, false, [true false]);
+  catch
+    disp (lasterr ());
+    error ('Operator \\ problem for %s vs. %s', class (A), class (B));
+  end
+
+end

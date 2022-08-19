@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>polyconf (optim_doc)</title>
+
+<meta name="description" content="polyconf (optim_doc)">
+<meta name="keywords" content="polyconf (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Residual-optimization.html#Residual-optimization" rel="up" title="Residual optimization">
+<link href="LinearRegression.html#LinearRegression" rel="next" title="LinearRegression">
+<link href="wpolyfit.html#wpolyfit" rel="prev" title="wpolyfit">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="polyconf"></a>
+<div class="header">
+<p>
+Next: <a href="LinearRegression.html#LinearRegression" accesskey="n" rel="next">LinearRegression</a>, Previous: <a href="wpolyfit.html#wpolyfit" accesskey="p" rel="prev">wpolyfit</a>, Up: <a href="Residual-optimization.html#Residual-optimization" accesskey="u" rel="up">Residual optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Confidence-and-prediction-intervals-for-polynomial-fitting"></a>
+<h3 class="section">2.12 Confidence and prediction intervals for polynomial fitting</h3>
+<a name="index-polyconf"></a>
+
+<a name="Helptext_003a-9"></a>
+<h4 class="subheading">Helptext:</h4>
+
+<a name="XREFpolyconf"></a><pre class="verbatim">[y,dy] = polyconf(p,x,s)
+
+  Produce prediction intervals for the fitted y. The vector p 
+  and structure s are returned from polyfit or wpolyfit. The 
+  x values are where you want to compute the prediction interval.
+
+polyconf(...,['ci'|'pi'])
+
+  Produce a confidence interval (range of likely values for the
+  mean at x) or a prediction interval (range of likely values 
+  seen when measuring at x).  The prediction interval tells
+  you the width of the distribution at x.  This should be the same
+  regardless of the number of measurements you have for the value
+  at x.  The confidence interval tells you how well you know the
+  mean at x.  It should get smaller as you increase the number of
+  measurements.  Error bars in the physical sciences usually show 
+  a 1-alpha confidence value of erfc(1/sqrt(2)), representing
+  one standandard deviation of uncertainty in the mean.
+
+polyconf(...,1-alpha)
+
+  Control the width of the interval. If asking for the prediction
+  interval 'pi', the default is .05 for the 95% prediction interval.
+  If asking for the confidence interval 'ci', the default is
+  erfc(1/sqrt(2)) for a one standard deviation confidence interval.
+
+Example:
+ [p,s] = polyfit(x,y,1);
+ xf = linspace(x(1),x(end),150);
+ [yf,dyf] = polyconf(p,xf,s,'ci');
+ plot(xf,yf,'g-;fit;',xf,yf+dyf,'g.;;',xf,yf-dyf,'g.;;',x,y,'xr;data;');
+ plot(x,y-polyval(p,x),';residuals;',xf,dyf,'g-;;',xf,-dyf,'g-;;');
+
+</pre>
+
+
+
+
+</body>
+</html>

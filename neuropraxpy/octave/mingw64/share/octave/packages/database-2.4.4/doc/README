@@ -1,0 +1,5 @@
+Interfaces for SQL databases should go into this package. Currently
+only a postgresql interface is implemented (see
+README-postgresql). Interfaces to other database systems need to be
+contributed by others. As soon as interfaces to further database
+systems emerge we should move the code into respective subdirectories.

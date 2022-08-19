@@ -1,0 +1,45 @@
+## Generated from __udp_properties__.cc
+%!test
+%! # test get
+%! a = udp ();
+%! assert (__udp_properties__ (a,"type"), "udp");
+%! assert (__udp_properties__ (a,"remoteport"), 23);
+%! assert (__udp_properties__ (a,"remotehost"), "127.0.0.1");
+%! assert (__udp_properties__ (a,"timeout"), -1);
+%! assert (__udp_properties__ (a,"status"), "open");
+%! assert (__udp_properties__ (a,"name"), "UDP-127.0.0.1");
+%! fail ("__udp_properties__ (a,'invalid')", "invalid property name");
+%! udp_close (a);
+%! assert (__udp_properties__ (a,"status"), "closed");
+%!test
+%! # test set
+%! a = udp();
+%! __udp_properties__ (a, 'name', "mytest");
+%! assert (__udp_properties__ (a,"name"), "mytest");
+%! fail ("__udp_properties__ (a,'invalid', 1)", "invalid property name");
+%! udp_close (a);
+%!test
+%! # test flush
+%! a = udp();
+%! __udp_properties__ (a, 'flush', 0);
+%! __udp_properties__ (a, 'flush', 1);
+%! __udp_properties__ (a, 'flush', 2);
+%! fail ("__udp_properties__ (a,'flush')", "invalid property name");
+%! udp_close (a);
+%!test
+%! # test subsref and get/set
+%! a = udp ();
+%! a.name = "test1";
+%! assert (isa(a, "octave_udp"));
+%! assert (a.name, "test1");
+%! assert (get(a, 'name'), "test1");
+%!
+%! set (a, "name", "test2");
+%! assert (a.name, "test2");
+%! assert (get(a, 'name'), "test2");
+%!error <wrong number of arguments> __udp_properties__ ()
+%!error <wrong number of arguments> __udp_properties__ (1)
+%!test
+%! a = udp ();
+%! fail ("__udp_properties__ (a, 'name', 'test', 0)", "wrong number of arguments");
+%! udp_close (a);

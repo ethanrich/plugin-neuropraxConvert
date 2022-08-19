@@ -1,0 +1,384 @@
+@c ---------------------------------------------------
+@node  Dicom Functions
+@section  Dicom Functions
+@cindex  Dicom Functions
+@c Dicom Functions dicomanon
+@c -----------------------------------------
+@subsection  dicomanon
+@cindex  dicomanon
+@deftypefn {Loadable Function} {} dicomanon(@var{file_in}, @var{file_out})
+@deftypefnx {Loadable Function} {} dicomanon(___, @var{name}, @var{value})
+
+Anonymize a DICOM format file by removing or replacing specific fields.
+
+@subsubheading Inputs
+@var{file_in} is filename to read from.@*
+@var{file_out} is the filename to write to.@*
+@var{name}, @var{value} optional name/value properties.@*
+
+Known property names are:
+@table @asis
+@item keep
+The value is a cell array of names to not remove during the anonymize procedure.
+@item update
+A structure of name/values to update rather than remove.
+@end table
+@subsubheading Outputs
+None
+
+@xseealso{dicomread, dicomwrite, dicominfo}
+@end deftypefn 
+
+@c Dicom Functions dicomdict
+@c -----------------------------------------
+@subsection  dicomdict
+@cindex  dicomdict
+@deftypefn {Loadable Function} {@var{dictionary_name} =} dicomdict (@code{get}) 
+@deftypefnx {Loadable Function} {} dicomdict (@code{factory}) 
+@deftypefnx {Loadable Function} {} dicomdict (@code{set}, @var{dictionary_name}) 
+
+Get or set the active dicom data dictionary.
+
+The first usage returns the filename of the dictionary that is currently being used.
+Using @code{factory} resets the dictionary to the default.
+Using @code{set} allows setting the dictionary for future operations.
+In this case, the dictionary file @var{dictionary_name} can be anywhere in the path.
+@subsubheading Inputs
+@var{code} -  string value of 'get', 'set' or 'factory'.
+
+@var{dictionary_name'} - name of dictionary file to use
+
+@subsubheading Outputs
+@var{dictionary_name'} - name of dictionary file currently set for dictionaty
+
+@subsubheading Examples
+Get current dicom dict path:
+
+@example
+> f = dicomdict('get')
+f = octavedicom.dic
+@end example
+
+Set a new dictionary:
+
+@example
+> dicomdict('set', 'anewdictfile.txt')
+@end example
+
+@xseealso{dicomread, dicomwrite}
+@end deftypefn 
+
+@c Dicom Functions dicomdisp
+@c -----------------------------------------
+@subsection  dicomdisp
+@cindex  dicomdisp
+@deftypefn {Loadable Function} {} dicomdisp (@var{filename}) 
+@deftypefnx {Loadable Function} {} dicomdisp (@var{filename}, [@var{propertyname}, @var{propertvalue} ...]) 
+Read and display the metadata from a DICOM file.
+
+@subsubheading Inputs
+@var{filename} - dicomfilename to display.@*
+@var{propertyname}, @var{propertvalue} - property pairs for options to the display function.
+
+Currently the only known property is 'dictionary' to specify a non default dict to use.
+@subsubheading Outputs
+None
+
+@xseealso{dicomread, dicominfo} 
+@end deftypefn
+
+@c Dicom Functions dicomfind
+@c -----------------------------------------
+@subsection  dicomfind
+@cindex  dicomfind
+ @deftypefn {} {@var{attrinfo}} = dicomfind(@var{filename}, @var{attribute})
+ @deftypefnx {} {@var{attrinfo}} = dicomfind(@var{info}, @var{attribute})
+ Find the location and value of an attribute in a dicom file or info structure.
+
+ @subsubheading Inputs
+ @var{filename} - filename to open.
+
+ @var{info} - dicominfo struct.
+
+ @var{attribute} - attribute name to find.
+
+ @subsubheading Outputs
+ @var{attrinfo} - a table with fields Location and Value fior each matched attribute.
+
+ @subsubheading Examples
+ @example
+ filename = file_in_loadpath("imdata/rtstruct.dcm");
+
+ info = dicomfind(filename, "ROINumber");
+
+ @end example
+ @end deftypefn
+@c Dicom Functions dicominfo
+@c -----------------------------------------
+@subsection  dicominfo
+@cindex  dicominfo
+@deftypefn {Loadable Function} {@var{info}} = dicominfo (@var{filename}) 
+@deftypefnx {Loadable Function} {@var{info}} = dicominfo (@var{filename}, @code{dictionary}, @var{dictionary-name}) 
+@deftypefnx  {Loadable Function} {} dicominfo (@var{filename}, @var{options}) 
+@deftypefnx {Command} {} dicominfo @var{filename} 
+@deftypefnx {Command} {} dicominfo @var{filename} @var{options} 
+Get all data from a DICOM file, excluding any actual image. 
+@var{info} is a nested struct containing the data. 
+
+If no return argument is given, then there will be output similar to 
+a DICOM dump. 
+
+If the @code{dictionary} argument is used, the given @var{dictionary-name} is used for this operation, 
+otherwise, the dictionary set by @code{dicomdict} is used.
+
+@subsubheading Inputs
+@var{filename} - name of file to read.
+
+@var{'dictionary'} - string constant of 'dictionary'.
+
+@var{dictionary-name} - filename of dictionary to use.
+
+@var{options}:
+@code{truncate=n}
+where n is the number of characters to limit the dump output display to @code{n}
+for each value. 
+@subsubheading Outputs
+@var{info} - struct of fields read frome the dicom file.
+
+@subsubheading Examples
+Read the metadata of a dicomfile:
+
+@example
+> info = dicominfo(file_in_loadpath('imdata/simple-test.dcm')
+info = 
+scalar structure containing the fields:
+Filename = a.dcm
+FileModDate = 04-Feb-2017 02:08:31
+FileMetaInformationVersion =
+0  1
+MediaStorageSOPClassUID = 1.2.840.10008.5.1.4.1.1.7
+MediaStorageSOPInstanceUID = 1.2.826.0.1.3680043.2.1143.4379544382488839209812957878553810312
+TransferSyntaxUID = 1.2.840.10008.1.2
+ImplementationClassUID = 1.2.826.0.1.3680043.2.1143.107.104.103.115.2.6.3
+ImplementationVersionName = GDCM 2.6.3
+SourceApplicationEntityTitle = GDCM
+ImageType = DERIVED \\SECONDARY  
+SOPClassUID = 1.2.840.10008.5.1.4.1.1.7
+SOPInstanceUID = 1.2.826.0.1.3680043.2.1143.4379544382488839209812957878553810312
+StudyDate = 20170203
+StudyTime = 210831.360586 
+Modality = OT
+ConversionType = WSD 
+NominalScannedPixelSpacing =
+1
+1
+StudyInstanceUID = 1.2.826.0.1.3680043.2.1143.1282184104726305239898701219563360204
+SeriesInstanceUID = 1.2.826.0.1.3680043.2.1143.9385265081744858155080799316976198629
+SamplesPerPixel = 1
+PhotometricInterpretation = MONOCHROME1 
+Rows = 10
+Columns = 5
+BitsAllocated = 8
+BitsStored = 8
+HighBit = 7
+PixelRepresentation = 0
+RescaleIntercept = 0
+RescaleSlope =  1
+RescaleType = US
+PixelData = not assigned
+@end example
+
+@xseealso{dicomread, dicomdict} 
+@end deftypefn
+
+@c Dicom Functions dicomlookup
+@c -----------------------------------------
+@subsection  dicomlookup
+@cindex  dicomlookup
+@deftypefn {Loadable Function} @var{keyword} = dicomlookup (@var{group}, @var{element}) 
+@deftypefnx {Loadable Function} [@var{group}, @var{element}] = dicomlookup (@var{keyword}) 
+
+Lookup an attribute in the DICOM data dictionary.
+
+@var{keyword} = dicomlookup (@var{group}, @var{element}) will look in the current dicom 
+dictionary for a specified @var{group} and @var{element} tag and returns string name 
+of the attribute.
+
+[@var{group}, @var{element}] = dicomlookup (@var{keyword}) will look in the current dicom 
+dictionary for a specified @var{keyword} string and returns the @var{group} and @var{element}
+for keyword.
+
+@subsubheading Inputs
+@var{keyword} - string keyword name to look up a group, element value.@*
+@var{group} - group value to look up (string or integer).@*
+@var{element} - element value to look up (string or integer).@*
+
+@subsubheading Outputs
+@var{keyword} - string keyword name to looked up from a group, element value.@*
+@var{group}, @var{element} - group and element value looked up from keyword.@*
+
+@subsubheading Outputs
+Look up tag name for 0x10 0x10:
+
+@example
+> name = dicomlookup(0x10,0x10)
+name = PatientName
+
+@end example
+
+Look up tag group and element value:
+
+@example
+> [grp, elm] = dicomlookup('TransferSyntaxUID')
+grp = 2
+elm = 16
+@end example
+@xseealso{dicomdict}
+@end deftypefn 
+
+@c Dicom Functions dicomread
+@c -----------------------------------------
+@subsection  dicomread
+@cindex  dicomread
+@deftypefn {Loadable Function} @var{image} = dicomread (@var{filename}) 
+@deftypefnx {Loadable Function} @var{image} = dicomread (@var{structure}) 
+
+Load the image from a DICOM file. 
+@subsubheading Inputs
+@var{filename} - a string giving the filename.*
+
+@var{structure} - a structure with a field @code{Filename} (such as returned by @code{dicominfo}).
+
+@var{image} - may be two or three dimensional, depending on the content of the file. 
+
+@subsubheading Outputs
+@var{image} - An integer or float matrix will be returned, the number of bits will depend on the file. 
+
+@subsubheading Examples
+Load the image data of a dcm file:
+
+@example
+> image = dicomread(file_in_load_path('imdata/simple-test.dcm'))
+image =
+0  0  0  0  0
+0  0  0  0  0
+0  0  0  0  0
+0  0  0  0  0
+0  0  0  0  0
+0  0  0  0  0
+0  0  0  0  0
+0  0  0  0  0
+0  0  0  0  0
+0  0  0  0  0
+@end example
+
+@xseealso{dicominfo} 
+@end deftypefn 
+
+@c Dicom Functions dicomuid
+@c -----------------------------------------
+@subsection  dicomuid
+@cindex  dicomuid
+@deftypefn {Loadable Function} @var{uuid} = dicomuid () 
+
+Generate a DICOM unique id . 
+
+@subsubheading Inputs
+None
+@subsubheading Outputs
+@var{uuid} is a unique id string.
+
+@subsubheading Examples
+Get a new uid:
+
+@example
+> uid = dicomuid ()
+uid = 1.2.826.0.1.3680043.2.1143.3114589836670200378351641061429967573
+@end example
+
+@end deftypefn 
+
+@c Dicom Functions dicomupdate
+@c -----------------------------------------
+@subsection  dicomupdate
+@cindex  dicomupdate
+ @deftypefn {} {@var{info} =} dicomupdate(@var{fileinfo}, @var{attribute}, @var{value})
+ @deftypefnx {} {@var{info} =} dicomupdate(@var{info}, @var{attrinfo})
+ Update a dicom struct with new values
+
+ @subsubheading Inputs
+ @var{info} - dicominfo struct.
+
+ @var{attribute} - attribute name to find and change value of.
+
+ @var{value} - attribute value to set.
+
+ @var{attrinfo} - a table with fields Location and Value for each matched attribute to change.
+
+ @subsubheading Outputs
+ @var{info} - dicominfo struct.
+
+ @subsubheading Examples
+ @example
+ filename = file_in_loadpath("imdata/rtstruct.dcm");
+ info = dicominfo(filename);
+
+ % update specific values
+ finfo = dicomfind(info, "ROINumber");
+ finfo.Value@{1@} = 10;
+ info = dicomupdate(info, finfo);
+
+ % update all matching
+ info = dicomupdate(info, "ROINumber", 100);
+
+ @end example
+ @end deftypefn
+@c Dicom Functions dicomwrite
+@c -----------------------------------------
+@subsection  dicomwrite
+@cindex  dicomwrite
+@deftypefn {Loadable Function} {} dicomwrite(@var{im}, @var{filename})
+@deftypefnx {Loadable Function} {} dicomwrite(@var{im}, @var{filename}, @var{info})
+
+Write a DICOM format file to @var{filename}.
+
+@subsubheading Inputs
+@var{im} - image data or empty matrix, [], if only metadata save is required
+
+@var{filename} - filename to write dicom to. if [], then function runs in verbose trial mode.
+
+@var{info} - struct, like that produced by dicominfo
+
+@subsubheading Examples
+Create a dicom file using default info, and the supplied data:
+@example
+> wdata = uint8 (10*rand (10,10));
+> dicomwrite (wdata, 'test.dcm');
+@end example
+
+Create a dicom file using data and meta info:
+
+@example
+> wdata = dicomread(file_in_loadpath('imdata/CT-MONO2-16-ankle.dcm');
+> info = dicominfo(file_in_loadpath('imdata/CT-MONO2-16-ankle.dcm');
+> dicomwrite(wdata, info);
+@end example
+
+@xseealso{dicomread, dicominfo}
+@end deftypefn 
+
+@c Dicom Functions isdicom
+@c -----------------------------------------
+@subsection  isdicom
+@cindex  isdicom
+@deftypefn {Loadable Function} {@var{yesno} =} isdicom (@var{filename}) 
+Return true if @var{filename} is a valid DICOM file.
+
+@subsubheading Inputs
+@var{filename} - name of file to read.
+
+@subsubheading Outputs
+@var{yesno} - logical value of true if filename is a dicom file.
+
+@xseealso{dicomdict, dicominfo, dicomread, dicomwrite} 
+@end deftypefn

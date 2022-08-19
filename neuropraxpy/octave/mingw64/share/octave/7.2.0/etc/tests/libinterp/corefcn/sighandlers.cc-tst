@@ -1,0 +1,36 @@
+## DO NOT EDIT!  Generated automatically from sighandlers.cc by Make.
+%!assert (isstruct (SIG ()))
+%!assert (! isempty (SIG ()))
+%!error SIG (1)
+%!test
+%! orig_val = debug_on_interrupt ();
+%! old_val = debug_on_interrupt (! orig_val);
+%! assert (orig_val, old_val);
+%! assert (debug_on_interrupt (), ! orig_val);
+%! debug_on_interrupt (orig_val);
+%! assert (debug_on_interrupt (), orig_val);
+%!error debug_on_interrupt (1, 2)
+%!test
+%! orig_val = sighup_dumps_octave_core ();
+%! old_val = sighup_dumps_octave_core (! orig_val);
+%! assert (orig_val, old_val);
+%! assert (sighup_dumps_octave_core (), ! orig_val);
+%! sighup_dumps_octave_core (orig_val);
+%! assert (sighup_dumps_octave_core (), orig_val);
+%!error sighup_dumps_octave_core (1, 2)
+%!test
+%! orig_val = sigquit_dumps_octave_core ();
+%! old_val = sigquit_dumps_octave_core (! orig_val);
+%! assert (orig_val, old_val);
+%! assert (sigquit_dumps_octave_core (), ! orig_val);
+%! sigquit_dumps_octave_core (orig_val);
+%! assert (sigquit_dumps_octave_core (), orig_val);
+%!error sigquit_dumps_octave_core (1, 2)
+%!test
+%! orig_val = sigterm_dumps_octave_core ();
+%! old_val = sigterm_dumps_octave_core (! orig_val);
+%! assert (orig_val, old_val);
+%! assert (sigterm_dumps_octave_core (), ! orig_val);
+%! sigterm_dumps_octave_core (orig_val);
+%! assert (sigterm_dumps_octave_core (), orig_val);
+%!error sigterm_dumps_octave_core (1, 2)

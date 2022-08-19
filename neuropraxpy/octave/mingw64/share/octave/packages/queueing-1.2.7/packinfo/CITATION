@@ -1,0 +1,27 @@
+To cite the Octave queueing package use:
+
+  Moreno Marzolla, The qnetworks Toolbox: A Software Package for
+  Queueing Networks Analysis. Khalid Al-Begain, Dieter Fiems and
+  William J. Knottenbelt, Editors, Proceedings 17th International
+  Conference on Analytical and Stochastic Modeling Techniques and
+  Applications (ASMTA 2010) Cardiff, UK, June 14--16, 2010, volume
+  6148 of Lecture Notes in Computer Science, Springer, pp. 102--116,
+  ISBN 978-3-642-13567-5, DOI 10.1007/978-3-642-13568-2_8
+
+A BibTeX entry for LaTeX users is:
+
+  @inproceedings{queueing,
+    author    = {Moreno Marzolla},
+    title     = {The qnetworks Toolbox: A Software Package for Queueing Networks Analysis},
+    booktitle = {Analytical and Stochastic Modeling Techniques and Applications, 17th International Conference, ASMTA 2010, Cardiff, UK, June 14--16, 2010. Proceedings},
+    editor    = {Khalid Al-Begain and Dieter Fiems and William J. Knottenbelt},
+    year      = {2010},
+    publisher = {Springer},
+    series    = {Lecture Notes in Computer Science},
+    volume    = {6148},
+    pages     = {102--116},
+    ee        = {http://dx.doi.org/10.1007/978-3-642-13568-2_8},
+    doi       = {10.1007/978-3-642-13568-2_8},
+    isbn      = {978-3-642-13567-5}
+  }
+

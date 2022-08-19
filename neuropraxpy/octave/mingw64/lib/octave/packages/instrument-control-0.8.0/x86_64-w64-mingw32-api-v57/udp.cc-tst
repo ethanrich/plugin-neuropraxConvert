@@ -1,0 +1,21 @@
+## Generated from udp.cc
+%!test
+%! # can create default udp object
+%! a = udp ();
+%! assert (! isnull (a));
+%! assert (isa (a, 'octave_udp'));
+%! udp_close (a);
+%!error <Invalid call to udp> a = udp (1)
+%!error <Expected property name/value pairs> a = udp ("127.0.0.1", 23, 0)
+%!error <Expected property name as a string> a = udp ("127.0.0.1", 23, 0, 0)
+%!test
+%! a = udp ('127.0.0.1', 23);
+%! assert (! isnull (a));
+%! udp_close (a);
+%!test
+%! a = udp ('127.0.0.1', 23, "name", "test", "timeout", 2.5);
+%! assert (! isnull (a));
+%! assert (a.name, "test");
+%! assert (a.timeout, 2.5);
+%! udp_close (a);
+%!error <Invalid call to udp> udp ('127.0.0.1', 23,0,0,0)

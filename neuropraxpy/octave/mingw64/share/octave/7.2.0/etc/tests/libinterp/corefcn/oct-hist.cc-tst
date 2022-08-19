@@ -1,0 +1,7 @@
+## DO NOT EDIT!  Generated automatically from oct-hist.cc by Make.
+%!test
+%! history_timestamp_format_string ("# Example history marker", "local");
+%! assert (history_timestamp_format_string (), "# Example history marker")
+%!test <*57843>
+%! history_timestamp_format_string ("", "local");
+%! assert (history_timestamp_format_string (), "")

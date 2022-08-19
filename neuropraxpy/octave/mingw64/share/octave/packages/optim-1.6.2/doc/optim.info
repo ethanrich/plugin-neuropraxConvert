@@ -1,0 +1,3622 @@
+This is optim.info, produced by makeinfo version 6.5 from optim.texi.
+
+Additional documentation for the optim package for Octave.
+
+   Copyright (C) <Olaf Till <i7tiol@t-online.de>>
+
+   You can redistribute this documentation and/or modify it under the
+terms of the GNU General Public License as published by the Free
+Software Foundation; either version 3 of the License, or (at your
+option) any later version.
+
+   This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+along with this documentation; if not, see
+<http://www.gnu.org/licenses/>.
+
+
+File: optim.info,  Node: Top,  Next: Scalar optimization,  Up: (dir)
+
+Additional documentation for the optim package for Octave
+*********************************************************
+
+This documentation applies to version 1.6.2 of the optim package.
+
+   The optim package is a collection of additional functions related to
+numerical optimization.  For Octaves core optimization functions (not
+contained in this package) *note (octave)Optimization::.
+
+* Menu:
+
+Types of functions in the optim package
+* Scalar optimization::         Functions for optimization of a scalar
+                                  objective function.
+* Residual optimization::       Functions for optimization of a model
+                                  function returning an array.
+* Zero finders::                Functions for finding the zero of a
+                                  scalar or array valued nonlinear user
+                                  function.
+* Gradient functions::          Functions for numerical approximation of
+                                  gradients and Hessians.
+* Helper functions::            Functions for algebraic tasks common to
+                                  optimization problems.
+* Documentation::               Function optim_doc to view documentation.
+
+* Compatibility functions::     Functions with traditional names and
+                                  arguments which provide a subset of
+                                  the functionality of other functions.
+
+Configuration
+* Common frontend options::     Options common to all frontends.
+* Common optimization options:: Options common to all optimization
+                                  frontends.
+
+* Parameter structures::        Handling of structures of optimized
+                                  parameters.
+* Additional parameters::       Passing additional parameters to user
+                                  functions.
+
+Indices
+* Function index::              Index of functions in optim.
+* Concept index::               Concept index.
+
+
+File: optim.info,  Node: Scalar optimization,  Next: Residual optimization,  Prev: Top,  Up: Top
+
+1 Functions for optimization of a scalar objective function
+***********************************************************
+
+* Menu:
+
+Frontend
+* nonlin_min::                 Interface for scalar non-linear
+                                 optimization.
+
+Backends
+* lm_feasible::                L/M-like optimizer, constraints met
+                                 throughout optimization.
+* octave_sqp::                 A wrapper to core Octaves sqp function.
+* siman::                      Simulated annealing with constraints.
+* samin::                      Simulated annealing covering a range.
+* d2_min::                     Newton-like optimizer, no constraints.
+
+Standalone functions
+* mdsmax::                     A multidirectional search algorithm.
+* adsmax::                     An alternating directions algorithm.
+* nelder_mead_min::            Another Nelder-Mead algorithm.
+* powell::                     Direction-set (Powell's) method.
+* bfgsmin::                    Unconstrained BFGS algorithm.
+* nrm::                        Newton-Raphson algorithm.
+* cg_min::                     A conjugate gradient method.
+* brent_line_min::             Linesearch, Brent method.
+* line_min::                   Linesearch (minimize a function along dx).
+* de_min::                     A differential evolution algorithm.
+* battery::                    Repeatedly call bfgsmin.
+
+
+File: optim.info,  Node: nonlin_min,  Next: lm_feasible,  Up: Scalar optimization
+
+1.1 Frontend nonlin_min for scalar non-linear optimization
+==========================================================
+
+ -- Function File: [P, OBJF, CVG, OUTP] = nonlin_min (F, PIN)
+ -- Function File: [P, OBJF, CVG, OUTP] = nonlin_min (F, PIN, SETTINGS)
+     Frontend for nonlinear minimization of a scalar objective function.
+
+     The functions supplied by the user have a minimal interface; any
+     additionally needed constants can be supplied by wrapping the user
+     functions into anonymous functions.
+
+     The following description applies to usage with vector-based
+     parameter handling.  Differences in usage for structure-based
+     parameter handling will be explained separately.
+
+     F: objective function.  It gets a column vector of real parameters
+     as argument.  In gradient determination, this function may be
+     called with an informational second argument (if the function
+     accepts it), whose content depends on the function for gradient
+     determination.
+
+     PIN: real column vector of initial parameters.
+
+     SETTINGS: structure whose fields stand for optional settings
+     referred to below.  The fields can be set by 'optimset()'.
+
+     The returned values are the column vector of final parameters P,
+     the final value of the objective function OBJF, an integer CVG
+     indicating if and how optimization succeeded or failed, and a
+     structure OUTP with additional information, curently with possible
+     fields: 'niter', the number of iterations, 'nobjf', the number of
+     objective function calls (indirect calls by gradient function not
+     counted), 'lambda', the lambda of constraints at the result, and
+     'user_interaction', information on user stops (see settings).  The
+     backend may define additional fields.  CVG is greater than zero for
+     success and less than or equal to zero for failure; its possible
+     values depend on the used backend and currently can be '0' (maximum
+     number of iterations exceeded), '1' (success without further
+     specification of criteria), '2' (parameter change less than
+     specified precision in two consecutive iterations), '3'
+     (improvement in objective function less than specified), '-1'
+     (algorithm aborted by a user function), or '-4' (algorithm got
+     stuck).
+
+Settings
+--------
+
+The fields of the SETTINGS structure can be set with *note optimset:
+(octave)XREFoptimset.
+
+   For settings common to all frontends (including these for statistics)
+*note Common frontend options::.
+
+   For additional settings common to all optimization frontends *note
+Common optimization options::.
+
+Specific defaults:
+..................
+
+'Algorithm':  "lm_feasible"
+
+Additional settings:
+....................
+
+'objf_grad'
+     Function computing the gradient of the objective function with
+     respect to the parameters.  Default: real finite differences.  Will
+     be called with the column vector of parameters and, if it accepts
+     it, an informational structure as arguments.  If 'objf_grad' was
+     specified by the user, the informational structure has the fields
+     'f': value of objective function for current parameters, 'fixed':
+     logical vector indicating which parameters are not optimized, so
+     these partial derivatives need not be computed and can be set to
+     zero, 'diffp', 'diff_onesided', 'lbound', 'ubound': identical to
+     the user settings of this name, 'plabels': 1-dimensional cell-array
+     of column-cell-arrays, each column with labels for all parameters;
+     the first column contains the numerical indices of the parameters;
+     the second and third columns, present for structure based parameter
+     handling, *note Parameter structures::, contain the names of the
+     parameters and the subindices of the parameters, *note Non-scalar
+     parameters::, respectively.  The default gradient function will
+     call the objective function with the second argument set with
+     fields 'f': as the 'f' passed to the gradient function, 'plabels':
+     cell-array of 1x1 cell-arrays with the entries of the
+     column-cell-arrays of 'plabels' as passed to the jacobian function
+     corresponding to current parameter, 'side': '0' for one-sided
+     interval, '1' or '2', respectively, for the sides of a two-sided
+     interval, and 'parallel': logical scalar indicating parallel
+     computation of partial derivatives.  This information can be useful
+     if the model function can omit some computations depending on the
+     currently computed partial derivative.
+'objf_hessian'
+     Function computing the Hessian of the objective function with
+     respect to the parameters.  The default is backend specific.  Will
+     be called with the column vector of parameters as argument.
+'inverse_hessian'
+     Logical scalar, indicating whether the Hessian function passed by
+     the user actually returns the inverse of the Hessian.
+'complex_step_derivative_objf'
+     Logical scalar, default: 'false'.  Estimate gradient of objective
+     function with complex step derivative approximation.  Use only if
+     you know that your objective function is suitable for this.  No
+     user function for the gradient ('objf_grad') must be specified.
+'save_state'
+     String with path to a file which will be created for periodical
+     saving of the state of optimization.  Useful for very long
+     optimizations which might get interrupted.  The format of the saved
+     state will be backend-specific.  Currently, only the "siman"
+     backend honours this option.  Default: empty string, meaning no
+     saving of state.
+'recover_state'
+     String with path to a file created due to option 'save_state',
+     which is used to recover a saved state before starting
+     optimization.  Default: empty string, meaning no recovering of
+     state.
+
+Structure based parameter handling
+----------------------------------
+
+Please *note Parameter structures::.
+
+Backend information
+-------------------
+
+Please *note Scalar optimization:: and choose backend from menu.
+
+
+File: optim.info,  Node: lm_feasible,  Next: octave_sqp,  Prev: nonlin_min,  Up: Scalar optimization
+
+1.2 Default backend lm_feasible of scalar optimization
+======================================================
+
+A Levenberg/Marquardt-like algorithm, attempting to honour constraints
+throughout the course of optimization.  This means that the initial
+parameters must not violate constraints (to find an initial feasible set
+of parameters, e.g.  core Octaves 'sqp' can be used ( *note
+octave_sqp::), by specifying an objective function which is constant or
+which returns a norm of the distances to the initial values).  The
+Hessian is either supplied by the user or is approximated by the BFGS
+algorithm.  Core Octaves 'sqp' performed better in some tests with
+_unconstrained_ problems.
+
+   Returned value CVG will be '2' or '3' for success and '0' or '-4' for
+failure ( *note nonlin_min:: for meaning).  Returned structure OUTP will
+have the fields 'niter', 'nobjf', and 'user_interaction'.
+
+   Backend-specific defaults are: 'MaxIter': 20, 'fract_prec': 'zeros
+(size (parameters))', 'max_fract_change': 'Inf' for all parameters.  The
+setting 'TolX' is not honoured.
+
+   Interpretation of 'Display': if set to "iter", currently only
+information on applying 'max_fract_change' is printed.
+
+
+File: optim.info,  Node: octave_sqp,  Next: siman,  Prev: lm_feasible,  Up: Scalar optimization
+
+1.3 Backend wrapping core Octaves sqp function
+==============================================
+
+This backend calls the 'sqp' function of core Octave, a sequential
+quadratic programming algorithm with BFGS, so that it is usable with the
+'nonlin_min' frontend of the optim package.  'sqp' honours constraints
+for the returned result, but not necessarily during the course of
+optimization.
+
+   Compared to calling 'sqp' directly ( *note sqp: (octave)XREFsqp.),
+
+   * a different default (numerical) gradient function is used (that of
+     the frontend),
+   * bounds are set to '+-Inf' by default, not to '+-realmax'.
+
+   The value of the additional setting 'octave_sqp_tolerance', a
+tolerance to several termination criteria, is passed as the respective
+argument to Octaves 'sqp', which provides the default 'sqrt (eps)'.  The
+settings 'TolFun', 'TolX', 'fract_prec', 'max_fract_change', 'Display',
+and 'user_interaction' are not honoured.
+
+   Returned value CVG will be '1' for success and '0' or '-4' for
+failure ( *note nonlin_min:: for meaning).  Returned structure OUTP will
+have the fields 'niter', 'nobjf', and 'lambda'.
+
+   The default of 'MaxIter' is that of Octaves 'sqp' (100).
+
+
+File: optim.info,  Node: siman,  Next: samin,  Prev: octave_sqp,  Up: Scalar optimization
+
+1.4 Simulated annealing backend siman of scalar optimization
+============================================================
+
+A simulated annealing (stochastic) optimizer, changing all parameters at
+once in a single step, so being suitable for non-bound constraints.
+
+   No gradient or hessian of the objective function is used.  The
+settings 'MaxIter', 'fract_prec', 'TolFun', 'TolX', and
+'max_fract_change' are not honoured.
+
+   Accepts the additional settings 'T_init' (initial temperature,
+default 0.01), 'T_min' (final temperature, default 1.0e-5), 'mu_T'
+(factor of temperature decrease, default 1.005), 'iters_fixed_T'
+(iterations within one temperature step, default 10), 'max_rand_step'
+(column vector or structure-based configuration of maximum random steps
+for each parameter, default 0.005 * PIN), 'stoch_regain_constr' (if
+'true', regain constraints after a random step, otherwise take new
+random value until constraints are met, default 'false'), 'trace_steps'
+(set field 'trace' of OUTP with a matrix with a row for each step, first
+column iteration number, second column repeat number within iteration,
+third column value of objective function, rest columns parameter values,
+default 'false'), and 'siman_log' (set field 'log' of OUTP with a matrix
+with a row for each iteration, first column temperature, second column
+value of objective function, rest columns numbers of tries with
+decrease, no decrease but accepted, and no decrease and rejected.
+
+   Steps with increase 'diff' of objective function are accepted if
+'rand (1) < exp (- diff / T)', where 'T' is the temperature of the
+current iteration.
+
+   If regaining of constraints failed, optimization will be aborted and
+returned value of CVG will be '0'.  Otherwise, CVG will be '1'.
+Returned structure OUTP, additionally to the possible fields 'trace' and
+'log' described above, will have the fields 'niter' and
+'user_interaction'.
+
+   Interpretation of 'Display': if set to "iter", an informational line
+is printed after each iteration.
+
+   If 'parallel_local' is equivalent to 'true', the objective function
+is evaluated for several parameter combinations in parallel.  If
+'parallel_local' is set to an integer '> 1', this is the maximal number
+of parallel processes; if it is '<= 1', the maximal number will be the
+number of available processor cores.  The course of optimization won't
+be changed by parallelization, provided the random number generator
+starts with the same state.  To achieve this, some of the parallel
+results are discarded, causing the speedup to be smaller if the rate of
+acceptance of results is high.  Also, due to overhead, there won't be
+any speedup, but even a slowdown, if the objective function is not
+computationally extensive enough.
+
+   Honours options 'save_state' and 'recover_state', described for the
+frontend.
+
+
+File: optim.info,  Node: samin,  Next: d2_min,  Prev: siman,  Up: Scalar optimization
+
+1.5 Simulated annealing backend samin of scalar optimization
+============================================================
+
+A simulated annealing (stochastic) optimizer, changing each parameter
+separately, so not suitable for non-bound constraints.  Requires
+specification of lower and upper bounds for each parameter and attempts
+to scan the whole region so defined.
+
+   No gradient or hessian of the objective function is used.  The
+settings 'fract_prec' and 'max_fract_change' are not honoured.
+
+   Maximal stepwidth is continuously adjusted according to the ratio of
+accepted steps.  Temperature is increased at the start until accepted
+steps cover the whole parameter range, if this is not the case at the
+initial temperature.
+
+   Accepts the additional settings 'T_init' (initial temperature,
+default 0.1), 'mu_T' (factor of temperature decrease, default 1.2),
+'iters_fixed_T' (subiterations within one temperature step, default
+100), 'iters_adjust_step' (number of subiterations after which maximal
+stepwidth is adjusted, default 5), 'niter_check_tolfun' (number of
+iterations to compare with if checking the value of the objective
+function for convergence, default 5), 'trace_steps' (set field 'trace'
+of OUTP with a matrix with a row for each step, first column iteration
+number, second column repeat number within iteration, third column value
+of objective function, fourth column temperature, rest columns parameter
+values, default 'false'), and 'siman_log' (set field 'log' of OUTP with
+a matrix with a row for each iteration, first column temperature, second
+column value of objective function, rest columns numbers of tries with
+decrease, no decrease but accepted, no decrease and rejected, steps
+corrected back into bounds, and steps yielding a new best value of the
+objective function).
+
+   Steps with increase 'diff' of objective function are accepted if
+'rand (1) < exp (- diff / T)', where 'T' is the temperature of the
+current iteration.
+
+   If converged, the returned value of CVG will be '1', if 'MaxIters' is
+exceeded before convergence, CVG will be '0'.  The returned structure
+OUTP, additionally to the possible fields 'trace' and 'log' described
+above, will have the fields 'niter' and 'user_interaction'.
+
+   Interpretation of 'Display': if set to "iter", informational text is
+printed after each iteration and at the end of optimization.  If set to
+"final", informational text is printed only at the end of optimization.
+
+   No parallel execution is performed in this backend.
+
+   Options 'save_state' and 'recover_state' are not honoured.
+
+
+File: optim.info,  Node: d2_min,  Next: mdsmax,  Prev: samin,  Up: Scalar optimization
+
+1.6 Unconstrained Newton-like optimization
+==========================================
+
+This backend features a Newton-like algorithm.  The user has to supply a
+Hessian function.  No constraints are honoured.  If the supplied Hessian
+function actually returns the inverse of the Hessian, set
+'inverse_hessian' to 'true'.  Supplying the inverse Hessian is
+preferable, if possible.
+
+   Returned value CVG will be '2' or '3' for success and '0' or '-1' for
+failure ( *note nonlin_min:: for meaning).  Returned structure OUTP will
+have the fields 'niter', 'nobjf', and 'user_interaction'.
+
+   Interpretation of 'Display': if set to "iter", some diagnostics are
+printed.
+
+
+File: optim.info,  Node: mdsmax,  Next: adsmax,  Prev: d2_min,  Up: Scalar optimization
+
+1.7 A multidirectional search algorithm
+=======================================
+
+Helptext:
+---------
+
+MDSMAX  Multidirectional search method for direct search optimization.
+       [x, fmax, nf] = MDSMAX(FUN, x0, STOPIT, SAVIT) attempts to
+       maximize the function FUN, using the starting vector x0.
+       The method of multidirectional search is used.
+       Output arguments:
+              x    = vector yielding largest function value found,
+              fmax = function value at x,
+              nf   = number of function evaluations.
+       The iteration is terminated when either
+              - the relative size of the simplex is <= STOPIT(1)
+                (default 1e-3),
+              - STOPIT(2) function evaluations have been performed
+                (default inf, i.e., no limit), or
+              - a function value equals or exceeds STOPIT(3)
+                (default inf, i.e., no test on function values).
+       The form of the initial simplex is determined by STOPIT(4):
+         STOPIT(4) = 0: regular simplex (sides of equal length, the default),
+         STOPIT(4) = 1: right-angled simplex.
+       Progress of the iteration is not shown if STOPIT(5) = 0 (default 1).
+       If a non-empty fourth parameter string SAVIT is present, then
+       `SAVE SAVIT x fmax nf' is executed after each inner iteration.
+       NB: x0 can be a matrix.  In the output argument, in SAVIT saves,
+           and in function calls, x has the same shape as x0.
+       MDSMAX(fun, x0, STOPIT, SAVIT, P1, P2,...) allows additional
+       arguments to be passed to fun, via feval(fun,x,P1,P2,...).
+
+This implementation uses 2n^2 elements of storage (two simplices), where x0
+is an n-vector.  It is based on the algorithm statement in [2, sec.3],
+modified so as to halve the storage (with a slight loss in readability).
+
+References:
+[1] V. J. Torczon, Multi-directional search: A direct search algorithm for
+    parallel machines, Ph.D. Thesis, Rice University, Houston, Texas, 1989.
+[2] V. J. Torczon, On the convergence of the multidirectional search
+    algorithm, SIAM J. Optimization, 1 (1991), pp. 123-145.
+[3] N. J. Higham, Optimization by direct search in matrix computations,
+    SIAM J. Matrix Anal. Appl, 14(2): 317-333, 1993.
+[4] N. J. Higham, Accuracy and Stability of Numerical Algorithms,
+       Second edition, Society for Industrial and Applied Mathematics,
+       Philadelphia, PA, 2002; sec. 20.5.
+
+
+
+File: optim.info,  Node: adsmax,  Next: nelder_mead_min,  Prev: mdsmax,  Up: Scalar optimization
+
+1.8 An alternating directions algorithm
+=======================================
+
+Helptext:
+---------
+
+ADSMAX  Alternating directions method for direct search optimization.
+       [x, fmax, nf] = ADSMAX(FUN, x0, STOPIT, SAVIT, P) attempts to
+       maximize the function FUN, using the starting vector x0.
+       The alternating directions direct search method is used.
+       Output arguments:
+              x    = vector yielding largest function value found,
+              fmax = function value at x,
+              nf   = number of function evaluations.
+       The iteration is terminated when either
+              - the relative increase in function value between successive
+                iterations is <= STOPIT(1) (default 1e-3),
+              - STOPIT(2) function evaluations have been performed
+                (default inf, i.e., no limit), or
+              - a function value equals or exceeds STOPIT(3)
+                (default inf, i.e., no test on function values).
+       Progress of the iteration is not shown if STOPIT(5) = 0 (default 1).
+       If a non-empty fourth parameter string SAVIT is present, then
+       `SAVE SAVIT x fmax nf' is executed after each inner iteration.
+       By default, the search directions are the co-ordinate directions.
+       The columns of a fifth parameter matrix P specify alternative search
+       directions (P = EYE is the default).
+       NB: x0 can be a matrix.  In the output argument, in SAVIT saves,
+           and in function calls, x has the same shape as x0.
+       ADSMAX(fun, x0, STOPIT, SAVIT, P, P1, P2,...) allows additional
+       arguments to be passed to fun, via feval(fun,x,P1,P2,...).
+    Reference:
+    N. J. Higham, Optimization by direct search in matrix computations,
+       SIAM J. Matrix Anal. Appl, 14(2): 317-333, 1993.
+    N. J. Higham, Accuracy and Stability of Numerical Algorithms,
+       Second edition, Society for Industrial and Applied Mathematics,
+       Philadelphia, PA, 2002; sec. 20.5.
+
+
+
+File: optim.info,  Node: nelder_mead_min,  Next: powell,  Prev: adsmax,  Up: Scalar optimization
+
+1.9 Another Nelder-Mead algorithm
+=================================
+
+This function does gradient-less minimization using the Nelder-Mead
+algorithm.  No constraints are honoured.
+
+Helptext:
+---------
+
+[x0,v,nev] = nelder_mead_min (f,args,ctl) - Nelder-Mead minimization
+
+Minimize 'f' using the Nelder-Mead algorithm. This function is inspired
+from the that found in the book "Numerical Recipes".
+
+ARGUMENTS
+---------
+f     : string : Name of function. Must return a real value
+args  : list   : Arguments passed to f.
+     or matrix : f's only argument
+ctl   : vector : (Optional) Control variables, described below
+     or struct
+
+RETURNED VALUES
+---------------
+x0  : matrix   : Local minimum of f
+v   : real     : Value of f in x0
+nev : number   : Number of function evaluations
+
+CONTROL VARIABLE : (optional) may be named arguments (i.e. "name",value
+------------------ pairs), a struct, or a vector of length <= 6, where
+                   NaN's are ignored. Default values are written <value>.
+ OPT.   VECTOR
+ NAME    POS
+ftol,f  N/A    : Stopping criterion : stop search when values at simplex
+                 vertices are all alike, as tested by 
+
+                  f > (max_i (f_i) - min_i (f_i)) /max(max(|f_i|),1)
+
+                 where f_i are the values of f at the vertices.  <10*eps>
+
+rtol,r  N/A    : Stop search when biggest radius of simplex, using
+                 infinity-norm, is small, as tested by :
+
+             ctl(2) > Radius                                     <10*eps>
+
+vtol,v  N/A    : Stop search when volume of simplex is small, tested by
+           
+             ctl(2) > Vol
+
+crit,c ctl(1)  : Set one stopping criterion, 'ftol' (c=1), 'rtol' (c=2)
+                 or 'vtol' (c=3) to the value of the 'tol' option.    <1>
+
+tol, t ctl(2)  : Threshold in termination test chosen by 'crit'  <10*eps>
+
+narg  ctl(3)  : Position of the minimized argument in args            <1>
+maxev ctl(4)  : Maximum number of function evaluations. This number <inf>
+                may be slightly exceeded.
+isz   ctl(5)  : Size of initial simplex, which is :                   <1>
+
+               { x + e_i | i in 0..N } 
+
+               Where x == args{narg} is the initial value 
+                e_0    == zeros (size (x)), 
+                e_i(j) == 0 if j != i and e_i(i) == ctl(5)
+                e_i    has same size as x
+
+               Set ctl(5) to the distance you expect between the starting
+               point and the minimum.
+
+rst   ctl(6)   : When a minimum is found the algorithm restarts next to
+                 it until the minimum does not improve anymore. ctl(6) is
+                 the maximum number of restarts. Set ctl(6) to zero if
+                 you know the function is well-behaved or if you don't
+                 mind not getting a true minimum.                     <0>
+
+verbose, v     Be more or less verbose (quiet=0)                      <0>
+
+
+
+File: optim.info,  Node: powell,  Next: bfgsmin,  Prev: nelder_mead_min,  Up: Scalar optimization
+
+1.10 Direction-set (Powell's) method
+====================================
+
+ -- Function File: [P, OBJ_VALUE, CONVERGENCE, ITERS, NEVS] = powell (F,
+          P0, CONTROL)
+     Multidimensional minimization (direction-set method).  Implements a
+     direction-set (Powell's) method for multidimensional minimization
+     of a function without calculation of the gradient [1, 2]
+
+     Arguments
+     ---------
+
+        * F: name of function to minimize (string or handle), which
+          should accept one input variable (see example for how to pass
+          on additional input arguments)
+
+        * P0: An initial value of the function argument to minimize
+
+        * OPTIONS: an optional structure, which can be generated by
+          optimset, with some or all of the following fields:
+             - MaxIter: maximum iterations (positive integer, or -1 or
+               Inf for unlimited (default))
+             - TolFun: minimum amount by which function value must
+               decrease in each iteration to continue (default is 1E-8)
+             - MaxFunEvals: maximum function evaluations (positive
+               integer, or -1 or Inf for unlimited (default))
+             - SearchDirections: an n*n matrix whose columns contain the
+               initial set of (presumably orthogonal) directions to
+               minimize along, where n is the number of elements in the
+               argument to be minimized for; or an n*1 vector of
+               magnitudes for the initial directions (defaults to the
+               set of unit direction vectors)
+
+     Examples
+     --------
+
+          y = @(x, s) x(1) ^ 2 + x(2) ^ 2 + s;
+          o = optimset('MaxIter', 100, 'TolFun', 1E-10);
+          s = 1;
+          [x_optim, y_min, conv, iters, nevs] = powell(@(x) y(x, s), [1 0.5], o); %pass y wrapped in an anonymous function so that all other arguments to y, which are held constant, are set
+          %should return something like x_optim = [4E-14 3E-14], y_min = 1, conv = 1, iters = 2, nevs = 24
+
+
+     Returns:
+     --------
+
+        * P: the minimizing value of the function argument
+        * OBJ_VALUE: the value of F() at P
+        * CONVERGENCE: 1 if normal convergence, 0 if not
+        * ITERS: number of iterations performed
+        * NEVS: number of function evaluations
+
+     References
+     ----------
+
+       1. Powell MJD (1964), An efficient method for finding the minimum
+          of a function of several variables without calculating
+          derivatives, 'Computer Journal', 7 :155-162
+
+       2. Press, WH; Teukolsky, SA; Vetterling, WT; Flannery, BP (1992).
+          'Numerical Recipes in Fortran: The Art of Scientific
+          Computing' (2nd Ed.).  New York: Cambridge University Press
+          (Section 10.5)
+
+
+File: optim.info,  Node: bfgsmin,  Next: nrm,  Prev: powell,  Up: Scalar optimization
+
+1.11 Unconstrained BFGS algorithm
+=================================
+
+BFGS or limited memory BFGS minimization of a function.  No constraits
+are honoured.
+
+Helptext:
+---------
+
+bfgsmin: bfgs or limited memory bfgs minimization of function
+
+Usage: [x, obj_value, convergence, iters] = bfgsmin(f, args, control)
+
+The function must be of the form
+[value, return_2,..., return_m] = f(arg_1, arg_2,..., arg_n)
+By default, minimization is w.r.t. arg_1, but it can be done
+w.r.t. any argument that is a vector. Numeric derivatives are
+used unless analytic derivatives are supplied. See bfgsmin_example.m
+for methods.
+
+Arguments:
+* f: name of function to minimize (string)
+* args: a cell array that holds all arguments of the function
+	The argument with respect to which minimization is done
+	MUST be a vector
+* control: an optional cell array of 1-8 elements. If a cell
+  array shorter than 8 elements is provided, the trailing elements
+  are provided with default values.
+	* elem 1: maximum iterations  (positive integer, or -1 or Inf for unlimited (default))
+	* elem 2: verbosity
+		0 = no screen output (default)
+		1 = only final results
+		2 = summary every iteration
+		3 = detailed information
+	* elem 3: convergence criterion
+		1 = strict (function, gradient and param change) (default)
+		0 = weak - only function convergence required
+	* elem 4: arg in f_args with respect to which minimization is done (default is first)
+	* elem 5: (optional) Memory limit for lbfgs. If it's a positive integer
+		then lbfgs will be use. Otherwise ordinary bfgs is used
+	* elem 6: function change tolerance, default 1e-12
+	* elem 7: parameter change tolerance, default 1e-6
+	* elem 8: gradient tolerance, default 1e-5
+
+Returns:
+* x: the minimizer
+* obj_value: the value of f() at x
+* convergence: 1 if normal conv, other values if not
+* iters: number of iterations performed
+
+Example: see bfgsmin_example.m
+
+
+
+File: optim.info,  Node: nrm,  Next: cg_min,  Prev: bfgsmin,  Up: Scalar optimization
+
+1.12 Newton-Raphson algorithm
+=============================
+
+No constraints are honoured.
+
+ -- Function File: XMIN = nrm (F,X0)
+     Using X0 as a starting point find a minimum of the scalar function
+     F.  The Newton-Raphson method is used.
+
+
+File: optim.info,  Node: cg_min,  Next: brent_line_min,  Prev: nrm,  Up: Scalar optimization
+
+1.13 A conjugate gradient method
+================================
+
+ -- Function File: [X0,V,NEV] cg_min ( F,DF,ARGS,CTL )
+     NonLinear Conjugate Gradient method to minimize function F.
+
+     Arguments
+     ---------
+
+        * F : string : Name of function.  Return a real value
+        * DF : string : Name of f's derivative.  Returns a (R*C) x 1
+          vector
+        * ARGS: cell : Arguments passed to f.
+        * CTL : 5-vec : (Optional) Control variables, described below
+
+     Returned values
+     ---------------
+
+        * X0 : matrix : Local minimum of f
+        * V : real : Value of f in x0
+        * NEV : 1 x 2 : Number of evaluations of f and of df
+
+     Control Variables
+     -----------------
+
+        * CTL(1) : 1 or 2 : Select stopping criterion amongst :
+        * CTL(1)==0 : Default value
+        * CTL(1)==1 : Stopping criterion : Stop search when value
+          doesn't improve, as tested by ctl(2) > Deltaf/max(|f(x)|,1)
+          where Deltaf is the decrease in f observed in the last
+          iteration (each iteration consists R*C line searches).
+        * CTL(1)==2 : Stopping criterion : Stop search when updates are
+          small, as tested by ctl(2) > max { dx(i)/max(|x(i)|,1) | i in
+          1..N } where dx is the change in the x that occured in the
+          last iteration.
+        * CTL(2) : Threshold used in stopping tests.  Default=10*eps
+        * CTL(2)==0 : Default value
+        * CTL(3) : Position of the minimized argument in args Default=1
+        * CTL(3)==0 : Default value
+        * CTL(4) : Maximum number of function evaluations Default=inf
+        * CTL(4)==0 : Default value
+        * CTL(5) : Type of optimization:
+        * CTL(5)==1 : "Fletcher-Reves" method
+        * CTL(5)==2 : "Polak-Ribiere" (Default)
+        * CTL(5)==3 : "Hestenes-Stiefel" method
+
+     CTL may have length smaller than 4.  Default values will be used if
+     ctl is not passed or if nan values are given.
+
+     Example:
+     --------
+
+     function r=df( l ) b=[1;0;-1]; r = -( 2*l{1} - 2*b +
+     rand(size(l{1}))); endfunction
+     function r=ff( l ) b=[1;0;-1]; r = (l{1}-b)' * (l{1}-b);
+     endfunction
+     ll = { [10; 2; 3] };
+     ctl(5) = 3;
+     [x0,v,nev]=cg_min( "ff", "df", ll, ctl )
+
+     Comment: In general, BFGS method seems to be better performin in
+     many cases but requires more computation per iteration See also
+     http://en.wikipedia.org/wiki/Nonlinear_conjugate_gradient.
+
+     See also: *note bfgsmin: XREFbfgsmin.
+
+
+File: optim.info,  Node: brent_line_min,  Next: line_min,  Prev: cg_min,  Up: Scalar optimization
+
+1.14 Linesearch, Brent method
+=============================
+
+ -- Function File: [S,V,N] brent_line_min ( F,DF,ARGS,CTL )
+     Line minimization of f along df
+
+     Finds minimum of f on line x0 + dx*w | a < w < b by bracketing.  a
+     and b are passed through argument ctl.
+
+     Arguments
+     ---------
+
+        * F : string : Name of function.  Must return a real value
+        * ARGS : cell : Arguments passed to f or RxC : f's only
+          argument.  x0 must be at ARGS{ CTL(2) }
+        * CTL : 5 : (optional) Control variables, described below.
+
+     Returned values
+     ---------------
+
+        * S : 1 : Minimum is at x0 + s*dx
+        * V : 1 : Value of f at x0 + s*dx
+        * NEV : 1 : Number of function evaluations
+
+     Control Variables
+     -----------------
+
+        * CTL(1) : Upper bound for error on s Default=sqrt(eps)
+        * CTL(2) : Position of minimized argument in args Default= 1
+        * CTL(3) : Maximum number of function evaluations Default= inf
+        * CTL(4) : a Default=-inf
+        * CTL(5) : b Default= inf
+
+     Default values will be used if ctl is not passed or if nan values
+     are given.
+
+
+File: optim.info,  Node: line_min,  Next: de_min,  Prev: brent_line_min,  Up: Scalar optimization
+
+1.15 Linesearch, minimize a function along dx
+=============================================
+
+Helptext:
+---------
+
+[a,fx,nev] = line_min (f, dx, args, narg, h, nev_max) - Minimize f() along dx
+
+INPUT ----------
+f    : string  : Name of minimized function
+dx   : matrix  : Direction along which f() is minimized
+args : cell    : Arguments of f
+narg : integer : Position of minimized variable in args.  Default=1
+h    : scalar  : Step size to use for centered finite difference
+approximation of first and second derivatives. Default=1E-3.
+nev_max : integer : Maximum number of function evaluations.  Default=30
+
+OUTPUT ---------
+a    : scalar  : Value for which f(x+a*dx) is a minimum (*)
+fx   : scalar  : Value of f(x+a*dx) at minimum (*)
+nev  : integer : Number of function evaluations
+
+(*) The notation f(x+a*dx) assumes that args == {x}.
+
+Reference: David G Luenberger's Linear and Nonlinear Programming
+
+
+
+File: optim.info,  Node: de_min,  Next: battery,  Prev: line_min,  Up: Scalar optimization
+
+1.16 A differential evolution (stochastic) optimizer
+====================================================
+
+Helptext:
+---------
+
+de_min: global optimisation using differential evolution
+
+Usage: [x, obj_value, nfeval, convergence] = de_min(fcn, control)
+
+minimization of a user-supplied function with respect to x(1:D),
+using the differential evolution (DE) method based on an algorithm
+by  Rainer Storn (http://www.icsi.berkeley.edu/~storn/code.html)
+See: http://www.softcomputing.net/tevc2009_1.pdf
+
+
+Arguments:  
+---------------
+fcn        string : Name of function. Must return a real value
+control    vector : (Optional) Control variables, described below
+        or struct
+
+Returned values:
+----------------
+x          vector : parameter vector of best solution
+obj_value  scalar : objective function value of best solution
+nfeval     scalar : number of function evaluations
+convergence       : 1 = best below value to reach (VTR)
+                    0 = population has reached defined quality (tol)
+                   -1 = some values are close to constraints/boundaries
+                   -2 = max number of iterations reached (maxiter)
+                   -3 = max number of functions evaluations reached (maxnfe)
+
+Control variable:   (optional) may be named arguments (i.e. "name",value
+----------------    pairs), a struct, or a vector, where
+                    NaN's are ignored.
+
+XVmin        : vector of lower bounds of initial population
+               *** note: by default these are no constraints ***
+XVmax        : vector of upper bounds of initial population
+constr       : 1 -> enforce the bounds not just for the initial population
+const        : data vector (remains fixed during the minimization)
+NP           : number of population members
+F            : difference factor from interval [0, 2]
+CR           : crossover probability constant from interval [0, 1]
+strategy     : 1 --> DE/best/1/exp           7 --> DE/best/1/bin
+               2 --> DE/rand/1/exp           8 --> DE/rand/1/bin
+               3 --> DE/target-to-best/1/exp 9 --> DE/target-to-best/1/bin
+               4 --> DE/best/2/exp           10--> DE/best/2/bin
+               5 --> DE/rand/2/exp           11--> DE/rand/2/bin
+               6 --> DEGL/SAW/exp            else  DEGL/SAW/bin
+refresh      : intermediate output will be produced after "refresh"
+               iterations. No intermediate output will be produced
+               if refresh is < 1
+VTR          : Stopping criterion: "Value To Reach"
+               de_min will stop when obj_value <= VTR.
+               Use this if you know which value you expect.
+tol          : Stopping criterion: "tolerance"
+               stops if (best-worst)/max(1,worst) < tol
+               This stops basically if the whole population is "good".
+maxnfe       : maximum number of function evaluations
+maxiter      : maximum number of iterations (generations)
+
+      The algorithm seems to work well only if [XVmin,XVmax] covers the 
+      region where the global minimum is expected.
+      DE is also somewhat sensitive to the choice of the
+      difference factor F. A good initial guess is to choose F from
+      interval [0.5, 1], e.g. 0.8.
+      CR, the crossover probability constant from interval [0, 1]
+      helps to maintain the diversity of the population and is
+      rather uncritical but affects strongly the convergence speed.
+      If the parameters are correlated, high values of CR work better.
+      The reverse is true for no correlation.
+      Experiments suggest that /bin likes to have a slightly
+      larger CR than /exp.
+      The number of population members NP is also not very critical. A
+      good initial guess is 10*D. Depending on the difficulty of the
+      problem NP can be lower than 10*D or must be higher than 10*D
+      to achieve convergence.
+
+Default Values:
+---------------
+XVmin = [-2];
+XVmax = [ 2];
+constr= 0;
+const = [];
+NP    = 10 *D
+F     = 0.8;
+CR    = 0.9;
+strategy = 12;
+refresh  = 0;
+VTR   = -Inf;
+tol   = 1.e-3;
+maxnfe  = 1e6;
+maxiter = 1000;
+
+
+Example to find the minimum of the Rosenbrock saddle:
+----------------------------------------------------
+Define f as:
+                   function result = f(x);
+                     result = 100 * (x(2) - x(1)^2)^2 + (1 - x(1))^2;
+                   end
+Then type:
+
+	ctl.XVmin = [-2 -2];
+	ctl.XVmax = [ 2  2];
+	[x, obj_value, nfeval, convergence] = de_min (@f, ctl);
+
+Keywords: global-optimisation optimisation minimisation
+
+
+
+File: optim.info,  Node: battery,  Prev: de_min,  Up: Scalar optimization
+
+1.17 Repeatedly call bfgsmin
+============================
+
+Helptext:
+---------
+
+battery.m: repeatedly call bfgs using a battery of 
+start values, to attempt to find global min
+of a nonconvex function
+
+INPUTS:
+func: function to mimimize
+args: args of function
+minarg: argument to minimize w.r.t. (usually = 1)
+startvals: kxp matrix of values to try for sure (don't include all zeros, that's automatic)
+max iters per start value
+number of additional random start values to try
+
+OUTPUT: theta - the best value found - NOT iterated to convergence
+
+
+
+File: optim.info,  Node: Residual optimization,  Next: Zero finders,  Prev: Scalar optimization,  Up: Top
+
+2 Functions for optimization of a model function returning an array
+*******************************************************************
+
+Model functions whose parameters are to be optimized may return a vector
+or array of values.  Either these or their differences to some constant
+values (curve fitting) can be minimized in some sense, often, but not
+necessarily, by minimizing the sum of their squares.  It is usually
+preferable to use optimizers designed for residual optimization for this
+purpose.  These can exploit information contained in the individual
+elements of the returned array, which would not be possible if the user
+calculated a norm (e.g.  sum of squares) of the elements and performed a
+scalar optimization.
+
+* Menu:
+
+Optimization frontends
+* nonlin_residmin::            The standard interface for non-linear
+                                 residual minimization.
+* nonlin_curvefit::            A convenience interface, curve fitting.
+
+Optimization backends
+* lm_svd_feasible::            L/M algorithm with SVD, constraints met
+                                 throughout optimization.
+
+Statistics frontends
+* residmin_stat::              Statistics for residual minimization.
+* curvefit_stat::              Statistics for curve fitting.
+
+Statistics backends
+* wls::                        Statistics for weighted least squares.
+
+Standalone functions
+* lsqlin::                     Linear least squares with linear
+                                 constraints.
+* leasqr::                     An older function for curve fitting.
+* pronyfit::                     Prony's method for non-linear exponential
+                                 fitting.
+* polyfitinf::                 Function polyfitinf for polynomial
+                                 fitting.
+* wpolyfit::                   Polynomial fitting suitable for polyconf.
+* polyconf::                   Confidence and prediction intervals for
+                                 polynomial fitting.
+* LinearRegression::           Function LinearRegression.
+* wsolve::                     Another linear solver.
+
+
+File: optim.info,  Node: nonlin_residmin,  Next: nonlin_curvefit,  Up: Residual optimization
+
+2.1 Frontend nonlin_residmin for non-linear residual minimization
+=================================================================
+
+ -- Function File: [P, RESID, CVG, OUTP] = nonlin_residmin (F, PIN)
+ -- Function File: [P, RESID, CVG, OUTP] = nonlin_residmin (F, PIN,
+          SETTINGS)
+     Frontend for nonlinear minimization of residuals returned by a
+     model function.
+
+     The functions supplied by the user have a minimal interface; any
+     additionally needed constants (e.g.  observed values) can be
+     supplied by wrapping the user functions into anonymous functions.
+
+     The following description applies to usage with vector-based
+     parameter handling.  Differences in usage for structure-based
+     parameter handling will be explained separately.
+
+     F: function returning the array of residuals.  It gets a column
+     vector of real parameters as argument.  In gradient determination,
+     this function may be called with an informational second argument
+     (if the function accepts it), whose content depends on the function
+     for gradient determination.
+
+     PIN: real column vector of initial parameters.
+
+     SETTINGS: structure whose fields stand for optional settings
+     referred to below.  The fields can be set by 'optimset()'.
+
+     The returned values are the column vector of final parameters P,
+     the final array of residuals RESID, an integer CVG indicating if
+     and how optimization succeeded or failed, and a structure OUTP with
+     additional information, curently with the fields: 'niter', the
+     number of iterations and 'user_interaction', information on user
+     stops (see settings).  The backend may define additional fields.
+     If the backend supports it, OUTP has a field 'lambda' with
+     determined Lagrange multipliers of any constraints, seperated into
+     subfields 'lower' and 'upper' for bounds, 'eqlin' and 'ineqlin' for
+     linear equality and inequality constraints (except bounds),
+     respectively, and 'eqnonlin' and 'ineqnonlin' for general equality
+     and inequality constraints, respectively.  CVG is greater than zero
+     for success and less than or equal to zero for failure; its
+     possible values depend on the used backend and currently can be '0'
+     (maximum number of iterations exceeded), '2' (parameter change less
+     than specified precision in two consecutive iterations), or '3'
+     (improvement in objective function - e.g.  sum of squares - less
+     than specified), or '-1' (algorithm aborted by a user function).
+
+     See also: *note nonlin_curvefit: XREFnonlin_curvefit.
+
+Settings
+--------
+
+The fields of the SETTINGS structure can be set with *note optimset:
+(octave)XREFoptimset.
+
+   For settings common to all frontends (including these for statistics)
+*note Common frontend options::.
+
+   For additional settings common to all optimization frontends *note
+Common optimization options::.
+
+Specific defaults:
+..................
+
+'Algorithm':  "lm_svd_feasible"
+
+Additional settings:
+....................
+
+'weights'
+     Array of weights for the residuals.  Dimensions must match.
+'dfdp'
+     Function computing the Jacobian of the residuals with respect to
+     the parameters, assuming residuals are reshaped to a column vector.
+     Default: real finite differences.  Will be called with the column
+     vector of parameters and, if it accepts it, an informational
+     structure as arguments.  If 'dfdp' was specified by the user, the
+     informational structure has the fields 'f': value of residuals for
+     current parameters, reshaped to a column vector, 'fixed': logical
+     vector indicating which parameters are not optimized, so these
+     partial derivatives need not be computed and can be set to zero,
+     'diffp', 'diff_onesided', 'lbound', 'ubound': identical to the user
+     settings of this name, 'plabels': 1-dimensional cell-array of
+     column-cell-arrays, each column with labels for all parameters; the
+     first column contains the numerical indices of the parameters; the
+     second and third columns, present for structure based parameter
+     handling, *note Parameter structures::, contain the names of the
+     parameters and the subindices of the parameters, *note Non-scalar
+     parameters::, respectively.  The default jacobian function will
+     call the model function with the second argument set with fields
+     'f': as the 'f' passed to the jacobian function, 'plabels':
+     cell-array of 1x1 cell-arrays with the entries of the
+     column-cell-arrays of 'plabels' as passed to the jacobian function
+     corresponding to current parameter, 'side': '0' for one-sided
+     interval, '1' or '2', respectively, for the sides of a two-sided
+     interval, and 'parallel': logical scalar indicating parallel
+     computation of partial derivatives.  This information can be useful
+     if the model function can omit some computations depending on the
+     currently computed partial derivative.
+'complex_step_derivative_f'
+     Logical scalar, default: 'false'.  Estimate Jacobian of model
+     function with complex step derivative approximation.  Use only if
+     you know that your model function is suitable for this.  No user
+     function for the Jacobian ('dfdp') must be specified.
+'plot_cmd'
+     Function enabling backend to plot results or intermediate results.
+     Will be called with current computed residuals.  Default: plot
+     nothing.  This setting is deprecated and will disappear.  Please
+     use 'user_interaction' instead ( *note Common optimization
+     options::).
+
+Structure based parameter handling
+----------------------------------
+
+Please *note Parameter structures::.
+
+Backend information
+-------------------
+
+Please *note Residual optimization:: and choose backend from menu under
+'Optimization backends'.
+
+
+File: optim.info,  Node: nonlin_curvefit,  Next: lm_svd_feasible,  Prev: nonlin_residmin,  Up: Residual optimization
+
+2.2 Function nonlin_curvefit() for curve fitting
+================================================
+
+In curve fitting, the model function computes values from a constant set
+of 'independents', and the intention is to minimize the differences of
+these computed values to a constant set of 'observations'.  This can be
+done with 'nonlin_residmin', but it is more convenient to use
+'nonlin_curvefit', which cares for passing the constant 'independents'
+to the model function and for calculating the differences to the
+constant 'observations'.
+
+   However, if in some optimization problem you notice that you end up
+with passing dummy-values for the 'independents' and zeros for the
+'observations', you can more naturally use 'nonlin_residmin' instead of
+'nonlin_curvefit'.
+
+ -- Function File: [P, FY, CVG, OUTP] = nonlin_curvefit (F, PIN, X, Y)
+ -- Function File: [P, FY, CVG, OUTP] = nonlin_curvefit (F, PIN, X, Y,
+          SETTINGS)
+     Frontend for nonlinear fitting of values, computed by a model
+     function, to observed values.
+
+     Please refer to the description of 'nonlin_residmin'.  The
+     differences to 'nonlin_residmin' are the additional arguments X
+     (independent values, mostly, but not necessarily, an array of the
+     same dimensions or the same number of rows as Y) and Y (array of
+     observations), the returned value FY (final guess for observed
+     values) instead of RESID, that the model function has a second
+     obligatory argument which will be set to X and is supposed to
+     return guesses for the observations (with the same dimensions), and
+     that the possibly user-supplied function for the jacobian of the
+     model function has also a second obligatory argument which will be
+     set to X.
+
+     See also: *note nonlin_residmin: XREFnonlin_residmin.
+
+   Also, if the setting 'user_interaction' is given, additional
+information is passed to these functions, *note Common optimization
+options::.
+
+
+File: optim.info,  Node: lm_svd_feasible,  Next: residmin_stat,  Prev: nonlin_curvefit,  Up: Residual optimization
+
+2.3 Default backend lm_svd_feasible of residual minimization
+============================================================
+
+Levenberg/Marquardt algorithm using singular value decomposition.
+Constraints must be met by the initial parameters and are attempted to
+be kept met throughout the optimization.
+
+   Returned value CVG will be '0', '1', or '2'.  Returned structure OUTP
+will have the fields 'niter' and 'user_interaction'.
+
+   Backend-specific defaults are: 'MaxIter': 20, 'fract_prec': 'zeros
+(size (parameters))', 'max_fract_change': 'Inf' for all parameters.  The
+setting 'TolX' is not honoured.
+
+   Interpretation of 'Display': if set to "iter", currently some
+diagnostics are printed.
+
+   Specific option: 'lm_svd_feasible_alt_s': if falling back to nearly
+gradient descent, do it more like original Levenberg/Marquardt method,
+with descent in each gradient component; for testing only.
+
+
+File: optim.info,  Node: residmin_stat,  Next: curvefit_stat,  Prev: lm_svd_feasible,  Up: Residual optimization
+
+2.4 Statistics for residual minimization
+========================================
+
+ -- Function File: INFO = residmin_stat (F, P, SETTINGS)
+     Frontend for computation of statistics for a residual-based
+     minimization.
+
+     SETTINGS is a structure whose fields can be set by 'optimset'.
+     With SETTINGS the computation of certain statistics is requested by
+     setting the fields 'ret_<name_of_statistic>' to 'true'.  The
+     respective statistics will be returned in a structure as fields
+     with name '<name_of_statistic>'.  Depending on the requested
+     statistic and on the additional information provided in SETTINGS, F
+     and P may be empty.  Otherwise, F is the model function of an
+     optimization (the interface of F is described e.g.  in
+     'nonlin_residmin', please see there), and P is a real column vector
+     with parameters resulting from the same optimization.
+
+     Currently, the following statistics (or general information) can be
+     requested (the 'ret_' is prepended so that the option name is
+     complete):
+
+     'ret_dfdp': Jacobian of model function with respect to parameters.
+
+     'ret_covd': Covariance matrix of data (typically guessed by
+     applying a factor to the covariance matrix of the residuals).
+
+     'ret_covp': Covariance matrix of final parameters.
+
+     'ret_corp': Correlation matrix of final parameters.
+
+     See also: *note curvefit_stat: XREFcurvefit_stat.
+
+Further settings
+----------------
+
+The fields of the SETTINGS structure can be set with *note optimset:
+(octave)XREFoptimset.
+
+   For settings common to all frontends *note Common frontend options::.
+
+Additional settings:
+....................
+
+'objf_type'
+     Type of objective function of the optimization; must be specified
+     in many cases.  This determines which backends to use.  Currently,
+     there are only backends for the type "wls" (weighted least
+     squares).
+'residuals'
+'covd'
+     Optional information on the result of optimization, residuals and
+     covariance matrix of data, respectively.
+'weights'
+     Array of weights applied to the residuals in the previous
+     optimization.  Dimensions must match those of the residuals.
+'dfdp'
+     Can be set in the same way and has the same default as in
+     'nonlin_residmin' ( *note nonlin_residmin::), but alternatively may
+     already contain the computed Jacobian of the model function at the
+     final parameters in matrix- or structure-form.
+'complex_step_derivative_f'
+     Estimate Jacobian of model function with complex step derivative
+     approximation.  Use only if you know that your model function is
+     suitable for this.  No user function for the Jacobian ('dfdp') must
+     be specified.
+
+Structure based parameter handling
+----------------------------------
+
+Please *note Parameter structures::.
+
+Backend information
+-------------------
+
+Please *note Residual optimization:: and choose backend from menu under
+'Statistics backends'.
+
+
+File: optim.info,  Node: curvefit_stat,  Next: wls,  Prev: residmin_stat,  Up: Residual optimization
+
+2.5 Statistics for curve fitting
+================================
+
+As 'nonlin_curvefit' can be used instead of 'nonlin_residmin' for curve
+fitting ( *note nonlin_curvefit::, *note nonlin_residmin::),
+'curvefit_stat' can be used instead of 'residmin_stat' ( *note
+residmin_stat::) for statistics on the results of curve fitting.
+
+ -- Function File: INFO = curvefit_stat (F, P, X, Y, SETTINGS)
+
+     Frontend for computation of statistics for fitting of values,
+     computed by a model function, to observed values.
+
+     Please refer to the description of 'residmin_stat'.  The only
+     differences to 'residmin_stat' are the additional arguments X
+     (independent values) and Y (observations), that the model function
+     F, if provided, has a second obligatory argument which will be set
+     to X and is supposed to return guesses for the observations (with
+     the same dimensions), and that the possibly user-supplied function
+     for the jacobian of the model function has also a second obligatory
+     argument which will be set to X.
+
+     See also: *note residmin_stat: XREFresidmin_stat.
+
+
+File: optim.info,  Node: wls,  Next: lsqlin,  Prev: curvefit_stat,  Up: Residual optimization
+
+2.6 Statistics for weighted least squares
+=========================================
+
+The backends for 'objf_type == "wls"' (currently the only supported type
+of objective function) compute 'covd' (due to user request or as a
+prerequisite for 'covp' and 'corp') as a diagonal matrix by assuming
+that the variances of data points are proportional to the reciprocal of
+the squared 'weights' and guessing the factor of proportionality from
+the residuals.  If 'covp' is not defined (e.g.  because the Jacobian has
+no full rank), an attempt is made to still compute its uniquely defined
+elements, if any.  In 'corp', interdependent parameters can cause
+elements of '1' or '-1', which in this case are not the real
+coefficients of correlation, but rather indicate the direction of
+parameter interdependence.  To be consistent with this, an attempt is
+made (often not successful) to identify parameter interdependence and
+mark it with elements of '1' or '-1' in 'corp' even if the respective
+elements of 'covp' can not be computed.
+
+
+File: optim.info,  Node: lsqlin,  Next: leasqr,  Prev: wls,  Up: Residual optimization
+
+2.7 Linear least squares with linear constraints.
+=================================================
+
+(This function does not fit well into this chapter because it is
+actually a special case of quadratic programming).
+
+ -- Function File: lsqlin (C, D, A, B)
+ -- Function File: lsqlin (C, D, A, B, AEQ, BEQ, LB, UB)
+ -- Function File: lsqlin (C, D, A, B, AEQ, BEQ, LB, UB, X0)
+ -- Function File: lsqlin (C, D, A, B, AEQ, BEQ, LB, UB, X0, OPTIONS)
+ -- Function File: [X, RESNORM, RESIDUAL, EXITFLAG, OUTPUT, LAMBDA] =
+          lsqlin (...)
+     Solve the linear least squares program
+          min 0.5 sumsq(C*x - d)
+          x
+     subject to
+          A*X <= B,
+          AEQ*X = BEQ,
+          LB <= X <= UB.
+
+     The initial guess X0 and the constraint arguments (A and B, AEQ and
+     BEQ, LB and UB) can be set to the empty matrix ('[]') if not given.
+     If the initial guess X0 is feasible the algorithm is faster.
+
+     OPTIONS can be set with 'optimset', currently the only option is
+     'MaxIter', the maximum number of iterations (default: 200).
+
+     Returned values:
+
+     X
+          Position of minimum.
+
+     RESNORM
+          Scalar value of objective as sumsq(C*x - d).
+
+     RESIDUAL
+          Vector of solution residuals C*x - d.
+
+     EXITFLAG
+          Status of solution:
+
+          '0'
+               Maximum number of iterations reached.
+
+          '-2'
+               The problem is infeasible.
+
+          '-3'
+               The problem is not convex and unbounded.
+
+          '1'
+               Global solution found.
+
+     OUTPUT
+          Structure with additional information, currently the only
+          field is 'iterations', the number of used iterations.
+
+     LAMBDA
+          Structure containing Lagrange multipliers corresponding to the
+          constraints.
+
+     This function calls the more general function 'quadprog'
+     internally.
+
+     See also: *note quadprog: XREFquadprog.
+
+
+File: optim.info,  Node: leasqr,  Next: pronyfit,  Prev: lsqlin,  Up: Residual optimization
+
+2.8 An older function for curve fitting
+=======================================
+
+This was a popular function for curve fitting and has been enhanced to
+honour constraints.  'nonlin_curvefit' ( *note nonlin_curvefit::) does
+now the same job if used with the default backend, and should be
+prefered due to its more powerful interface.  The statistics returned by
+'leasqr' can also (and partially better) be computed with
+'curvefit_stat' ( *note curvefit_stat::).  There are currently two
+things which still only 'leasqr' does:
+
+   * internally providing a function for plotting fits during
+     optimization,
+   * returning a pre-computed matrix for determining confidence regions.
+
+ -- Function File: leasqr (X, Y, PIN, F)
+ -- Function File: leasqr (X, Y, PIN, F, STOL)
+ -- Function File: leasqr (X, Y, PIN, F, STOL, NITER)
+ -- Function File: leasqr (X, Y, PIN, F, STOL, NITER, WT)
+ -- Function File: leasqr (X, Y, PIN, F, STOL, NITER, WT, DP)
+ -- Function File: leasqr (X, Y, PIN, F, STOL, NITER, WT, DP, DFDP)
+ -- Function File: leasqr (X, Y, PIN, F, STOL, NITER, WT, DP, DFDP,
+          OPTIONS)
+ -- Function File: [F, P, CVG, ITER, CORP, COVP, COVR, STDRESID, Z, R2]
+          = leasqr (...)
+     Levenberg-Marquardt nonlinear regression.
+
+     Input arguments:
+
+     X
+          Vector or matrix of independent variables.
+
+     Y
+          Vector or matrix of observed values.
+
+     PIN
+          Vector of initial parameters to be adjusted by leasqr.
+
+     F
+          Name of function or function handle.  The function must be of
+          the form 'y = f(x, p)', with y, x, p of the form Y, X, PIN.
+
+     STOL
+          Scalar tolerance on fractional improvement in scalar sum of
+          squares, i.e., 'sum ((WT .* (Y-F))^2)'.  Set to 0.0001 if
+          empty or not given;
+
+     NITER
+          Maximum number of iterations.  Set to 20 if empty or not
+          given.
+
+     WT
+          Statistical weights (same dimensions as Y).  These should be
+          set to be proportional to 'sqrt (Y) ^-1', i.e., the covariance
+          matrix of the data is assumed to be proportional to diagonal
+          with diagonal equal to '(WT.^2)^-1'.  The constant of
+          proportionality will be estimated.  Set to 'ones (size (Y))'
+          if empty or not given.
+
+     DP
+          Fractional increment of P for numerical partial derivatives.
+          Set to '0.001 * ones (size (PIN))' if empty or not given.
+
+             * dp(j) > 0 means central differences on j-th parameter
+               p(j).
+             * dp(j) < 0 means one-sided differences on j-th parameter
+               p(j).
+             * dp(j) = 0 holds p(j) fixed, i.e., leasqr won't change
+               initial guess: pin(j)
+
+     DFDP
+          Name of partial derivative function in quotes or function
+          handle.  If not given or empty, set to 'dfdp', a slow but
+          general partial derivatives function.  The function must be of
+          the form 'prt = dfdp (x, f, p, dp, F [,bounds])'.  For
+          backwards compatibility, the function will only be called with
+          an extra 'bounds' argument if the 'bounds' option is
+          explicitly specified to leasqr (see dfdp.m).
+
+     OPTIONS
+          Structure with multiple options.  The following fields are
+          recognized:
+
+          fract_prec
+               Column vector (same length as PIN) of desired fractional
+               precisions in parameter estimates.  Iterations are
+               terminated if change in parameter vector (chg) relative
+               to current parameter estimate is less than their
+               corresponding elements in 'fract_prec', i.e., 'all (abs
+               (chg) < abs (options.fract_prec .* current_parm_est))' on
+               two consecutive iterations.  Defaults to 'zeros (size
+               (PIN))'.
+
+          max_fract_change
+               Column vector (same length as PIN) of maximum fractional
+               step changes in parameter vector.  Fractional change in
+               elements of parameter vector is constrained to be at most
+               'max_fract_change' between sucessive iterations, i.e.,
+               'abs (chg(i)) = abs (min([chg(i),
+               options.max_fract_change(i) * current param estimate]))'.
+               Defaults to 'Inf * ones (size (PIN))'.
+
+          inequc
+               Cell-array containing up to four entries, two entries for
+               linear inequality constraints and/or one or two entries
+               for general inequality constraints.  Initial parameters
+               must satisfy these constraints.  Either linear or general
+               constraints may be the first entries, but the two entries
+               for linear constraints must be adjacent and, if two
+               entries are given for general constraints, they also must
+               be adjacent.  The two entries for linear constraints are
+               a matrix (say m) and a vector (say v), specifying linear
+               inequality constraints of the form 'm.'  * parameters + v
+               >= 0'.  If the constraints are just bounds, it is
+               suggested to specify them in 'options.bounds' instead,
+               since then some sanity tests are performed, and since the
+               function 'dfdp.m' is guarantied not to violate
+               constraints during determination of the numeric gradient
+               only for those constraints specified as 'bounds'
+               (possibly with violations due to a certain inaccuracy,
+               however, except if no constraints except bounds are
+               specified).  The first entry for general constraints must
+               be a differentiable vector valued function (say h),
+               specifying general inequality constraints of the form 'h
+               (p[, idx]) >= 0'; p is the column vector of optimized
+               paraters and the optional argument idx is a logical
+               index.  h has to return the values of all constraints if
+               idx is not given, and has to return only the indexed
+               constraints if idx is given (so computation of the other
+               constraints can be spared).  If a second entry for
+               general constraints is given, it must be a function (say
+               dh) which returnes a matrix whos rows contain the
+               gradients of the constraint function h with respect to
+               the optimized parameters.  It has the form jac_h = dh
+               (vh, p, dp, h, idx[, bounds]); p is the column vector of
+               optimized parameters, and idx is a logical index -- only
+               the rows indexed by idx must be returned (so computation
+               of the others can be spared).  The other arguments of dh
+               are for the case that dh computes numerical gradients: vh
+               is the column vector of the current values of the
+               constraint function h, with idx already applied.  h is a
+               function h (p) to compute the values of the constraints
+               for parameters p, it will return only the values indexed
+               by idx.  dp is a suggestion for relative step width,
+               having the same value as the argument 'dp' of leasqr
+               above.  If bounds were specified to leasqr, they are
+               provided in the argument bounds of dh, to enable their
+               consideration in determination of numerical gradients.
+               If dh is not specified to leasqr, numerical gradients are
+               computed in the same way as with 'dfdp.m' (see above).
+               If some constraints are linear, they should be specified
+               as linear constraints (or bounds, if applicable) for
+               reasons of performance, even if general constraints are
+               also specified.
+
+          bounds
+               Two-column-matrix, one row for each parameter in PIN.
+               Each row contains a minimal and maximal value for each
+               parameter.  Default: [-Inf, Inf] in each row.  If this
+               field is used with an existing user-side function for
+               'dFdp' (see above) the functions interface might have to
+               be changed.
+
+          equc
+               Equality constraints, specified the same way as
+               inequality constraints (see field 'options.inequc').
+               Initial parameters must satisfy these constraints.  Note
+               that there is possibly a certain inaccuracy in honoring
+               constraints, except if only bounds are specified.
+               _Warning_: If constraints (or bounds) are set, returned
+               guesses of CORP, COVP, and Z are generally invalid, even
+               if no constraints are active for the final parameters.
+               If equality constraints are specified, CORP, COVP, and Z
+               are not guessed at all.
+
+          cpiv
+               Function for complementary pivot algorithm for inequality
+               constraints.  Defaults to cpiv_bard.  No different
+               function is supplied.
+
+          For backwards compatibility, OPTIONS can also be a matrix
+          whose first and second column contains the values of
+          fract_prec and max_fract_change, respectively.
+
+     Output:
+
+     F
+          Column vector of values computed: f = F(x,p).
+
+     P
+          Column vector trial or final parameters, i.e, the solution.
+
+     CVG
+          Scalar: = 1 if convergence, = 0 otherwise.
+
+     ITER
+          Scalar number of iterations used.
+
+     CORP
+          Correlation matrix for parameters.
+
+     COVP
+          Covariance matrix of the parameters.
+
+     COVR
+          Diag(covariance matrix of the residuals).
+
+     STDRESID
+          Standardized residuals.
+
+     Z
+          Matrix that defines confidence region (see comments in the
+          source).
+
+     R2
+          Coefficient of multiple determination, intercept form.
+
+     Not suitable for non-real residuals.
+
+     References: Bard, Nonlinear Parameter Estimation, Academic Press,
+     1974.  Draper and Smith, Applied Regression Analysis, John Wiley
+     and Sons, 1981.
+
+
+File: optim.info,  Node: pronyfit,  Next: polyfitinf,  Prev: leasqr,  Up: Residual optimization
+
+2.9 Prony's method for non-linear exponential fitting
+=====================================================
+
+Helptext:
+---------
+
+USAGE  [alpha,c,rms] = pronyfit( deg, x1, h, y )
+
+Prony's method for non-linear exponential fitting
+
+Fit function:   \sum_1^{deg} c(i)*exp(alpha(i)*x)
+
+Elements of data vector y must correspond to
+equidistant x-values starting at x1 with stepsize h
+
+The method is fully compatible with complex linear
+coefficients c, complex nonlinear coefficients alpha
+and complex input arguments y, x1, non-zero h .
+Fit-order deg  must be a real positive integer.
+
+Returns linear coefficients c, nonlinear coefficients
+alpha and root mean square error rms. This method is
+known to be more stable than 'brute-force' non-linear
+least squares fitting.
+
+Example
+   x0 = 0; step = 0.05; xend = 5; x = x0:step:xend;
+   y = 2*exp(1.3*x)-0.5*exp(2*x);
+   error = (rand(1,length(y))-0.5)*1e-4;
+   [alpha,c,rms] = pronyfit(2,x0,step,y+error)
+
+ alpha =
+   2.0000
+   1.3000
+ c =
+   -0.50000
+    2.00000
+ rms = 0.00028461
+
+The fit is very sensitive to the number of data points.
+It doesn't perform very well for small data sets.
+Theoretically, you need at least 2*deg data points, but
+if there are errors on the data, you certainly need more.
+
+Be aware that this is a very (very,very) ill-posed problem.
+By the way, this algorithm relies heavily on computing the
+roots of a polynomial. I used 'roots.m', if there is
+something better please use that code.
+
+Demo for a complex fit-function:
+deg= 2; N= 20; x1= -(1+i), x= linspace(x1,1+i/2,N).';
+h = x(2) - x(1)
+y= (2+i)*exp( (-1-2i)*x ) + (-1+3i)*exp( (2+3i)*x );
+A= 5e-2; y+= A*(randn(N,1)+randn(N,1)*i); % add complex noise
+[alpha,c,rms]= pronyfit( deg, x1, h, y )
+
+
+
+File: optim.info,  Node: polyfitinf,  Next: wpolyfit,  Prev: pronyfit,  Up: Residual optimization
+
+2.10 Function polyfitinf for polynomial fitting.
+================================================
+
+Helptext:
+---------
+
+function [A,REF,HMAX,H,R,EQUAL] = polyfitinf(M,N,K,X,Y,EPSH,MAXIT,REF0)
+
+  Best polynomial approximation in discrete uniform norm
+
+  INPUT VARIABLES:
+
+  M       : degree of the fitting polynomial
+  N       : number of data points
+  X(N)    : x-coordinates of data points
+  Y(N)    : y-coordinates of data points
+  K       : character of the polynomial:
+                  K = 0 : mixed parity polynomial
+                  K = 1 : odd polynomial  ( X(1) must be >  0 )
+                  K = 2 : even polynomial ( X(1) must be >= 0 )
+  EPSH    : tolerance for leveling. A useful value for 24-bit
+            mantissa is EPSH = 2.0E-7
+  MAXIT   : upper limit for number of exchange steps
+  REF0(M2): initial alternating set ( N-vector ). This is an
+            OPTIONAL argument. The length M2 is given by:
+                  M2 = M + 2                      , if K = 0
+                  M2 = integer part of (M+3)/2    , if K = 1
+                  M2 = 2 + M/2 (M must be even)   , if K = 2
+
+  OUTPUT VARIABLES:
+
+  A       : polynomial coefficients of the best approximation
+            in order of increasing powers:
+                  p*(x) = A(1) + A(2)*x + A(3)*x^2 + ...
+  REF     : selected alternating set of points
+  HMAX    : maximum deviation ( uniform norm of p* - f )
+  H       : pointwise approximation errors
+	R		: total number of iterations
+  EQUAL   : success of failure of algorithm
+                  EQUAL=1 :  succesful
+                  EQUAL=0 :  convergence not acheived
+                  EQUAL=-1:  input error
+                  EQUAL=-2:  algorithm failure
+
+  Relies on function EXCH, provided below.
+
+  Example: 
+  M = 5; N = 10000; K = 0; EPSH = 10^-12; MAXIT = 10;
+  X = linspace(-1,1,N);   % uniformly spaced nodes on [-1,1]
+  k=1; Y = abs(X).^k;     % the function Y to approximate
+  [A,REF,HMAX,H,R,EQUAL] = polyfitinf(M,N,K,X,Y,EPSH,MAXIT);
+  p = polyval(A,X); plot(X,Y,X,p) % p is the best approximation
+
+  Note: using an even value of M, e.g., M=2, in the example above, makes
+  the algorithm to fail with EQUAL=-2, because of collocation, which
+  appears because both the appriximating function and the polynomial are
+  even functions. The way aroung it is to approximate only the right half
+  of the function, setting K = 2 : even polynomial. For example: 
+
+N = 10000; K = 2; EPSH = 10^-12; MAXIT = 10;  X = linspace(0,1,N);
+for i = 1:2
+    k = 2*i-1; Y = abs(X).^k;
+    for j = 1:4
+        M = 2^j;
+        [~,~,HMAX] = polyfitinf(M,N,K,X,Y,EPSH,MAXIT);
+        approxerror(i,j) = HMAX;
+    end
+end
+disp('Table 3.1 from Approximation theory and methods, M.J.D.POWELL, p. 27');
+disp(' ');
+disp('            n          K=1          K=3'); 
+disp(' '); format short g;
+disp([(2.^(1:4))' approxerror']);
+
+  ALGORITHM:
+
+  Computation of the polynomial that best approximates the data (X,Y)
+  in the discrete uniform norm, i.e. the polynomial with the  minimum
+  value of max{ | p(x_i) - y_i | , x_i in X } . That polynomial, also
+  known as minimax polynomial, is obtained by the exchange algorithm,
+  a finite iterative process requiring, at most,
+     n
+   (   ) iterations ( usually p = M + 2. See also function EXCH ).
+     p
+  since this number can be very large , the routine  may not converge
+  within MAXIT iterations . The  other possibility of  failure occurs
+  when there is insufficient floating point precision  for  the input
+  data chosen.
+
+  CREDITS: This routine was developed and modified as 
+  computer assignments in Approximation Theory courses by 
+  Prof. Andrew Knyazev, University of Colorado Denver, USA.
+
+  Team Fall 98 (Revision 1.0):
+          Chanchai Aniwathananon
+          Crhistopher Mehl
+          David A. Duran
+          Saulo P. Oliveira
+
+  Team Spring 11 (Revision 1.1): Manuchehr Aminian
+
+  The algorithm and the comments are based on a FORTRAN code written
+  by Joseph C. Simpson. The code is available on Netlib repository:
+  http://www.netlib.org/toms/501
+  See also: Communications of the ACM, V14, pp.355-356(1971)
+
+  NOTES:
+
+  1) A may contain the collocation polynomial
+  2) If MAXIT is exceeded, REF contains a new reference set
+  3) M, EPSH and REF can be altered during the execution
+  4) To keep consistency to the original code , EPSH can be
+  negative. However, the use of REF0 is *NOT* determined by
+  EPSH< 0, but only by its inclusion as an input parameter.
+
+  Some parts of the code can still take advantage of vectorization.  
+
+  Revision 1.0 from 1998 is a direct human translation of 
+  the FORTRAN code http://www.netlib.org/toms/501
+  Revision 1.1 is a clean-up and technical update.  
+  Tested on MATLAB Version 7.11.0.584 (R2010b) and 
+  GNU Octave Version 3.2.4
+
+
+
+File: optim.info,  Node: wpolyfit,  Next: polyconf,  Prev: polyfitinf,  Up: Residual optimization
+
+2.11 Polynomial fitting suitable for polyconf
+=============================================
+
+ -- Function File: [P, S] = wpolyfit (X, Y, DY, N)
+     Return the coefficients of a polynomial P(X) of degree N that
+     minimizes 'sumsq (p(x(i)) - y(i))', to best fit the data in the
+     least squares sense.  The standard error on the observations Y if
+     present are given in DY.
+
+     The returned value P contains the polynomial coefficients suitable
+     for use in the function polyval.  The structure S returns
+     information necessary to compute uncertainty in the model.
+
+     To compute the predicted values of y with uncertainty use
+          [y,dy] = polyconf(p,x,s,'ci');
+     You can see the effects of different confidence intervals and
+     prediction intervals by calling the wpolyfit internal plot function
+     with your fit:
+          feval('wpolyfit:plt',x,y,dy,p,s,0.05,'pi')
+     Use DY=[] if uncertainty is unknown.
+
+     You can use a chi^2 test to reject the polynomial fit:
+          p = 1-chi2cdf(s.normr^2,s.df);
+     p is the probability of seeing a chi^2 value higher than that which
+     was observed assuming the data are normally distributed around the
+     fit.  If p < 0.01, you can reject the fit at the 1% level.
+
+     You can use an F test to determine if a higher order polynomial
+     improves the fit:
+          [poly1,S1] = wpolyfit(x,y,dy,n);
+          [poly2,S2] = wpolyfit(x,y,dy,n+1);
+          F = (S1.normr^2 - S2.normr^2)/(S1.df-S2.df)/(S2.normr^2/S2.df);
+          p = 1-f_cdf(F,S1.df-S2.df,S2.df);
+     p is the probability of observing the improvement in chi^2 obtained
+     by adding the extra parameter to the fit.  If p < 0.01, you can
+     reject the lower order polynomial at the 1% level.
+
+     You can estimate the uncertainty in the polynomial coefficients
+     themselves using
+          dp = sqrt(sumsq(inv(s.R'))'/s.df)*s.normr;
+     but the high degree of covariance amongst them makes this a
+     questionable operation.
+
+ -- Function File: [P, S, MU] = wpolyfit (...)
+
+     If an additional output 'mu = [mean(x),std(x)]' is requested then
+     the X values are centered and normalized prior to computing the
+     fit.  This will give more stable numerical results.  To compute a
+     predicted Y from the returned model use 'y = polyval(p,
+     (x-mu(1))/mu(2)'
+
+ -- Function File: wpolyfit (...)
+
+     If no output arguments are requested, then wpolyfit plots the data,
+     the fitted line and polynomials defining the standard error range.
+
+     Example
+          x = linspace(0,4,20);
+          dy = (1+rand(size(x)))/2;
+          y = polyval([2,3,1],x) + dy.*randn(size(x));
+          wpolyfit(x,y,dy,2);
+
+ -- Function File: wpolyfit (..., 'origin')
+
+     If 'origin' is specified, then the fitted polynomial will go
+     through the origin.  This is generally ill-advised.  Use with
+     caution.
+
+     Hocking, RR (2003).  Methods and Applications of Linear Models.
+     New Jersey: John Wiley and Sons, Inc.
+
+     See also: *note polyconf: XREFpolyconf.
+
+   See also *note polyfit: (octave)XREFpolyfit.
+
+
+File: optim.info,  Node: polyconf,  Next: LinearRegression,  Prev: wpolyfit,  Up: Residual optimization
+
+2.12 Confidence and prediction intervals for polynomial fitting
+===============================================================
+
+Helptext:
+---------
+
+[y,dy] = polyconf(p,x,s)
+
+  Produce prediction intervals for the fitted y. The vector p 
+  and structure s are returned from polyfit or wpolyfit. The 
+  x values are where you want to compute the prediction interval.
+
+polyconf(...,['ci'|'pi'])
+
+  Produce a confidence interval (range of likely values for the
+  mean at x) or a prediction interval (range of likely values 
+  seen when measuring at x).  The prediction interval tells
+  you the width of the distribution at x.  This should be the same
+  regardless of the number of measurements you have for the value
+  at x.  The confidence interval tells you how well you know the
+  mean at x.  It should get smaller as you increase the number of
+  measurements.  Error bars in the physical sciences usually show 
+  a 1-alpha confidence value of erfc(1/sqrt(2)), representing
+  one standandard deviation of uncertainty in the mean.
+
+polyconf(...,1-alpha)
+
+  Control the width of the interval. If asking for the prediction
+  interval 'pi', the default is .05 for the 95% prediction interval.
+  If asking for the confidence interval 'ci', the default is
+  erfc(1/sqrt(2)) for a one standard deviation confidence interval.
+
+Example:
+ [p,s] = polyfit(x,y,1);
+ xf = linspace(x(1),x(end),150);
+ [yf,dyf] = polyconf(p,xf,s,'ci');
+ plot(xf,yf,'g-;fit;',xf,yf+dyf,'g.;;',xf,yf-dyf,'g.;;',x,y,'xr;data;');
+ plot(x,y-polyval(p,x),';residuals;',xf,dyf,'g-;;',xf,-dyf,'g-;;');
+
+
+
+File: optim.info,  Node: LinearRegression,  Next: wsolve,  Prev: polyconf,  Up: Residual optimization
+
+2.13 Function LinearRegression
+==============================
+
+ -- Function File: LinearRegression (F, Y)
+ -- Function File: LinearRegression (F, Y, W)
+ -- Function File: [P, E_VAR, R, P_VAR, FIT_VAR] = LinearRegression
+          (...)
+
+     general linear regression
+
+     determine the parameters p_j (j=1,2,...,m) such that the function
+     f(x) = sum_(j=1,...,m) p_j*f_j(x) is the best fit to the given
+     values y_i by f(x_i) for i=1,...,n, i.e.  minimize
+     sum_(i=1,...,n)(y_i-sum_(j=1,...,m) p_j*f_j(x_i))^2 with respect to
+     p_j
+
+     parameters:
+        * F is an n*m matrix with the values of the basis functions at
+          the support points.  In column j give the values of f_j at the
+          points x_i (i=1,2,...,n)
+        * Y is a column vector of length n with the given values
+        * W is a column vector of length n with the weights of the data
+          points.  1/w_i is expected to be proportional to the estimated
+          uncertainty in the y values.  Then the weighted expression
+          sum_(i=1,...,n)(w_i^2*(y_i-f(x_i))^2) is minimized.
+
+     return values:
+        * P is the vector of length m with the estimated values of the
+          parameters
+        * E_VAR is the vector of estimated variances of the provided y
+          values.  If weights are provided, then the product e_var_i *
+          w^2_i is assumed to be constant.
+        * R is the weighted norm of the residual
+        * P_VAR is the vector of estimated variances of the parameters
+          p_j
+        * FIT_VAR is the vector of the estimated variances of the fitted
+          function values f(x_i)
+
+     To estimate the variance of the difference between future y values
+     and fitted y values use the sum of E_VAR and FIT_VAR
+
+     Caution: do NOT request FIT_VAR for large data sets, as a n by n
+     matrix is generated
+
+   See also *note ols: (octave)XREFols, *note gls: (octave)XREFgls,
+*note regress: (octave)XREFregress, *note leasqr: XREFleasqr, *note
+nonlin_curvefit: XREFnonlin_curvefit, *note polyfit:
+(octave)XREFpolyfit, *note wpolyfit: XREFwpolyfit, *note pronyfit:
+XREFpronyfit.
+
+
+File: optim.info,  Node: wsolve,  Prev: LinearRegression,  Up: Residual optimization
+
+2.14 Function wsolve, another linear solver
+===========================================
+
+Helptext:
+---------
+
+[x,s] = wsolve(A,y,dy)
+
+Solve a potentially over-determined system with uncertainty in
+the values. 
+
+    A x = y +/- dy
+
+Use QR decomposition for increased accuracy.  Estimate the 
+uncertainty for the solution from the scatter in the data.
+
+The returned structure s contains
+
+   normr = sqrt( A x - y ), weighted by dy
+   R such that R'R = A'A
+   df = n-p, n = rows of A, p = columns of A
+
+See polyconf for details on how to use s to compute dy.
+The covariance matrix is inv(R'*R).  If you know that the
+parameters are independent, then uncertainty is given by
+the diagonal of the covariance matrix, or 
+
+   dx = sqrt(N*sumsq(inv(s.R'))')
+
+where N = normr^2/df, or N = 1 if df = 0.
+
+Example 1: weighted system
+
+   A=[1,2,3;2,1,3;1,1,1]; xin=[1;2;3]; 
+   dy=[0.2;0.01;0.1]; y=A*xin+randn(size(dy)).*dy;
+   [x,s] = wsolve(A,y,dy);
+   dx = sqrt(sumsq(inv(s.R'))');
+   res = [xin, x, dx]
+
+Example 2: weighted overdetermined system  y = x1 + 2*x2 + 3*x3 + e
+
+   A = fullfact([3,3,3]); xin=[1;2;3];
+   y = A*xin; dy = rand(size(y))/50; y+=dy.*randn(size(y));
+   [x,s] = wsolve(A,y,dy);
+   dx = s.normr*sqrt(sumsq(inv(s.R'))'/s.df);
+   res = [xin, x, dx]
+
+Note there is a counter-intuitive result that scaling the
+uncertainty in the data does not affect the uncertainty in
+the fit.  Indeed, if you perform a monte carlo simulation
+with x,y datasets selected from a normal distribution centered
+on y with width 10*dy instead of dy you will see that the
+variance in the parameters indeed increases by a factor of 100.
+However, if the error bars really do increase by a factor of 10
+you should expect a corresponding increase in the scatter of 
+the data, which will increase the variance computed by the fit.
+
+
+
+File: optim.info,  Node: Zero finders,  Next: Gradient functions,  Prev: Residual optimization,  Up: Top
+
+3 Functions for finding the zero of a nonlinear user function
+*************************************************************
+
+There is only one dedicated zero finder in the optim package, which is
+just a vectorized version of Octaves fzero ( *note fzero:
+(octave)XREFfzero.).
+
+* Menu:
+
+* vfzero::                A vectorized version of fzero.
+
+
+File: optim.info,  Node: vfzero,  Up: Zero finders
+
+3.1 A vectorized version of fzero
+=================================
+
+ -- Function File: vfzero (FUN, X0)
+ -- Function File: vfzero (FUN, X0, OPTIONS)
+ -- Function File: [X, FVAL, INFO, OUTPUT] = vfzero (...)
+     A variant of 'fzero'.  Finds a zero of a vector-valued multivariate
+     function where each output element only depends on the input
+     element with the same index (so the Jacobian is diagonal).
+
+     FUN should be a handle or name of a function returning a column
+     vector.  X0 should be a two-column matrix, each row specifying two
+     points which bracket a zero of the respective output element of
+     FUN.
+
+     If X0 is a single-column matrix then several nearby and distant
+     values are probed in an attempt to obtain a valid bracketing.  If
+     this is not successful, the function fails.  OPTIONS is a structure
+     specifying additional options.  Currently, 'vfzero' recognizes
+     these options: '"FunValCheck"', '"OutputFcn"', '"TolX"',
+     '"MaxIter"', '"MaxFunEvals"'.  For a description of these options,
+     see optimset.
+
+     On exit, the function returns X, the approximate zero and FVAL, the
+     function value thereof.  INFO is a column vector of exit flags that
+     can have these values:
+
+        * 1 The algorithm converged to a solution.
+
+        * 0 Maximum number of iterations or function evaluations has
+          been reached.
+
+        * -1 The algorithm has been terminated from user output
+          function.
+
+        * -5 The algorithm may have converged to a singular point.
+
+     OUTPUT is a structure containing runtime information about the
+     'fzero' algorithm.  Fields in the structure are:
+
+        * iterations Number of iterations through loop.
+
+        * nfev Number of function evaluations.
+
+        * bracketx A two-column matrix with the final bracketing of the
+          zero along the x-axis.
+
+        * brackety A two-column matrix with the final bracketing of the
+          zero along the y-axis.
+
+
+File: optim.info,  Node: Gradient functions,  Next: Helper functions,  Prev: Zero finders,  Up: Top
+
+4 Functions for numerical approximation of gradients and Hessians
+*****************************************************************
+
+You should not usually need to use these functions directly or pass them
+as arguments.  They should be chosen and used by optimizer functions,
+possibly subject to their configuration options.
+
+* Menu:
+
+* dfpdp::                 Direct user interface to default numerical
+                            gradient method of new frontends.
+* deriv::                 Higher order numerical derivatives.
+* numgradient::           Another numerical gradient function.
+* numhessian::            Numerical Hessian function.
+* cdiff::                 A string, yielding the numerical gradient if
+                            evaluated.
+* jacobs::                Complex step derivatives.
+
+
+File: optim.info,  Node: dfpdp,  Next: deriv,  Up: Gradient functions
+
+4.1 Direct user interface to default numerical gradient method of new frontends
+===============================================================================
+
+Helptext:
+---------
+
+function jac = dfpdp (p, func[, hook])
+
+Returns Jacobian of func (p) with respect to p with finite
+differencing. The optional argument hook is a structure which can
+contain the following fields at the moment:
+
+hook.f: value of func(p) for p as given in the arguments
+
+hook.diffp: positive vector of fractional steps from given p in
+finite differencing (actual steps may be smaller if bounds are
+given). The default is .001 * ones (size (p)).
+
+hook.diff_onesided: logical vector, indexing elements of p for
+which only one-sided differences should be computed (faster); even
+if not one-sided, differences might not be exactly central if
+bounds are given. The default is false (size (p)).
+
+hook.fixed: logical vector, indexing elements of p for which zero
+should be returned instead of the guessed partial derivatives
+(useful in optimization if some parameters are not optimized, but
+are 'fixed').
+
+hook.lbound, hook.ubound: vectors of lower and upper parameter
+bounds (or -Inf or +Inf, respectively) to be respected in finite
+differencing. The consistency of bounds is not checked.
+
+
+
+File: optim.info,  Node: deriv,  Next: numgradient,  Prev: dfpdp,  Up: Gradient functions
+
+4.2 Higher order numerical derivatives
+======================================
+
+ -- Function File: DX = deriv (F, X0)
+ -- Function File: DX = deriv (F, X0, H)
+ -- Function File: DX = deriv (F, X0, H, O)
+ -- Function File: DX = deriv (F, X0, H, O, N)
+     Calculate derivate of function F.
+
+     F must be a function handle or the name of a function that takes X0
+     and returns a variable of equal length and orientation.  X0 must be
+     a numeric vector or scalar.
+
+     H defines the step taken for the derivative calculation.  Defaults
+     to 1e-7.
+
+     O defines the order of the calculation.  Supported values are 2
+     (h^2 order) or 4 (h^4 order).  Defaults to 2.
+
+     N defines the derivative order.  Defaults to the 1st derivative of
+     the function.  Can be up to the 4th derivative.
+
+     Reference: Numerical Methods for Mathematics, Science, and
+     Engineering by John H. Mathews.
+
+
+File: optim.info,  Node: numgradient,  Next: numhessian,  Prev: deriv,  Up: Gradient functions
+
+4.3 Another numerical gradient function
+=======================================
+
+Helptext:
+---------
+
+numgradient(f, {args}, minarg)
+
+Numeric central difference gradient of f with respect
+to argument "minarg".
+* first argument: function name (string)
+* second argument: all arguments of the function (cell array)
+* third argument: (optional) the argument to differentiate w.r.t.
+        (scalar, default=1)
+
+"f" may be vector-valued. If "f" returns
+an n-vector, and the argument is a k-vector, the gradient
+will be an nxk matrix
+
+Example:
+function a = f(x);
+        a = [x'*x; 2*x];
+endfunction
+numgradient("f", {ones(2,1)})
+ans =
+
+  2.00000  2.00000
+  2.00000  0.00000
+  0.00000  2.00000
+
+
+
+
+
+File: optim.info,  Node: numhessian,  Next: cdiff,  Prev: numgradient,  Up: Gradient functions
+
+4.4 Numerical Hessian function
+==============================
+
+Helptext:
+---------
+
+numhessian(f, {args}, minarg)
+
+Numeric second derivative of f with respect
+to argument "minarg".
+* first argument: function name (string)
+* second argument: all arguments of the function (cell array)
+* third argument: (optional) the argument to differentiate w.r.t.
+        (scalar, default=1)
+
+If the argument
+is a k-vector, the Hessian will be a kxk matrix
+
+function a = f(x, y)
+        a = x'*x + log(y);
+endfunction
+
+numhessian("f", {ones(2,1), 1})
+ans =
+
+    2.0000e+00   -7.4507e-09
+   -7.4507e-09    2.0000e+00
+
+Now, w.r.t. second argument:
+numhessian("f", {ones(2,1), 1}, 2)
+ans = -1.0000
+
+
+
+
+
+File: optim.info,  Node: cdiff,  Next: jacobs,  Prev: numhessian,  Up: Gradient functions
+
+4.5 A string, yielding the numerical gradient if evaluated
+==========================================================
+
+Helptext:
+---------
+
+c = cdiff (func,wrt,N,dfunc,stack,dx) - Code for num. differentiation
+  = "function df = dfunc (var1,..,dvar,..,varN) .. endfunction
+
+Returns a string of octave code that defines a function 'dfunc' that
+returns the derivative of 'func' with respect to it's 'wrt'th
+argument.
+
+The derivatives are obtained by symmetric finite difference.
+
+dfunc()'s return value is in the same format as that of  ndiff()
+
+func  : string : name of the function to differentiate
+
+wrt   : int    : position, in argument list, of the differentiation
+                 variable.                                Default:1
+
+N     : int    : total number of arguments taken by 'func'. 
+                 If N=inf, dfunc will take variable argument list.
+                                                        Default:wrt
+
+dfunc : string : Name of the octave function that returns the
+                  derivatives.                   Default:['d',func]
+
+stack : string : Indicates whether 'func' accepts vertically
+                 (stack="rstack") or horizontally (stack="cstack")
+                 arguments. Any other string indicates that 'func'
+                 does not allow stacking.                Default:''
+
+dx    : real   : Step used in the symmetric difference scheme.
+                                                 Default:10*sqrt(eps)
+
+See also : ndiff, eval, todisk
+
+
+
+File: optim.info,  Node: jacobs,  Prev: cdiff,  Up: Gradient functions
+
+4.6 Complex step derivatives
+============================
+
+ -- Function File: Df = jacobs (X, F)
+ -- Function File: Df = jacobs (X, F, HOOK)
+     Calculate the jacobian of a function using the complex step method.
+
+     Let F be a user-supplied function.  Given a point X at which we
+     seek for the Jacobian, the function 'jacobs' returns the Jacobian
+     matrix 'd(f(1), ..., df(end))/d(x(1), ..., x(n))'.  The function
+     uses the complex step method and thus can be applied to real
+     analytic functions.
+
+     The optional argument HOOK is a structure with additional options.
+     HOOK can have the following fields:
+        * 'h' - can be used to define the magnitude of the complex step
+          and defaults to 1e-20; steps larger than 1e-3 are not allowed.
+        * 'fixed' - is a logical vector internally usable by some
+          optimization functions; it indicates for which elements of X
+          no gradient should be computed, but zero should be returned.
+
+     For example:
+
+          f = @(x) [x(1)^2 + x(2); x(2)*exp(x(1))];
+          Df = jacobs ([1, 2], f)
+
+
+File: optim.info,  Node: Helper functions,  Next: Documentation,  Prev: Gradient functions,  Up: Top
+
+5 Functions for algebraic tasks common to optimization problems
+***************************************************************
+
+* Menu:
+
+* cpiv_bard::             A complementary pivoting algorithm.
+* gjp::                   Gauss-Jordan pivoting.
+
+
+File: optim.info,  Node: cpiv_bard,  Next: gjp,  Up: Helper functions
+
+5.1 A complementary pivoting algorithm
+======================================
+
+Helptext:
+---------
+
+[lb, idx, ridx, mv] = cpiv_bard (v, m[, incl])
+
+v: column vector; m: matrix; incl (optional): index. length (v)
+must equal rows (m). Finds column vectors w and l with w == v + m *
+l, w >= 0, l >= 0, l.' * w == 0. Chooses idx, w, and l so that
+l(~idx) == 0, l(idx) == -inv (m(idx, idx)) * v(idx), w(idx) roughly
+== 0, and w(~idx) == v(~idx) + m(idx, ~idx).' * l(idx). idx indexes
+at least everything indexed by incl, but l(incl) may be < 0. lb:
+l(idx) (column vector); idx: logical index, defined above; ridx:
+~idx & w roughly == 0; mv: [m, v] after performing a Gauss-Jordan
+'sweep' (with gjp.m) on each diagonal element indexed by idx.
+Except the handling of incl (which enables handling of equality
+constraints in the calling code), this is called solving the
+'complementary pivot problem' (Cottle, R. W. and Dantzig, G. B.,
+'Complementary pivot theory of mathematical programming', Linear
+Algebra and Appl. 1, 102--125. References for the current
+algorithm: Bard, Y.: Nonlinear Parameter Estimation, p. 147--149,
+Academic Press, New York and London 1974; Bard, Y., 'An eclectic
+approach to nonlinear programming', Proc. ANU Sem. Optimization,
+Canberra, Austral. Nat. Univ.).
+
+
+
+File: optim.info,  Node: gjp,  Prev: cpiv_bard,  Up: Helper functions
+
+5.2 Gauss-Jordan pivoting
+=========================
+
+Helptext:
+---------
+
+m = gjp (m, k[, l])
+
+m: matrix; k, l: row- and column-index of pivot, l defaults to k.
+
+Gauss-Jordon pivot as defined in Bard, Y.: Nonlinear Parameter
+Estimation, p. 296, Academic Press, New York and London 1974. In
+the pivot column, this seems not quite the same as the usual
+Gauss-Jordan(-Clasen) pivot. Bard gives Beaton, A. E., 'The use of
+special matrix operators in statistical calculus' Research Bulletin
+RB-64-51 (1964), Educational Testing Service, Princeton, New Jersey
+as a reference, but this article is not easily accessible. Another
+reference, whose definition of gjp differs from Bards by some
+signs, is Clarke, R. B., 'Algorithm AS 178: The Gauss-Jordan sweep
+operator with detection of collinearity', Journal of the Royal
+Statistical Society, Series C (Applied Statistics) (1982), 31(2),
+166--168.
+
+
+
+File: optim.info,  Node: Documentation,  Next: Compatibility functions,  Prev: Helper functions,  Up: Top
+
+6 Function optim_doc to view documentation
+******************************************
+
+ -- Function File: optim_doc ()
+ -- Function File: optim_doc (KEYWORD)
+     Show optim package documentation.
+
+     Runs the info viewer Octave is configured with on the documentation
+     in info format of the installed optim package.  Without argument,
+     the top node of the documentation is displayed.  With an argument,
+     the respective index entry is searched for and its node displayed.
+
+
+File: optim.info,  Node: Compatibility functions,  Next: Common frontend options,  Prev: Documentation,  Up: Top
+
+7 Traditional functions
+***********************
+
+* Menu:
+
+* linprog::                    Linear programming.
+* quadprog::                   Quadratic programming.
+* lsqnonlin::                  Non-linear residual minimization.
+* lsqcurvefit::                Curve fitting.
+* nlinfit::                    Non-linear regression.
+* fmincon::                    Non-linear scalar optimization.
+
+
+File: optim.info,  Node: linprog,  Next: quadprog,  Up: Compatibility functions
+
+7.1 Linear programming
+======================
+
+This function works by calling 'glpk' of core Octave.
+
+ -- Function File: X = linprog (F, A, B)
+ -- Function File: X = linprog (F, A, B, AEQ, BEQ)
+ -- Function File: X = linprog (F, A, B, AEQ, BEQ, LB, UB)
+ -- Function File: [X, FVAL] = linprog (...)
+     Solve a linear problem.
+
+     Finds
+
+          min (f' * x)
+
+     (both f and x are column vectors) subject to
+
+          A   * x <= b
+          Aeq * x  = beq
+          lb <= x <= ub
+
+     If not specified, AEQ and BEQ default to empty matrices.
+
+     If not specified, the lower bound LB defaults to minus infinite and
+     the upper bound UB defaults to infinite.
+
+   See also *note glpk: (octave)XREFglpk.
+
+
+File: optim.info,  Node: quadprog,  Next: lsqnonlin,  Prev: linprog,  Up: Compatibility functions
+
+7.2 Quadratic programming
+=========================
+
+This function is similar to 'qp' of core Octave.
+
+ -- Function File: quadprog (H, F)
+ -- Function File: quadprog (H, F, A, B)
+ -- Function File: quadprog (H, F, A, B, AEQ, BEQ)
+ -- Function File: quadprog (H, F, A, B, AEQ, BEQ, LB, UB)
+ -- Function File: quadprog (H, F, A, B, AEQ, BEQ, LB, UB, X0)
+ -- Function File: quadprog (H, F, A, B, AEQ, BEQ, LB, UB, X0, OPTIONS)
+ -- Function File: [X, FVAL, EXITFLAG, OUTPUT, LAMBDA] = quadprog (...)
+     Solve the quadratic program
+          min 0.5 x'*H*x + x'*f
+           x
+     subject to
+          A*X <= B,
+          AEQ*X = BEQ,
+          LB <= X <= UB.
+
+     The initial guess X0 and the constraint arguments (A and B, AEQ and
+     BEQ, LB and UB) can be set to the empty matrix ('[]') if not given.
+     If the initial guess X0 is feasible the algorithm is faster.
+
+     OPTIONS can be set with 'optimset', currently the only option is
+     'MaxIter', the maximum number of iterations (default: 200).
+
+     Returned values:
+
+     X
+          Position of minimum.
+
+     FVAL
+          Value at the minimum.
+
+     EXITFLAG
+          Status of solution:
+
+          '0'
+               Maximum number of iterations reached.
+
+          '-2'
+               The problem is infeasible.
+
+          '-3'
+               The problem is not convex and unbounded
+
+          '1'
+               Global solution found.
+
+          '4'
+               Local solution found.
+
+     OUTPUT
+          Structure with additional information, currently the only
+          field is 'iterations', the number of used iterations.
+
+     LAMBDA
+          Structure containing Lagrange multipliers corresponding to the
+          constraints.  For equality constraints, the sign of the
+          multipliers is chosen to satisfy the equation
+               0.5 H * x + f + A' * lambda_inequ + Aeq' * lambda_equ = 0 .
+          If lower and upper bounds are equal, or so close to each other
+          that they are considered equal by the algorithm, only one of
+          these bounds is considered active when computing the solution,
+          and a positive lambda will be placed only at this bound.
+
+     This function calls Octave's '__qp__' back-end algorithm
+     internally.
+
+
+File: optim.info,  Node: lsqnonlin,  Next: lsqcurvefit,  Prev: quadprog,  Up: Compatibility functions
+
+7.3 Non-linear residual minimization
+====================================
+
+This function is for Matlab compatibility.  It attempts to work like
+'lsqnonlin' by calling *note nonlin_residmin::.
+
+ -- Function File: lsqnonlin (FUN, X0)
+ -- Function File: lsqnonlin (FUN, X0, LB, UB)
+ -- Function File: lsqnonlin (FUN, X0, LB, UB, OPTIONS)
+ -- Function File: [X, RESNORM, RESIDUAL, EXITFLAG, OUTPUT, LAMBDA,
+          JACOBIAN] = lsqnonlin (...)
+     Solve nonlinear least-squares (nonlinear data-fitting) problems
+          min [EuclidianNorm(f(x))] .^ 2
+           x
+
+     FUN computes residuals from given parameters.  The initial guess of
+     the parameters X0 must be provided while the bounds LB and UB) can
+     be set to the empty matrix ('[]') if not given.
+
+     'lsqnonlin' may also be called with a single structure argument
+     with the fields 'fun', 'x0', 'lb', 'ub', and 'options', resembling
+     the separate input arguments above.  For compatibility reasons,
+     field 'fun' may also be called 'objective'.  Additionally, the
+     structure must have the field 'solver', set to "lsqnonlin".
+
+     OPTIONS can be set with 'optimset'.  Follwing Matlab compatible
+     options are recognized:
+
+     'Algorithm' String specifying backend algorithm.  Currently
+     available "lm_svd_feasible" only.
+
+     'TolFun' Minimum fractional improvement in objective function in an
+     iteration (termination criterium).  Default: 1e-6.
+
+     'TypicalX' Typical values of x.  Default: 1.
+
+     'MaxIter' Maximum number of iterations allowed.  Default: 400.
+
+     'Jacobian' If set to "on", the function FUN must return a second
+     output containing a user-specified Jacobian.  The Jacobian is
+     computed using finite differences otherwise.  Default: "off"
+
+     'FinDiffType' "centered" or "forward" (Default) type finite
+     differences estimation.
+
+     'FinDiffRelStep' Step size factor.  The default is sqrt(eps) for
+     forward finite differences, and eps^(1/3) for central finite
+     differences
+
+     'OutputFcn' One or more user-defined functions, either as a
+     function handle or as a cell array of function handles that an
+     optimization function calls at each iteration.  The function
+     definition has the following form:
+
+     'stop = outfun(x, optimValues, state)'
+
+     'x' is the point computed at the current iteration.  'optimValues'
+     is a structure containing data from the current iteration in the
+     following fields: "iteration"- number of current iteration.
+     "residual"- residuals.  'state' is the state of the algorithm:
+     "init" at start, "iter" after each iteration and "done" at the end.
+
+     'Display' String indicating the degree of verbosity.  Default:
+     "off".  Currently only supported values are "off" (no messages) and
+     "iter" (some messages after each iteration).
+
+     Returned values:
+
+     X
+          Position of minimum.
+
+     RESNORM
+          Scalar value of objective as squared EuclidianNorm(f(x)).
+
+     RESIDUAL
+          Value of solution residuals f(x).
+
+     EXITFLAG
+          Status of solution:
+
+          '0'
+               Maximum number of iterations reached.
+
+          '2'
+               Change in x was less than the specified tolerance.
+
+          '3'
+               Change in the residual was less than the specified
+               tolerance.
+
+          '-1'
+               Output function terminated the algorithm.
+
+     OUTPUT
+          Structure with additional information, currently the only
+          field is 'iterations', the number of used iterations.
+
+     LAMBDA
+          Structure containing Lagrange multipliers at the solution X
+          sepatared by constraint type (LB and UB).
+
+     JACOBIAN
+          m-by-n matrix, where JACOBIAN(I,J) is the partial derivative
+          of FUN(I) with respect to X(J) Default: lsqnonlin approximates
+          the Jacobian using finite differences.  If 'Jacobian' is set
+          to "on" in OPTIONS then FUN must return a second argument
+          providing a user-sepcified Jacobian .
+
+     This function is a compatibility wrapper.  It calls the more
+     general 'nonlin_residmin' function internally.
+
+     See also: *note lsqcurvefit: XREFlsqcurvefit, *note
+     nonlin_residmin: XREFnonlin_residmin, *note nonlin_curvefit:
+     XREFnonlin_curvefit.
+
+
+File: optim.info,  Node: lsqcurvefit,  Next: nlinfit,  Prev: lsqnonlin,  Up: Compatibility functions
+
+7.4 Curve fitting
+=================
+
+This function is for Matlab compatibility.  It attempts to work like
+'lsqcurvefit' by calling *note nonlin_curvefit::.
+
+ -- Function File: lsqcurvefit (FUN, X0, XDATA, YDATA)
+ -- Function File: lsqcurvefit (FUN, X0, XDATA, YDATA, LB, UB)
+ -- Function File: lsqcurvefit (FUN, X0, XDATA, YDATA, LB, UB, OPTIONS)
+ -- Function File: lsqcurvefit (PROBLEM)
+ -- Function File: [X, RESNORM, RESIDUAL, EXITFLAG, OUTPUT, LAMBDA,
+          JACOBIAN] = lsqcurvefit (...)
+     Solve nonlinear least-squares (nonlinear data-fitting) problems
+          min [EuclidianNorm (f(x, xdata) - ydata)] .^ 2
+           x
+
+     The first four input arguments must be provided with non-empty
+     initial guess X0.  For a given input XDATA, YDATA is the observed
+     output.  YDATA must be the same size as the vector (or matrix)
+     returned by FUN.  The optional bounds LB and UB should be the same
+     size as X0.
+
+     'lsqcurvefit' may also be called with a single structure argument
+     with the fields 'fun', 'x0', 'xdata', 'ydata', 'lb', 'ub', and
+     'options', resembling the separate input arguments above.  For
+     compatibility reasons, field 'fun' may also be called 'objective'.
+     Additionally, the structure must have the field 'solver', set to
+     "lsqcurvefit".
+
+     OPTIONS can be set with 'optimset'.  Follwing Matlab compatible
+     options are recognized:
+
+     'Algorithm' String specifying backend algorithm.  Currently
+     available "lm_svd_feasible" only.
+
+     'TolFun' Minimum fractional improvement in objective function in an
+     iteration (termination criterium).  Default: 1e-6.
+
+     'TypicalX' Typical values of x.  Default: 1.
+
+     'MaxIter' Maximum number of iterations allowed.  Default: 20.
+
+     'Jacobian' If set to "on", the function FUN must return a second
+     output containing a user-specified Jacobian.  The Jacobian is
+     computed using finite differences otherwise.  Default: "off"
+
+     'FinDiffType' "centered" or "forward" (Default) type finite
+     differences estimation.
+
+     'FinDiffRelStep' Step size factor.  The default is sqrt(eps) for
+     forward finite differences, and eps^(1/3) for central finite
+     differences
+
+     'OutputFcn' One or more user-defined functions, either as a
+     function handle or as a cell array of function handles that an
+     optimization function calls at each iteration.  The function
+     definition has the following form:
+
+     'stop = outfun(x, optimValues, state)'
+
+     'x' is the point computed at the current iteration.  'optimValues'
+     is a structure containing data from the current iteration in the
+     following fields: "iteration"- number of current iteration.
+     "residual"- residuals.  'state' is the state of the algorithm:
+     "init" at start, "iter" after each iteration and "done" at the end.
+
+     'Display' String indicating the degree of verbosity.  Default:
+     "off".  Currently only supported values are "off" (no messages) and
+     "iter" (some messages after each iteration).
+
+     Returned values:
+
+     X
+          Coefficients to best fit the nonlinear function fun(x,xdata)
+          to the observed values ydata.
+
+     RESNORM
+          Scalar value of objective as squared EuclidianNorm(f(x)).
+
+     RESIDUAL
+          Value of solution residuals f(x).
+
+     EXITFLAG
+          Status of solution:
+
+          '0'
+               Maximum number of iterations reached.
+
+          '2'
+               Change in x was less than the specified tolerance.
+
+          '3'
+               Change in the residual was less than the specified
+               tolerance.
+
+          '-1'
+               Output function terminated the algorithm.
+
+     OUTPUT
+          Structure with additional information, currently the only
+          field is 'iterations', the number of used iterations.
+
+     LAMBDA
+          Structure containing Lagrange multipliers at the solution X
+          sepatared by constraint type (LB and UB).
+
+     JACOBIAN
+          m-by-n matrix, where JACOBIAN(i,j) is the partial derivative
+          of FUN(I) with respect to X(J) If 'Jacobian' is set to "on" in
+          OPTIONS then FUN must return a second argument providing a
+          user-sepcified Jacobian.  Otherwise, lsqnonlin approximates
+          the Jacobian using finite differences.
+
+     This function is a compatibility wrapper.  It calls the more
+     general 'nonlin_curvefit' function internally.
+
+     See also: *note lsqnonlin: XREFlsqnonlin, *note nonlin_residmin:
+     XREFnonlin_residmin, *note nonlin_curvefit: XREFnonlin_curvefit.
+
+
+File: optim.info,  Node: nlinfit,  Next: fmincon,  Prev: lsqcurvefit,  Up: Compatibility functions
+
+7.5 Non-linear regression
+=========================
+
+This function is for Matlab compatibility.  It attempts to work like
+'nlinfit' by calling *note nonlin_curvefit:: and *note curvefit_stat::.
+
+ -- Function File: nlinfit (X, Y, MODELFUN, BETA0)
+ -- Function File: nlinfit (X, Y, MODELFUN, BETA0, OPTIONS)
+ -- Function File: nlinfit (..., NAME, VALUE)
+ -- Function File: [BETA, R, J, COVB, MSE] = nlinfit (...)
+     Nonlinear Regression.
+
+          min [EuclidianNorm (Y - modelfun (beta, X))] ^ 2
+          beta
+
+     X is a matrix of independents, Y is the observed output and
+     MODELFUN is the nonlinear regression model function.  MODELFUN
+     should be specified as a function handle, which accepts two inputs:
+     an array of coefficients and an array of independents - in that
+     order.  The first four input arguments must be provided with
+     non-empty initial guess of the coefficients BETA0.  Y and X must be
+     the same size as the vector (or matrix) returned by FUN.  OPTIONS
+     is a structure containing estimation algorithm options.  It can be
+     set using 'statset'.  Follwing Matlab compatible options are
+     recognized:
+
+     'TolFun' Minimum fractional improvement in objective function in an
+     iteration (termination criterium).  Default: 1e-6.
+
+     'MaxIter' Maximum number of iterations allowed.  Default: 400.
+
+     'DerivStep' Step size factor.  The default is eps^(1/3) for finite
+     differences gradient calculation.
+
+     'Display' String indicating the degree of verbosity.  Default:
+     "off".  Currently only supported values are "off" (no messages) and
+     "iter" (some messages after each iteration).
+
+     Optional NAME, VALUE pairs can be provided to set additional
+     options.  Currently the only applicable name-value pair is
+     'Weights', w, where w is the array of real positive weight factors
+     for the squared residuals.
+
+     Returned values:
+
+     BETA
+          Coefficients to best fit the nonlinear function modelfun
+          (beta, X) to the observed values Y.
+
+     R
+          Value of solution residuals: 'modelfun (beta, X) - Y'.  If
+          observation weights are specified then R is the array of
+          weighted residuals: 'sqrt (weights) .* modelfun (beta, X) -
+          Y'.
+
+     J
+          A matrix where 'J(i,j)' is the partial derivative of
+          'modelfun(i)' with respect to 'beta(j)'.  If observation
+          weights are specified, then J is the weighted model function
+          Jacobian: 'diag (sqrt (weights)) * J'.
+
+     COVB
+
+          Estimated covariance matrix of the fitted coefficients.
+
+     MSE
+          Scalar valued estimate of the variance of error term.  If the
+          model Jacobian is full rank, then MSE = (R' * R)/(N-p), where
+          N is the number of observations and p is the number of
+          estimated coefficients.
+
+     This function is a compatibility wrapper.  It calls the more
+     general 'nonlin_curvefit' and 'curvefit_stat' functions internally.
+
+     See also: *note nonlin_residmin: XREFnonlin_residmin, *note
+     nonlin_curvefit: XREFnonlin_curvefit, *note residmin_stat:
+     XREFresidmin_stat, *note curvefit_stat: XREFcurvefit_stat.
+
+
+File: optim.info,  Node: fmincon,  Prev: nlinfit,  Up: Compatibility functions
+
+7.6 Non-linear scalar optimization
+==================================
+
+ -- Function File: fmincon (OBJF, X0)
+ -- Function File: fmincon (OBJF, X0, A, B)
+ -- Function File: fmincon (OBJF, X0, A, B, AEQ, BEQ)
+ -- Function File: fmincon (OBJF, X0, A, B, AEQ, BEQ, LB, UB)
+ -- Function File: fmincon (OBJF, X0, A, B, AEQ, BEQ, LB, UB, NONLCON)
+ -- Function File: fmincon (OBJF, X0, A, B, AEQ, BEQ, LB, UB, NONLCON,
+          OPTIONS)
+ -- Function File: fmincon (PROBLEM)
+ -- Function File: [X, FVAL, CVG, OUTP] = fmincon (...)
+     Compatibility frontend for nonlinear minimization of a scalar
+     objective function.
+
+     This function is for Matlab compatibility and provides a subset of
+     the functionality of 'nonlin_min'.
+
+     OBJF: objective function.  It gets the real parameters as argument.
+
+     X0: real vector or array of initial parameters.
+
+     A, B: Inequality constraints of the parameters 'p' with 'A * p - b
+     <= 0'.
+
+     AEQ, BEQ: Equality constraints of the parameters 'p' with 'A * p -
+     b = 0'.
+
+     LB, UB: Bounds of the parameters 'p' with 'lb <= p <= ub'.  Vectors
+     or arrays.  If the number of elements is smaller than the number of
+     parameters, as many bounds as present are applied, starting with
+     the first parameter.  This is for compatibility with Matlab.
+
+     NONLCON: Nonlinear constraints.  Function returning the current
+     values of nonlinear inequality constraints (constrained to '<= 0')
+     in the first output and the current values of nonlinear equality
+     constraints in the second output.
+
+     OPTIONS: structure whose fields stand for optional settings
+     referred to below.  The fields can be set by 'optimset()'.
+
+     An argument can be set to '[]' to indicate that its value is not
+     set.
+
+     'fmincon' may also be called with a single structure argument with
+     the fields 'objective', 'x0', 'Aineq', 'bineq', 'Aeq', 'beq', 'lb',
+     'ub', 'nonlcon' and 'options', resembling the separate input
+     arguments above.  Additionally, the structure must have the field
+     'solver', set to "fmincon".
+
+     The returned values are the final parameters X, the final value of
+     the objective function FVAL, an integer CVG indicating if and how
+     optimization succeeded or failed, and a structure OUTP with
+     additional information, curently with possible fields:
+     'iterations', the number of iterations, 'funcCount', the number of
+     objective function calls (indirect calls by gradient function not
+     counted), 'constrviolation', the maximum of the constraint
+     violations.  The backend may define additional fields.  CVG is
+     greater than zero for success and less than or equal to zero for
+     failure; its possible values depend on the used backend and
+     currently can be '0' (maximum number of iterations exceeded), '1'
+     (success without further specification of criteria), '2' (parameter
+     change less than specified precision in two consecutive
+     iterations), '3' (improvement in objective function less than
+     specified), '-1' (algorithm aborted by a user function), or '-4'
+     (algorithm got stuck).
+
+     Options:
+     ........
+
+     'Algorithm'
+          'interior-point', 'sqp', and 'sqp-legacy' are mapped to optims
+          'lm_feasible' algorithm (the default) to satisfy constraints
+          throughout the optimization.  'active-set' is mapped to
+          'octave_sqp', which may perform better if constraints only
+          need to be satisfied for the result.  Other algorithms are
+          available with 'nonlin_min'.
+
+     'OutputFcn'
+          Similar to the setting 'user_interaction' -- see
+          'optim_doc()'.  Differently, 'OutputFcn' returns only one
+          output argument, the STOP flag.
+
+     'GradObj'
+          If set to '"on"', OBJF must return the gradient of the
+          objective function as a second output.  The default is
+          '"off"'.
+
+     'GradConstr'
+          If set to '"on"', NONLCON must return the Jacobians of the
+          inequality- and equality-constraints as third and fourth
+          output, respectively.
+
+     'HessianFcn'
+          If set to '"objective"', OBJF must not only return the
+          gradient as the second, but also the Hessian as the third
+          output.
+
+     'Display, FinDiffRelStep, FinDiffType, TypicalX, MaxIter, TolFun, TolX,'
+          See documentation of these options in 'optim_doc()'.
+
+     For description of individual backends, type 'optim_doc ("scalar
+     optimization")' and choose the backend in the menu.
+
+
+File: optim.info,  Node: Common frontend options,  Next: Common optimization options,  Prev: Compatibility functions,  Up: Top
+
+8 Options common to all frontends
+*********************************
+
+All frontends for optimization and for result statistics (*note
+nonlin_min::, *note nonlin_residmin::, *note nonlin_curvefit::, *note
+residmin_stat::, *note curvefit_stat::)accept the following options,
+settable with *note optimset: (octave)XREFoptimset.
+
+   These options are handled within the frontend.
+
+'FinDiffRelStep'
+     Column vector (or scalar, for all parameters) of fractional
+     intervals supposed to be used by gradient or Jacobian functions
+     performing finite differencing.  Default: '.002 * ones (size
+     (parameters))' for central intervals and '.001 * ones (size
+     (parameters))' for one-sided intervals.  The default function for
+     finite differencing won't let the absolute interval width get
+     smaller than 'abs (FinDiffRelStep .* TypicalX' (see below).
+'diffp'
+     Can be used alternatively to 'FinDiffRelStep', but for central
+     intervals twice the specified value will be used for backwards
+     compatibility.
+'diff_onesided'
+     Logical column vector (or scalar, for all parameters) indicating
+     the parameters for which one-sided intervals (instead of central
+     intervals) should be used by gradient or Jacobian functions
+     performing finite differencing.  Default: 'false (size
+     (parameters))'.
+'FinDiffType'
+     Can be used alternatively to 'diff_onesided', but always applies to
+     all parameters at once.  Possible values: '"central"' (central
+     intervals) or '"forward"' (one-sided intervals).
+'TypicalX'
+     Column vector (or scalar, for all parameters) whose absolute value
+     specifies minimal absolute parameter values for computation of
+     intervals in finite differencing by gradient or Jacobian functions
+     (see 'FinDiffRelStep').  Default: 0.0001.  Must not be zero.
+'cstep'
+     Scalar step size for complex step derivative approximation of
+     gradients or Jacobians.  Default: 1e-20.
+'parallel_local'
+     Logical or numeric scalar, default: 'false'.  If the 'parallel'
+     package, 'version >= 2.0.5', is loaded, estimate gradients of
+     objective function and Jacobians of model function and of
+     constraints in parallel processes.  If 'parallel_local' is set to
+     an integer '> 1', this is number of parallel processes; if it is
+     '<= 1', the number of processes will be the number of available
+     processor cores.  Works for default (real) finite differences and
+     for complex step derivatives.  Due to overhead, a speed advantage
+     can only be expected if objective function, model function or
+     constraint functions are time consuming enough.  Additionally, this
+     setting is also passed to the individual optimization backends,
+     which may also consider this option (see documentation of
+     backends).  If this option is equivalent to 'true', a warning (ID:
+     'optim:parallel_local') will be issued if no 'parallel' package of
+     a correct version is loaded.
+'parallel_net'
+     Empty (default) or a parallel connections object, see function
+     'pconnect' of the 'parallel' package.  If not empty, estimate
+     gradients of objective function and Jacobians of model function and
+     of constraints using parallel processing in a network of machines.
+     The considerations regarding a speed advantage are similar to those
+     for option 'parallel_local'.
+'fixed'
+     Logical column vector indicating which parameters are not
+     optimized, but kept to their inital value.
+
+
+File: optim.info,  Node: Common optimization options,  Next: Parameter structures,  Prev: Common frontend options,  Up: Top
+
+9 Options common to all optimization frontends
+**********************************************
+
+All frontends for optimization (*note nonlin_min::, *note
+nonlin_residmin::, *note nonlin_curvefit::) accept the following
+options, settable with *note optimset: (octave)XREFoptimset.
+
+Settings handled within the frontend
+------------------------------------
+
+'Algorithm'
+     String specifying the backend.
+'complex_step_derivative_inequc,'
+'complex_step_derivative_equc'
+     Logical scalars, default: 'false'.  Estimate Jacobian of general
+     inequality constraints and equality constraints, respectively, with
+     complex step derivative approximation.  Use only if you know that
+     your function of general inequality constraints or function of
+     general equality constraints, respectively, is suitable for this.
+     No user function for the respective Jacobian must be specified.
+
+Settings passed to the backend
+------------------------------
+
+Which of these options are actually honored is noted in the descriptions
+of the individual backends.
+
+'lbound,'
+'ubound'
+     Column vectors of lower and upper bounds for parameters.  Default:
+     '-Inf' and '+Inf', respectively.  The bounds are non-strict, i.e.
+     parameters are allowed to be exactly equal to a bound.  The default
+     function for gradients or Jacobians will respect bounds (but no
+     further inequality constraints) in finite differencing if the
+     backend respects bounds even during the course of optimization.
+'inequc'
+     Further inequality constraints.  Cell-array containing up to four
+     entries, two entries for linear inequality constraints and/or one
+     or two entries for general inequality constraints.  Either linear
+     or general constraints may be the first entries, but the two
+     entries for linear constraints must be adjacent and, if two entries
+     are given for general constraints, they also must be adjacent.  The
+     two entries for linear constraints are a matrix (say 'm') and a
+     vector (say 'v'), specifying linear inequality constraints of the
+     form 'm.' * parameters + v >= 0'.  The first entry for general
+     constraints must be a differentiable column-vector valued function
+     (say 'h'), specifying general inequality constraints of the form 'h
+     (p[, idx]) >= 0'; 'p' is the column vector of optimized paraters
+     and the optional argument 'idx', given only if the function accepts
+     it, is a logical index.  'h' has to return the values of all
+     constraints if 'idx' is not given.  It may choose to return only
+     the indexed constraints if 'idx' is given (so computation of the
+     other constraints can be spared); in this case, the additional
+     setting 'f_inequc_idx' has to be set to 'true'.  In gradient
+     determination, this function may be called with an informational
+     third argument (only if the function accepts it), whose content
+     depends on the function for gradient determination.  If a second
+     entry for general inequality constraints is given, it must be a
+     function computing the jacobian of the constraints with respect to
+     the parameters.  For this function, the description of the setting
+     'dfdp', *note dfdp: XREFoptiondfdp, applies, with 2 exceptions: 1)
+     it is called with 3 arguments (but with the 2nd and 3rd argument
+     only if it accepts them) since it has an additional argument 'idx',
+     a logical index, at second position, indicating which rows of the
+     jacobian must be returned (if the function chooses to return only
+     indexed rows, the additional setting 'df_inequc_idx' has to be set
+     to 'true').  2) the default jacobian function calls 'h' with 3
+     arguments, since the argument 'idx' is also supplied.  Note that
+     specifying linear constraints as general constraints will generally
+     waste performance, even if further, non-linear, general constraints
+     are also specified.
+'f_inequc_idx,'
+'df_inequc_idx'
+     Indicate that functions for general inequality constraints or their
+     jacobian, respectively, return only the values or derivatives for
+     the indexed parameters.  See description of setting 'inequc' above.
+'equc'
+     Equality constraints.  Specified the same way as inequality
+     constraints (see 'inequc' above).
+'f_equc_idx,'
+'df_equc_idx'
+     As 'f_inequc_idx' and 'df_inequc_idx' above, but for equality
+     constraints.
+'cpiv'
+     Function for complementary pivoting, usable in algorithms for
+     constraints.  Default: 'cpiv_bard'.  Only the default function is
+     supplied with the package.
+'TolFun'
+     Minimum fractional improvement in objective function (e.g.  sum of
+     squares) in an iteration (termination criterium).  Default: .0001.
+'TolX'
+     Minimum fractional change in a norm of the parameters in an
+     iteration (termination criterium).  Default: backend specific.
+'MaxIter'
+     Maximum number of iterations (termination criterium).  Default:
+     backend-specific.
+'fract_prec'
+     Column Vector, minimum fractional changes of corresponding
+     parameters in an iteration (termination criterium if violated in
+     two consecutive iterations).  Default: backend-specific.
+'max_fract_change'
+     Column Vector, enforced maximum fractional changes in corresponding
+     parameters in an iteration.  Default: backend-specific.
+'Display'
+     String indicating the degree of verbosity.  Default: "off".
+     Possible values are currently "off" (no messages) and "iter" (some
+     messages after each iteration).  Support of this setting and its
+     exact interpretation are backend-specific.
+'debug'
+     Logical scalar, default: 'false'.  Will be passed to the backend,
+     which might print debugging information if 'true'.
+'FunValCheck'
+     If "on", the output of user functions will be sanity-checked.
+     Default: "off".
+'user_interaction'
+     Handle to a user function or cell-array with a number of these.
+     Functions must have this interface:
+          [STOP, INFO] = some_user_function (P, VALS,
+                                                         STATE);
+     If STOP is 'true', the algorithm stops.  In INFO information about
+     the reason for stopping can be returned in a free format.  INFO can
+     be set to be empty, but it must be set.  Note that this is
+     different from the otherwise similar Matlab setting 'OutputFcn'.
+     The functions will be called by the algorithms at the start with
+     STATE set to init, after each iteration with STATE set to iter, and
+     at the end with STATE set to done.  P contains the current
+     parameters, and VALS is a structure with other current values, the
+     possible fields are currently:
+     'iteration'
+          number of the current iteration,
+     'fval'
+          value of objective function (for scalar optimization),
+     'residual'
+          residuals (for residual-based optimization),
+     'model_y'
+          in 'nonlin_curvefit', the output of the model function,
+     'observations'
+          in 'nonlin_curvefit', the constant observations,
+     'model_x'
+          in 'nonlin_curvefit', the constant argument X.
+     Information about the output of these functions when they were
+     called the last time (possibly causing a stop) will be contained in
+     the output OUTP of the frontend in field 'user_interaction'.
+     Subfield 'stop' is a vector containing the STOP outputs of each
+     function, subfield 'info' is a cell-array containing the output
+     INFO of each function.  In the case of a stop, the output CVG of
+     the frontent will be '-1'.
+
+
+File: optim.info,  Node: Parameter structures,  Next: Additional parameters,  Prev: Common optimization options,  Up: Top
+
+10 Handling of structures of optimized parameters
+*************************************************
+
+It can be convenient not to handle the optimized parameters as elements
+of a vector, but as named fields of a structure.  The frontends
+'nonlin_residmin', 'nonlin_curvefit', 'residmin_stat', 'curvefit_stat',
+and 'nonlin_min' can accept parameter information in structure form, and
+can pass the parameters as a structure to user functions, although the
+backends still handle the parameters as vectors.
+
+   To use this feature, the initial parameters must be given in
+structure form, or the setting 'param_order' must be given, a cell-array
+with names of the parameters.  If both is done, only the parameters in
+structure fields named in 'param_order' will be optimized.  If there are
+still some non-structure-based configuration settings or user functions,
+specifying 'param_order' is mandatory even if the initial parameters are
+given in structure form.
+
+   If the initial parameters are a structure, the parameters being the
+optimization result will also be returned as a structure.
+
+* Menu:
+
+* Structure-based user functions:: Specify which user functions accept
+                             parameter structures.
+* Structure-based gradients and Hessians::    Format of returned values of
+                             structure-based gradient and Hessian functions.
+* Structure-based linear constraints:: Specify structure-based linear
+                             constraints.
+* Structure-based configuration settings:: Parameter-related
+                             configuration settings in structure form.
+* Non-scalar parameters::  Handling named parameter arrays.
+
+
+File: optim.info,  Node: Structure-based user functions,  Next: Structure-based gradients and Hessians,  Up: Parameter structures
+
+10.1 Specify which user functions accept parameter structures
+=============================================================
+
+The frontend must be told which user functions accept parameter
+structures by setting corresponding settings to 'true'.  The names of
+these settings depend on which user functions are applicable to the
+respective frontend and are shown in the following table.
+
+User function            Setting                  Frontends
+-----------------------------------------------------------------------
+Objective function       'objf_pstruct'           'nonlin_min'
+Gradient                 'grad_objf_pstruct'      'nonlin_min'
+Hessian                  'hessian_objf_pstruct'   'nonlin_min'
+Model function           'f_pstruct'              'nonlin_residmin',
+                                                  'nonlin_curvefit',
+                                                  'residmin_stat',
+                                                  'curvefit_stat'
+Jacobian                 'df_pstruct'             'nonlin_residmin',
+                                                  'nonlin_curvefit',
+                                                  'residmin_stat',
+                                                  'curvefit_stat'
+General inequality       'f_inequc_pstruct'       'nonlin_min',
+constraints                                       'nonlin_residmin',
+                                                  'nonlin_curvefit'
+Jacobian of general      'df_inequc_pstruct'      'nonlin_min',
+inequality constraints                            'nonlin_residmin',
+                                                  'nonlin_curvefit'
+General equality         'f_equc_pstruct'         'nonlin_min',
+constraints                                       'nonlin_residmin',
+                                                  'nonlin_curvefit'
+Jacobian of general      'df_equc_pstruct'        'nonlin_min',
+equality constraints                              'nonlin_residmin',
+                                                  'nonlin_curvefit'
+
+
+File: optim.info,  Node: Structure-based gradients and Hessians,  Next: Structure-based linear constraints,  Prev: Structure-based user functions,  Up: Parameter structures
+
+10.2 Format of returned values of structure-based gradient and Hessian functions
+================================================================================
+
+Structure-based gradient or Jacobian functions, including Jacobians of
+general constraints, must return the partial derivatives as fields of a
+structure under the respective parameter names.  For gradients, the
+partial derivatives are scalar.  For Jacobians, the partial derivatives
+must be column vectors.
+
+   Structure-based Hessian functions must return the 2nd derivatives as
+subfields in a two-level structure of parameter names.  For example, if
+the parameter names are 'a' and 'b', the 2nd derivative with respect to
+'a' and 'b' must be in the field 'returned_structure.a.b' or
+'returned_structure.b.a' (there is no need to specify both).
+
+
+File: optim.info,  Node: Structure-based linear constraints,  Next: Structure-based configuration settings,  Prev: Structure-based gradients and Hessians,  Up: Parameter structures
+
+10.3 Specify structure-based linear constraints
+===============================================
+
+Linear constraints, otherwise specified with a matrix and a vector, can
+be adapted to structure-based parameter handling by specifying, instead
+of a matrix, a structure containing the rows of the matrix in fields
+under the respective parameter names.  In this case, rows containing
+only zeros need not be given.
+
+
+File: optim.info,  Node: Structure-based configuration settings,  Next: Non-scalar parameters,  Prev: Structure-based linear constraints,  Up: Parameter structures
+
+10.4 Parameter-related configuration settings in structure form
+===============================================================
+
+The vector-based settings 'lbound', 'ubound', 'fixed', 'diffp',
+'diff_onesided', 'fract_prec', and 'max_fract_change' can be replaced by
+the setting 'param_config'.  It is a structure that can contain fields
+corresponding to parameter names.  For each such field, there may be
+subfields with the same names as the above vector-based settings, but
+containing a scalar value for the respective parameter.
+
+   For example, if the parameters are named 'a' and 'b', instead of
+specifying
+
+     settings = optimset ("lbound", [-Inf; 0],
+                          "diff_onesided", [true; true]);
+
+   one can specify
+
+     pconf.b.lbound = 0;
+     pconf.a.diff_onesided = true;
+     pconf.b.diff_onesided = true;
+     settings = optimset ("param_config", pconf);
+
+   If 'param_config' is specified, none of the above vector-based
+settings may be used.
+
+
+File: optim.info,  Node: Non-scalar parameters,  Prev: Structure-based configuration settings,  Up: Parameter structures
+
+10.5 Handling named parameter arrays
+====================================
+
+Parameters in named structure fields are allowed to be non-scalar real
+arrays.  In this case, their dimensions must be given by the setting
+'param_dims', a cell-array of dimension vectors, each containing at
+least two dimensions; if not given, dimensions are taken from the
+initial parameters, if these are given in a structure.
+
+   If there are any vector-based settings or not structure-based linear
+constraints, they must correspond to an order of parameters defined as
+follows:
+
+   All named parameter arrays are reshaped to vectors.  Then, all
+parameters, scalars and vectors, are concatenated in the order of
+parameter names, given by the user.
+
+   Structure-based settings or structure-based initial parameters must
+contain arrays with dimensions reshapable to those of the respective
+parameters.
+
+
+File: optim.info,  Node: Additional parameters,  Next: Function index,  Prev: Parameter structures,  Up: Top
+
+11 Passing additional parameters to user functions
+**************************************************
+
+Optimizers often require the user to supply functions (e.g.  objective
+functions, model functions, constraint functions).  The interface of
+these functions -- arguments and returned values -- is defined by the
+optimizer.  Often, a user function needs additional arguments, not
+covered by the defined interface, which are constant throughout the
+optimization.  These can be supplied by wrapping the user function into
+an anonymous function.  *Note (octave)Anonymous Functions::, for further
+explanation and examples.
+
+   There are also some older optimizers in the optim package, written
+when anonymous functions were not available in Octave.  Some of these
+offer an interface to user functions which is itself able to pass
+additional constant variables in arbitrary argument positions.  Newer
+optimizers should not be written this way, since this is an unnecessary
+complication.
+
+   Though it is possible to use global variables to pass additional data
+to user functions, this is not recommended since it introduces the
+possibility of name conflicts within the pool of global variables.
+
+
+File: optim.info,  Node: Function index,  Next: Concept index,  Prev: Additional parameters,  Up: Top
+
+Index of functions in optim
+***************************
+
+ [index ]
+* Menu:
+
+* adsmax:                                adsmax.                (line 6)
+* battery:                               battery.               (line 6)
+* bfgsmin:                               bfgsmin.               (line 6)
+* brent_line_min:                        brent_line_min.        (line 6)
+* cdiff:                                 cdiff.                 (line 6)
+* cg_min:                                cg_min.                (line 6)
+* cpiv_bard:                             cpiv_bard.             (line 6)
+* curvefit_stat:                         curvefit_stat.         (line 6)
+* deriv:                                 deriv.                 (line 6)
+* de_min:                                de_min.                (line 6)
+* dfpdp:                                 dfpdp.                 (line 6)
+* fmincon:                               fmincon.               (line 6)
+* gjp:                                   gjp.                   (line 6)
+* jacobs:                                jacobs.                (line 6)
+* leasqr:                                leasqr.                (line 6)
+* LinearRegression:                      LinearRegression.      (line 6)
+* line_min:                              line_min.              (line 6)
+* linprog:                               linprog.               (line 6)
+* lsqcurvefit:                           lsqcurvefit.           (line 6)
+* lsqlin:                                lsqlin.                (line 6)
+* lsqnonlin:                             lsqnonlin.             (line 6)
+* mdsmax:                                mdsmax.                (line 6)
+* nelder_mead_min:                       nelder_mead_min.       (line 6)
+* nlinfit:                               nlinfit.               (line 6)
+* nonlin_curvefit:                       nonlin_curvefit.       (line 6)
+* nonlin_min:                            nonlin_min.            (line 6)
+* nonlin_residmin:                       nonlin_residmin.       (line 6)
+* nrm:                                   nrm.                   (line 6)
+* numgradient:                           numgradient.           (line 6)
+* numhessian:                            numhessian.            (line 6)
+* optim_doc:                             Documentation.         (line 6)
+* polyconf:                              polyconf.              (line 6)
+* polyfitinf:                            polyfitinf.            (line 6)
+* powell:                                powell.                (line 6)
+* pronyfit:                              pronyfit.              (line 6)
+* quadprog:                              quadprog.              (line 6)
+* residmin_stat:                         residmin_stat.         (line 6)
+* vfzero:                                vfzero.                (line 6)
+* wpolyfit:                              wpolyfit.              (line 6)
+* wsolve:                                wsolve.                (line 6)
+
+
+File: optim.info,  Node: Concept index,  Prev: Function index,  Up: Top
+
+Concept index
+*************
+
+ [index ]
+* Menu:
+
+* additional parameters:                 Additional parameters. (line 6)
+* common optimization options:           Common optimization options.
+                                                                (line 6)
+* common options:                        Common frontend options.
+                                                                (line 6)
+* compatibility functions:               Compatibility functions.
+                                                                (line 6)
+* d2_min:                                d2_min.                (line 6)
+* gradient functions:                    Gradient functions.    (line 6)
+* helper functions:                      Helper functions.      (line 6)
+* lm_feasible:                           lm_feasible.           (line 6)
+* lm_svd_feasible:                       lm_svd_feasible.       (line 6)
+* named parameter arrays:                Non-scalar parameters. (line 6)
+* non-scalar parameters:                 Non-scalar parameters. (line 6)
+* octave_sqp:                            octave_sqp.            (line 6)
+* parameter structures:                  Parameter structures.  (line 6)
+* residual optimization:                 Residual optimization. (line 6)
+* samin:                                 samin.                 (line 6)
+* scalar optimization:                   Scalar optimization.   (line 6)
+* siman:                                 siman.                 (line 6)
+* statistics for weighted least squares: wls.                   (line 6)
+* structure-based configuration settings: Structure-based configuration settings.
+                                                                (line 6)
+* structure-based gradients:             Structure-based gradients and Hessians.
+                                                                (line 6)
+* structure-based Hessians:              Structure-based gradients and Hessians.
+                                                                (line 6)
+* structure-based linear constraints:    Structure-based linear constraints.
+                                                                (line 6)
+* structure-based user functions:        Structure-based user functions.
+                                                                (line 6)
+* wls:                                   wls.                   (line 6)
+* zero finders:                          Zero finders.          (line 6)
+
+
+
+Tag Table:
+Node: Top799
+Node: Scalar optimization2832
+Node: nonlin_min4312
+Ref: XREFnonlin_min4516
+Node: lm_feasible10427
+Node: octave_sqp11719
+Node: siman13004
+Node: samin15919
+Node: d2_min18576
+Node: mdsmax19332
+Ref: XREFmdsmax19525
+Node: adsmax21848
+Ref: XREFadsmax22050
+Node: nelder_mead_min23931
+Ref: XREFnelder_mead_min24231
+Node: powell26928
+Ref: XREFpowell27104
+Node: bfgsmin29788
+Ref: XREFbfgsmin30053
+Node: nrm31765
+Ref: XREFnrm31945
+Node: cg_min32099
+Ref: XREFcg_min32262
+Node: brent_line_min34685
+Ref: XREFbrent_line_min34847
+Node: line_min35929
+Ref: XREFline_min36144
+Node: de_min36937
+Ref: XREFde_min37159
+Node: battery41502
+Ref: XREFbattery41659
+Node: Residual optimization42124
+Node: nonlin_residmin44319
+Ref: XREFnonlin_residmin44548
+Ref: XREFoptiondfdp47523
+Node: nonlin_curvefit50230
+Ref: XREFnonlin_curvefit51119
+Node: lm_svd_feasible52296
+Node: residmin_stat53312
+Ref: XREFresidmin_stat53511
+Node: curvefit_stat56389
+Ref: XREFcurvefit_stat56822
+Node: wls57598
+Node: lsqlin58720
+Ref: XREFlsqlin59028
+Node: leasqr60741
+Ref: XREFleasqr61517
+Node: pronyfit71032
+Ref: XREFpronyfit71261
+Node: polyfitinf72851
+Ref: XREFpolyfitinf73072
+Node: wpolyfit77840
+Ref: XREFwpolyfit78034
+Node: polyconf81022
+Ref: XREFpolyconf81279
+Node: LinearRegression82694
+Ref: XREFLinearRegression82862
+Node: wsolve84920
+Ref: XREFwsolve85118
+Node: Zero finders86819
+Node: vfzero87270
+Ref: XREFvfzero87393
+Node: Gradient functions89306
+Node: dfpdp90217
+Ref: XREFdfpdp90472
+Node: deriv91554
+Ref: XREFderiv91726
+Node: numgradient92552
+Ref: XREFnumgradient92752
+Node: numhessian93343
+Ref: XREFnumhessian93525
+Node: cdiff94126
+Ref: XREFcdiff94359
+Node: jacobs95715
+Ref: XREFjacobs95848
+Node: Helper functions96879
+Node: cpiv_bard97233
+Ref: XREFcpiv_bard97406
+Node: gjp98586
+Ref: XREFgjp98733
+Node: Documentation99550
+Ref: XREFoptim_doc99746
+Node: Compatibility functions100146
+Node: linprog100654
+Ref: XREFlinprog100839
+Node: quadprog101451
+Ref: XREFquadprog101655
+Node: lsqnonlin103804
+Ref: XREFlsqnonlin104102
+Node: lsqcurvefit108222
+Ref: XREFlsqcurvefit108483
+Node: nlinfit112905
+Ref: XREFnlinfit113202
+Node: fmincon116198
+Ref: XREFfmincon116351
+Node: Common frontend options120831
+Node: Common optimization options124447
+Node: Parameter structures132139
+Node: Structure-based user functions133938
+Node: Structure-based gradients and Hessians136125
+Node: Structure-based linear constraints137111
+Node: Structure-based configuration settings137705
+Node: Non-scalar parameters138846
+Node: Additional parameters139850
+Node: Function index141153
+Node: Concept index144257
+
+End Tag Table

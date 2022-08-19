@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>dfpdp (optim_doc)</title>
+
+<meta name="description" content="dfpdp (optim_doc)">
+<meta name="keywords" content="dfpdp (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Gradient-functions.html#Gradient-functions" rel="up" title="Gradient functions">
+<link href="deriv.html#deriv" rel="next" title="deriv">
+<link href="Gradient-functions.html#Gradient-functions" rel="prev" title="Gradient functions">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="dfpdp"></a>
+<div class="header">
+<p>
+Next: <a href="deriv.html#deriv" accesskey="n" rel="next">deriv</a>, Up: <a href="Gradient-functions.html#Gradient-functions" accesskey="u" rel="up">Gradient functions</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Direct-user-interface-to-default-numerical-gradient-method-of-new-frontends"></a>
+<h3 class="section">4.1 Direct user interface to default numerical gradient method of new frontends</h3>
+<a name="index-dfpdp"></a>
+
+<a name="Helptext_003a-11"></a>
+<h4 class="subheading">Helptext:</h4>
+
+<a name="XREFdfpdp"></a><pre class="verbatim">function jac = dfpdp (p, func[, hook])
+
+Returns Jacobian of func (p) with respect to p with finite
+differencing. The optional argument hook is a structure which can
+contain the following fields at the moment:
+
+hook.f: value of func(p) for p as given in the arguments
+
+hook.diffp: positive vector of fractional steps from given p in
+finite differencing (actual steps may be smaller if bounds are
+given). The default is .001 * ones (size (p)).
+
+hook.diff_onesided: logical vector, indexing elements of p for
+which only one-sided differences should be computed (faster); even
+if not one-sided, differences might not be exactly central if
+bounds are given. The default is false (size (p)).
+
+hook.fixed: logical vector, indexing elements of p for which zero
+should be returned instead of the guessed partial derivatives
+(useful in optimization if some parameters are not optimized, but
+are 'fixed').
+
+hook.lbound, hook.ubound: vectors of lower and upper parameter
+bounds (or -Inf or +Inf, respectively) to be respected in finite
+differencing. The consistency of bounds is not checked.
+
+</pre>
+
+
+
+
+</body>
+</html>

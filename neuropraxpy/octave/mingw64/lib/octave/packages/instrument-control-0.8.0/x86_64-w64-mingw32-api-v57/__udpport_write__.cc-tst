@@ -1,0 +1,21 @@
+## Generated from __udpport_write__.cc
+%!test
+%! a = udpport ();
+%! b = udpport ();
+%! port = get (b, 'LocalPort');
+%! assert (5, __udpport_write__ (a, uint8 ([104  101  108  108  111]), "127.0.0.1", port));
+%! [d, c] = __udpport_read__ (b, 5, 1000);
+%! assert (c, 5);
+%! assert (d, uint8 ([104  101  108  108  111]));
+%! clear a;
+%! clear b;
+%!error <Invalid call to __udpport_write__> __udpport_write__ (1, uint8([104  101  108  108  111]))
+%!error <Invalid call to __udpport_write__> __udpport_write__ ()
+%!test
+%! a = udpport ();
+%! fail ("__udpport_write__ (a, uint8([104  101  108  108  111]), 0)", "Invalid call to __udpport_write__")
+%! clear a;
+%!test
+%! a = udpport ();
+%! fail ("__udpport_write__ (a)", "Invalid call to __udpport_write__")
+%! clear a;

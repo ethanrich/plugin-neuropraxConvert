@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>wpolyfit (optim_doc)</title>
+
+<meta name="description" content="wpolyfit (optim_doc)">
+<meta name="keywords" content="wpolyfit (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Residual-optimization.html#Residual-optimization" rel="up" title="Residual optimization">
+<link href="polyconf.html#polyconf" rel="next" title="polyconf">
+<link href="polyfitinf.html#polyfitinf" rel="prev" title="polyfitinf">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="wpolyfit"></a>
+<div class="header">
+<p>
+Next: <a href="polyconf.html#polyconf" accesskey="n" rel="next">polyconf</a>, Previous: <a href="polyfitinf.html#polyfitinf" accesskey="p" rel="prev">polyfitinf</a>, Up: <a href="Residual-optimization.html#Residual-optimization" accesskey="u" rel="up">Residual optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Polynomial-fitting-suitable-for-polyconf"></a>
+<h3 class="section">2.11 Polynomial fitting suitable for polyconf</h3>
+<a name="index-wpolyfit-4"></a>
+
+<a name="XREFwpolyfit"></a><dl>
+<dt><a name="index-wpolyfit"></a>Function File: <em>[<var>p</var>, <var>s</var>] =</em> <strong>wpolyfit</strong> <em>(<var>x</var>, <var>y</var>, <var>dy</var>, <var>n</var>)</em></dt>
+<dd><p>Return the coefficients of a polynomial <var>p</var>(<var>x</var>) of degree
+<var>n</var> that minimizes
+<code>sumsq (p(x(i)) - y(i))</code>,
+to best fit the data in the least squares sense.  The standard error
+on the observations <var>y</var> if present are given in <var>dy</var>.
+</p>
+<p>The returned value <var>p</var> contains the polynomial coefficients 
+suitable for use in the function polyval.  The structure <var>s</var> returns
+information necessary to compute uncertainty in the model.
+</p>
+<p>To compute the predicted values of y with uncertainty use
+</p><div class="example">
+<pre class="example">[y,dy] = polyconf(p,x,s,'ci');
+</pre></div>
+<p>You can see the effects of different confidence intervals and
+prediction intervals by calling the wpolyfit internal plot
+function with your fit:
+</p><div class="example">
+<pre class="example">feval('wpolyfit:plt',x,y,dy,p,s,0.05,'pi')
+</pre></div>
+<p>Use <var>dy</var>=[] if uncertainty is unknown.
+</p>
+<p>You can use a chi^2 test to reject the polynomial fit:
+</p><div class="example">
+<pre class="example">p = 1-chi2cdf(s.normr^2,s.df);
+</pre></div>
+<p>p is the probability of seeing a chi^2 value higher than that which 
+was observed assuming the data are normally distributed around the fit.
+If p &lt; 0.01, you can reject the fit at the 1% level.
+</p>
+<p>You can use an F test to determine if a higher order polynomial 
+improves the fit:
+</p><div class="example">
+<pre class="example">[poly1,S1] = wpolyfit(x,y,dy,n);
+[poly2,S2] = wpolyfit(x,y,dy,n+1);
+F = (S1.normr^2 - S2.normr^2)/(S1.df-S2.df)/(S2.normr^2/S2.df);
+p = 1-f_cdf(F,S1.df-S2.df,S2.df);
+</pre></div>
+<p>p is the probability of observing the improvement in chi^2 obtained
+by adding the extra parameter to the fit.  If p &lt; 0.01, you can reject 
+the lower order polynomial at the 1% level.
+</p>
+<p>You can estimate the uncertainty in the polynomial coefficients 
+themselves using
+</p><div class="example">
+<pre class="example">dp = sqrt(sumsq(inv(s.R'))'/s.df)*s.normr;
+</pre></div>
+<p>but the high degree of covariance amongst them makes this a questionable
+operation.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-wpolyfit-1"></a>Function File: <em>[<var>p</var>, <var>s</var>, <var>mu</var>] =</em> <strong>wpolyfit</strong> <em>(...)</em></dt>
+<dd>
+<p>If an additional output <code>mu = [mean(x),std(x)]</code> is requested then 
+the <var>x</var> values are centered and normalized prior to computing the fit.
+This will give more stable numerical results.  To compute a predicted 
+<var>y</var> from the returned model use
+<code>y = polyval(p, (x-mu(1))/mu(2)</code>
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-wpolyfit-2"></a>Function File: <em></em> <strong>wpolyfit</strong> <em>(...)</em></dt>
+<dd>
+<p>If no output arguments are requested, then wpolyfit plots the data,
+the fitted line and polynomials defining the standard error range.
+</p>
+<p>Example
+</p><div class="example">
+<pre class="example">x = linspace(0,4,20);
+dy = (1+rand(size(x)))/2;
+y = polyval([2,3,1],x) + dy.*randn(size(x));
+wpolyfit(x,y,dy,2);
+</pre></div>
+</dd></dl>
+
+<dl>
+<dt><a name="index-wpolyfit-3"></a>Function File: <em></em> <strong>wpolyfit</strong> <em>(..., 'origin')</em></dt>
+<dd>
+<p>If &rsquo;origin&rsquo; is specified, then the fitted polynomial will go through
+the origin.  This is generally ill-advised.  Use with caution.
+</p>
+<p>Hocking, RR (2003). Methods and Applications of Linear Models.
+New Jersey: John Wiley and Sons, Inc.
+</p>
+
+<p><strong>See also:</strong> <a href="polyconf.html#XREFpolyconf">polyconf</a>.
+</p></dd></dl>
+
+
+<p>See also <a href="https://www.gnu.org/software/octave/doc/interpreter/XREFpolyfit.html#XREFpolyfit">(octave)polyfit</a>.
+</p>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="polyconf.html#polyconf" accesskey="n" rel="next">polyconf</a>, Previous: <a href="polyfitinf.html#polyfitinf" accesskey="p" rel="prev">polyfitinf</a>, Up: <a href="Residual-optimization.html#Residual-optimization" accesskey="u" rel="up">Residual optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

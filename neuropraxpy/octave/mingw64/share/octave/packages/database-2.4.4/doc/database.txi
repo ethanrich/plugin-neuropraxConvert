@@ -1,0 +1,784 @@
+\input texinfo
+@c %**start of header
+@setfilename database.info
+@settitle database_doc
+@c %**end of header
+
+@c Nowadays the predined function index has entries for each @deftypefn
+@c in additiont to each @findex.
+@defcodeindex mfn
+
+@copying
+General documentation for the database package for Octave.
+
+Copyright @copyright{} 2016--2018 @email{Olaf Till <i7tiol@@t-online.de>}
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>.
+@end copying
+
+@include macros.texi
+
+@macro mysee
+@ifhtml
+see
+@end ifhtml
+@end macro
+
+@titlepage
+@title General documentation for the documentation package for Octave
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@c No table of contents. The table would occupy most of the top node in
+@c html and IMHO misleads the user to use the table instead of the menu
+@c structure of the nodes, which would let some information unused.
+@c
+@c @contents
+
+@c ------------------------------------------------------------------
+
+@node Top
+@top General documentation for the database package for Octave
+
+@ifhtml
+The info version of this document is accessible, after package
+installation, from the Octave commandline with @code{database_doc()}.
+@end ifhtml
+
+This documentation applies to version @PACKAGEVERSION of the database
+package.
+
+The database package enables accessing SQL databases from
+Octave. Differences between database implementations will inevitably
+cause some of this packages functions to be specific for a certain
+implementation. Currently, however, this package only supports the
+Postgresql database. Later additions might support further databases,
+and possibly some general functions (with only very basic
+functionality), which can be used for all backends, will also be
+provided.
+
+This documentation currently describes the concepts of SQL access in
+'database' and the details for Postgresql. Familiarity with SQL and the
+database implementation (Postgresql) is assumed.
+
+@menu
+* Installation::                Installation hints.
+* Concept::                     Introduction and package concept.
+* SQL data types::              Representation in Octave of types
+                                  defined by SQL.
+* Arbitrary Octave types::      Storing arbitrary Octave types in a
+                                  database.
+* Setting options::             Functions for setting or retrieving
+                                  options.
+* Documentation::               Function database_doc to view
+                                  documentation.
+
+Specific databases
+* Postgresql::                  Description of access to Postgresql
+                                  databases.
+
+Indices
+* Function index::              Index of functions in database.
+* Concept index::               Concept index.
+@end menu
+
+@c ------------------------------------------------------------------
+
+@node Installation
+@chapter Installation hints
+
+Maybe your distribution provides the database package.
+
+If not, or if you want a newer version, Octaves @code{pkg} command
+allows building the package from source and installing it. Note that you
+have to @code{load} any Octave package before you can use it. See
+Octaves documentation of @code{pkg}.
+
+In building from source with @code{pkg}, some preconditions of the
+system are checked, in particular the presence of the @code{pq} library
+of Postgresql. If you have to install a package of your operating system
+with @code{libpq}, you usually also need to install the so called
+development package (named @code{libpq-dev} or similar).
+
+@c ------------------------------------------------------------------
+
+@node Concept
+@chapter Introduction and package concept
+
+To enable scripting of SQL access, particularly combinations of SQL
+commands with temporary local storage or local processing of data, for
+almost each SQL data type a corresponding representation of the data in
+Octave is defined. This includes the SQL array types and user-defined
+SQL composite types (row types) of arbitrary nesting depth. Octave
+variables containing these corresponding representations are created by
+the package if data is received from a database by a @code{select}
+query, and correspondingly are used for sending data to the
+database. This data exchange is lossless if the database backend allows
+it (which is the case for Postgresql).
+
+The representations of SQL types in Octave are the 'naturally'
+corresponding Octave types, if possible. They can also be created
+directly in Octave and sent to a database.
+
+The package keeps a notion of all SQL types available in a
+database. This information is automatically retrieved after
+connecting. If the user creates new types with SQL commands, a package
+function for refreshing the packages information on types must be called
+for the type to be available within the same session. The same function
+should be called if the session continues after deletion of types.
+
+The package provides functions for issuing SQL commands whose text is
+provided by the user. The command text can contain placeholders for
+data. The data, corresponding to these placeholders, can be passed to
+the function in separate arguments.
+
+In queries, not only data is returned, but also information on data type
+and column names.
+
+
+@c ------------------------------------------------------------------
+
+@node SQL data types
+@chapter Representation in Octave of types defined by SQL
+@cindex data types
+
+For types specific to database implementations,
+@mysee
+@ref{Postgresql data types}.
+
+The last column indicates whether the SQL type is automatically deduced
+by this packages functions from the representation of the data in
+Octave. If not, the correct SQL type must be specified by the user if
+the data is sent from Octave to the database.
+
+The listed names of SQL data types are those which are used by the
+functions of this package. They are sometimes different from the
+original SQL typenames, e.g. @code{int2}, @code{int4}, and @code{int8}
+instead of @code{smallint}, @code{integer}, and @code{bigint},
+respectively. If not obvious, the original SQL typename is given in
+parantheses.
+
+@multitable {aaaaaaaaaaaaa} {Octave type blah blah blah blah blah} {auto}
+@headitem SQL @tab Octave @tab auto
+@item bool
+@tab logical scalar
+@tab yes
+@item bytea (variable length binary string)
+@tab array of uint8, one-dimensional if converted from SQL data
+@tab yes
+@item float8
+@tab double scalar
+@tab yes
+@item float4
+@tab single scalar
+@tab yes
+@item varchar
+@tab string
+@tab no
+@item bpchar (char)
+@tab string
+@tab no
+@item int2
+@tab int16 scalar
+@tab yes
+@item int4
+@tab int32 scalar
+@tab yes
+@item int8
+@tab int64 scalar
+@tab yes
+@item timestamp
+@tab 8-byte-time-value (see below), positive or negative difference
+to 2000-01-01 00:00
+@tab no
+@item timestamptz
+@tab as timestamp
+@tab no
+@item time
+@tab 8-byte-time-value (see below)
+@tab no
+@item timetz
+@tab 2-element cell array with 8-byte-time-value (see below, time of
+day) and int32 scalar (time zone in seconds, negative east of UTC)
+@tab no
+@item date
+@tab int32 scalar, positive or negative difference to 2000-01-01
+@tab no
+@item interval
+@tab 3-element cell array with 8-byte-time-value (see below), int32
+(days), and int32 (months)
+@tab no
+@item bit
+@tab structure with fields @code{bitlen} (int32, number of valid
+bits) and @code{bits} (uint8 array, 8 bits per entry, first entry
+contains the leftmost bits, last entry may contain less than 8 bits)
+@tab no
+@item varbit
+@tab as bit
+@tab yes
+@item xml
+@tab string
+@tab no
+@item any array
+@tab Structure with fields @code{data} (holding a cell-array with
+entries of a type corresponding to the SQL element type), @code{ndims}
+(holding the number of dimensions of the corresponding SQL array, since
+this can not be deduced from the dimensions of the Octave cell-array in
+all cases), and optionally (but always present in returned values)
+@code{lbounds} (a row vector of enumeration bases for all dimensions,
+default is @code{ones (1, ndims)}; enumeration bases different from
+@code{1} are supported e.g. by Postgresql). Array elements may not
+correspond to arrays in SQL (use additional dimensions for this), but
+may correspond to composite types, which is allowed to lead to
+arbitrarily deep nesting.
+@tab no
+@item any composite type (row type)
+@tab One-dimensional cell-array with entries of types corresponding
+to the respective SQL types. Entries may also correspond to an
+array-type or composite type; this is allowed to lead to arbitrarily
+deep nesting.
+@tab no
+@end multitable
+
+8-byte-time-value: int64 scalar, representing microseconds, if server is
+configured for integer date/time; double scalar, representing seconds,
+if server is configured for float date/time. If the type (integer or
+float) of an input Octave variable for an 8-byte-time-value does not
+match the server configuration, there is no automatic conversion but an
+error is thrown.
+
+Octaves @code{NA} corresponds to an SQL NULL value (not @code{NaN},
+which is interpreted as a value of a float type!).
+
+
+@c ------------------------------------------------------------------
+
+@node Arbitrary Octave types
+@chapter Storing arbitrary Octave types in a database
+@cindex arbitrary Octave types
+
+If Octave variable types have corresponding SQL types (
+@mysee
+@ref{SQL data types}
+, also consider the links there to types specific for database
+implementations), the variables can directly be stored in a database. If
+not, the variables can be converted to representations of the SQL type
+bytea and then stored. This way of storing is possible for all Octave
+types which can be correctly saved and loaded with Octaves @code{save}
+and @code{load} functions.
+
+@menu
+* var2bytea::                Converting Octave variables to bytea.
+* bytea2var::                Converting bytea back to Octave variables.
+@end menu
+
+@c ------------------------------------------------------------------
+
+@node var2bytea
+@section Converting Octave variables to bytea
+@mfnindex var2bytea
+
+@c include function helptext here
+@DOCSTRING(var2bytea)
+
+@c ------------------------------------------------------------------
+
+@node bytea2var
+@section Converting bytea back to Octave variables
+@mfnindex bytea2var
+
+@c include function helptext here
+@DOCSTRING(bytea2var)
+
+@c ------------------------------------------------------------------
+
+@node Setting options
+@chapter Functions for setting or retrieving options
+@cindex options
+
+Some functions in 'database' accept options. These are set or retrieved
+with the following functions.
+
+@menu
+* setdbopts::                   Setting options.
+* getdbopts::                   Retrieving options.
+@end menu
+
+@c ------------------------------------------------------------------
+
+@node setdbopts
+@section Function setdbopts for setting options in 'database'
+@mfnindex setdbopts
+
+@c include function help here
+@DOCSTRING(setdbopts)
+
+@c ------------------------------------------------------------------
+
+@node getdbopts
+@section Function getdbopts for retrieving options in 'database'
+@mfnindex getdbopts
+
+This function is internally called by the functions of 'database'.
+
+@c include function help here
+@DOCSTRING(getdbopts)
+
+@c ------------------------------------------------------------------
+
+@node Documentation
+@chapter Function database_doc to view documentation
+@cindex documentation
+@mfnindex database_doc
+
+@c include function helptext here
+@DOCSTRING(database_doc)
+
+@c ------------------------------------------------------------------
+
+@node Postgresql
+@chapter Description of access to Postgresql databases
+@cindex postgresql
+
+@menu
+* Postgresql data types::            Representation in Octave of types
+                                       specific to Postgresql.
+* Connection functions::             Functions related to the connection
+                                       to a Postgresql database.
+* Data exchange::                    Functions for data exchange with a
+                                       Postgresql database.
+* Examples::                         Examples for accessing Postgresql.
+@end menu
+
+@c ------------------------------------------------------------------
+
+@node Postgresql data types
+@section Representation in Octave of types specific to Postgresql
+@cindex data types
+
+For the general types, defined by SQL and potentially available in each
+database implementation,
+@mysee
+@ref{SQL data types}.
+
+The last column indicates whether the SQL type is automatically deduced
+by this packages functions from the representation of the data in
+Octave. If not, the correct SQL type must be specified by the user if
+the data is sent from Octave to the database.
+
+@multitable {aaaaaaaaaaaaaaa} {Octave type blah blah blah blah blah} {auto}
+@headitem Postgresql @tab Octave @tab auto
+@item oid
+@tab uint32 scalar
+@tab yes
+@item text
+@tab string
+@tab yes
+@item name
+@tab string of length < @code{NAMEDATALEN} (often 64)
+@tab no
+@item money
+@tab int64 scalar, which is 100 times the currency value to enable
+storing the 'small currency' (e.g. Cent) fraction in the last two
+digits
+@tab no
+@item point
+@tab geometric point data for one point (see below)
+@tab yes
+@item lseg
+@tab geometric point data for two points (see below)
+@tab yes
+@item line (not yet implemented by postgresql-9.2.4)
+@tab as lseg
+@tab no
+@item box
+@tab as lseg
+@tab no
+@item circle
+@tab real vector (but the restrictions for type uint8 as in geometric
+element type apply, as explained below) with 3 elements, no. 1 and 2
+centre coordinates, no. 3 radius
+@tab yes
+@item polygon
+@tab geometric point data (see below)
+@tab no
+@item path
+@tab structure with fields @code{closed} (boolean, is path closed?)
+and @code{path} (geometric point data, see below).
+@tab no
+@item inet
+@tab uint8 array of 4 or 5 elements for IPv4 or uint16 array of 8 or
+9 elements for IPv6. 5th or 9th element, respectively, contain number
+of set bits in network mask, the default (if there are only 4 or 8
+elements, respectively) is all bits set.
+@tab no
+@item cidr
+@tab as inet
+@tab no
+@item macaddr
+@tab uint8 array of 6 elements
+@tab no
+@item uuid
+@tab uint8 array of 16 elements
+@tab no
+@item any enum type
+@tab string
+@tab no
+@end multitable
+
+The 8-byte-time value (see time types in @ref{SQL data types}) can be an
+int64 scalar, representing microseconds, if the Postgresql server is
+configured for integer date/time, or a double scalar, representing
+seconds, if the server is configured for float date/time
+(deprecated). One can use @ref{pq_conninfo} to query the respective
+server configuration.
+
+Geometric point data: if converting from Octave data, any real array
+(but if of type uint8, the geometric type name must always be specified,
+for otherwise uint8 would be considered as bytea) with even number of
+elements. Two adjacent elements (adjacent if indexed with a single
+index) define a pair of 2D point coordinates. In converting from
+Postgresql data, dimensions of Octave geometric point data will be
+chosen to be (2, n_points) and elements will be of format double.
+
+@c ------------------------------------------------------------------
+
+@node Connection functions
+@section Functions related to the connection to a Postgresql database
+@cindex database connection
+
+@menu
+* pq_connect::                Connecting to a Postgresql database.
+* pq_close::                  Disconnecting from a Postgresql database.
+* pq_conninfo::               Retrieving information on the
+                              connection and on the server.
+@end menu
+
+@c ------------------------------------------------------------------
+
+@node pq_connect
+@subsection Connecting to a Postgresql database
+@mfnindex pq_connect
+
+@c include function help here
+@DOCSTRING(pq_connect)
+
+@c ------------------------------------------------------------------
+
+@node  pq_close
+@subsection Disconnecting from a Postgresql database
+@mfnindex pq_close
+
+@c include function help here
+@DOCSTRING(pq_close)
+
+@c ------------------------------------------------------------------
+
+@node pq_conninfo
+@subsection Retrieving information on the connection and on the server
+@mfnindex pq_conninfo
+
+@c include function help here
+@DOCSTRING(pq_conninfo)
+
+@c ------------------------------------------------------------------
+
+@node Data exchange
+@section Functions for data exchange with a Postgresql database
+@cindex data exchange, Postgresql
+
+@menu
+* pq_exec_params::             Issuing SQL commands.
+* pq_update_types::            Updating type information.
+
+Large objects
+* pq_lo_import::               Importing large objects into a database.
+* pq_lo_export::               Exporting large objects from a database.
+* pq_lo_unlink::               Deleting large objects from a database.
+* pq_lo_view::                 Viewing large objects.
+@end menu
+
+@c ------------------------------------------------------------------
+
+@node pq_exec_params
+@subsection Issuing SQL commands
+@mfnindex pq_exec_params
+
+@c include function helptext here
+@DOCSTRING(pq_exec_params)
+
+@subheading Type mapping
+
+For the mapping of currently implemented Postgresql types to Octave
+types,
+@mysee
+@ref{Postgresql data types}.
+
+@c ------------------------------------------------------------------
+
+@node pq_update_types
+@subsection Updating type information
+@mfnindex pq_update_types
+
+@c include function helptext here
+@DOCSTRING(pq_update_types)
+
+@c ------------------------------------------------------------------
+
+@node pq_lo_import
+@subsection Importing large objects into a database
+@mfnindex pq_lo_import
+
+@c include function helptext here
+@DOCSTRING(pq_lo_import)
+
+@c ------------------------------------------------------------------
+
+@node pq_lo_export
+@subsection Exporting large objects from a database
+@mfnindex pq_lo_export
+
+@c include function helptext here
+@DOCSTRING(pq_lo_export)
+
+@c ------------------------------------------------------------------
+
+@node pq_lo_unlink
+@subsection Deleting large objects from a database
+@mfnindex pq_lo_unlink
+
+@c include function helptext here
+@DOCSTRING(pq_lo_unlink)
+
+@c ------------------------------------------------------------------
+
+@node pq_lo_view
+@subsection Viewing large objects
+@mfnindex pq_lo_view
+
+@c include function helptext here
+@DOCSTRING(pq_lo_view)
+
+@c ------------------------------------------------------------------
+
+@node Examples
+@section Examples for accessing Postgresql
+@cindex postgresql examples
+@cindex examples, postgresql
+
+The examples assume that there is a database named @code{test} and you
+have the necessary rights to access it without password (probably the
+database is on a server at the local machine) as the default user,
+i.e. the user with the same name as your current operating system
+account.
+
+Each example contains code for cleaning up, but, for more clarity, the
+cleanup is not enforced with Octaves @code{unwind_protect} or with an
+SQL transaction. If something goes wrong, you can drop the database
+@code{test} -- this should assure purging any created large objects.
+
+You can also type @code{demo pq_connect} to access some demo code. But
+it is possibly more difficult to read. @code{test pq_connect} runs some
+functionality tests. The preconditions (access to a database named
+@code{test}) are the same as for the code in the current section.
+
+@menu
+* Large objects::                    Large objects.
+* Copy in::                          Copy in from Octave variable.
+* Composite types::                  Working with composite types.
+@end menu
+
+@c ------------------------------------------------------------------
+
+@node Large objects
+@subsection Large objects
+
+@example
+
+# connect
+conn = pq_connect (setdbopts ("dbname", "test"));
+
+# create table to store large object oids
+pq_exec_params (conn, "create table programs (name text, image oid);")
+
+# start transaction, so we don't miss storing the oid
+pq_exec_params (conn, "begin;")
+
+# download image, pipe it to a large objects and note its oid
+# (you need `wget' to be installed)
+oid = pq_lo_import (conn,
+"wget -q -O - https://www.gnu.org/software/octave/img/example-mesh.svg |")
+
+# write oid and program name into the table
+pq_exec_params (conn,
+                "insert into programs values ($1, $2);", @{"Octave", oid@})
+
+# finish transaction
+pq_exec_params (conn, "commit;")
+
+# find and retrieve the oid searching for the program name
+foid = pq_exec_params (conn,
+                       "select image from programs where name = $1;",
+                       @{"Octave"@}).data@{1@}
+
+# view large object corresponding to found @code{foid}
+# (you need `eog' to be installed, or change to another program able to
+# display `.svg')
+pq_lo_view (conn, foid, "eog")
+
+# cleanup (we don't use `begin;' and `rollback;' since the
+# example should show an inner transaction instead)
+
+pq_lo_unlink (conn, oid);
+
+pq_exec_params (conn, "drop table programs;");
+
+pq_close (conn);
+
+@end example
+
+@c ------------------------------------------------------------------
+
+@node Copy in
+@subsection Copy in from Octave variable
+
+@example
+
+# connect
+conn = pq_connect (setdbopts ("dbname", "test"));
+
+# create table
+pq_exec_params (conn,
+                "create table testdata (a float8, b float8, label text);")
+
+# generate data in Octave
+data = horzcat (num2cell (reshape (linspace (3, 4, 10), [], 2)),
+                @{"a"; "b"; "c"; "d"; "e"@})
+
+# copy in to the table
+pq_exec_params (conn, "copy testdata from stdin with (format binary);",
+                setdbopts ("copy_in_from_variable", true,
+                           "copy_in_data", data))
+
+# retrieve the data from the table
+rdata = pq_exec_params (conn, "select * from testdata;").data
+
+# cleanup 
+
+pq_exec_params (conn, "drop table testdata;");
+
+pq_close (conn);
+
+@end example
+
+@c ------------------------------------------------------------------
+
+@node Composite types
+@subsection Working with composite types
+
+This is a more complicated example with nested composite types.
+
+@example
+
+# connect
+conn = pq_connect (setdbopts ("dbname", "test"));
+
+# create a first composite type, consisting of a boolean and an array of
+# booleans
+pq_exec_params (conn,
+"create type complex_bool_array_type as (b bool, ba bool[]);")
+
+# create a second composite type, consisting of a boolean and the first
+# composite type
+pq_exec_params (conn,
+"create type complex_complex_bool_array_type as (b bool, c complex_bool_array_type);")
+
+# create a table with one column, holding the second defined composite
+# type
+pq_exec_params (conn,
+"create table complex_complex_bool_array (a complex_complex_bool_array_type);")
+
+# to enable data exchange using the new types, update type infomation
+pq_update_types (conn);
+
+# construct a data element for an SQL array of booleans in Octave
+d_arr = cell2struct (@{2; @{true, false; true, true@}@}, @{"ndims", "data"@})
+
+# construct a data element for the first defined composite type in
+# Octave
+d_c1 = @{true; d_arr@};
+
+# construct a data element for the second defined composite type in
+# Octave
+d_c2 = @{false; d_c1@};
+
+# insert the data element of the second composite type into the table;
+# note that in this case specification of the parameter type in
+# `param_types' is necessary
+pq_exec_params (conn,
+                "insert into complex_complex_bool_array values ($1);",
+                @{d_c2@},
+                setdbopts ("param_types", @{"complex_complex_bool_array_type"@}))
+
+# read contents of the table
+result = pq_exec_params (conn, "select * from complex_complex_bool_array");
+
+
+
+# only for demonstration purpouses, verify that the read data matches
+# the element constructed in Octave;
+# for this, the field `lbounds' is deleted from the returned data
+#
+# note that the verification would not work if we had constructed the
+# data element with rows of cell-arrays instead of columns, which would
+# also have been possible
+rdata = result.data@{1@};
+rdata@{2@}@{2@} = rmfield (rdata@{2@}@{2@}, "lbounds");
+isequal (d_c2, rdata)
+
+# view returned column names
+result.columns
+
+# view returned type information
+result.types
+
+# cleanup
+
+pq_exec_params (conn, "drop table complex_complex_bool_array;")
+
+pq_exec_params (conn, "drop type complex_complex_bool_array_type;")
+
+pq_exec_params (conn, "drop type complex_bool_array_type;")
+
+pq_close (conn);
+
+@end example
+
+@c ------------------------------------------------------------------
+
+@node Function index
+@unnumbered Index of functions in database
+
+@printindex mfn
+
+@c ------------------------------------------------------------------
+
+@node Concept index
+@unnumbered Concept index
+
+@printindex cp
+
+@bye

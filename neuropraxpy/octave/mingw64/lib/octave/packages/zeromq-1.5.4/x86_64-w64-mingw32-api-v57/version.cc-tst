@@ -1,0 +1,6 @@
+## DO NOT EDIT! Generated from version.cc
+%!test
+%! [a,b,c] = zmq_version ();
+%! assert(~isempty(a));
+%! assert(~isempty(b));
+%! assert(~isempty(c));

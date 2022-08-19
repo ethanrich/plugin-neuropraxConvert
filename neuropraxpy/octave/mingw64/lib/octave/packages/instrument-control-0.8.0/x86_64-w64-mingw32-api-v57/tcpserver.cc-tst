@@ -1,0 +1,21 @@
+## Generated from tcpserver.cc
+%!test
+%! a = tcpserver ("", 0);
+%! assert (! isnull (a));
+%! assert (isa (a, 'octave_tcpserver'));
+%! clear a
+%!test
+%! a = tcpserver (0);
+%! assert (! isnull (a));
+%! assert (isa (a, 'octave_tcpserver'));
+%! clear a
+%!test
+%! a = tcpserver (0, 'Name', 'test', 'Timeout', 2.5);
+%! assert (! isnull (a));
+%! assert (isa (a, 'octave_tcpserver'));
+%! assert (get(a, 'Name'), 'test');
+%! assert (get(a, 'Timeout'), 2.5);
+%! clear a
+%!error <Invalid call to tcpserver> tcpserver (1, 1)
+%!error <Invalid call to tcpserver> tcpserver ('127.0.0.1', '80')
+%!error <Invalid call to tcpserver> tcpserver ('127.0.0.1', 80, 'prop1')

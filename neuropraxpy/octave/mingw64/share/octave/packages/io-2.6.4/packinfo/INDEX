@@ -1,0 +1,52 @@
+io >> Input from and output to external formats
+File I/O
+  append_save
+  fexist
+  rfsearch
+Miscellaneous conversion functions
+  fromJSON
+  object2json
+  pch2mat
+  read_namelist
+  toJSON
+  utf82unicode
+  unicode2utf8
+  write_namelist
+CSV file functions
+  cell2csv
+  csv2cell
+  csvconcat
+  csvexplode
+DBF I/O
+  dbfread
+  dbfwrite
+XML I/O
+  getxmlattv
+  getxmlnode
+  tidyxml
+  xmlread
+  xmlwrite
+Spreadsheet I/O user functions for MS-Excel
+  oct2xls
+  xls2oct
+  xlsclose
+  xlsfinfo
+  xlsopen
+  xlsread
+  xlswrite
+Spreadsheet I/O user functions for OpenOffice.org Calc
+  oct2ods
+  ods2oct
+  odsclose
+  odsfinfo
+  odsopen
+  odsread
+  odswrite
+Spreadsheet utility functions
+  calccelladdress
+  chk_spreadsheet_support
+  parsecell
+Spreadsheet function test scripts
+  io_testscript
+  test_spsh
+

@@ -1,0 +1,11 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: pstoedit
+Description: converts PostScript(TM) and PDF files to other vector graphic formats
+Version: 3.78.0
+Requires: 
+Libs: -L${exec_prefix}/lib -lpstoedit -lstdc++  
+Cflags: -I${prefix}/include

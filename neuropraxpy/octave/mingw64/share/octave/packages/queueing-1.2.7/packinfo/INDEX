@@ -1,0 +1,69 @@
+queueing >> Queueing Networks and Markov chains
+Discrete-time Markov chains
+ dtmcchkP
+ dtmc
+ dtmcbd
+ dtmcexps
+ dtmcisir
+ dtmctaexps
+ dtmcmtta
+ dtmcfpt
+Continuous-time Markov chains
+ ctmcchkQ
+ ctmc
+ ctmcbd
+ ctmcexps
+ ctmcisir
+ ctmctaexps
+ ctmcmtta
+ ctmcfpt
+Single Station Queueing Systems
+ qsmm1
+ qsmmm
+ erlangb
+ erlangc
+ engset
+ qsmminf
+ qsmm1k
+ qsmmmk
+ qsammm
+ qsmg1
+ qsmh1
+Queueing Networks
+ qnclosed
+ qncmmvaap
+ qncmmvabs
+ qncmmva
+ qncmnpop
+ qncmpopmix
+ qncmvisits
+ qncscmva
+ qncsconvld
+ qncsconv
+ qncsmvaap
+ qncsmvablo
+ qncsmvald
+ qncsmva
+ qncsvisits
+ qnmarkov
+ qnmix
+ qnmknode
+ qnom
+ qnomvisits
+ qnopen
+ qnos
+ qnosvisits
+ qnsolve
+Bounds Analysis
+ qnosaba
+ qnomaba
+ qncsaba
+ qncmaba
+ qnosbsb
+ qncsbsb
+ qncmbsb
+ qncmcb
+ qncspb
+ qncsgb
+ 
+ 

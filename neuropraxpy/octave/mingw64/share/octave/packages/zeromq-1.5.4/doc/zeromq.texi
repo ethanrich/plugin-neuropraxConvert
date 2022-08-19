@@ -1,0 +1,252 @@
+\input texinfo @c -*-texinfo-*-
+@c Copyright (c) 2019-2022, John Donoghue <john.donoghue@ieee.org>
+@c Octave ZeroMQ - ZeroMQ bindings for GNU octave.
+
+@c For manually generating the documentation use
+@c   LANGUAGE=en makeinfo --html --no-split zeromq.texi
+
+@c %*** Start of HEADER
+@setfilename zeromq.info
+@settitle Octave ZeroMQ - ZeroMQ bindings for GNU octave
+@afourpaper
+@paragraphindent 0
+@finalout
+@set VERSION 1.5.4
+@c @afourwide
+@c %*** End of the HEADER
+
+@include macros.texi
+
+@c %*** Start of TITLEPAGE
+@titlepage
+@title ZeroMQ Toolkit @value{VERSION}
+@subtitle ZeroMQ bindings for @acronym{GNU} Octave.
+@author John Donoghue
+@page
+@vskip 0pt plus 1filll
+Copyright @copyright{} 2019-2022 John Donoghue
+
+Permission is granted to make and distribute verbatim copies of
+this manual provided the copyright notice and this permission notice
+are preserved on all copies.
+
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided that the entire
+resulting derived work is distributed under the terms of a permission
+notice identical to this one.
+
+Permission is granted to copy and distribute translations of this manual
+into another language, under the same conditions as for modified versions.
+
+@page
+@heading Distribution
+The @acronym{GNU} Octave ZeroMQ package is @dfn{free} software.
+Free software is a matter of the users' freedom to run, copy, distribute,
+study, change and improve the software.
+This means that everyone is free to use it and free to redistribute it
+on certain conditions.  The @acronym{GNU} Octave ZeroMQ package
+is not, however, in the public domain.  It is copyrighted and there are
+restrictions on its distribution, but the restrictions are designed to
+ensure that others will have the same freedom to use and redistribute
+Octave that you have.  The precise conditions can be found in the
+@acronym{GNU} General Public License that comes with the @acronym{GNU}
+Octave ZeroMQ package and that also appears in @ref{Copying}.
+
+To download a copy of the @acronym{GNU} Octave zeromq package, please visit
+@url{http://octave.sourceforge.net/zeromq/}.
+
+@end titlepage
+@c %*** End of TITLEPAGE
+
+@dircategory Math
+@direntry
+* Octave ZeroMQ: (zeromq).          ZeroMQ Toolkit for Octave
+@end direntry
+
+@c %*** Start of BODY
+@contents
+@ifnottex
+@node Top
+@top Introduction
+The ZeroMQ toolkit is a set of  ZeroMQ bindings for GNU Octave
+@end ifnottex
+
+@menu
+* Installing and loading::    Installing and loading the ZeroMQ toolkit
+* Basic Usage Overview::      Basic Usage Overview
+* Examples::                  Examples using the ZeroMQ toolkit
+* Function Reference::        ZeroMQ toolkit functions
+* Copying::                   Copying
+* Index::                     Index
+@end menu
+
+@c -------------------------------------------------------------------------
+@node Installing and loading
+@chapter Installing and loading
+@cindex Installing and loading
+
+The ZeroMQ toolkit must be installed and then loaded to be used.
+
+It can be installed in @acronym{GNU} Octave directly from octave-forge,
+or can be installed in an off-line mode via a downloaded tarball.
+
+The toolkit has a dependency on the zeromq library (@url{https://zeromq.org}), so it must be installed in order
+to successfully install the ZeroMQ toolkit.
+
+For Fedora: @code{yum install zeromq-devel} 
+
+For Ubuntu: @code{apt install libzmq-dev} 
+
+The toolkit must be then be loaded once per each @acronym{GNU} Octave session in order to use its functionality.
+
+@section Online Direct install
+@cindex Online install
+With an internet connection available, the ZeroMQ package can be installed from
+octave-forge using the following command within @acronym{GNU} Octave:
+
+@example
+pkg install -forge zeromq
+@end example
+
+The latest released version of the toolkit will be downloaded and installed.
+
+@section Off-line install
+@cindex Off-line install
+With the ZeroMQ toolkit package already downloaded, and in the current directory when running
+@acronym{GNU} Octave, the package can be installed using the following command within @acronym{GNU} Octave:
+
+@example
+pkg install zeromq-@value{VERSION}.tar.gz
+@end example
+
+@section Loading
+@cindex Loading
+Regardless of the method of installing the ZeroMQ toolkit, in order to use its functions,
+the toolkit must be loaded using the pkg load command:
+
+@example
+pkg load zeromq
+@end example
+
+The toolkit must be loaded on each @acronym{GNU} Octave session.
+
+@c -------------------------------------------------------------------------
+@node Basic Usage Overview
+@chapter Basic Usage Overview
+@cindex Basic Usage Overview
+
+The usage is very close to the ZeroMQ library C language bindings for the socket 
+creation and manipulation with the exception of creating a zeromq context, 
+which is automatically done in the bindings internals.
+
+For example, a basic client that does a request / reply from a server on port
+local port 5555 (available as zmq_example1.m):
+
+@example
+
+%% Create socket and connect to server
+requester = zmq_socket (ZMQ_REQ);
+zmq_connect (requester, "tcp://localhost:5555");
+
+%% send some data
+zmq_send (requester, uint8("Hello"), 5, 0); 
+%% try to read up to 10 bytes of reply data.
+received = zmq_recv (requester, 10, 0);
+
+zmq_close (requester);
+@end example
+
+An overview of the package can be displayed by running @code{help zeromq}
+
+Help for each function can be displayed by  @code{help thefunctionname}
+
+ie: 
+@example
+help iszmq
+@end example
+
+
+@c -------------------------------------------------------------------------
+@node Examples
+@chapter Examples
+@cindex Examples
+
+There are several examples that come with the toolkit.
+
+View example code using @code{edit examples/example_name}
+
+ie: 
+@example
+edit examples/zmq_example1
+@end example
+
+
+@section Example1
+@cindex Example1
+
+Simple client REQ socket example that attempts to connect to a server and
+send a hello command and get back the response.
+
+@example
+edit examples/zmq_example1
+@end example
+
+@section Example2
+@cindex Example2
+
+Simple server REP socket example that creates the server that the client 
+from example 1 will connect to and responds back to client 'requests'
+
+@example
+edit examples/zmq_example2
+@end example
+
+@section Example3
+@cindex Example3
+
+Simple server PUB socket example that creates 'weather' server sends
+weather updates for random zip codes.
+
+@example
+edit examples/zmq_example3
+@end example
+
+@section Example4
+@cindex Example4
+
+Simple client SUB socket example that creates client that connects to the 'weather'
+server and subscribes for weather updates from zip-code 10001.
+
+@example
+edit examples/zmq_example4
+@end example
+
+@section Example5
+@cindex Example5
+Simple client STREAM socket example that creates client that connects to octave.org
+and posts HEAD request.
+
+@example
+edit examples/zmq_example5
+@end example
+
+@c -------------------------------------------------------------------------
+@node Function Reference
+@chapter Function Reference
+@cindex Function Reference
+
+The functions currently available in the ZeroMQ toolkit are described below;
+
+@include functions.texi
+
+@c -------------------------------------------------------------------------
+
+@include gpl.texi
+
+@c -------------------------------------------------------------------------
+@node Index 
+@unnumbered Index 
+ 
+@printindex cp
+ 
+@bye

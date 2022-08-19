@@ -1,0 +1,64 @@
+## DO NOT EDIT!  Generated automatically from dot.cc by Make.
+%!assert (dot ([1, 2], [2, 3]), 8)
+%!test
+%! x = [2, 1; 2, 1];
+%! y = [-0.5, 2; 0.5, -2];
+%! assert (dot (x, y), [0 0]);
+%! assert (dot (single (x), single (y)), single ([0 0]));
+%!test
+%! x = [1+i, 3-i; 1-i, 3-i];
+%! assert (dot (x, x), [4, 20]);
+%! assert (dot (single (x), single (x)), single ([4, 20]));
+%!test
+%! x = int8 ([1, 2]);
+%! y = int8 ([2, 3]);
+%! assert (dot (x, y), 8);
+%!test
+%! x = int8 ([1, 2; 3, 4]);
+%! y = int8 ([5, 6; 7, 8]);
+%! assert (dot (x, y), [26 44]);
+%! assert (dot (x, y, 2), [17; 53]);
+%! assert (dot (x, y, 3), [5 12; 21 32]);
+%!test
+%! x = int8 ([127]);
+%! assert (dot (x, x), 127);
+%!error dot ()
+%!error dot (1)
+%!error dot (1,2,3,4)
+%!error <X and Y must be numeric> dot ({1,2}, [3,4])
+%!error <X and Y must be numeric> dot ([1,2], {3,4})
+%!error <sizes of X and Y must match> dot ([1 2], [1 2 3])
+%!error <sizes of X and Y must match> dot ([1 2]', [1 2 3]')
+%!error <sizes of X and Y must match> dot (ones (2,2), ones (2,3))
+%!error <DIM must be a valid dimension> dot ([1 2], [1 2], 0)
+%!test
+%! x(:,:,1) = [1 2; 3 4];
+%! x(:,:,2) = [1 1; 1 1];
+%! z(:,:,1) = [7 10; 15 22];
+%! z(:,:,2) = [2 2; 2 2];
+%! assert (blkmm (x,x), z);
+%! assert (blkmm (single (x), single (x)), single (z));
+%! assert (blkmm (x, single (x)), single (z));
+%!test
+%! x(:,:,1) = [1 2; 3 4];
+%! x(:,:,2) = [1i 1i; 1i 1i];
+%! z(:,:,1) = [7 10; 15 22];
+%! z(:,:,2) = [-2 -2; -2 -2];
+%! assert (blkmm (x,x), z);
+%! assert (blkmm (single (x), single (x)), single (z));
+%! assert (blkmm (x, single (x)), single (z));
+%!test <*54261>
+%! x = ones (0, 3, 3);
+%! y = ones (3, 5, 3);
+%! z = blkmm (x,y);
+%! assert (size (z), [0, 5, 3]);
+%! x = ones (1, 3, 3);
+%! y = ones (3, 0, 3);
+%! z = blkmm (x,y);
+%! assert (size (z), [1, 0, 3]);
+%!error blkmm ()
+%!error blkmm (1)
+%!error blkmm (1,2,3)
+%!error <A and B must be numeric> blkmm ({1,2}, [3,4])
+%!error <A and B must be numeric> blkmm ([3,4], {1,2})
+%!error <A and B dimensions don't match> blkmm (ones (2,2), ones (3,3))

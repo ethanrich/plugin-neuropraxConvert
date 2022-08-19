@@ -1,0 +1,12 @@
+## DO NOT EDIT! Generated from curve_public.cc
+%!error <Invalid call to zmq_curve_public()> zmq_curve_public()
+%!error <zeromq: expected input to be a string> zmq_curve_public(1)
+%!error <zeromq: input string key size must be 40> zmq_curve_public("12345")
+%!test
+%! if zmq_has ('curve')
+%!  [pub, priv] = zmq_curve_keypair();
+%!  assert(!isempty(pub))
+%!  assert(!isempty(priv))
+%!  check = zmq_curve_public(priv);
+%!  assert(check, pub)
+%! endif

@@ -1,0 +1,33 @@
+Summary of important user-visible changes for dataframe 1.2.0:
+-------------------------------------------------------------------
+
+ ** dataframe 1.2.0 is a major update. Most of the mapping functions are
+    now supported: abs, acosh, acos, all, and, angle, any, arg, ... They
+    are simple proxies to the corresponding Octave functions.
+    -- The display function now supports 3.8, 4.0, 4.2, and upcoming 4.4
+       Octave major release.
+    -- if some specific output format is requested, it must come first,
+       e.g. x.dataframe([1:10]) instead of x([1:10].dataframe
+    -- a longstanding bug on default separator was corrected. If more than
+       one are used, they must be grouped into a cellstr instead of a str
+    -- a dataframe may now contain 'pages' corresponding to a third
+       dimension. The inner mechanism uses a "copy-on-write" scheme
+       and avoid duplicating content repeated over many pages.
+
+Summary of important user-visible changes for dataframe 1.1:
+-------------------------------------------------------------------
+
+ ** dataframe 1.1.0 is a major update. As it introduces new functions, if 
+    dataframe-1.0.1 was previously loaded, Octave has to be restarted.
+    Significants changes:
+    - the structure of "row empty", i.e. dataframes with [0, n] size,
+      is fully displayed
+    - the "_src" metadata is now correctly set
+    - new function: nth_element, make it compatible with median. Note 
+      that only row-median and page median are implemented, using directly
+      the underlying data structures
+    - new function; numel. Only the one argument form is supported.
+    - bsxfun now better handles array as first arguement
+    - vector vs matrix plot are now supported, provided both data set possess
+      the same colum length. 
+

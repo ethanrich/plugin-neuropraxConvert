@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>d2_min (optim_doc)</title>
+
+<meta name="description" content="d2_min (optim_doc)">
+<meta name="keywords" content="d2_min (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Scalar-optimization.html#Scalar-optimization" rel="up" title="Scalar optimization">
+<link href="mdsmax.html#mdsmax" rel="next" title="mdsmax">
+<link href="samin.html#samin" rel="prev" title="samin">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="d2_005fmin"></a>
+<div class="header">
+<p>
+Next: <a href="mdsmax.html#mdsmax" accesskey="n" rel="next">mdsmax</a>, Previous: <a href="samin.html#samin" accesskey="p" rel="prev">samin</a>, Up: <a href="Scalar-optimization.html#Scalar-optimization" accesskey="u" rel="up">Scalar optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Unconstrained-Newton_002dlike-optimization"></a>
+<h3 class="section">1.6 Unconstrained Newton-like optimization</h3>
+<a name="index-d2_005fmin"></a>
+
+<p>This backend features a Newton-like algorithm. The user has to supply a
+Hessian function. No constraints are honoured. If the supplied Hessian
+function actually returns the inverse of the Hessian, set
+<code>inverse_hessian</code> to <code>true</code>. Supplying the inverse Hessian is
+preferable, if possible.
+</p>
+<p>Returned value <var>cvg</var> will be <code>2</code> or <code>3</code> for success and
+<code>0</code> or <code>-1</code> for failure (
+see
+<a href="nonlin_005fmin.html#nonlin_005fmin">nonlin_min</a> for
+meaning). Returned structure <var>outp</var> will have the fields
+<code>niter</code>, <code>nobjf</code>, and <code>user_interaction</code>.
+</p>
+<p>Interpretation of <code>Display</code>: if set to <code>&quot;iter&quot;</code>, some
+diagnostics are printed.
+</p>
+
+
+
+
+</body>
+</html>

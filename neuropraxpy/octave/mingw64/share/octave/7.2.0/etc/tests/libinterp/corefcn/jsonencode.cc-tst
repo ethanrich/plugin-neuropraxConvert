@@ -1,0 +1,14 @@
+## DO NOT EDIT!  Generated automatically from jsonencode.cc by Make.
+%!testif HAVE_RAPIDJSON
+%! fail ("jsonencode ()");
+%! fail ("jsonencode (1, 2)");
+%! fail ("jsonencode (1, 2, 3, 4)");
+%! fail ("jsonencode (1, 2, 3, 4, 5, 6)");
+%! fail ("jsonencode (1, 2, true)", "option must be a string");
+%! fail ("jsonencode (1, 'string', ones (2,2))", ...
+%!       "option value must be a logical scalar");
+%! fail ("jsonencode (1, 'foobar', true)", ...
+%!       'Valid options are "ConvertInfAndNaN"');
+%!testif HAVE_RAPIDJSON; ! __have_feature__ ("RAPIDJSON_PRETTYWRITER")
+%! fail ("jsonencode (1, 'PrettyPrint', true)", ...
+%!       "warning", 'the "PrettyPrint" option of RapidJSON was unavailable');

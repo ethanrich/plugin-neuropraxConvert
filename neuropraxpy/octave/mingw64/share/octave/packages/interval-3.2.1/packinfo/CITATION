@@ -1,0 +1,15 @@
+The interval package is a collection of functions for interval
+arithmetic.  It is developed at Octave Forge, a sibling of the GNU
+Octave project.  To cite this particular version of the interval package
+in publications use:
+
+     @software{octave-interval,
+       author  = {Oliver Heimlich},
+       title   = {GNU Octave Interval Package},
+       url     = {https://octave.sourceforge.io/interval/},
+       version = {3.2.1},
+       date    = {2022-01-28},
+     }
+
+See also ‘citation’ for citing Octave as a whole.
+

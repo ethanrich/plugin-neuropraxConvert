@@ -1,0 +1,6 @@
+## DO NOT EDIT! Generated from mark_for_deletion.cc
+%!test
+%! testname = tempname;
+%! mark_for_deletion(testname);
+%! mark_for_deletion(testname, testname);
+%!error <arguments must be string filenames> mark_for_deletion(1)

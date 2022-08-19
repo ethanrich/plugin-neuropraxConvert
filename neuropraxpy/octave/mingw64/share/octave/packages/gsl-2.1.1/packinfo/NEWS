@@ -1,0 +1,93 @@
+Summary of important user-visible changes for releases of the gsl package
+
+===============================================================================
+gsl-2.1.1
+===============================================================================
+
+** Octave 4.4 compatibility fixes (remove deprecation warnings)
+
+===============================================================================
+gsl-2.1.0
+===============================================================================
+
+** Changes in the family of zeta functions
+    > Rename gsl_zt_zeta to gsl_sf_zeta (accidentally named with a wrong prefix
+      in the 2.0.0 release; alias names zeta and gsl_zt_zeta still available
+      but deprecated)
+    > New functions to compute zeta minus one: gsl_sf_zetam1, gsl_sf_zetam1_int
+
+===============================================================================
+gsl-2.0.0
+===============================================================================
+
+** Change of naming scheme
+    > full GSL function names are now systematically used
+    > the old naming scheme is deprecated but still working as well
+
+** new Bessel functions
+    > gsl_sf_bessel_il_scaled_array
+    > gsl_sf_bessel_In_array
+    > gsl_sf_bessel_In_scaled_array
+    > gsl_sf_bessel_jl_array
+    > gsl_sf_bessel_jl_steed_array
+    > gsl_sf_bessel_Jn_array
+    > gsl_sf_bessel_kl_scaled_array
+    > gsl_sf_bessel_Kn_array
+    > gsl_sf_bessel_Kn_scaled_array
+    > gsl_sf_bessel_yl_array
+    > gsl_sf_bessel_Yn_array
+    > gsl_sf_bessel_zero_Jnu
+    
+** new elliptic integrals
+    > gsl_sf_ellint_D
+    > gsl_sf_ellint_E
+    > gsl_sf_ellint_F
+    > gsl_sf_ellint_P
+    > gsl_sf_ellint_Pcomp
+    > gsl_sf_ellint_RC
+    > gsl_sf_ellint_RD
+    > gsl_sf_ellint_RF
+    > gsl_sf_ellint_RJ
+
+** new Legendre functions (Legendre polynomials and related functions)
+    > gsl_sf_legendre_array
+    > gsl_sf_legendre_deriv2_array
+    > gsl_sf_legendre_deriv_array
+    > gsl_sf_legendre_Pl_array
+    > gsl_sf_legendre_Plm_array
+    > gsl_sf_legendre_Plm_deriv_array
+    > gsl_sf_legendre_sphPlm_deriv_array
+    > gsl_sf_conicalP_cyl_reg
+    > gsl_sf_conicalP_sph_reg
+
+** new Mathieu functions
+    > gsl_sf_mathieu_a
+    > gsl_sf_mathieu_b
+    > gsl_sf_mathieu_ce
+    > gsl_sf_mathieu_Mc
+    > gsl_sf_mathieu_Ms
+    > gsl_sf_mathieu_se
+
+** other new special functions
+    > gsl_sf_beta_inc
+    > gsl_sf_debye_5
+    > gsl_sf_debye_6
+    > gsl_sf_dilog
+    > gsl_sf_gegenpoly_array
+    > gsl_sf_gegenpoly_n
+    > gsl_sf_hydrogenicR
+    > gsl_sf_hyperg_1F1_int
+    > gsl_sf_hyperg_2F0
+    > gsl_sf_hyperg_2F1
+    > gsl_sf_hyperg_U_int
+    > gsl_sf_laguerre_n
+
+** new factorial and related functions
+    > gsl_sf_choose
+    > gsl_sf_doublefact
+    > gsl_sf_lnchoose
+    > gsl_sf_lndoublefact
+    > gsl_sf_lnfact
+    > gsl_sf_fact
+
+** gsl doesn't autoload anymore

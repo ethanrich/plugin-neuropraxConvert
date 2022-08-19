@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>bfgsmin (optim_doc)</title>
+
+<meta name="description" content="bfgsmin (optim_doc)">
+<meta name="keywords" content="bfgsmin (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Scalar-optimization.html#Scalar-optimization" rel="up" title="Scalar optimization">
+<link href="nrm.html#nrm" rel="next" title="nrm">
+<link href="powell.html#powell" rel="prev" title="powell">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="bfgsmin"></a>
+<div class="header">
+<p>
+Next: <a href="nrm.html#nrm" accesskey="n" rel="next">nrm</a>, Previous: <a href="powell.html#powell" accesskey="p" rel="prev">powell</a>, Up: <a href="Scalar-optimization.html#Scalar-optimization" accesskey="u" rel="up">Scalar optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Unconstrained-BFGS-algorithm"></a>
+<h3 class="section">1.11 Unconstrained BFGS algorithm</h3>
+<a name="index-bfgsmin"></a>
+
+<p>BFGS or limited memory BFGS minimization of a function. No constraits
+are honoured.
+</p>
+<a name="Helptext_003a-3"></a>
+<h4 class="subheading">Helptext:</h4>
+
+<a name="XREFbfgsmin"></a><pre class="verbatim">bfgsmin: bfgs or limited memory bfgs minimization of function
+
+Usage: [x, obj_value, convergence, iters] = bfgsmin(f, args, control)
+
+The function must be of the form
+[value, return_2,..., return_m] = f(arg_1, arg_2,..., arg_n)
+By default, minimization is w.r.t. arg_1, but it can be done
+w.r.t. any argument that is a vector. Numeric derivatives are
+used unless analytic derivatives are supplied. See bfgsmin_example.m
+for methods.
+
+Arguments:
+* f: name of function to minimize (string)
+* args: a cell array that holds all arguments of the function
+	The argument with respect to which minimization is done
+	MUST be a vector
+* control: an optional cell array of 1-8 elements. If a cell
+  array shorter than 8 elements is provided, the trailing elements
+  are provided with default values.
+	* elem 1: maximum iterations  (positive integer, or -1 or Inf for unlimited (default))
+	* elem 2: verbosity
+		0 = no screen output (default)
+		1 = only final results
+		2 = summary every iteration
+		3 = detailed information
+	* elem 3: convergence criterion
+		1 = strict (function, gradient and param change) (default)
+		0 = weak - only function convergence required
+	* elem 4: arg in f_args with respect to which minimization is done (default is first)
+	* elem 5: (optional) Memory limit for lbfgs. If it's a positive integer
+		then lbfgs will be use. Otherwise ordinary bfgs is used
+	* elem 6: function change tolerance, default 1e-12
+	* elem 7: parameter change tolerance, default 1e-6
+	* elem 8: gradient tolerance, default 1e-5
+
+Returns:
+* x: the minimizer
+* obj_value: the value of f() at x
+* convergence: 1 if normal conv, other values if not
+* iters: number of iterations performed
+
+Example: see bfgsmin_example.m
+
+</pre>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="nrm.html#nrm" accesskey="n" rel="next">nrm</a>, Previous: <a href="powell.html#powell" accesskey="p" rel="prev">powell</a>, Up: <a href="Scalar-optimization.html#Scalar-optimization" accesskey="u" rel="up">Scalar optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

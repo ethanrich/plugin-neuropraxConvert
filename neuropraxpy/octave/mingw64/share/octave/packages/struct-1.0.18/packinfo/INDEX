@@ -1,0 +1,9 @@
+struct >> Structure Handling
+Structure handling
+ getfields
+ setfields
+ tars
+ fields2cell
+ cell2fields
+ fieldempty
+ structcat

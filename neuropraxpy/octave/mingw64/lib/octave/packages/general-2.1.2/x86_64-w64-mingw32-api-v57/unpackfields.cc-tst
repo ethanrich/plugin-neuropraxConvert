@@ -1,0 +1,7 @@
+## DO NOT EDIT! Generated from unpackfields.cc
+%!test
+%! s.foo = "hello";
+%! s.bar = 42;
+%! unpackfields ("s", "foo", "bar");
+%! assert (foo, "hello");
+%! assert (bar, 42);

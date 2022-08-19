@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>lsqnonlin (optim_doc)</title>
+
+<meta name="description" content="lsqnonlin (optim_doc)">
+<meta name="keywords" content="lsqnonlin (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Compatibility-functions.html#Compatibility-functions" rel="up" title="Compatibility functions">
+<link href="lsqcurvefit.html#lsqcurvefit" rel="next" title="lsqcurvefit">
+<link href="quadprog.html#quadprog" rel="prev" title="quadprog">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="lsqnonlin"></a>
+<div class="header">
+<p>
+Next: <a href="lsqcurvefit.html#lsqcurvefit" accesskey="n" rel="next">lsqcurvefit</a>, Previous: <a href="quadprog.html#quadprog" accesskey="p" rel="prev">quadprog</a>, Up: <a href="Compatibility-functions.html#Compatibility-functions" accesskey="u" rel="up">Compatibility functions</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Non_002dlinear-residual-minimization"></a>
+<h3 class="section">7.3 Non-linear residual minimization</h3>
+<a name="index-lsqnonlin-4"></a>
+
+<p>This function is for Matlab compatibility. It attempts to work like
+<code>lsqnonlin</code> by calling <a href="nonlin_005fresidmin.html#nonlin_005fresidmin">nonlin_residmin</a>.
+</p>
+<a name="XREFlsqnonlin"></a><dl>
+<dt><a name="index-lsqnonlin"></a>Function File: <em></em> <strong>lsqnonlin</strong> <em>(<var>fun</var>, <var>x0</var>)</em></dt>
+<dt><a name="index-lsqnonlin-1"></a>Function File: <em></em> <strong>lsqnonlin</strong> <em>(<var>fun</var>, <var>x0</var>, <var>lb</var>, <var>ub</var>)</em></dt>
+<dt><a name="index-lsqnonlin-2"></a>Function File: <em></em> <strong>lsqnonlin</strong> <em>(<var>fun</var>, <var>x0</var>, <var>lb</var>, <var>ub</var>, <var>options</var>)</em></dt>
+<dt><a name="index-lsqnonlin-3"></a>Function File: <em>[<var>x</var>, <var>resnorm</var>, <var>residual</var>, <var>exitflag</var>, <var>output</var>, <var>lambda</var>, <var>jacobian</var>] =</em> <strong>lsqnonlin</strong> <em>(&hellip;)</em></dt>
+<dd><p>Solve nonlinear least-squares (nonlinear data-fitting) problems
+</p><div class="example">
+<pre class="example">min [EuclidianNorm(f(x))] .^ 2
+ x   
+</pre></div>
+
+<p><var>fun</var> computes residuals from given parameters. The initial
+guess of the parameters <var>x0</var> must be provided while the bounds
+<var>lb</var> and <var>ub</var>) can be set to the empty matrix (<code>[]</code>)
+if not given.
+</p>
+<p><code>lsqnonlin</code> may also be called with a single structure
+argument with the fields <code>fun</code>, <code>x0</code>, <code>lb</code>,
+<code>ub</code>, and <code>options</code>, resembling the separate input
+arguments above. For compatibility reasons, field <code>fun</code> may
+also be called <code>objective</code>. Additionally, the structure must
+have the field <code>solver</code>, set to <code>&quot;lsqnonlin&quot;</code>.
+</p>
+<p><var>options</var> can be set with <code>optimset</code>. Follwing Matlab compatible options
+are recognized:
+</p>
+<p><code>Algorithm</code>
+   String specifying backend algorithm. Currently available &quot;lm_svd_feasible&quot;
+   only. 
+</p>
+<p><code>TolFun</code>
+   Minimum fractional improvement in objective function in an iteration 
+   (termination criterium). Default: 1e-6. 
+</p>
+<p><code>TypicalX</code>
+   Typical values of x. Default: 1.
+</p>
+<p><code>MaxIter</code>
+   Maximum number of iterations allowed. Default: 400.
+</p>
+<p><code>Jacobian</code>
+   If set to &quot;on&quot;, the function <var>fun</var> must return a second output
+   containing a user-specified Jacobian. The Jacobian is computed using
+   finite differences otherwise. Default: &quot;off&quot;
+</p>
+<p><code>FinDiffType</code>
+   &quot;centered&quot; or &quot;forward&quot; (Default) type finite differences estimation.
+</p>
+<p><code>FinDiffRelStep</code>
+   Step size factor. The default is sqrt(eps) for forward finite differences,
+   and eps^(1/3) for central finite differences
+</p>
+<p><code>OutputFcn</code>
+   One or more user-defined functions, either as a function handle or as a
+   cell array of function handles that an optimization function calls at each
+   iteration. The function definition has the following form:
+</p>
+<p><code>stop = outfun(x, optimValues, state)</code>
+</p>   
+<p><code>x</code> is the point computed at the current iteration.
+<code>optimValues</code> is a structure containing data from the current
+   iteration in the following fields:
+   &quot;iteration&quot;- number of current iteration.
+   &quot;residual&quot;- residuals.
+<code>state</code> is the state of the algorithm: &quot;init&quot; at start,
+   &quot;iter&quot; after each iteration and &quot;done&quot; at the end.
+</p>
+<p><code>Display</code>
+   String indicating the degree of verbosity. Default: &quot;off&quot;. 
+   Currently only supported values are &quot;off&quot; (no messages) and &quot;iter&quot; 
+   (some messages after each iteration).    
+</p>
+<p>Returned values:
+</p>
+<dl compact="compact">
+<dt><var>x</var></dt>
+<dd><p>Position of minimum.
+</p>
+</dd>
+<dt><var>resnorm</var></dt>
+<dd><p>Scalar value of objective as squared EuclidianNorm(f(x)).
+</p>
+</dd>
+<dt><var>residual</var></dt>
+<dd><p>Value of solution residuals f(x).
+</p>
+</dd>
+<dt><var>exitflag</var></dt>
+<dd><p>Status of solution:
+</p>
+<dl compact="compact">
+<dt><code>0</code></dt>
+<dd><p>Maximum number of iterations reached.
+</p>
+</dd>
+<dt><code>2</code></dt>
+<dd><p>Change in x was less than the specified tolerance.
+</p>
+</dd>
+<dt><code>3</code></dt>
+<dd><p>Change in the residual was less than the specified tolerance.
+</p>
+</dd>
+<dt><code>-1</code></dt>
+<dd><p>Output function terminated the algorithm.
+</p></dd>
+</dl>
+
+</dd>
+<dt><var>output</var></dt>
+<dd><p>Structure with additional information, currently the only field is
+<code>iterations</code>, the number of used iterations.
+</p>
+</dd>
+<dt><var>lambda</var></dt>
+<dd><p>Structure containing Lagrange multipliers at the solution <var>x</var> sepatared by constraint type (<var>lb</var> and <var>ub</var>).
+</p>
+</dd>
+<dt><var>jacobian</var></dt>
+<dd><p>m-by-n matrix, where <var>jacobian(i,j)</var> is the partial derivative of <var>fun(i)</var> with respect to <var>x(j)</var>
+Default: lsqnonlin approximates the Jacobian using finite differences. If <code>Jacobian</code> is set to &quot;on&quot; in 
+<var>options</var> then <var>fun</var> must return a second argument providing a user-sepcified Jacobian .
+</p></dd>
+</dl>
+
+<p>This function is a compatibility wrapper. It calls the more general <code>nonlin_residmin</code> function internally.
+</p>
+
+<p><strong>See also:</strong> <a href="lsqcurvefit.html#XREFlsqcurvefit">lsqcurvefit</a>, <a href="nonlin_005fresidmin.html#XREFnonlin_005fresidmin">nonlin_residmin</a>, <a href="nonlin_005fcurvefit.html#XREFnonlin_005fcurvefit">nonlin_curvefit</a>.
+</p></dd></dl>
+
+
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="lsqcurvefit.html#lsqcurvefit" accesskey="n" rel="next">lsqcurvefit</a>, Previous: <a href="quadprog.html#quadprog" accesskey="p" rel="prev">quadprog</a>, Up: <a href="Compatibility-functions.html#Compatibility-functions" accesskey="u" rel="up">Compatibility functions</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

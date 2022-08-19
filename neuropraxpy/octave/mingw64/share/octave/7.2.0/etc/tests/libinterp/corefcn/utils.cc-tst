@@ -1,0 +1,135 @@
+## DO NOT EDIT!  Generated automatically from utils.cc by Make.
+%!assert (isvarname ("foo"), true)
+%!assert (isvarname ("_foo"), true)
+%!assert (isvarname ("_1"), true)
+%!assert (isvarname ("1foo"), false)
+%!assert (isvarname (""), false)
+%!assert (isvarname (12), false)
+%!assert (isvarname ("foo+bar"), false)
+%!error isvarname ()
+%!error isvarname ("foo", "bar")
+%!testif ; ! ispc ()
+%! assert (is_same_file ("~", tilde_expand ("~")));
+%!testif ; ispc ()
+%! assert (is_same_file (tolower (tempdir ()), toupper (tempdir ())), true);
+%!assert (is_same_file ({pwd(), ".", tempdir()}, canonicalize_file_name (".")),
+%!        [true, true, false])
+%!error is_same_file ()
+%!error is_same_file ("foo")
+%!error is_same_file ("foo", "bar", "baz")
+%!error <must be strings or cell arrays of strings> is_same_file ("foo", 1)
+%!error <must be strings or cell arrays of strings> is_same_file (1, "foo")
+%!error <must be strings or cell arrays of strings> is_same_file ("foo", {1})
+%!error <must be strings or cell arrays of strings> is_same_file ({1}, "foo")
+%!error <arrays .* must be the same size> is_same_file ({"1", "2"}, {"1"; "2"})
+%!test
+%! f = file_in_loadpath ("plot.m");
+%! assert (ischar (f));
+%! assert (! isempty (f));
+%!test
+%! f = file_in_loadpath ("$$probably_!! _not_&&_a_!! _file$$");
+%! assert (f, "");
+%!test
+%! lst = file_in_loadpath ("$$probably_!! _not_&&_a_!! _file$$", "all");
+%! assert (lst, {});
+%!error file_in_loadpath ()
+%!error file_in_loadpath ("foo", "bar", 1)
+%!error file_in_loadpath ([])
+%!error file_in_loadpath ("plot.m", "bar")
+%!test
+%! f = file_in_path (path (), "plot.m");
+%! assert (ischar (f));
+%! assert (! isempty (f));
+%!test
+%! f = file_in_path (path (), "$$probably_!! _not_&&_a_!! _file$$");
+%! assert (f, "");
+%!test
+%! lst = file_in_path (path (), "$$probably_!! _not_&&_a_!! _file$$", "all");
+%! assert (lst, {});
+%!error file_in_path ()
+%!error file_in_path ("foo")
+%!error file_in_path ("foo", "bar", "baz", 1)
+%!error file_in_path ([])
+%!error file_in_path (path (), [])
+%!error file_in_path (path (), "plot.m", "bar")
+%!assert (do_string_escapes ('foo\nbar'), "foo\nbar")
+%!assert (do_string_escapes ("foo\\nbar"), "foo\nbar")
+%!assert (do_string_escapes ("foo\\nbar"), ["foo", char(10), "bar"])
+%!assert ("foo\nbar", ["foo", char(10), "bar"])
+%!assert (do_string_escapes ('\0\a\b\f\n\r\t\v'), "\0\a\b\f\n\r\t\v")
+%!assert (do_string_escapes ("\\0\\a\\b\\f\\n\\r\\t\\v"), "\0\a\b\f\n\r\t\v")
+%!assert (do_string_escapes ("\\0\\a\\b\\f\\n\\r\\t\\v"),
+%!        char ([0, 7, 8, 12, 10, 13, 9, 11]))
+%!assert ("\0\a\b\f\n\r\t\v", char ([0, 7, 8, 12, 10, 13, 9, 11]))
+%!assert (do_string_escapes ('\\'), "\\")
+%!assert (do_string_escapes ("\\\\"), "\\")
+%!assert (do_string_escapes ("\\\\"), char (92))
+%!assert (do_string_escapes ('\''single-quoted\'''), "'single-quoted'")
+%!assert (do_string_escapes ("\\'single-quoted\\'"), "'single-quoted'")
+%!assert (do_string_escapes ('\"double-quoted\"'), "\"double-quoted\"")
+%!assert (do_string_escapes ("\\\"double-quoted\\\""), "\"double-quoted\"")
+%!assert (do_string_escapes ('A\4B'), ["A" char(4) "B"])
+%!assert (do_string_escapes ('A\45B'), ["A" char(37) "B"])
+%!assert (do_string_escapes ('A\123B'), ["A" char(83) "B"])
+%!assert (sprintf ('\117\143\164\141\166\145'), "Octave")
+%!assert (do_string_escapes ('A\x4G'), ["A" char(4) "G"])
+%!assert (do_string_escapes ('A\x4AG'), ["A" char(74) "G"])
+%!assert (sprintf ('\x4f\x63\x74\x61\x76\x65'), "Octave")
+%!error do_string_escapes ()
+%!error do_string_escapes ("foo", "bar")
+%!error <STRING argument> do_string_escapes (3)
+%!warning <malformed hex escape sequence> do_string_escapes ('\xG');
+%!warning <unrecognized escape sequence> do_string_escapes ('\G');
+%!assert (undo_string_escapes ("foo\nbar"), 'foo\nbar')
+%!assert (undo_string_escapes ("foo\nbar"), "foo\\nbar")
+%!assert (undo_string_escapes (["foo", char(10), "bar"]), "foo\\nbar")
+%!assert (undo_string_escapes ("\a\b\f\n\r\t\v"), '\a\b\f\n\r\t\v')
+%!assert (undo_string_escapes ("\a\b\f\n\r\t\v"), "\\a\\b\\f\\n\\r\\t\\v")
+%!assert (undo_string_escapes (char ([7, 8, 12, 10, 13, 9, 11])),
+%!        "\\a\\b\\f\\n\\r\\t\\v")
+%!assert (undo_string_escapes ("\\"), '\\')
+%!assert (undo_string_escapes ("\\"), "\\\\")
+%!assert (undo_string_escapes (char (92)), "\\\\")
+%!assert (undo_string_escapes ("\"double-quoted\""), '\"double-quoted\"')
+%!assert (undo_string_escapes ("\"double-quoted\""), "\\\"double-quoted\\\"")
+%!error undo_string_escapes ()
+%!error undo_string_escapes ("foo", "bar")
+%!error undo_string_escapes (3)
+%!error is_absolute_filename ()
+%!error is_absolute_filename ("foo", "bar")
+%!error is_rooted_relative_filename ()
+%!error is_rooted_relative_filename ("foo", "bar")
+%!error make_absolute_filename ()
+%!error make_absolute_filename ("foo", "bar")
+%!test
+%! f = dir_in_loadpath ("plot");
+%! assert (ischar (f));
+%! assert (! isempty (f));
+%!test
+%! f = dir_in_loadpath ("$$probably_!! _not_&&_a_!! _dir$$");
+%! assert (f, "");
+%!test
+%! lst = dir_in_loadpath ("$$probably_!! _not_&&_a_!! _dir$$", "all");
+%! assert (lst, {});
+%!error dir_in_loadpath ()
+%!error dir_in_loadpath ("foo", "bar", 1)
+%!assert (isnumeric (errno ()))
+%!test
+%! lst = errno_list ();
+%! fns = fieldnames (lst);
+%! oldval = errno (fns{1});
+%! assert (isnumeric (oldval));
+%! errno (oldval);
+%! newval = errno ();
+%! assert (oldval, newval);
+%!error errno ("foo", 1)
+%!assert (isstruct (errno_list ()))
+%!error errno_list ("foo")
+%!assert (isindex ([1, 2, 3]))
+%!assert (isindex (1:3))
+%!assert (isindex (1:3, 2), false)
+%!assert (isindex ([1, 2, -3]), false)
+%!error isindex ()
+%!error isindex (1:3, 2, 3)
+%!assert (isstudent (), false)
+%!error isstudent (1)

@@ -1,0 +1,17 @@
+## DO NOT EDIT! Generated from __setround__.cc
+%!test
+%!  __setround__ (+inf);
+%!  assert (1 + realmin > 1, true);
+%!  assert (1 - realmin == 1, true);
+%!  __setround__ (0.5);
+%!test
+%!  __setround__ (-inf);
+%!  assert (1 + realmin == 1, true);
+%!  assert (1 - realmin < 1, true);
+%!  __setround__ (0.5);
+%!test 
+%!  __setround__ (0.5);
+%!  assert (1 + realmin == 1, true);
+%!  assert (1 - realmin == 1, true);
+%!shared
+%!  __setround__ (0.5);

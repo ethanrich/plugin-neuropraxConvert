@@ -1,0 +1,10 @@
+## DO NOT EDIT! Generated from dicomdict.cpp
+%!fail ("dicomdict")
+%!fail ("dicomdict(1)")
+%!fail ("dicomdict('set')")
+%!test
+%! % assumes dictionary is in the load path so it can find the dictionary
+%! dicomdict factory ;
+%! [f n e]=fileparts(dicomdict('get'));
+%! assert([n e],"octavedicom.dic");
+%! % todo

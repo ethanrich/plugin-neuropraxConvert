@@ -1,0 +1,131 @@
+## DO NOT EDIT!  Generated automatically from inv.cc by Make.
+%!assert (inv ([1, 2; 3, 4]), [-2, 1; 1.5, -0.5], 5*eps)
+%!test
+%! [xinv, rcond] = inv ([1,2;3,4]);
+%! assert (xinv, [-2, 1; 1.5, -0.5], 5*eps);
+%! assert (isa (rcond, "double"));
+%!assert (inv (single ([1, 2; 3, 4])), single ([-2, 1; 1.5, -0.5]),
+%!        5*eps ("single"))
+%!test
+%! [xinv, rcond] = inv (single ([1,2;3,4]));
+%! assert (xinv, single ([-2, 1; 1.5, -0.5]), 5*eps ("single"));
+%! assert (isa (rcond, "single"));
+%!assert (inv (2), 0.5)
+%!test
+%! [xinv, rcond] = inv (2);
+%! assert (xinv, 0.5);
+%! assert (rcond, 1);
+%!assert (inv (single (2)), single (0.5))
+%!test
+%! [xinv, rcond] = inv (single (2));
+%! assert (xinv, single (0.5));
+%! assert (rcond, single (1));
+%!assert (inv (complex (1, -1)), 0.5+0.5i)
+%!test
+%! [xinv, rcond] = inv (complex (1, -1));
+%! assert (xinv, 0.5+0.5i);
+%! assert (rcond, 1);
+%!assert (inv (complex (single (1), -1)), single (0.5+0.5i))
+%!test
+%! [xinv, rcond] = inv (complex (single (1), -1));
+%! assert (xinv, single (0.5+0.5i));
+%! assert (rcond, single (1));
+%!assert (inv (zeros (2,0)), [])
+%!assert (inv (0), Inf)
+%!test
+%! [xinv, rcond] = inv (0);
+%! assert (xinv, Inf);
+%! assert (rcond, 0);
+%!assert (inv (single (0)), single (Inf))
+%!test
+%! [xinv, rcond] = inv (single (0));
+%! assert (xinv, single (Inf));
+%! assert (rcond, single (0));
+%!assert (inv (complex (0, 0)), Inf)
+%!test
+%! [xinv, rcond] = inv (complex (0, 0));
+%! assert (xinv, Inf);
+%! assert (rcond, 0);
+%!assert (inv (complex (single (0), 0)), single (Inf))
+%!test
+%! [xinv, rcond] = inv (complex (single (0), 0));
+%! assert (xinv, single (Inf));
+%! assert (rcond, single (0));
+%!assert (inv (-0), -Inf)
+%!test
+%! [xinv, rcond] = inv (-0);
+%! assert (xinv, -Inf);
+%! assert (rcond, 0);
+%!assert (inv (Inf), 0)
+%!test
+%! [xinv, rcond] = inv (Inf);
+%! assert (xinv, 0);
+%! assert (rcond, 0);
+%!assert (inv (single (Inf)), single (0))
+%!test
+%! [xinv, rcond] = inv (single (Inf));
+%! assert (xinv, single (0));
+%! assert (rcond, single (0));
+%!assert (inv (complex (1, Inf)), 0)
+%!test
+%! [xinv, rcond] = inv (complex (1, Inf));
+%! assert (xinv, 0);
+%! assert (rcond, 0);
+%!assert (inv (complex (single (1), Inf)), single (0))
+%!test
+%! [xinv, rcond] = inv (complex (single (1), Inf));
+%! assert (xinv, single (0));
+%! assert (rcond, single (0));
+%!assert (inv (NaN), NaN)
+%!test
+%! [xinv, rcond] = inv (NaN);
+%! assert (xinv, NaN);
+%! assert (rcond, NaN);
+%!assert (inv (single (NaN)), single (NaN))
+%!test
+%! [xinv, rcond] = inv (single (NaN));
+%! assert (xinv, single (NaN));
+%! assert (rcond, single (NaN));
+%!assert (inv (complex (1, NaN)), complex (NaN, NaN))
+%!test
+%! [xinv, rcond] = inv (complex (1, NaN));
+%! assert (xinv, complex (NaN, NaN));
+%! assert (rcond, NaN);
+%!assert (inv (complex (single (1), NaN)), complex (single (NaN), NaN))
+%!test
+%! [xinv, rcond] = inv (complex (single (1), NaN));
+%! assert (xinv, complex (single (NaN), NaN));
+%! assert (rcond, single (NaN));
+%!warning <matrix singular> assert (inv (zeros (2,2)), Inf (2,2))
+%!test
+%! [xinv, rcond] = inv (zeros (2,2));
+%! assert (xinv, Inf (2,2));
+%! assert (rcond, 0);
+%!warning <rcond = > assert (inv (Inf (2,2)), NaN (2,2))
+%!test
+%! [xinv, rcond] = inv (Inf (2,2));
+%! assert (xinv, NaN (2,2));
+%! assert (rcond, NaN);
+%!warning <rcond = > assert (inv (NaN (2,2)), NaN (2,2))
+%!test
+%! [xinv, rcond] = inv (NaN (2,2));
+%! assert (xinv, NaN (2,2));
+%! assert (rcond, NaN);
+%!test
+%! fail ("A = inv (diag ([1, 0, 1]))", "warning", "matrix singular");
+%! assert (A, diag ([Inf, Inf, Inf]));
+%!testif HAVE_UMFPACK <*56232>
+%! fail ("A = inv (sparse ([1, 2;0 ,0]))", "warning", "matrix singular");
+%! assert (A, sparse ([Inf, Inf; 0, 0]));
+%!testif HAVE_UMFPACK <*56232>
+%! fail ("A = inv (sparse ([1i, 2;0 ,0]))", "warning", "matrix singular");
+%! assert (A, sparse ([Inf, Inf; 0, 0]));
+%!testif HAVE_UMFPACK <*56232>
+%! fail ("A = inv (sparse ([1, 0, 0; 0, 0, 0; 0, 0, 1]))", "warning", "matrix singular");
+%! assert (A, sparse ([Inf, 0, 0; 0, 0, 0; 0, 0, Inf]));
+%!error inv ()
+%!error inv ([1, 2; 3, 4], 2)
+%!error <must be a square matrix> inv ([1, 2; 3, 4; 5, 6])
+%!error <inverse of the null matrix not defined> inv (sparse (2, 2, 0))
+%!error <inverse of the null matrix not defined> inv (diag ([0, 0]))
+%!error <inverse of the null matrix not defined> inv (diag (complex ([0, 0])))

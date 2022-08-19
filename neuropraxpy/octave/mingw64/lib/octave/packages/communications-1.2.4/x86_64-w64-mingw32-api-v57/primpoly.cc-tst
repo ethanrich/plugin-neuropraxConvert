@@ -1,0 +1,6 @@
+## DO NOT EDIT! Generated from primpoly.cc
+%!error primpoly ()
+%!error primpoly (1, 2, 3, 4)
+%!error primpoly (1, "invalid")
+%!error primpoly (1, 2, "invalid")
+%!error primpoly (1, "nodisplay", "invalid")

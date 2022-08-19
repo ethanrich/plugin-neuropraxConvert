@@ -1,0 +1,2 @@
+## DO NOT EDIT!  Generated automatically from ov-cx-diag.cc by Make.
+%!assert <*36368> (diag ([1+i, 1-i])^2 , diag ([2i, -2i]), 4*eps)

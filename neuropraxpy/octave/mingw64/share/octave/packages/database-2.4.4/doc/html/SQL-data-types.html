@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- General documentation for the database package for Octave.
+
+Copyright (C) 2016-2018 Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.3, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>database_doc: SQL data types</title>
+
+<meta name="description" content="database_doc: SQL data types">
+<meta name="keywords" content="database_doc: SQL data types">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="Arbitrary-Octave-types.html#Arbitrary-Octave-types" rel="next" title="Arbitrary Octave types">
+<link href="Concept.html#Concept" rel="prev" title="Concept">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="SQL-data-types"></a>
+<div class="header">
+<p>
+Next: <a href="Arbitrary-Octave-types.html#Arbitrary-Octave-types" accesskey="n" rel="next">Arbitrary Octave types</a>, Previous: <a href="Concept.html#Concept" accesskey="p" rel="prev">Concept</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Representation-in-Octave-of-types-defined-by-SQL"></a>
+<h2 class="chapter">3 Representation in Octave of types defined by SQL</h2>
+<a name="index-data-types"></a>
+
+<p>For types specific to database implementations,
+see
+<a href="Postgresql-data-types.html#Postgresql-data-types">Postgresql data types</a>.
+</p>
+<p>The last column indicates whether the SQL type is automatically deduced
+by this packages functions from the representation of the data in
+Octave. If not, the correct SQL type must be specified by the user if
+the data is sent from Octave to the database.
+</p>
+<p>The listed names of SQL data types are those which are used by the
+functions of this package. They are sometimes different from the
+original SQL typenames, e.g. <code>int2</code>, <code>int4</code>, and <code>int8</code>
+instead of <code>smallint</code>, <code>integer</code>, and <code>bigint</code>,
+respectively. If not obvious, the original SQL typename is given in
+parantheses.
+</p>
+<table>
+<thead><tr><th>SQL</th><th>Octave</th><th>auto</th></tr></thead>
+<tr><td>bool</td><td>logical scalar</td><td>yes</td></tr>
+<tr><td>bytea (variable length binary string)</td><td>array of uint8, one-dimensional if converted from SQL data</td><td>yes</td></tr>
+<tr><td>float8</td><td>double scalar</td><td>yes</td></tr>
+<tr><td>float4</td><td>single scalar</td><td>yes</td></tr>
+<tr><td>varchar</td><td>string</td><td>no</td></tr>
+<tr><td>bpchar (char)</td><td>string</td><td>no</td></tr>
+<tr><td>int2</td><td>int16 scalar</td><td>yes</td></tr>
+<tr><td>int4</td><td>int32 scalar</td><td>yes</td></tr>
+<tr><td>int8</td><td>int64 scalar</td><td>yes</td></tr>
+<tr><td>timestamp</td><td>8-byte-time-value (see below), positive or negative difference
+to 2000-01-01 00:00</td><td>no</td></tr>
+<tr><td>timestamptz</td><td>as timestamp</td><td>no</td></tr>
+<tr><td>time</td><td>8-byte-time-value (see below)</td><td>no</td></tr>
+<tr><td>timetz</td><td>2-element cell array with 8-byte-time-value (see below, time of
+day) and int32 scalar (time zone in seconds, negative east of UTC)</td><td>no</td></tr>
+<tr><td>date</td><td>int32 scalar, positive or negative difference to 2000-01-01</td><td>no</td></tr>
+<tr><td>interval</td><td>3-element cell array with 8-byte-time-value (see below), int32
+(days), and int32 (months)</td><td>no</td></tr>
+<tr><td>bit</td><td>structure with fields <code>bitlen</code> (int32, number of valid
+bits) and <code>bits</code> (uint8 array, 8 bits per entry, first entry
+contains the leftmost bits, last entry may contain less than 8 bits)</td><td>no</td></tr>
+<tr><td>varbit</td><td>as bit</td><td>yes</td></tr>
+<tr><td>xml</td><td>string</td><td>no</td></tr>
+<tr><td>any array</td><td>Structure with fields <code>data</code> (holding a cell-array with
+entries of a type corresponding to the SQL element type), <code>ndims</code>
+(holding the number of dimensions of the corresponding SQL array, since
+this can not be deduced from the dimensions of the Octave cell-array in
+all cases), and optionally (but always present in returned values)
+<code>lbounds</code> (a row vector of enumeration bases for all dimensions,
+default is <code>ones (1, ndims)</code>; enumeration bases different from
+<code>1</code> are supported e.g. by Postgresql). Array elements may not
+correspond to arrays in SQL (use additional dimensions for this), but
+may correspond to composite types, which is allowed to lead to
+arbitrarily deep nesting.</td><td>no</td></tr>
+<tr><td>any composite type (row type)</td><td>One-dimensional cell-array with entries of types corresponding
+to the respective SQL types. Entries may also correspond to an
+array-type or composite type; this is allowed to lead to arbitrarily
+deep nesting.</td><td>no</td></tr>
+</table>
+
+<p>8-byte-time-value: int64 scalar, representing microseconds, if server is
+configured for integer date/time; double scalar, representing seconds,
+if server is configured for float date/time. If the type (integer or
+float) of an input Octave variable for an 8-byte-time-value does not
+match the server configuration, there is no automatic conversion but an
+error is thrown.
+</p>
+<p>Octaves <code>NA</code> corresponds to an SQL NULL value (not <code>NaN</code>,
+which is interpreted as a value of a float type!).
+</p>
+
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Arbitrary-Octave-types.html#Arbitrary-Octave-types" accesskey="n" rel="next">Arbitrary Octave types</a>, Previous: <a href="Concept.html#Concept" accesskey="p" rel="prev">Concept</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

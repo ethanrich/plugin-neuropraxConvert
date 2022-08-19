@@ -1,0 +1,128 @@
+## DO NOT EDIT!  Generated automatically from pr-output.cc by Make.
+%!test <*56941>
+%! [old_fmt, old_spacing] = format ();
+%! unwind_protect
+%!   format short;
+%!   assert (rats (-2.0005, 10), "-4001/2000");
+%!   assert (strtrim (rats (2.0005, 30)), "4001/2000");
+%!   assert (pi - str2num (rats (pi, 30)), 0, 4 * eps);
+%!   assert (e - str2num (rats (e, 30)), 0, 4 * eps);
+%! unwind_protect_cleanup
+%!   format (old_fmt);
+%!   format (old_spacing);
+%! end_unwind_protect
+%!test <*57003>
+%! x = ones (2,1,3);
+%! s = rats (x,4);
+%! assert (ndims (s) == 2);
+%! assert (rows (s) == 2);
+%! assert (columns (s) == 3 * 6);
+%!assert <*57004> (rats ([]), '')
+%!test <57704>
+%! [old_fmt, old_spacing] = format ();
+%! unwind_protect
+%!   format short;
+%!   assert (rats (2.0005, 9), "4001/2000");
+%!   assert (rats (123, 2), " *");
+%! unwind_protect_cleanup
+%!   format (old_fmt);
+%!   format (old_spacing);
+%! end_unwind_protect
+%!test
+%! [old_fmt, old_spacing] = format ();
+%! unwind_protect
+%!   format short
+%!   fd = tmpfile ();
+%!   for r = [0, Inf -Inf, NaN]
+%!     for i = [0, Inf -Inf, NaN]
+%!       fdisp (fd, complex (r, i));
+%!     endfor
+%!   endfor
+%!   fclose (fd);
+%! unwind_protect_cleanup
+%!   format (old_fmt);
+%!   format (old_spacing);
+%! end_unwind_protect
+%!test
+%! [old_fmt, old_spacing] = format ();
+%! unwind_protect
+%!   foo.real = pi * ones (3,20,3);
+%!   foo.complex = pi * ones (3,20,3) + 1i;
+%!   foo.char = repmat ("- Hello World -", [3, 20]);
+%!   foo.cell = {foo.real, foo.complex, foo.char};
+%!   fields = fieldnames (foo);
+%!   for f = 1:numel (fields)
+%!     format loose;
+%!     loose = disp (foo.(fields{f}));
+%!     format compact;
+%!     compact = disp (foo.(fields{f}));
+%!     expected = strrep (loose, "\n\n", "\n");
+%!     assert (expected, compact);
+%!   endfor
+%! unwind_protect_cleanup
+%!   format (old_fmt);
+%!   format (old_spacing);
+%! end_unwind_protect
+%!test
+%! [old_fmt, old_spacing] = format ();
+%! unwind_protect
+%!   format short;
+%!   str = evalc ("x = 1.1; display (x)");
+%!   assert (str, "x = 1.1000\n");
+%! unwind_protect_cleanup
+%!   format (old_fmt);
+%!   format (old_spacing);
+%! end_unwind_protect
+%!test
+%! [old_fmt, old_spacing] = format ();
+%! unwind_protect
+%!   format short;
+%!   str = evalc ("display (1.1)");
+%!   assert (str, "1.1000\n");
+%! unwind_protect_cleanup
+%!   format (old_fmt);
+%!   format (old_spacing);
+%! end_unwind_protect
+%!error display ()
+%!error display (1,2)
+%!test
+%! [old_fmt, old_spacing, old_uppercase] = format ();
+%! unwind_protect
+%!   ## Test one of the formats
+%!   format long e;
+%!   format uppercase;
+%!   str = disp (pi);
+%!   assert (str, "3.141592653589793E+00\n");
+%!   str = disp (single (pi));
+%!   assert (str, "3.1415927E+00\n");
+%!   new_fmt = format ();
+%!   assert (new_fmt, "longe");
+%!   ## Test resetting format
+%!   format compact;
+%!   [~, new_spacing] = format ();
+%!   assert (new_spacing, "compact");
+%!   format;
+%!   [new_fmt, new_spacing, new_case] = format ();
+%!   assert (new_fmt, "short");
+%!   assert (new_spacing, "loose");
+%!   assert (new_case, "lowercase");
+%! unwind_protect_cleanup
+%!   format (old_fmt);
+%!   format (old_spacing);
+%!   format (old_uppercase);
+%! end_unwind_protect
+%!test <*53427>
+%! [old_fmt, old_spacing] = format ();
+%! unwind_protect
+%!   format;          # reset format to short and loose
+%!   format compact;  # set compact format
+%!   format long;     # set long format
+%!   [fmt, spacing] = format ();
+%!   assert (fmt, "long");
+%!   assert (spacing, "compact");
+%! unwind_protect_cleanup
+%!   format (old_fmt);
+%!   format (old_spacing);
+%! end_unwind_protect
+%!test
+%! fail ("fmt = format ('long')", "warning", "cannot query and set format");

@@ -1,0 +1,11 @@
+## Generated from pp_data.cc
+%!xtest
+%! if any (strcmp(instrhwinfo().SupportedInterfaces, "parallel"))
+%!   a = parallel ();
+%!   d = pp_data (a);
+%!   pp_close (a);
+%! endif
+%!test
+%! if any (strcmp(instrhwinfo().SupportedInterfaces, "parallel"))
+%!   fail ("pp_data(1);", "Invalid call to pp_data");
+%! endif

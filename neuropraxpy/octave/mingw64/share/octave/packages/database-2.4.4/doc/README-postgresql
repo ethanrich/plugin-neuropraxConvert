@@ -1,0 +1,57 @@
+Octave postgresql interface
+
+
+Functions:
+
+
+pq_connect: connect to a postgresql database,
+
+pq_exec_params: execute an SQL command with optional parameters and
+                return result,
+
+pq_update_types: used if defined types change during connection time,
+
+pq_lo_import: import large object from client side,
+
+pq_lo_export: export large object to client side,
+
+pq_lo_unlink: delete large object,
+
+pq_close: disconnect from database,
+
+pq_conninfo: get information on connection and server.
+
+
+Features:
+
+
+- number of connections not limited,
+
+- mapping of postgresql types to Octave types in data exchange in both
+  directions,
+
+- arbitrarily deeply nested composite- and array-types,
+
+- caches converter lookups for composite type elements,
+
+- binary data transfer,
+
+- reads postgresql system catalogs to get type information,
+
+- types can be scheme-qualified.
+
+
+State:
+
+
+All commands should work with pq_exec_params, copy from stdin and copy
+to stdout are implemented from/to files at client side, copy from
+stdin is also possible from an Octave cell-array. There are no plans
+to implement copy to stdout into an Octave cell-array (does not safely
+fit into the framework, and select should be equivalent). The whole
+framework including conversion of composite and array types with the
+resulting possible recursion, enum types, and all base types except
+textsearch types are implemented. Large object import, export, and
+unlink works, also import/export from/to pipes.
+
+Please report bugs.

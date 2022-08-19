@@ -1,0 +1,18 @@
+## DO NOT EDIT! Generated from surfderivcpts.cc
+%!test
+%! plane = nrbdegelev(nrb4surf([0 0], [0 1], [1 0], [1 1]), [1, 1]);
+%! 
+%! pkl = surfderivcpts (plane.number(1)-1, plane.order(1)-1,
+%!                       plane.knots{1}, plane.number(2)-1,
+%!                     plane.order(2)-1, plane.knots{2}, 
+%!                       squeeze (plane.coefs(1,:,:)), 2);
+%! 
+%! 
+%! pkl2 = [  0   0   0   1   0   0   0   0   0   0   0   0   1   0 ...
+%! 	0   0   0   0   0   0   0   1   0   0   0   0   0 0.5   0 ...
+%! 	0   1   0   0   0   0   0 0.5   0   0   1   0   0   0   0 ...
+%! 	0 0.5  0   0   1   0   0   0   0   0   1   0   0   0   0 ...
+%! 	0   0   0   0   1   0   0   0   0   0   0   0   0   1   0 ...
+%! 	0   0   0   0   0   0   0]';
+%! 
+%! assert (pkl(:),pkl2);

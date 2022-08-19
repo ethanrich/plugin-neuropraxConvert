@@ -1,0 +1,11 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libtxc_dxtn
+Description: Library for S2TC texture compression
+Requires:
+Version: 0.1
+Libs: -L${libdir} -ltxc_dxtn
+Cflags: -I${includedir}

@@ -1,0 +1,8 @@
+## DO NOT EDIT!  Generated automatically from __isprimelarge__.cc by Make.
+%!assert (__isprimelarge__ (41:50), logical ([1 0 1 0 0 0 1 0 0 0]))
+%!assert (__isprimelarge__ (uint64 (12345)), false)
+%!assert (__isprimelarge__ (uint64 (2147483647)), true)
+%!assert (__isprimelarge__ (uint64 (2305843009213693951)), true)
+%!assert (__isprimelarge__ (uint64 (18446744073709551557)), true)
+%!assert (__isprimelarge__ ([uint64(12345), uint64(2147483647), uint64(2305843009213693951), uint64(18446744073709551557)]), logical ([0 1 1 1]))
+%!error <unable to convert input> (__isprimelarge__ ({'foo'; 'bar'}))

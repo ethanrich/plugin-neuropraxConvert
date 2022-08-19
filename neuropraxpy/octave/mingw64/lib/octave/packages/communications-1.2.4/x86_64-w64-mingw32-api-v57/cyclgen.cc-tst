@@ -1,0 +1,4 @@
+## DO NOT EDIT! Generated from cyclgen.cc
+%!error cyclgen ()
+%!error cyclgen (1)
+%!error cyclgen (1, 2, 3, 4)

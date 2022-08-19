@@ -1,0 +1,10 @@
+## Generated from serialport.cc
+%!test
+%! if any(strcmp(instrhwinfo().SupportedInterfaces, "serial"))
+%!   fail ("a = serialport ()", "Invalid call to serial");
+%!   fail ("a = serialport ('noport', 'a')", "Invalid call to serial");
+%!   fail ("a = serialport ('noport', 9600, 1)", "Expected property name string");
+%!   fail ("a = serialport ('noport', 9600, 1, 1)", "Expected property name/value pairs");
+%! else
+%!   fail ("serialport ()", "serial: Your system doesn't support the serial interface");
+%! endif

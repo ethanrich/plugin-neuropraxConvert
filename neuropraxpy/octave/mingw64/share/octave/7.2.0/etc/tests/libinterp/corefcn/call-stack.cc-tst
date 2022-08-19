@@ -1,0 +1,25 @@
+## DO NOT EDIT!  Generated automatically from call-stack.cc by Make.
+%!test
+%! orig_val = max_stack_depth ();
+%! old_val = max_stack_depth (2*orig_val);
+%! assert (orig_val, old_val);
+%! assert (max_stack_depth (), 2*orig_val);
+%! max_stack_depth (orig_val);
+%! assert (max_stack_depth (), orig_val);
+%!error max_stack_depth (1, 2)
+%!test
+%! avar = magic (4);
+%! ftmp = [tempname() ".mat"];
+%! save_default_options ("-binary", "local");
+%! unwind_protect
+%!   save (ftmp, "avar");
+%!   vars = whos ("-file", ftmp);
+%!   assert (numel (vars), 1);
+%!   assert (isstruct (vars));
+%!   assert (vars.name, "avar");
+%!   assert (vars.size, [4, 4]);
+%!   assert (vars.class, "double");
+%!   assert (vars.bytes, 128);
+%! unwind_protect_cleanup
+%!   unlink (ftmp);
+%! end_unwind_protect

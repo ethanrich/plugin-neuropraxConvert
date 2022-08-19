@@ -1,0 +1,12 @@
+## DO NOT EDIT! Generated from dicomuid.cpp
+%!fail ("dicomuuid (1)");
+%!fail ("dicominfo ([])");
+%!fail ("dicominfo ('string')");
+%!test
+%! id = dicomuid ();
+%! assert (ischar (id));
+%! assert (length(id) > 0);
+%!test
+%! id1 = dicomuid ();
+%! id2 = dicomuid();
+%! assert (strcmp (id1, id2), false);

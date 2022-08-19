@@ -1,0 +1,14 @@
+## Generated from pp_close.cc
+%!xtest
+%! if any (strcmp(instrhwinfo().SupportedInterfaces, "parallel"))
+%!   a = parallel ();
+%!   pp_close (a);
+%! endif
+%!test
+%! if any (strcmp(instrhwinfo().SupportedInterfaces, "parallel"))
+%!   fail ("pp_close(1);", "Invalid call to pp_close");
+%! endif
+%!test
+%! if any (strcmp(instrhwinfo().SupportedInterfaces, "parallel"))
+%!   fail ("pp_close();", "Invalid call to pp_close");
+%! endif

@@ -1,0 +1,231 @@
+\input texinfo @c -*-texinfo-*-
+@c Copyright (c) 2020-2022, John Donoghue <john.donoghue@ieee.org>
+@c Octave Windows - Windows Toolkit for GNU octave.
+
+@c For manually generating the documentation use
+@c   LANGUAGE=en makeinfo --html --no-split windows.texi
+
+@c %*** Start of HEADER
+@setfilename windows.info
+@settitle Octave Windows - Windows Toolkit for GNU octave
+@afourpaper
+@paragraphindent 0
+@finalout
+@set VERSION 1.6.2
+@c @afourwide
+@c %*** End of the HEADER
+
+@include macros.texi
+
+@c %*** Start of TITLEPAGE
+@titlepage
+@title Windows Toolkit @value{VERSION}
+@subtitle Windows COM interface and additional functionality on Windows for @acronym{GNU} Octave.
+@author John Donoghue
+@page
+@vskip 0pt plus 1filll
+Copyright @copyright{} 2020-2022 John Donoghue
+
+Permission is granted to make and distribute verbatim copies of
+this manual provided the copyright notice and this permission notice
+are preserved on all copies.
+
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided that the entire
+resulting derived work is distributed under the terms of a permission
+notice identical to this one.
+
+Permission is granted to copy and distribute translations of this manual
+into another language, under the same conditions as for modified versions.
+
+@page
+@heading Distribution
+The @acronym{GNU} Octave Windows package is @dfn{free} software.
+Free software is a matter of the users' freedom to run, copy, distribute,
+study, change and improve the software.
+This means that everyone is free to use it and free to redistribute it
+on certain conditions.  The @acronym{GNU} Octave Windows package
+is not, however, in the public domain.  It is copyrighted and there are
+restrictions on its distribution, but the restrictions are designed to
+ensure that others will have the same freedom to use and redistribute
+Octave that you have.  The precise conditions can be found in the
+@acronym{GNU} General Public License that comes with the @acronym{GNU}
+Octave Windows package and that also appears in @ref{Copying}.
+
+To download a copy of the @acronym{GNU} Octave Windows package, please visit
+@url{http://octave.sourceforge.net/windows/}.
+
+@end titlepage
+@c %*** End of TITLEPAGE
+
+@dircategory Math
+@direntry
+* Octave Windows: (windows).          Windows Toolkit for Octave
+@end direntry
+
+@c %*** Start of BODY
+@contents
+@ifnottex
+@node Top
+@top Introduction
+The Windows toolkit provides a COM interface and additional functionality on Windows for GNU Octave
+@end ifnottex
+
+@menu
+* Installing and loading::    Installing and loading the Windows toolkit
+* Basic Usage Overview::      Basic Usage Overview
+* Function Reference::        Windows toolkit functions
+* Copying::                   Copying
+* Index::                     Index
+@end menu
+
+@c -------------------------------------------------------------------------
+@node Installing and loading
+@chapter Installing and loading
+@cindex Installing and loading
+
+The Windows toolkit must be installed and then loaded to be used.
+
+It can be installed in @acronym{GNU} Octave directly from octave-forge,
+or can be installed in an off-line mode via a downloaded tarball.
+
+
+The toolkit must be then be loaded once per each @acronym{GNU} Octave session in order to use its functionality.
+
+@section Windows install
+@cindex Windows install
+If running in Windows, the package may already be installed, to check run:
+
+@example
+pkg list windows
+@end example
+
+Otherwise it can be installed by installing the requirements and then using the online or offline install method.
+
+@section Online Direct install
+@cindex Online install
+With an internet connection available, the Windows package can be installed from
+octave-forge using the following command within @acronym{GNU} Octave:
+
+@example
+pkg install -forge windows
+@end example
+
+The latest released version of the toolkit will be downloaded and installed.
+
+@section Off-line install
+@cindex Off-line install
+With the Windows toolkit package already downloaded, and in the current directory when running
+@acronym{GNU} Octave, the package can be installed using the following command within @acronym{GNU} Octave:
+
+@example
+pkg install windows-@value{VERSION}.tar.gz
+@end example
+
+@section Loading
+@cindex Loading
+Regardless of the method of installing the Windows toolkit, in order to use its functions,
+the toolkit must be loaded using the pkg load command:
+
+@example
+pkg load windows
+@end example
+
+The toolkit must be loaded on each @acronym{GNU} Octave session.
+
+@c -------------------------------------------------------------------------
+@node Basic Usage Overview
+@chapter Basic Usage Overview
+@cindex Basic Usage Overview
+
+The Windows package must be loaded each time a @acronym{GNU} Octave session is started:
+@example
+pkg load windows
+@end example
+
+The Windows toolkit provides 2 main types of functionality:
+
+@table @asis
+@item COM Interface functions
+These are functions that allow interfacing to COM objects.
+@item Windows Utilities
+Functions that provide additional functions for windows
+@end table
+
+@section COM objects
+@subsection Creating a COM object
+
+To create a COM object, you use the actxserver function with the name of the object to create.
+
+@example
+wshell = actxserver ("WScript.Shell");
+@end example
+
+A octave_com_object type will be returned that provides an interface to the functions and properties of the object.
+
+
+To get a list of properties for the object, use the get function. Assuming we have the wshell object from the previous example:
+@example
+get(wshell)
+@end example
+
+A list of the properties of the object will be displayed.
+
+
+To get a list of the methods available for the object, use the methods function.
+
+@example
+methods(wshell)
+@end example
+
+@subsection Using a COM object
+
+Once a object is created using the actxserver function, and you know the methods and properties available, call the
+properties of methods using the dot notation.
+
+The following example will display the current directory.
+@example
+wshell = actxserver ("WScript.Shell");
+wshell.CurrentDirectory
+@end example
+
+Calling functions is performed in the same way.
+
+@example
+wshell = actxserver ("WScript.Shell");
+wshell.Exec("notepad.exe");
+@end example
+
+@subsection Releasing COM object
+
+A COM object should be released when it is not going to be used anymore to free any resources it may have allowed.
+
+@example
+release(wshell);
+@end example
+
+
+@section Windows Utility functions
+
+A number of utility functions are available. See the reference for their usage.
+
+@c -------------------------------------------------------------------------
+@node Function Reference
+@chapter Function Reference
+@cindex Function Reference
+
+The functions currently available in the Windows toolkit are described below:
+
+@include functions.texi
+
+@c -------------------------------------------------------------------------
+
+@include gpl.texi
+
+@c -------------------------------------------------------------------------
+@node Index 
+@unnumbered Index 
+ 
+@printindex cp
+ 
+@bye

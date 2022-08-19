@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>fmincon (optim_doc)</title>
+
+<meta name="description" content="fmincon (optim_doc)">
+<meta name="keywords" content="fmincon (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Compatibility-functions.html#Compatibility-functions" rel="up" title="Compatibility functions">
+<link href="Common-frontend-options.html#Common-frontend-options" rel="next" title="Common frontend options">
+<link href="nlinfit.html#nlinfit" rel="prev" title="nlinfit">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="fmincon"></a>
+<div class="header">
+<p>
+Previous: <a href="nlinfit.html#nlinfit" accesskey="p" rel="prev">nlinfit</a>, Up: <a href="Compatibility-functions.html#Compatibility-functions" accesskey="u" rel="up">Compatibility functions</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Non_002dlinear-scalar-optimization"></a>
+<h3 class="section">7.6 Non-linear scalar optimization</h3>
+<a name="index-fmincon-8"></a>
+
+<a name="XREFfmincon"></a><dl>
+<dt><a name="index-fmincon"></a>Function File: <em></em> <strong>fmincon</strong> <em>(<var>objf</var>, <var>x0</var>)</em></dt>
+<dt><a name="index-fmincon-1"></a>Function File: <em></em> <strong>fmincon</strong> <em>(<var>objf</var>, <var>x0</var>, <var>A</var>, <var>b</var>)</em></dt>
+<dt><a name="index-fmincon-2"></a>Function File: <em></em> <strong>fmincon</strong> <em>(<var>objf</var>, <var>x0</var>, <var>A</var>, <var>b</var>, <var>Aeq</var>, <var>beq</var>)</em></dt>
+<dt><a name="index-fmincon-3"></a>Function File: <em></em> <strong>fmincon</strong> <em>(<var>objf</var>, <var>x0</var>, <var>A</var>, <var>b</var>, <var>Aeq</var>, <var>beq</var>, <var>lb</var>, <var>ub</var>)</em></dt>
+<dt><a name="index-fmincon-4"></a>Function File: <em></em> <strong>fmincon</strong> <em>(<var>objf</var>, <var>x0</var>,  <var>A</var>, <var>b</var>, <var>Aeq</var>, <var>beq</var>, <var>lb</var>, <var>ub</var>, <var>nonlcon</var>)</em></dt>
+<dt><a name="index-fmincon-5"></a>Function File: <em></em> <strong>fmincon</strong> <em>(<var>objf</var>, <var>x0</var>, <var>A</var>, <var>b</var>, <var>Aeq</var>, <var>beq</var>, <var>lb</var>, <var>ub</var>, <var>nonlcon</var>, <var>options</var>)</em></dt>
+<dt><a name="index-fmincon-6"></a>Function File: <em></em> <strong>fmincon</strong> <em>(<var>problem</var>)</em></dt>
+<dt><a name="index-fmincon-7"></a>Function File: <em>[<var>x</var>, <var>fval</var>, <var>cvg</var>, <var>outp</var>] =</em> <strong>fmincon</strong> <em>(&hellip;)</em></dt>
+<dd><p>Compatibility frontend for nonlinear minimization of a scalar
+objective function.
+</p>
+<p>This function is for Matlab compatibility and provides a subset of
+the functionality of <code>nonlin_min</code>.
+</p>
+<p><var>objf</var>: objective function. It gets the real parameters as
+argument.
+</p>
+<p><var>x0</var>: real vector or array of initial parameters.
+</p>
+<p><var>A</var>, <var>b</var>: Inequality constraints of the parameters <code>p</code>
+with <code>A * p - b &lt;= 0</code>.
+</p>
+<p><var>Aeq</var>, <var>beq</var>: Equality constraints of the parameters <code>p</code>
+with <code>A * p - b = 0</code>.
+</p>
+<p><var>lb</var>, <var>ub</var>: Bounds of the parameters <code>p</code> with <code>lb
+&lt;= p &lt;= ub</code>. Vectors or arrays. If the number of elements is
+smaller than the number of parameters, as many bounds as present
+are applied, starting with the first parameter. This is for
+compatibility with Matlab.
+</p>
+<p><var>nonlcon</var>: Nonlinear constraints. Function returning the
+current values of nonlinear inequality constraints (constrained to
+<code>&lt;= 0</code>) in the first output and the current values of nonlinear
+equality constraints in the second output.
+</p>
+<p><var>options</var>: structure whose fields stand for optional settings
+referred to below. The fields can be set by <code>optimset()</code>.
+</p>
+<p>An argument can be set to <code>[]</code> to indicate that its value is
+not set.
+</p>
+<p><code>fmincon</code> may also be called with a single structure
+argument with the fields <code>objective</code>, <code>x0</code>, <code>Aineq</code>,
+<code>bineq</code>, <code>Aeq</code>, <code>beq</code>, <code>lb</code>, <code>ub</code>,
+<code>nonlcon</code> and <code>options</code>, resembling
+the separate input arguments above. Additionally,
+the structure must have the field <code>solver</code>, set to
+<code>&quot;fmincon&quot;</code>.
+</p>
+<p>The returned values are the final parameters <var>x</var>, the final
+value of the objective function <var>fval</var>, an integer <var>cvg</var>
+indicating if and how optimization succeeded or failed, and a
+structure <var>outp</var> with additional information, curently with
+possible fields: <code>iterations</code>, the number of iterations,
+<code>funcCount</code>, the number of objective function calls (indirect
+calls by gradient function not counted), <code>constrviolation</code>,
+the maximum of the constraint violations. The backend may define
+additional fields. <var>cvg</var> is greater than zero for success and
+less than or equal to zero for failure; its possible values depend
+on the used backend and currently can be <code>0</code> (maximum number
+of iterations exceeded), <code>1</code> (success without further
+specification of criteria), <code>2</code> (parameter change less than
+specified precision in two consecutive iterations), <code>3</code>
+(improvement in objective function less than specified), <code>-1</code>
+(algorithm aborted by a user function), or <code>-4</code> (algorithm got
+stuck).
+</p>
+<a name="Options_003a"></a>
+<h4 class="subsubheading">Options:</h4>
+
+<dl compact="compact">
+<dt><code>Algorithm</code></dt>
+<dd><p><code>interior-point</code>, <code>sqp</code>, and <code>sqp-legacy</code> are
+mapped to optims <code>lm_feasible</code> algorithm (the default) to
+satisfy constraints throughout the optimization. <code>active-set</code>
+is mapped to <code>octave_sqp</code>, which may perform better if
+constraints only need to be satisfied for the result. Other
+algorithms are available with <code>nonlin_min</code>.
+</p>
+</dd>
+<dt><code>OutputFcn</code></dt>
+<dd><p>Similar to the setting <code>user_interaction</code> &mdash; see
+<code>optim_doc()</code>. Differently, <code>OutputFcn</code> returns only one
+output argument, the  <var>stop</var> flag.
+</p>
+</dd>
+<dt><code>GradObj</code></dt>
+<dd><p>If set to <code>&quot;on&quot;</code>, <var>objf</var> must return the gradient of the
+objective function as a second output. The default is <code>&quot;off&quot;</code>.
+</p>
+</dd>
+<dt><code>GradConstr</code></dt>
+<dd><p>If set to <code>&quot;on&quot;</code>, <var>nonlcon</var> must return the Jacobians of
+the inequality- and equality-constraints as third and fourth
+output, respectively.
+</p>
+</dd>
+<dt><code>HessianFcn</code></dt>
+<dd><p>If set to <code>&quot;objective&quot;</code>, <var>objf</var> must not only return the
+gradient as the second, but also the Hessian as the third output.
+</p>
+</dd>
+<dt><code>Display, FinDiffRelStep, FinDiffType, TypicalX, MaxIter, TolFun, TolX,</code></dt>
+<dd><p>See documentation of these options in <code>optim_doc()</code>.
+</p>
+</dd>
+</dl>
+
+<p>For description of individual backends, type
+<code>optim_doc (&quot;scalar optimization&quot;)</code> and choose the backend in
+the menu.
+</p>
+</dd></dl>
+
+
+
+<hr>
+<div class="header">
+<p>
+Previous: <a href="nlinfit.html#nlinfit" accesskey="p" rel="prev">nlinfit</a>, Up: <a href="Compatibility-functions.html#Compatibility-functions" accesskey="u" rel="up">Compatibility functions</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

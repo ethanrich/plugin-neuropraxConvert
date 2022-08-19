@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Common optimization options (optim_doc)</title>
+
+<meta name="description" content="Common optimization options (optim_doc)">
+<meta name="keywords" content="Common optimization options (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="Parameter-structures.html#Parameter-structures" rel="next" title="Parameter structures">
+<link href="Common-frontend-options.html#Common-frontend-options" rel="prev" title="Common frontend options">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="Common-optimization-options"></a>
+<div class="header">
+<p>
+Next: <a href="Parameter-structures.html#Parameter-structures" accesskey="n" rel="next">Parameter structures</a>, Previous: <a href="Common-frontend-options.html#Common-frontend-options" accesskey="p" rel="prev">Common frontend options</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Options-common-to-all-optimization-frontends"></a>
+<h2 class="chapter">9 Options common to all optimization frontends</h2>
+<a name="index-common-optimization-options"></a>
+
+<p>All frontends for optimization (<a href="nonlin_005fmin.html#nonlin_005fmin">nonlin_min</a>, <a href="nonlin_005fresidmin.html#nonlin_005fresidmin">nonlin_residmin</a>,
+<a href="nonlin_005fcurvefit.html#nonlin_005fcurvefit">nonlin_curvefit</a>) accept the following options, settable with
+<a href="https://www.gnu.org/software/octave/doc/interpreter/XREFoptimset.html#XREFoptimset">(octave)optimset</a>.
+</p>
+<a name="Settings-handled-within-the-frontend"></a>
+<h4 class="subheading">Settings handled within the frontend</h4>
+
+<dl compact="compact">
+<dt><code>Algorithm</code></dt>
+<dd><p>String specifying the backend.
+</p></dd>
+<dt><code>complex_step_derivative_inequc,</code></dt>
+<dt><code>complex_step_derivative_equc</code></dt>
+<dd><p>Logical scalars, default: <code>false</code>. Estimate Jacobian of general
+inequality constraints and equality constraints, respectively, with
+complex step derivative approximation. Use only if you know that your
+function of general inequality constraints or function of general
+equality constraints, respectively, is suitable for this. No user
+function for the respective Jacobian must be specified.
+</p></dd>
+</dl>
+
+<a name="Settings-passed-to-the-backend"></a>
+<h4 class="subheading">Settings passed to the backend</h4>
+
+<p>Which of these options are actually honored is noted in the descriptions
+of the individual backends.
+</p>
+<dl compact="compact">
+<dt><code>lbound,</code></dt>
+<dt><code>ubound</code></dt>
+<dd><p>Column vectors of lower and upper bounds for parameters.  Default:
+<code>-Inf</code> and <code>+Inf</code>, respectively.  The bounds are non-strict,
+i.e. parameters are allowed to be exactly equal to a bound.  The default
+function for gradients or Jacobians will respect bounds (but no further
+inequality constraints) in finite differencing if the backend respects
+bounds even during the course of optimization.
+</p></dd>
+<dt><code>inequc</code></dt>
+<dd><p>Further inequality constraints.  Cell-array containing up to four
+entries, two entries for linear inequality constraints and/or one or two
+entries for general inequality constraints.  Either linear or general
+constraints may be the first entries, but the two entries for linear
+constraints must be adjacent and, if two entries are given for general
+constraints, they also must be adjacent.  The two entries for linear
+constraints are a matrix (say <code>m</code>) and a vector (say <code>v</code>),
+specifying linear inequality constraints of the form <code>m.' *
+parameters + v &gt;= 0</code>.  The first entry for general constraints must be a
+differentiable column-vector valued function (say <code>h</code>), specifying
+general inequality constraints of the form <code>h (p[, idx]) &gt;= 0</code>;
+<code>p</code> is the column vector of optimized paraters and the optional
+argument <code>idx</code>, given only if the function accepts it, is a logical
+index.  <code>h</code> has to return the values of all constraints if
+<code>idx</code> is not given.  It may choose to return only the indexed
+constraints if <code>idx</code> is given (so computation of the other
+constraints can be spared); in this case, the additional setting
+<code>f_inequc_idx</code> has to be set to <code>true</code>.  In gradient
+determination, this function may be called with an informational third
+argument (only if the function accepts it), whose content depends on the
+function for gradient determination.  If a second entry for general
+inequality constraints is given, it must be a function computing the
+jacobian of the constraints with respect to the parameters.  For this
+function, the description of the setting <code>dfdp</code>,
+see
+<a href="nonlin_005fresidmin.html#XREFoptiondfdp">dfdp</a>,
+applies, with 2 exceptions: 1) it is called with 3 arguments (but with
+the 2nd and 3rd argument only if it accepts them) since it has an
+additional argument <code>idx</code>, a logical index, at second position,
+indicating which rows of the jacobian must be returned (if the function
+chooses to return only indexed rows, the additional setting
+<code>df_inequc_idx</code> has to be set to <code>true</code>).  2) the default
+jacobian function calls <code>h</code> with 3 arguments, since the argument
+<code>idx</code> is also supplied.  Note that specifying linear constraints as
+general constraints will generally waste performance, even if further,
+non-linear, general constraints are also specified.
+</p></dd>
+<dt><code>f_inequc_idx,</code></dt>
+<dt><code>df_inequc_idx</code></dt>
+<dd><p>Indicate that functions for general inequality constraints or their
+jacobian, respectively, return only the values or derivatives for the
+indexed parameters.  See description of setting <code>inequc</code> above.
+</p></dd>
+<dt><code>equc</code></dt>
+<dd><p>Equality constraints.  Specified the same way as inequality constraints
+(see <code>inequc</code> above).
+</p></dd>
+<dt><code>f_equc_idx,</code></dt>
+<dt><code>df_equc_idx</code></dt>
+<dd><p>As <code>f_inequc_idx</code> and <code>df_inequc_idx</code> above, but for equality
+constraints.
+</p></dd>
+<dt><code>cpiv</code></dt>
+<dd><p>Function for complementary pivoting, usable in algorithms for
+constraints.  Default: <code>cpiv_bard</code>.  Only the default function is
+supplied with the package.
+</p></dd>
+<dt><code>TolFun</code></dt>
+<dd><p>Minimum fractional improvement in objective function (e.g. sum of
+squares) in an iteration (termination criterium).  Default: .0001.
+</p></dd>
+<dt><code>TolX</code></dt>
+<dd><p>Minimum fractional change in a norm of the parameters in an iteration
+(termination criterium).  Default: backend specific.
+</p></dd>
+<dt><code>MaxIter</code></dt>
+<dd><p>Maximum number of iterations (termination criterium).  Default:
+backend-specific.
+</p></dd>
+<dt><code>fract_prec</code></dt>
+<dd><p>Column Vector, minimum fractional changes of corresponding parameters in
+an iteration (termination criterium if violated in two consecutive
+iterations).  Default: backend-specific.
+</p></dd>
+<dt><code>max_fract_change</code></dt>
+<dd><p>Column Vector, enforced maximum fractional changes in corresponding
+parameters in an iteration. Default: backend-specific.
+</p></dd>
+<dt><code>Display</code></dt>
+<dd><p>String indicating the degree of verbosity. Default:
+<code>&quot;off&quot;</code>. Possible values are currently <code>&quot;off&quot;</code> (no messages)
+and <code>&quot;iter&quot;</code> (some messages after each iteration).  Support of
+this setting and its exact interpretation are backend-specific.
+</p></dd>
+<dt><code>debug</code></dt>
+<dd><p>Logical scalar, default: <code>false</code>. Will be passed to the backend,
+which might print debugging information if <code>true</code>.
+</p></dd>
+<dt><code>FunValCheck</code></dt>
+<dd><p>If <code>&quot;on&quot;</code>, the output of user functions will be sanity-checked.
+Default: <code>&quot;off&quot;</code>.
+</p></dd>
+<dt><code>user_interaction</code></dt>
+<dd><p>Handle to a user function or cell-array with a number of these.
+Functions must have this interface:
+</p><div class="example">
+<pre class="example">[<var>stop</var>, <var>info</var>] = some_user_function (<var>p</var>, <var>vals</var>,
+                                               <var>state</var>);
+</pre></div>
+<p>If <var>stop</var> is <code>true</code>, the algorithm stops.  In <var>info</var>
+information about the reason for stopping can be returned in a free
+format.  <var>info</var> can be set to be empty, but it must be set.  Note
+that this is different from the otherwise similar Matlab setting
+<code>OutputFcn</code>.  The functions will be called by the algorithms at the
+start with <var>state</var> set to <code>init</code>, after each iteration with
+<var>state</var> set to <code>iter</code>, and at the end with <var>state</var> set to
+<code>done</code>.  <var>p</var> contains the current parameters, and <var>vals</var>
+is a structure with other current values, the possible fields are
+currently:
+</p><dl compact="compact">
+<dt><code>iteration</code></dt>
+<dd><p>number of the current iteration,
+</p></dd>
+<dt><code>fval</code></dt>
+<dd><p>value of objective function (for scalar optimization),
+</p></dd>
+<dt><code>residual</code></dt>
+<dd><p>residuals (for residual-based optimization),
+</p></dd>
+<dt><code>model_y</code></dt>
+<dd><p>in <code>nonlin_curvefit</code>, the output of the model function,
+</p></dd>
+<dt><code>observations</code></dt>
+<dd><p>in <code>nonlin_curvefit</code>, the constant observations,
+</p></dd>
+<dt><code>model_x</code></dt>
+<dd><p>in <code>nonlin_curvefit</code>, the constant argument <var>x</var>.
+</p></dd>
+</dl>
+<p>Information about the output of these functions when they were called
+the last time (possibly causing a stop) will be contained in the output
+<var>outp</var> of the frontend in field <code>user_interaction</code>.  Subfield
+<code>stop</code> is a vector containing the <var>stop</var> outputs of each
+function, subfield <code>info</code> is a cell-array containing the output
+<var>info</var> of each function.  In the case of a stop, the output
+<var>cvg</var> of the frontent will be <code>-1</code>.
+</p></dd>
+</dl>
+
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Parameter-structures.html#Parameter-structures" accesskey="n" rel="next">Parameter structures</a>, Previous: <a href="Common-frontend-options.html#Common-frontend-options" accesskey="p" rel="prev">Common frontend options</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

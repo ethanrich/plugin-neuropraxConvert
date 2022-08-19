@@ -1,0 +1,35 @@
+## Generated from __tcpserver_properties__.cc
+%!test
+%! # test get
+%! a = tcpserver (0);
+%! assert (__tcpserver_properties__ (a,"Type"), "tcpserver");
+%! assert (__tcpserver_properties__ (a,"ServerPort") > 0);
+%! assert (! isempty(__tcpserver_properties__ (a,"ServerAddress")));
+%! assert (__tcpserver_properties__ (a,"Timeout"), -1);
+%! assert (__tcpserver_properties__ (a,"Status"), "open");
+%! assert (! isempty(__tcpserver_properties__ (a,"Name")));
+%! assert (__tcpserver_properties__ (a,"Connected"), false);
+%! fail ("__tcpserver_properties__ (a,'invalid')", "invalid property name");
+%! clear a
+%!test
+%! # test set
+%! a = tcpserver(0);
+%! __tcpserver_properties__ (a, 'Name', "mytest");
+%! assert (__tcpserver_properties__ (a,"Name"), "mytest");
+%! assert (a.Name, "mytest");
+%! fail ("__tcpserver_properties__ (a,'invalid', 1)", "invalid property name");
+%! clear a
+%!test
+%! # test flush
+%! a = tcpserver(0);
+%! __tcpserver_properties__ (a, 'flush', 0);
+%! __tcpserver_properties__ (a, 'flush', 1);
+%! __tcpserver_properties__ (a, 'flush', 2);
+%! fail ("__tcpserver_properties__ (a,'flush')", "invalid property name");
+%! clear a
+%!error <wrong number of arguments> __tcpserver_properties__ ()
+%!error <wrong number of arguments> __tcpserver_properties__ (1)
+%!test
+%! a = tcpserver (0);
+%! fail ("__tcpserver_properties__ (a, 'Name', 'test', 0)", "wrong number of arguments");
+%! clear a

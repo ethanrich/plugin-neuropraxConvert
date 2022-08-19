@@ -1,0 +1,11 @@
+Name: quaternion
+Version: 2.4.0
+Date: 2015-03-21
+Author: Lukas Reichlin <lukas.reichlin@gmail.com>
+Maintainer: Lukas Reichlin <lukas.reichlin@gmail.com>
+Title: Quaternion
+Description: Quaternion package for GNU Octave, includes a quaternion class with overloaded operators
+Depends: octave (>= 3.8.0)
+Autoload: no
+License: GPLv3+
+Url: http://octave.sf.net

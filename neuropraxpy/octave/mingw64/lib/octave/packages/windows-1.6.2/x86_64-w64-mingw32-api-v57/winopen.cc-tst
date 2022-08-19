@@ -1,0 +1,5 @@
+## DO NOT EDIT! Generated from winopen.cc
+%!testif HAVE_WINDOWS_H
+%! fail ("winopen(0)", "expected a string filename or directory");
+%!testif HAVE_WINDOWS_H
+%! winopen(cd);

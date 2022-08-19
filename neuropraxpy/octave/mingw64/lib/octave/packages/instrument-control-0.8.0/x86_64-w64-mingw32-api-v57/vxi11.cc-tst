@@ -1,0 +1,7 @@
+## Generated from vxi11.cc
+%!test
+%! if any(strcmp(instrhwinfo().SupportedInterfaces, "vxi11"))
+%!   fail ("vxi11 ()", "Invalid call to vxi11");
+%! else
+%!   fail ("vxi11 ()", "vxi11: Your system doesn't support the VXI11 interface");
+%! endif

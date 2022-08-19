@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>nelder_mead_min (optim_doc)</title>
+
+<meta name="description" content="nelder_mead_min (optim_doc)">
+<meta name="keywords" content="nelder_mead_min (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Scalar-optimization.html#Scalar-optimization" rel="up" title="Scalar optimization">
+<link href="powell.html#powell" rel="next" title="powell">
+<link href="adsmax.html#adsmax" rel="prev" title="adsmax">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="nelder_005fmead_005fmin"></a>
+<div class="header">
+<p>
+Next: <a href="powell.html#powell" accesskey="n" rel="next">powell</a>, Previous: <a href="adsmax.html#adsmax" accesskey="p" rel="prev">adsmax</a>, Up: <a href="Scalar-optimization.html#Scalar-optimization" accesskey="u" rel="up">Scalar optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Another-Nelder_002dMead-algorithm"></a>
+<h3 class="section">1.9 Another Nelder-Mead algorithm</h3>
+<a name="index-nelder_005fmead_005fmin"></a>
+
+<p>This function does gradient-less minimization using the Nelder-Mead
+algorithm. No constraints are honoured.
+</p>
+<a name="Helptext_003a-2"></a>
+<h4 class="subheading">Helptext:</h4>
+
+<a name="XREFnelder_005fmead_005fmin"></a><pre class="verbatim">[x0,v,nev] = nelder_mead_min (f,args,ctl) - Nelder-Mead minimization
+
+Minimize 'f' using the Nelder-Mead algorithm. This function is inspired
+from the that found in the book &quot;Numerical Recipes&quot;.
+
+ARGUMENTS
+---------
+f     : string : Name of function. Must return a real value
+args  : list   : Arguments passed to f.
+     or matrix : f's only argument
+ctl   : vector : (Optional) Control variables, described below
+     or struct
+
+RETURNED VALUES
+---------------
+x0  : matrix   : Local minimum of f
+v   : real     : Value of f in x0
+nev : number   : Number of function evaluations
+
+CONTROL VARIABLE : (optional) may be named arguments (i.e. &quot;name&quot;,value
+------------------ pairs), a struct, or a vector of length &lt;= 6, where
+                   NaN's are ignored. Default values are written &lt;value&gt;.
+ OPT.   VECTOR
+ NAME    POS
+ftol,f  N/A    : Stopping criterion : stop search when values at simplex
+                 vertices are all alike, as tested by 
+
+                  f &gt; (max_i (f_i) - min_i (f_i)) /max(max(|f_i|),1)
+
+                 where f_i are the values of f at the vertices.  &lt;10*eps&gt;
+
+rtol,r  N/A    : Stop search when biggest radius of simplex, using
+                 infinity-norm, is small, as tested by :
+
+             ctl(2) &gt; Radius                                     &lt;10*eps&gt;
+
+vtol,v  N/A    : Stop search when volume of simplex is small, tested by
+           
+             ctl(2) &gt; Vol
+
+crit,c ctl(1)  : Set one stopping criterion, 'ftol' (c=1), 'rtol' (c=2)
+                 or 'vtol' (c=3) to the value of the 'tol' option.    &lt;1&gt;
+
+tol, t ctl(2)  : Threshold in termination test chosen by 'crit'  &lt;10*eps&gt;
+
+narg  ctl(3)  : Position of the minimized argument in args            &lt;1&gt;
+maxev ctl(4)  : Maximum number of function evaluations. This number &lt;inf&gt;
+                may be slightly exceeded.
+isz   ctl(5)  : Size of initial simplex, which is :                   &lt;1&gt;
+
+               { x + e_i | i in 0..N } 
+
+               Where x == args{narg} is the initial value 
+                e_0    == zeros (size (x)), 
+                e_i(j) == 0 if j != i and e_i(i) == ctl(5)
+                e_i    has same size as x
+
+               Set ctl(5) to the distance you expect between the starting
+               point and the minimum.
+
+rst   ctl(6)   : When a minimum is found the algorithm restarts next to
+                 it until the minimum does not improve anymore. ctl(6) is
+                 the maximum number of restarts. Set ctl(6) to zero if
+                 you know the function is well-behaved or if you don't
+                 mind not getting a true minimum.                     &lt;0&gt;
+
+verbose, v     Be more or less verbose (quiet=0)                      &lt;0&gt;
+
+</pre>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="powell.html#powell" accesskey="n" rel="next">powell</a>, Previous: <a href="adsmax.html#adsmax" accesskey="p" rel="prev">adsmax</a>, Up: <a href="Scalar-optimization.html#Scalar-optimization" accesskey="u" rel="up">Scalar optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

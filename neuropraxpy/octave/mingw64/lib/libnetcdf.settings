@@ -1,0 +1,47 @@
+# NetCDF C Configuration Summary
+==============================
+
+# General
+-------
+NetCDF Version:		4.8.1
+Dispatch Version:       3
+Configured On:		Thu Jul 28 18:44:24 EDT 2022
+Host System:		x86_64-w64-mingw32
+Build Directory: 	/scratch/build/mxe-octave-w64/release/tmp-netcdf/netcdf-c-4.8.1
+Install Prefix:         /scratch/build/mxe-octave-w64/release/usr/x86_64-w64-mingw32
+
+# Compiling Options
+-----------------
+C Compiler:		/scratch/build/mxe-octave-w64/release/usr/bin/ccache/x86_64-w64-mingw32-gcc
+CFLAGS:			 -fno-strict-aliasing
+CPPFLAGS:		-DH5_USE_110_API -DDLL_NETCDF -I/scratch/build/mxe-octave-w64/release/usr/x86_64-w64-mingw32/include
+LDFLAGS:		-L/scratch/build/mxe-octave-w64/release/usr/x86_64-w64-mingw32/lib
+AM_CFLAGS:		
+AM_CPPFLAGS:		
+AM_LDFLAGS:		
+Shared Library:		yes
+Static Library:		no
+Extra libraries:	-lhdf5_hl -lhdf5 -lm -lz -lcurl 
+
+# Features
+--------
+NetCDF-2 API:		yes
+HDF4 Support:		no
+HDF5 Support:		yes
+NetCDF-4 API:		yes
+NC-4 Parallel Support:	no
+PnetCDF Support:	no
+DAP2 Support:		yes
+DAP4 Support:		yes
+Byte-Range Support:	no
+Diskless Support:	yes
+MMap Support:		no
+JNA Support:		no
+CDF5 Support:		yes
+ERANGE Fill Support:	no
+Relaxed Boundary Check:	yes
+SZIP Support:           no
+SZIP Write Support:     no
+Parallel Filters:       yes
+NCZarr Support:		yes
+Multi-Filter Support:	yes

@@ -1,0 +1,11 @@
+## DO NOT EDIT! Generated from dicomlookup.cpp
+%!test
+%! assert(dicomlookup(0x10,0x10),"PatientName");
+%! assert(dicomlookup("10","10"),"PatientName");
+%! assert(dicomlookup("0x10","0x10"),"PatientName");
+%! assert(dicomlookup(16,16),"PatientName");
+%!test
+%! [g e]=dicomlookup("PatientName");
+%! assert([g e], uint16([0x10 0x10]));
+%! 
+%!fail ("dicomlookup")

@@ -1,0 +1,16 @@
+autoload ("windows_feature", which ("__COM__"));
+autoload ("com_atexit", which ("__COM__"));
+autoload ("actxserver", which ("__COM__"));
+autoload ("com_get", which ("__COM__"));
+autoload ("com_set", which ("__COM__"));
+autoload ("com_invoke", which ("__COM__"));
+autoload ("com_delete", which ("__COM__"));
+autoload ("com_release", which ("__COM__"));
+autoload ("__windows_pkg_lock__", which ("__COM__"));
+__windows_pkg_lock__(1);
+autoload ("win32_MessageBox", "win32api.oct");
+autoload ("win32_ReadRegistry", "win32api.oct");
+autoload ("win32_WriteRegistry", "win32api.oct");
+autoload ("win32_RegEnumValue", "win32api.oct");
+autoload ("win32_RegEnumKey", "win32api.oct");
+autoload ("win32_DeleteRegistry", "win32api.oct");

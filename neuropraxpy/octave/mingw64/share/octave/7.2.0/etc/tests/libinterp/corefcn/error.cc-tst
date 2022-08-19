@@ -1,0 +1,30 @@
+## DO NOT EDIT!  Generated automatically from error.cc by Make.
+%!test <*51997>
+%! id = "Octave:logical-conversion";
+%! current = warning ("query", id);
+%! current_all = warning ();
+%! previous = warning (current_all);
+%! assert (previous, current_all);
+%! previous = warning (current);
+%! assert (previous, current);
+%! previous = warning (current.state, id);
+%! assert (previous, current);
+%!test <*57290>
+%! warning ("oN", "Octave:test-57290-ID");
+%! warnst = warning ("QUery", "Octave:test-57290-ID");
+%! assert (warnst.state, "on");
+%! assert (warnst.identifier, "Octave:test-57290-ID");
+%! warning ("OFF", "Octave:test-57290-ID");
+%! warnst = warning ("QUery", "ALL");
+%! idx = strcmp ({warnst.identifier}, "Octave:test-57290-ID");
+%! assert (warnst(idx).state, "off");
+%!error <cannot specify "all" warning ID> warning ("error")
+%!test
+%! lasterror ("reset");
+%! x = lasterror ();
+%! assert (x.identifier, "")
+%! assert (x.message, "")
+%! assert (isempty (x.stack))
+%! lasterror (x);
+%! y = lasterror ();
+%! assert (y, x);

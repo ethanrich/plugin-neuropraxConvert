@@ -1,0 +1,7 @@
+#!/bin/sh
+# BIN2REC converts ASCII-Header and binary channels data into GDF data file
+# The input files must match the format produced by rec2bin.
+#
+#    Copyright (C) 2008,2020 Alois Schloegl <alois.schloegl@gmail.com>
+#    This file is part of BioSig https://biosig.sourceforge.io/
+save2gdf -f=GDF $@

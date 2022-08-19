@@ -1,0 +1,8 @@
+## DO NOT EDIT! Generated from curve_keypair.cc
+%!error <Invalid call to zmq_curve_keypair()> zmq_curve_keypair(1)
+%!test
+%! if zmq_has ('curve')
+%!  [pub, priv] = zmq_curve_keypair();
+%!  assert(!isempty(pub))
+%!  assert(!isempty(priv))
+%! endif

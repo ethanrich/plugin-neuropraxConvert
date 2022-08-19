@@ -1,0 +1,17 @@
+## DO NOT EDIT!  Generated automatically from toplev.cc by Make.
+%!test
+%! cmd = ls_command ();
+%! [status, output] = system (cmd);
+%! assert (status, 0);
+%! assert (ischar (output));
+%! assert (! isempty (output));
+%!error system ()
+%!error system (1, 2, 3)
+%!assert (ischar (__octave_config_info__ ("version")))
+%!assert (__octave_config_info__ ("version"), OCTAVE_VERSION ())
+%!test
+%! x = __octave_config_info__ ();
+%! assert (isstruct (x));
+%! assert (! isempty (x));
+%! assert (x.version, OCTAVE_VERSION ());
+%!error __octave_config_info__ (1, 2)

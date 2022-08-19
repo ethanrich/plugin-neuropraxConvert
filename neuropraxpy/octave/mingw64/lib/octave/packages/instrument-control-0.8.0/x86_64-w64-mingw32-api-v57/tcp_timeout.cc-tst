@@ -1,0 +1,12 @@
+## Generated from tcp_timeout.cc
+%!test
+%! addr = resolvehost ('gnu.org', 'address');
+%! a = tcp (addr, 80);
+%! assert(tcp_timeout(a), -1);
+%! a.timeout = 2.5;
+%! assert(tcp_timeout(a), 2500);
+%! a.timeout = 0;
+%! assert(tcp_timeout(a), 0);
+%! a.timeout = -1;
+%! assert(tcp_timeout(a), -1);
+%! tcp_close(a);

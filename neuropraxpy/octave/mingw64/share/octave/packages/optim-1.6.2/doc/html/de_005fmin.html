@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>de_min (optim_doc)</title>
+
+<meta name="description" content="de_min (optim_doc)">
+<meta name="keywords" content="de_min (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Scalar-optimization.html#Scalar-optimization" rel="up" title="Scalar optimization">
+<link href="battery.html#battery" rel="next" title="battery">
+<link href="line_005fmin.html#line_005fmin" rel="prev" title="line_min">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="de_005fmin"></a>
+<div class="header">
+<p>
+Next: <a href="battery.html#battery" accesskey="n" rel="next">battery</a>, Previous: <a href="line_005fmin.html#line_005fmin" accesskey="p" rel="prev">line_min</a>, Up: <a href="Scalar-optimization.html#Scalar-optimization" accesskey="u" rel="up">Scalar optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="A-differential-evolution-_0028stochastic_0029-optimizer"></a>
+<h3 class="section">1.16 A differential evolution (stochastic) optimizer</h3>
+<a name="index-de_005fmin"></a>
+
+<a name="Helptext_003a-5"></a>
+<h4 class="subheading">Helptext:</h4>
+
+<a name="XREFde_005fmin"></a><pre class="verbatim">de_min: global optimisation using differential evolution
+
+Usage: [x, obj_value, nfeval, convergence] = de_min(fcn, control)
+
+minimization of a user-supplied function with respect to x(1:D),
+using the differential evolution (DE) method based on an algorithm
+by  Rainer Storn (http://www.icsi.berkeley.edu/~storn/code.html)
+See: http://www.softcomputing.net/tevc2009_1.pdf
+
+
+Arguments:  
+---------------
+fcn        string : Name of function. Must return a real value
+control    vector : (Optional) Control variables, described below
+        or struct
+
+Returned values:
+----------------
+x          vector : parameter vector of best solution
+obj_value  scalar : objective function value of best solution
+nfeval     scalar : number of function evaluations
+convergence       : 1 = best below value to reach (VTR)
+                    0 = population has reached defined quality (tol)
+                   -1 = some values are close to constraints/boundaries
+                   -2 = max number of iterations reached (maxiter)
+                   -3 = max number of functions evaluations reached (maxnfe)
+
+Control variable:   (optional) may be named arguments (i.e. &quot;name&quot;,value
+----------------    pairs), a struct, or a vector, where
+                    NaN's are ignored.
+
+XVmin        : vector of lower bounds of initial population
+               *** note: by default these are no constraints ***
+XVmax        : vector of upper bounds of initial population
+constr       : 1 -&gt; enforce the bounds not just for the initial population
+const        : data vector (remains fixed during the minimization)
+NP           : number of population members
+F            : difference factor from interval [0, 2]
+CR           : crossover probability constant from interval [0, 1]
+strategy     : 1 --&gt; DE/best/1/exp           7 --&gt; DE/best/1/bin
+               2 --&gt; DE/rand/1/exp           8 --&gt; DE/rand/1/bin
+               3 --&gt; DE/target-to-best/1/exp 9 --&gt; DE/target-to-best/1/bin
+               4 --&gt; DE/best/2/exp           10--&gt; DE/best/2/bin
+               5 --&gt; DE/rand/2/exp           11--&gt; DE/rand/2/bin
+               6 --&gt; DEGL/SAW/exp            else  DEGL/SAW/bin
+refresh      : intermediate output will be produced after &quot;refresh&quot;
+               iterations. No intermediate output will be produced
+               if refresh is &lt; 1
+VTR          : Stopping criterion: &quot;Value To Reach&quot;
+               de_min will stop when obj_value &lt;= VTR.
+               Use this if you know which value you expect.
+tol          : Stopping criterion: &quot;tolerance&quot;
+               stops if (best-worst)/max(1,worst) &lt; tol
+               This stops basically if the whole population is &quot;good&quot;.
+maxnfe       : maximum number of function evaluations
+maxiter      : maximum number of iterations (generations)
+
+      The algorithm seems to work well only if [XVmin,XVmax] covers the 
+      region where the global minimum is expected.
+      DE is also somewhat sensitive to the choice of the
+      difference factor F. A good initial guess is to choose F from
+      interval [0.5, 1], e.g. 0.8.
+      CR, the crossover probability constant from interval [0, 1]
+      helps to maintain the diversity of the population and is
+      rather uncritical but affects strongly the convergence speed.
+      If the parameters are correlated, high values of CR work better.
+      The reverse is true for no correlation.
+      Experiments suggest that /bin likes to have a slightly
+      larger CR than /exp.
+      The number of population members NP is also not very critical. A
+      good initial guess is 10*D. Depending on the difficulty of the
+      problem NP can be lower than 10*D or must be higher than 10*D
+      to achieve convergence.
+
+Default Values:
+---------------
+XVmin = [-2];
+XVmax = [ 2];
+constr= 0;
+const = [];
+NP    = 10 *D
+F     = 0.8;
+CR    = 0.9;
+strategy = 12;
+refresh  = 0;
+VTR   = -Inf;
+tol   = 1.e-3;
+maxnfe  = 1e6;
+maxiter = 1000;
+
+
+Example to find the minimum of the Rosenbrock saddle:
+----------------------------------------------------
+Define f as:
+                   function result = f(x);
+                     result = 100 * (x(2) - x(1)^2)^2 + (1 - x(1))^2;
+                   end
+Then type:
+
+	ctl.XVmin = [-2 -2];
+	ctl.XVmax = [ 2  2];
+	[x, obj_value, nfeval, convergence] = de_min (@f, ctl);
+
+Keywords: global-optimisation optimisation minimisation
+
+</pre>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="battery.html#battery" accesskey="n" rel="next">battery</a>, Previous: <a href="line_005fmin.html#line_005fmin" accesskey="p" rel="prev">line_min</a>, Up: <a href="Scalar-optimization.html#Scalar-optimization" accesskey="u" rel="up">Scalar optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+## DO NOT EDIT!  Generated automatically from fcn-info.cc by Make.
+%!shared old_state
+%! old_state = ignore_function_time_stamp ();
+%!test
+%! state = ignore_function_time_stamp ("all");
+%! assert (state, old_state);
+%! assert (ignore_function_time_stamp (), "all");
+%! state = ignore_function_time_stamp ("system");
+%! assert (state, "all");
+%! assert (ignore_function_time_stamp (), "system");
+%! ignore_function_time_stamp (old_state);
+%!error ignore_function_time_stamp ("all", "all")
+%!error ignore_function_time_stamp ("UNKNOWN_VALUE")
+%!error ignore_function_time_stamp (42)

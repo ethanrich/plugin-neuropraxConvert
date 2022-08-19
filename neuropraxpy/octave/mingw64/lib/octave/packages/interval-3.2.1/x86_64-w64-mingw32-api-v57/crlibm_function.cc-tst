@@ -1,0 +1,7 @@
+## DO NOT EDIT! Generated from crlibm_function.cc
+%!test
+%!  for f = {"acos", "asin", "atan", "cos", "cosh", "exp", "expm1", "log", "log10", "log1p", "log2", "sin", "sinh", "tan"}
+%!    for rnd = {+inf, -inf, 0, 0.5}
+%!      assert (crlibm_function (f{:}, rnd{:}, 0.5), mpfr_function_d (f{:}, rnd{:}, 0.5));
+%!    endfor
+%!  endfor

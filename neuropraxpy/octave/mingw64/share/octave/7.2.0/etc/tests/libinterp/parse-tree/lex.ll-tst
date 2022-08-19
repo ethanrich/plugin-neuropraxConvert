@@ -1,0 +1,10 @@
+## DO NOT EDIT!  Generated automatically from lex.ll by Make.
+%!assert (iskeyword ("for"))
+%!assert (iskeyword ("fort"), false)
+%!assert (iskeyword ("fft"), false)
+%!assert (iskeyword ("get"), false)
+%!assert (iskeyword ("set"), false)
+%!error iskeyword ("A", "B")
+%!error <NAME must be a string> iskeyword (1)
+%!assert <*62587> (ischar (__FILE__))
+%!assert <*62587> (isnumeric (__LINE__))

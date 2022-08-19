@@ -1,0 +1,87 @@
+## DO NOT EDIT!  Generated automatically from syscalls.cc by Make.
+%!test  # UNIX-style test
+%! if (isunix () || ismac ())
+%!   [in, out, pid] = popen2 ("sort", "-r");
+%!   EAGAIN = errno ("EAGAIN");
+%!   fputs (in, "these\nare\nsome\nstrings\n");
+%!   fclose (in);
+%!   done = false;
+%!   str = {};
+%!   idx = 0;
+%!   errs = 0;
+%!   do
+%!     if (ismac ())  # FIXME: Is this necessary?
+%!       errno (0);
+%!     endif
+%!     s = fgets (out);
+%!     if (ischar (s))
+%!       idx++;
+%!       str{idx} = s;
+%!     elseif (errno () == EAGAIN)
+%!       fclear (out);
+%!       pause (0.1);
+%!       if (++errs == 100)
+%!         done = true;
+%!       endif
+%!     else
+%!       done = true;
+%!     endif
+%!   until (done)
+%!   fclose (out);
+%!   waitpid (pid);
+%!   assert (str, {"these\n","strings\n","some\n","are\n"});
+%! endif
+%!test  # Windows-style test
+%! if (ispc () && ! isunix ())
+%!   [in, out, pid] = popen2 ('C:\Windows\system32\sort.exe', "/R");
+%!   EAGAIN = errno ("EINVAL");
+%!   fputs (in, "these\r\nare\r\nsome\r\nstrings\r\n");
+%!   fclose (in);
+%!   done = false;
+%!   str = {};
+%!   idx = 0;
+%!   errs = 0;
+%!   do
+%!     errno (0);
+%!     s = fgets (out);
+%!     if (ischar (s))
+%!       idx++;
+%!       str{idx} = s;
+%!     elseif (errno () == EAGAIN)
+%!       fclear (out);
+%!       pause (0.1);
+%!       if (++errs == 100)
+%!         done = true;
+%!       endif
+%!     else
+%!       done = true;
+%!     endif
+%!   until (done)
+%!   fclose (out);
+%!   waitpid (pid);
+%!   assert (str, {"these\r\n","strings\r\n","some\r\n","are\r\n"});
+%! endif
+%!error mkfifo ()
+%!error mkfifo ("abc")
+%!error mkfifo ("abc", 777, 123)
+%!error <FILE must be a string> mkfifo (123, 456)
+%!test <*51869>
+%! [info, status, msg] = uname ();
+%! if (status == 0)
+%!   assert (isstruct (info))
+%!   assert (ischar (msg) && isempty (msg))
+%! endif
+%!test
+%! file = tempname ();
+%! fid = fopen (file, "wt");
+%! if (fid < 0)
+%!   error ("Could not open temporary file for unlink BIST test");
+%! endif
+%! fdisp (fid, pi);
+%! fclose (fid);
+%! [status, msg] = unlink (file);
+%! assert (status, 0);
+%! assert (msg, "");
+%!error <Invalid call> unlink ()
+%!error <Invalid call> unlink ("a", "b")
+%!error <FILE must be a string> unlink (123)

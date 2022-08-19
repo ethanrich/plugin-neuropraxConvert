@@ -1,0 +1,130 @@
+## DO NOT EDIT!  Generated automatically from ov-fcn-handle.cc by Make.
+%!test <*33857>
+%! a = 2;
+%! f = @(x) a + x;
+%! g = @(x) 2 * x;
+%! hm = @version;
+%! hdld = @svd;
+%! hbi = @log2;
+%! f2 = f;
+%! g2 = g;
+%! hm2 = hm;
+%! hdld2 = hdld;
+%! hbi2 = hbi;
+%! modes = {"-text", "-binary"};
+%! if (isfield (__octave_config_info__, "HAVE_HDF5")
+%!     && __octave_config_info__ ("HAVE_HDF5"))
+%!   modes(end+1) = "-hdf5";
+%! endif
+%! for i = 1:numel (modes)
+%!   mode = modes{i};
+%!   nm = tempname ();
+%!   unwind_protect
+%!     f2 (1);
+%!     save (mode, nm, "f2", "g2", "hm2", "hdld2", "hbi2");
+%!     clear f2 g2 hm2 hdld2 hbi2
+%!     load (nm);
+%!     assert (f (2), f2 (2));
+%!     assert (g (2), g2 (2));
+%!     assert (g (3), g2 (3));
+%!     unlink (nm);
+%!     save (mode, nm, "f2", "g2", "hm2", "hdld2", "hbi2");
+%!   unwind_protect_cleanup
+%!     unlink (nm);
+%!   end_unwind_protect
+%! endfor
+%!function fcn_handle_save_recurse (n, mode, nm, f2, g2, hm2, hdld2, hbi2)
+%!  if (n == 0)
+%!    save (mode, nm, "f2", "g2", "hm2", "hdld2", "hbi2");
+%!  else
+%!    fcn_handle_save_recurse (n - 1, mode, nm, f2, g2, hm2, hdld2, hbi2);
+%!  endif
+%!endfunction
+%!function [f2, g2, hm2, hdld2, hbi2] = fcn_handle_load_recurse (n, nm)
+%!  if (n == 0)
+%!    load (nm);
+%!  else
+%!    [f2, g2, hm2, hdld2, hbi2] = fcn_handle_load_recurse (n - 1, nm);
+%!  endif
+%!endfunction
+%!test <*35876>
+%! a = 2;
+%! f = @(x) a + x;
+%! g = @(x) 2 * x;
+%! hm = @version;
+%! hdld = @svd;
+%! hbi = @log2;
+%! f2 = f;
+%! g2 = g;
+%! hm2 = hm;
+%! hdld2 = hdld;
+%! hbi2 = hbi;
+%! modes = {"-text", "-binary"};
+%! if (isfield (__octave_config_info__, "HAVE_HDF5")
+%!     && __octave_config_info__ ("HAVE_HDF5"))
+%!   modes(end+1) = "-hdf5";
+%! endif
+%! for i = 1:numel (modes)
+%!   mode = modes{i};
+%!   nm = tempname ();
+%!   unwind_protect
+%!     fcn_handle_save_recurse (2, mode, nm, f2, g2, hm2, hdld2, hbi2);
+%!     clear f2 g2 hm2 hdld2 hbi2
+%!     [f2, f2, hm2, hdld2, hbi2] = fcn_handle_load_recurse (2, nm);
+%!     load (nm);
+%!     assert (f (2), f2 (2));
+%!     assert (g (2), g2 (2));
+%!     assert (g (3), g2 (3));
+%!     unlink (nm);
+%!     fcn_handle_save_recurse (2, mode, nm, f2, g2, hm2, hdld2, hbi2);
+%!   unwind_protect_cleanup
+%!     unlink (nm);
+%!   end_unwind_protect
+%! endfor
+%!test
+%! f = str2func ("<");
+%! assert (class (f), "function_handle");
+%! assert (func2str (f), "lt");
+%! assert (f (1, 2), true);
+%! assert (f (2, 1), false);
+%!test
+%! f = str2func ("@(x) sin (x)");
+%! assert (func2str (f), "@(x) sin (x)");
+%! assert (f (0:3), sin (0:3));
+%!error <FCN_NAME must be a string> str2func ({"sin"})
+%!function y = __testrecursionfunc (f, x, n)
+%!  if (nargin < 3)
+%!    n = 0;
+%!  endif
+%!  if (n > 2)
+%!    y = f (x);
+%!  else
+%!    n++;
+%!    y = __testrecursionfunc (@(x) f (2*x), x, n);
+%!  endif
+%!endfunction
+%!
+%!assert (__testrecursionfunc (@(x) x, 1), 8)
+%!shared fh
+%! fh = @(x) x;
+%!assert (is_function_handle (fh))
+%!assert (! is_function_handle ({fh}))
+%!assert (! is_function_handle (1))
+%!error is_function_handle ()
+%!error is_function_handle (1, 2)
+%!test
+%! f = @(t) eval ('2*t');
+%! assert (f (21), 42);
+%!test <*58389>
+%! s = "x";
+%! a.(s) = [e, pi];
+%! f = @(x) a.(s)(x);
+%! assert (f(1), e);
+%! assert (f(2), pi);
+%! assert (f([2,1]), [pi, e]);
+%!function r = __f (g, i)
+%!  r = g(i);
+%!endfunction
+%!test
+%! x = [1,2;3,4];
+%! assert (__f (@(i) x(:,i), 1), [1;3]);

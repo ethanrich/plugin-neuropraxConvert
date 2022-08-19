@@ -1,0 +1,107 @@
+Summary of important user-visible changes for octave zeromq 1.5.4:
+-------------------------------------------------------------------
+
+  *** use octave_base_dld_value class if available
+
+  *** allow libzmq fallback detection
+
+Summary of important user-visible changes for octave zeromq 1.5.3:
+-------------------------------------------------------------------
+
+  *** bugfix use pkg-config in configure (Bug #60419) 
+
+Summary of important user-visible changes for octave zeromq 1.5.2:
+-------------------------------------------------------------------
+
+  *** bugfix ref count used by unique_clone
+
+  *** minor doc updates
+
+Summary of important user-visible changes for octave zeromq 1.5.1:
+-------------------------------------------------------------------
+  *** minor updates for octave depreciated features
+
+  *** minor doc updates
+
+Summary of important user-visible changes for octave zeromq 1.5.0:
+-------------------------------------------------------------------
+  *** use OCTAVE_LOCAL_BUFFER for temp mem usage
+
+  *** minor doc updates
+
+  *** bugfix octave_zeromq_socket subsasgn access
+
+  *** add initial curve functions and authentication
+
+  *** add plain authentication options
+
+  *** add gssapi authentication options
+
+  *** added security mechanism get option
+
+  *** added socks5 support
+
+Summary of important user-visible changes for octave zeromq 1.4.0:
+-------------------------------------------------------------------
+  *** additional spelling checks
+
+  *** added new functions zmq_has
+
+  *** added ZMQ_LAST_ENDPOINT, ZMQ_CONNECT_TIMEOUT to getsockopts
+
+  *** added ZMQ_XSUB, ZMQ_XPUB, ZMQ_STREAM constants for zmq_socket
+
+  *** added zmq_example5.m for STREAM type example
+
+  *** added package documentation
+
+  *** lock oct file on pkg load
+
+Summary of important user-visible changes for octave zeromq 1.3.0:
+-------------------------------------------------------------------
+
+  *** spelling check in docs
+
+  *** add generation and install of oct file tests
+
+  *** updated configuration for use of depreciated symbols
+
+  *** added new functions iszmq, get, set
+
+  *** added dot notation for access of get/set of properties
+
+  *** corrected display of socket type for dealer, pair, push, pull types
+
+Summary of important user-visible changes for octave zeromq 1.2.1:
+-------------------------------------------------------------------
+
+  *** updated zmq_test for using pause and uint8 typecast for identity set
+
+Summary of important user-visible changes for octave zeromq 1.2.0:
+-------------------------------------------------------------------
+
+  *** added pub/sub example code
+
+  *** added new function zmq_disconnect
+
+  *** add ZMQ_EVENTS, ZMQ_POLLIN, ZMQ_POLLOUT to INDEX, update events documentation
+
+  *** added ZMQ_IDENTITY to get/setsockopts
+
+Summary of important user-visible changes for octave zeromq 1.1.0:
+-------------------------------------------------------------------
+
+  *** added new functions zmq_unbind, zmq_errno.
+
+  *** added getsockopt ZMQ_TYPE, ZMQ_EVENTS processing.
+
+  *** added help zeromq implementation
+
+  *** added new examples folder/files
+
+
+Summary of important user-visible changes for octave zeromq 1.0.0:
+-------------------------------------------------------------------
+
+  *** Initial release
+

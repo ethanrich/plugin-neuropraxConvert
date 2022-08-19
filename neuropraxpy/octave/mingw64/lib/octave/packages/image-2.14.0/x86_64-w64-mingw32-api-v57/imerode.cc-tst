@@ -1,0 +1,414 @@
+## DO NOT EDIT! Generated from imerode.cc
+%!assert (imerode (eye (3), [1]), eye (3));
+%!assert (imerode (eye (3), []), Inf (3, 3));
+%!test
+%! im = [0 1 0
+%!       1 1 1
+%!       0 1 0];
+%! se = [1 0 0
+%!       0 1 0
+%!       0 1 1];
+%! assert (imerode (im,          se),          [0 1 0; 0 0 0; 0 1 0]);
+%! assert (imerode (logical(im), se), logical ([0 1 0; 0 0 0; 0 1 0]));
+%! assert (imerode (im, se, "full"),
+%!                 [  0    0    0    0  Inf
+%!                    1    0    1    0  Inf
+%!                    0    0    0    0    0
+%!                  Inf    0    1    0    1
+%!                  Inf  Inf    0    1    0]);
+%! assert (imerode (logical(im), se, "full"),
+%!                 logical([0     0     0     0     1
+%!                          1     0     1     0     1
+%!                          0     0     0     0     0
+%!                          1     0     1     0     1
+%!                          1     1     0     1     0]));
+%!test
+%! a = rand ([10 40 15 6 8 5]) > 0.2;
+%! se = ones ([5 3 7]);
+%!
+%! ## the image is not really indexed but this way it is padded with 1s
+%! assert (imerode (a, se), colfilt (a, "indexed", size (se), "sliding", @all))
+%!
+%! assert (imerode (a, se, "valid"), convn (a, se, "valid") == nnz (se))
+%! ## again, we need to pad it ourselves because convn pads with zeros
+%! b = true (size (a) + [4 2 6 0 0 0]);
+%! b(3:12, 2:41, 4:18,:,:,:) = a;
+%! assert (imdilate (b, se, "same"), convn (b, se, "same") > 0)
+%! b = true (size (a) + [8 4 12 0 0 0]);
+%! b(5:14, 3:42, 7:21,:,:,:) = a;
+%! assert (imdilate (b, se, "full"), convn (b, se, "full") > 0)
+%!test
+%! im = [0 0 0 0 0 0 0
+%!       0 0 1 0 1 0 0
+%!       0 0 1 1 0 1 0
+%!       0 0 1 1 1 0 0
+%!       0 0 0 0 0 0 0];
+%! se = [0 0 0
+%!       0 1 0
+%!       0 1 1];
+%! out = [0 0 0 0 0 0 0
+%!        0 0 1 0 0 0 0
+%!        0 0 1 1 0 0 0
+%!        0 0 0 0 0 0 0
+%!        0 0 0 0 0 0 0];
+%! assert (imerode (im, se), out);
+%! assert (imerode (logical (im), se), logical (out));
+%! assert (imerode (im, logical (se)), out);
+%! assert (imerode (logical (im), logical (se)), logical (out));
+%!
+%! # with an even-size SE
+%! se =  [0 0 0 1
+%!        0 1 0 0
+%!        0 1 1 1];
+%! out = [0 0 0 0 0 0 0
+%!        0 0 0 0 0 0 0
+%!        0 0 1 0 0 0 0
+%!        0 0 0 0 0 0 0
+%!        0 0 0 0 0 0 0];
+%! assert (imerode (im, se), out);
+%! out = [ 0 0 0 0 1 0 1
+%!        0 0 1 0 1 1 0
+%!        0 0 1 1 1 1 1
+%!        0 0 1 1 1 1 1
+%!        0 0 1 1 1 1 1];
+%! assert (imdilate (im, se), out);
+%!test
+%! a = [ 82    2   97   43   79   43   41   65   51   11
+%!       60   65   21   56   94   77   36   38   75   39
+%!       32   68   78    1   16   75   76   90   81   56
+%!       43   90   82   41   36    1   87   19   18   63
+%!       63   64    2   48   18   43   38   25   22   99
+%!       12   46   90   79    3   92   39   79   10   22
+%!       38   98   11   10   40   90   88   38    4   76
+%!       54   37    9    4   33   98   36   47   53   57
+%!       38   76   82   50   14   74   64   99    7   33
+%!       88   96   41   62   84   89   97   23   41    3];
+%!
+%! domain = ones (3);
+%! out = [  2    1    1    1   16   36   36   11
+%!         21    1    1    1    1    1   18   18
+%!          2    1    1    1    1    1   18   18
+%!          2    2    2    1    1    1   10   10
+%!          2    2    2    3    3   25    4    4
+%!          9    4    3    3    3   36    4    4
+%!          9    4    4    4   14   36    4    4
+%!          9    4    4    4   14   23    7    3];
+%! assert (imerode (a, domain, "valid"), out);
+%! assert (imerode (uint8 (a), domain, "valid"), uint8 (out));
+%! assert (imerode (uint8 (a), strel ("arbitrary", domain), "valid"), uint8 (out));
+%! assert (imerode (uint8 (a), strel ("square", 3), "valid"), uint8 (out));
+%!
+%!## Test for non-flat strel
+%! assert (imerode (a, strel ("arbitrary", domain, ones (3)), "valid"), out -1);
+%!
+%! out = [ 97   97   97   94   94   90   90   90
+%!         90   90   94   94   94   90   90   90
+%!         90   90   82   75   87   90   90   99
+%!         90   90   90   92   92   92   87   99
+%!         98   98   90   92   92   92   88   99
+%!         98   98   90   98   98   98   88   79
+%!         98   98   82   98   98   99   99   99
+%!         96   96   84   98   98   99   99   99];
+%! assert (imdilate (a, domain, "valid"), out);
+%! assert (imdilate (uint8 (a), domain, "valid"), uint8 (out));
+%!
+%!## Test for non-flat strel
+%! assert (imdilate (a, strel ("arbitrary", domain, ones (3)), "valid"), out +1);
+%!
+%! ## test while using SE that can be decomposed and an actual sequence
+%! domain = ones (5);
+%! out = [   2   1   1   1   1   1  16  11  11  11
+%!           2   1   1   1   1   1   1   1  11  11
+%!           2   1   1   1   1   1   1   1  11  11
+%!           2   1   1   1   1   1   1   1  10  10
+%!           2   1   1   1   1   1   1   1   4   4
+%!           2   2   2   1   1   1   1   1   4   4
+%!           2   2   2   2   2   3   3   4   4   4
+%!           9   4   3   3   3   3   3   3   3   3
+%!           9   4   4   4   4   4   4   3   3   3
+%!           9   4   4   4   4   4   7   3   3   3];
+%! assert (imerode (a, domain), out);
+%! assert (imerode (a, strel ("square", 5)), out);
+%! assert (imerode (a, getsequence (strel ("square", 5))), out);
+%!
+%! ## using a non-symmetric SE
+%! domain = [ 1 1 0
+%!            0 1 1
+%!            0 1 0];
+%!
+%! out = [  2    2    1   16   36   36   38   39
+%!         60    1    1   16    1   36   19   18
+%!         32    2    1    1    1   19   18   18
+%!          2    2   18    3    1    1   19   10
+%!         46    2    2    3   18   38   10    4
+%!         11    9    4    3    3   36    4    4
+%!          9    4    4   10   36   36   38    4
+%!         37    9    4    4   33   36    7    7];
+%! assert (imerode (a, domain, "valid"), out);
+%! assert (imerode (a, strel ("arbitrary", domain, ones (3)), "valid"), out -1);
+%!
+%! out = [ 78   97   56   94   94   90   90   81
+%!         90   82   78   94   87   87   90   90
+%!         90   90   82   43   75   87   90   99
+%!         90   90   79   92   92   87   79   25
+%!         98   90   90   90   92   92   79   79
+%!         98   98   79   98   98   90   88   57
+%!         98   82   50   74   98   99   99   53
+%!         96   82   84   89   98   97   99   99];
+%! assert (imdilate (a, domain, "valid"), out);
+%! assert (imdilate (a, strel ("arbitrary", domain, ones (3)), "valid"), out +1);
+%!test
+%! im = reshape (magic(16), [4 8 4 2]);
+%! se = true (3, 3, 3);
+%! out = zeros (4, 8, 4, 2);
+%! out(:,:,1,1) = [
+%!     3   3  46   2   2   2  47  47
+%!     3   3  30   2   2   2  31  31
+%!    17  17  16  16  16  20  13  13
+%!    33  33  16  16  16  36  13  13];
+%! out(:,:,2,1) = [
+%!     3   3  46   2   2   2  43  43
+%!     3   3  30   2   2   2  27  27
+%!    17  17  12  12  12  20  13  13
+%!    33  33  12  12  12  36  13  13];
+%! out(:,:,3,1) = [
+%!     3   3  42   6   6   6  43  43
+%!     3   3  26   6   6   6  27  27
+%!    21  21  12  12  12  20   9   9
+%!    37  37  12  12  12  36   9   9];
+%! out(:,:,4,1) = [
+%!     7   7  42   6   6   6  43  43
+%!     7   7  26   6   6   6  27  27
+%!    21  21  12  12  12  24   9   9
+%!    37  37  12  12  12  40   9   9];
+%! out(:,:,1,2) = [
+%!    11  11  38  10  10  10  39  39
+%!    11  11  22  10  10  10  23  23
+%!    25  25   8   8   8  28   5   5
+%!    41  41   8   8   8  44   5   5];
+%! out(:,:,2,2) = [
+%!    11  11  38  10  10  10  35  35
+%!    11  11  22  10  10  10  19  19
+%!    25  25   4   4   4  28   5   5
+%!    41  41   4   4   4  44   5   5];
+%! out(:,:,3,2) = [
+%!    11  11  34  14  14  14  35  35
+%!    11  11  18  14  14  14  19  19
+%!    29  29   4   4   4  28   1   1
+%!    45  45   4   4   4  44   1   1];
+%! out(:,:,4,2) = [
+%!    15  15  34  14  14  14  35  35
+%!    15  15  18  14  14  14  19  19
+%!    29  29   4   4   4  32   1   1
+%!    45  45   4   4   4  48   1   1];
+%! assert (imerode (im, se), out);
+%! assert (imerode (uint16 (im), se), uint16 (out));
+%!
+%! ## trying a more weird SE
+%! se(:,:,1) = [1 0 1; 0 1 1; 0 0 0];
+%! se(:,:,3) = [1 0 1; 0 1 1; 0 0 1];
+%! out(:,:,1,1) = [
+%!    3  17  46   2   2   2  47  47
+%!   17   3  30   2   2   2  31  31
+%!   17  17  16  16  16  20  13  31
+%!   33  33  16  16  16  36  13  13];
+%! out(:,:,2,1) = [
+%!    3   3  46   2   2  20  43  61
+%!    3   3  30   2  20   2  27  43
+%!   33  17  12  20  20  20  13  13
+%!   51  33  12  12  30  36  13  13];
+%! out(:,:,3,1) = [
+%!    3  21  42   6   6   6  43  43
+%!   21   3  26   6   6   6  27  27
+%!   21  21  12  12  12  20   9  27
+%!   37  37  12  12  12  36   9   9];
+%! out(:,:,4,1) = [
+%!    7   7  42   6   6  24  57  57
+%!    7   7  26   6  24   6  43  43
+%!   37  21  26  24  24  24   9   9
+%!   55  37  12  12  26  40   9   9];
+%! out(:,:,1,2) = [
+%!   11  25  38  10  10  10  39  39
+%!   25  11  22  10  10  10  23  23
+%!   25  25   8   8   8  28   5  23
+%!   41  41   8   8   8  44   5   5];
+%! out(:,:,2,2) = [
+%!   11  11  38  10  10  28  35  53
+%!   11  11  22  10  22  10  19  35
+%!   41  25   4  22  22  28   5   5
+%!   59  41   4   4  22  44   5   5];
+%! out(:,:,3,2) = [
+%!   11  29  34  14  14  14  35  35
+%!   29  11  18  14  14  14  19  19
+%!   29  29   4   4   4  28   1  19
+%!   45  45   4   4   4  44   1   1];
+%! out(:,:,4,2) = [
+%!   15  15  34  14  14  32  49  49
+%!   15  15  18  14  18  14  35  35
+%!   45  29  18  18  18  32   1   1
+%!   63  45   4   4  18  48   1   1];
+%! assert (imerode (im, se), out);
+%! assert (imerode (uint16 (im), se), uint16 (out));
+%!error imerode (ones (10), 45)
+%!error imerode (ones (10), "some text")
+%!error imerode (ones (10), {23, 45})
+%!error imerode (rand (10) > 10 , strel ("arbitrary", true (3), ones (3)))
+%!test
+%! a = rand ([10 40 15 6 8 5]) > 0.8;
+%! se = ones ([5 3 7]);
+%! assert (imdilate (a, se), convn (a, se, "same") > 0)
+%! assert (imdilate (a, se, "full"), convn (a, se, "full") > 0)
+%! assert (imdilate (a, se, "valid"), convn (a, se, "valid") > 0)
+%! assert (imdilate (a, se), colfilt (a, size (se), "sliding", @any))
+%!test
+%! im = reshape (magic(16), [4 8 4 2]);
+%! se = true (3, 3, 3);
+%! out = zeros (4, 8, 4, 2);
+%!
+%! out(:,:,1,1) = [
+%!   256   256   209   253   253   253   212   212
+%!   256   256   225   253   253   253   228   228
+%!   238   238   243   243   243   239   242   242
+%!   222   222   243   243   243   223   242   242];
+%! out(:,:,2,1) = [
+%!   256   256   213   253   253   253   212   212
+%!   256   256   229   253   253   253   228   228
+%!   238   238   243   243   243   239   246   246
+%!   222   222   243   243   243   223   246   246];
+%! out(:,:,3,1) = [
+%!   252   252   213   253   253   253   216   216
+%!   252   252   229   253   253   253   232   232
+%!   238   238   247   247   247   235   246   246
+%!   222   222   247   247   247   219   246   246];
+%! out(:,:,4,1) = [
+%!   252   252   213   249   249   249   216   216
+%!   252   252   229   249   249   249   232   232
+%!   234   234   247   247   247   235   246   246
+%!   218   218   247   247   247   219   246   246];
+%! out(:,:,1,2) = [
+%!   248   248   217   245   245   245   220   220
+%!   248   248   233   245   245   245   236   236
+%!   230   230   251   251   251   231   250   250
+%!   214   214   251   251   251   215   250   250];
+%! out(:,:,2,2) = [
+%!   248   248   221   245   245   245   220   220
+%!   248   248   237   245   245   245   236   236
+%!   230   230   251   251   251   231   254   254
+%!   214   214   251   251   251   215   254   254];
+%! out(:,:,3,2) = [
+%!   244   244   221   245   245   245   224   224
+%!   244   244   237   245   245   245   240   240
+%!   230   230   255   255   255   227   254   254
+%!   214   214   255   255   255   211   254   254];
+%! out(:,:,4,2) = [
+%!   244   244   221   241   241   241   224   224
+%!   244   244   237   241   241   241   240   240
+%!   226   226   255   255   255   227   254   254
+%!   210   210   255   255   255   211   254   254];
+%! assert (imdilate (im, se), out);
+%! assert (imdilate (uint16 (im), se), uint16 (out));
+%!
+%! ## trying a more weird SE
+%! se(:,:,1) = [1 0 1; 0 1 1; 0 0 0];
+%! se(:,:,3) = [1 0 1; 0 1 1; 0 0 1];
+%! out(:,:,1,1) = [
+%!  256   256   209   239   253   253   212   194
+%!  256   256   225   239   239   239   228   212
+%!  222   222   243   239   243   239   242   242
+%!  208   208   225   243   243   223   242   242];
+%! out(:,:,2,1) = [
+%!  256   256   213   253   253   253   212   212
+%!  238   256   229   253   253   253   228   228
+%!  238   238   243   243   243   239   246   228
+%!  222   222   243   243   243   223   228   246];
+%! out(:,:,3,1) = [
+%!  252   252   213   235   253   253   216   198
+%!  252   252   229   235   235   253   232   216
+%!  222   238   247   235   247   235   246   246
+%!  204   222   229   247   247   219   246   246];
+%! out(:,:,4,1) = [
+%!  252   252   213   249   249   249   216   216
+%!  234   252   229   249   249   249   232   232
+%!  234   234   247   247   247   235   246   232
+%!  218   218   247   247   247   219   232   246];
+%! out(:,:,1,2) = [
+%!  248   248   217   231   245   245   220   202
+%!  248   248   233   233   233   231   236   220
+%!  214   214   251   233   251   231   250   250
+%!  200   200   233   251   251   215   250   250];
+%! out(:,:,2,2) = [
+%!  248   248   221   245   245   245   220   220
+%!  230   248   237   245   245   245   236   236
+%!  230   230   251   251   251   231   254   236
+%!  214   214   251   251   251   215   236   254];
+%! out(:,:,3,2) = [
+%!  244   244   221   227   245   245   224   206
+%!  244   244   237   237   237   245   240   224
+%!  214   230   255   237   255   227   254   254
+%!  196   214   237   255   255   211   254   254];
+%! out(:,:,4,2) = [
+%!  244   244   221   241   241   241   224   224
+%!  226   244   237   241   241   241   240   240
+%!  226   226   255   255   255   227   254   240
+%!  210   210   255   255   255   211   240   254];
+%! assert (imdilate (im, se), out);
+%! assert (imdilate (uint16 (im), se), uint16 (out));
+%!test    # scalar blank SE
+%! se = 0;
+%! assert (imerode (5, se), Inf)
+%! assert (imerode (true, se), true)
+%! assert (imerode (false, se), true)
+%! assert (imerode (uint8 (3), se), uint8 (255))
+%!
+%! assert (imdilate (5, se), -Inf)
+%! assert (imdilate (true, se), false)
+%! assert (imdilate (false, se), false)
+%! assert (imdilate (uint8 (3), se), uint8 (0))
+%!test    # empty SE
+%! se = [];
+%! assert (imerode (5, se), Inf)
+%! assert (imerode (true, se), true)
+%! assert (imerode (false, se), true)
+%! assert (imerode (uint8 (3), se), uint8 (255))
+%!
+%! assert (imdilate (5, se), -Inf)
+%! assert (imdilate (true, se), false)
+%! assert (imdilate (false, se), false)
+%! assert (imdilate (uint8 (3), se), uint8 (0))
+%!test    # non-scalar blank SE
+%! se = zeros (3, 3);
+%! assert (imerode (5, se), Inf)
+%! assert (imerode (true, se), true)
+%! assert (imerode (false, se), true)
+%! assert (imerode (uint8 (3), se), uint8 (255))
+%!
+%! assert (imdilate (5, se), -Inf)
+%! assert (imdilate(true, se), false)
+%! assert (imdilate (false, se), false)
+%! assert (imdilate (uint8 (3), se), uint8 (0))
+%!test    # erode only with out-of-border elements
+%! se = [1 1 1; 1 0 1; 1 1 1];
+%! assert (imerode (5, se), Inf)
+%! assert (imerode (true, se), true)
+%!
+%! assert (imdilate (5, se), -Inf)
+%! assert (imdilate (true, se), false)
+%!test    # only true elements of SE are out-of-border
+%! se = [0 0 0; 1 0 0; 1 1 0];
+%! assert (imerode (zeros (3), se), [0 0 0; 0 0 0; Inf 0 0])
+%! assert (imerode (false (3), se), logical ([0 0 0; 0 0 0; 1 0 0]))
+%! assert (imdilate (zeros (3), se), [0 0 -Inf; 0 0 0; 0 0 0])
+%! assert (imdilate (false (3), se), false (3, 3))
+%!
+%! se = [0 0 0; 0 0 0; 1 1 1];
+%! assert (imerode (zeros (3, 3), se), [0 0 0; 0 0 0; Inf Inf Inf])
+%! assert (imerode (false (3, 3), se), logical ([0 0 0; 0 0 0; 1 1 1]))
+%! assert (imdilate (zeros (3, 3), se), [-Inf -Inf -Inf; 0 0 0; 0 0 0])
+%! assert (imdilate (false (3, 3), se), false (3, 3))
+%!test  # only true elements of even-sized SE are out-of-border
+%! se = logical ([0 1; 1 1]);
+%! assert (imerode (false (3, 3), se), logical ([0 0 0; 0 0 0; 0 0 1]))
+%! assert (imerode (zeros (3, 3), se), [0 0 0; 0 0 0; 0 0 Inf])
+%!
+%! assert (imdilate (false (3, 3), se), false (3, 3))
+%! assert (imdilate (zeros (3, 3), se), [-Inf 0 0; 0 0 0; 0 0 0])

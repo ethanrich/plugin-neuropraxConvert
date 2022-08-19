@@ -1,0 +1,6 @@
+## Generated from udp_close.cc
+%!test
+%! a = udp();
+%! udp_close(a);
+%!error <Invalid call to udp_close> udp_close(1)
+%!error <Invalid call to udp_close> udp_close()

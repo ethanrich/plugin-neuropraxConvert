@@ -1,0 +1,7 @@
+## Generated from i2c.cc
+%!test
+%! if any(strcmp(instrhwinfo().SupportedInterfaces, "i2c"))
+%!   fail ("i2c ()", "Invalid call to i2c");
+%! else
+%!   fail ("i2c ()", "i2c: Your system doesn't support the I2C interface");
+%! endif

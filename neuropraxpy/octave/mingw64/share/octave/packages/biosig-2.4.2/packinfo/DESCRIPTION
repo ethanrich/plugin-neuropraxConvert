@@ -1,0 +1,17 @@
+Name: biosig
+Version: 2.4.2
+Date: 2022-06-21
+Author: Alois Schloegl <alois.schloegl@ist.ac.at>
+Maintainer: Alois Schlögl
+Title: The Biosig toolbox
+Description: The Biosig package provides a number of tools
+   for biomedical signal processing, including importing of
+   about 50 different data formations.
+Depends: octave (> 3.2.0)
+Recommends: general, signal, statistics, nan, tsa
+SystemRequirements: octave (> 3.2.0), libbiosig1 | libbiosig2 | libbiosig3
+BuildRequires: libbiosig-dev (> 1.3.0)
+License: GPLv3+
+Url: http://pub.ist.ac.at/~schloegl/matlab/biosig
+Autoload: yes
+Categories: EEG ECG EMG EOG biomedical signals dataformat

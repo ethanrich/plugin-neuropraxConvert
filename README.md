@@ -1,26 +1,16 @@
 # tool-neuropraxpy
-This is a CLI (command line interface) tool to read binary files from NEUROPRAX (.EEG/.EE_ files) and parse them into Python dictionaries. Python wraps a module of MATLAB scripts for converting the binary files to .mat format. The hard work was done for me. 
+This is a CLI (command line interface) tool to read binary files from NEUROPRAX (.EEG/.EE_ files) and parse them into Python dictionaries. Python wraps a module of MATLAB scripts for converting the binary files to .mat format. The hard work was done for me. Functionality is currently limited to Windows. If there is a bug, please raise an Issue.
 
-Functionality is currently limited to Windows and requires GNU Octave installation.
+Note: the repository is ~2.14 GB in size. Please give it time to clone/download.
 
 Please follow the instructions below.
 
-If there is a bug, please raise an Issue.
-
 # Installation
 
-#### 1. Install GNU Octave ####
-[***Windows Installer***](https://ftpmirror.gnu.org/octave/windows/octave-7.2.0-w64-installer.exe)
+#### 1. Download Repository ####
 
-#### 2. Download Repository ####
-
-1) Git clone this repository to your machine OR download the ZIP folder and extract the files
+1) Git clone this repository to your machine OR download the ZIP folder and extract the files (recommend downloading the ZIP!)
 2) Pip install the package into your python environment
-
-#### 3. Configure Octave Executable ####
-
-1) Find your Octave executable file that contains "mingw64\bin\" at the end, like this: ***C:\Users\eri\AppData\Local\Programs\GNU Octave\Octave-7.2.0\mingw64\bin\octave.exe***
-2) Paste the full path of the Octave executable to the configuration file located in the repository, at ***tool-neuropraxpy\cli\config.ini***
 
 # Usage
 
@@ -51,5 +41,5 @@ eeg_data = load_pickle(pickles[0])
 2) You now have a variable called `eeg_data` that contains dictionaries of key:values similar to a MATLAB struct. I would recommend using Spyder to have a variable explorer.
 
 # Future Releases
-I'd like to make this tool easier for users by avoiding the hassles of installing this repository and GNU Octave. The best solution is to host this tool on the web. I would think that the size of the EEG files would be the only setback (long upload/download times). For those who find the installation instructions exhausting, a web version may be a good tradeoff. 
+Hosting this tool on the web would be cool. The only setback would be file upload/download times.
 

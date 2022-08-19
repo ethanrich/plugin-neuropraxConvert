@@ -1,0 +1,2 @@
+## DO NOT EDIT! Generated from structcat.cc
+%!assert (structcat (1, struct ("a", 1, "b", 2), struct ("a", 3, "c", 4)), cat (1, struct ("a", 1, "b", 2, "c", []), struct ("a", 3, "b", [], "c", 4)))

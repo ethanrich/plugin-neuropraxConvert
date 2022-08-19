@@ -1,0 +1,144 @@
+## DO NOT EDIT! Generated from socket.cc
+%!test
+%! ## Server socket
+%! server = socket (AF_INET, SOCK_STREAM, 0);
+%! assert (server >= 0);
+%!
+%! rc = bind (server, 9001);
+%! assert (rc, 0);
+%!
+%! rc = listen (server, 1);
+%! assert (rc, 0);
+%!
+%! ## Client socket
+%! client = socket (AF_INET, SOCK_STREAM, 0);
+%! assert (client >= 0);
+%!
+%! ## Create the connection and accept the connection
+%! server_info = struct ("addr", "127.0.0.1", "port", 9001);
+%! rc = connect (client, server_info);
+%! assert (rc, 0);
+%!
+%! server_data = accept (server);
+%! assert (server_data >= 0);
+%!
+%! ## Send and receive data
+%!
+%! ## Send as string from client
+%! msg = "Hello socket-land!";
+%! rc = send (client, msg);
+%! assert (rc,length (msg));
+%!
+%! ## Receive at server
+%! [msg_s, len_s] = recv (server_data, 100);
+%! assert (msg_s != -1);
+%! assert (len_s, length (msg));
+%!
+%! ## Send back out from server
+%! rc = send (server_data, msg_s);
+%! assert (rc, length (msg_s));
+%!
+%! ## Receive at client
+%! [msg_c, len_c] = recv (client, 100);
+%! assert (msg_c != -1);
+%! assert (len_c, length (msg));
+%!
+%! ## Compare original string with recv string
+%! assert (msg, num2str (msg_c, "%c"));
+%!
+%! assert (shutdown (client, SHUT_WR), 0);
+%! assert (shutdown (client, SHUT_RD), 0);
+%! assert (shutdown (client, SHUT_RDWR), 0);
+%!
+%! assert (disconnect (client), 0);
+%! assert (disconnect (server_data), 0);
+%! assert (disconnect (server), 0);
+%!test
+%! ## UDP
+%! sock = socket (AF_INET, SOCK_DGRAM, 0);
+%! assert (sock >= 0);
+%!
+%! rc = bind (sock, 9001);
+%! assert (rc, 0);
+%!
+%! msg = "Hello socket-land!";
+%! addrinfo = struct ("addr", "127.0.0.1", "port", 9001);
+%! rc = sendto (sock, msg, 0, addrinfo);
+%! assert (rc,length (msg));
+%!
+%! [msg_c, len_c, addr_c] = recvfrom (sock, 100);
+%! assert (msg_c != -1);
+%! assert (len_c, length (msg));
+%! assert (addr_c.port, 9001);
+%!
+%! assert (msg, num2str (msg_c, "%c"));
+%!
+%! assert (disconnect (sock), 0);
+%!test
+%! assert (SOL_SOCKET != 0)
+%! assert (MSG_WAITALL != 0)
+%! assert (MSG_PEEK != 0)
+%! assert (SO_REUSEADDR != 0)
+%! assert (SO_KEEPALIVE != 0)
+%! assert (SO_TYPE != 0)
+%! assert (SHUT_RD, 0)
+%! assert (SHUT_WR, 1)
+%! assert (SHUT_RDWR, 2)
+%!test
+%! ## select
+%! sock = socket (AF_INET, SOCK_DGRAM, 0);
+%! assert (sock >= 0);
+%!
+%! rc = bind (sock, 9001);
+%! assert (rc, 0);
+%!
+%! [ret, rdfs, wdfs, edfs] = select(sock+1, [sock], [sock], [sock], 1);
+%! assert(ret, 1);
+%! assert(rdfs, []);
+%! # initial open
+%! assert(wdfs, [sock]);
+%! assert(edfs, []);
+%!
+%! start = tic;
+%! [ret, rdfs, wdfs, edfs] = select(sock+1, [sock], [], [], 1);
+%! timeout = toc(start);
+%! assert(ret, 0);
+%! assert(rdfs, []);
+%! assert(wdfs, []);
+%! assert(edfs, []);
+%! assert(timeout, 1, 0.01);
+%!
+%! timeout = struct ("tv_sec", 2, "tv_usec", 0);
+%! start = tic;
+%! [ret, rdfs, wdfs, edfs] = select(sock+1, [sock], [], [], timeout);
+%! timeout = toc(start);
+%! assert(ret, 0);
+%! assert(rdfs, []);
+%! assert(wdfs, []);
+%! assert(edfs, []);
+%! assert(timeout, 2, 0.01);
+%!
+%! msg = "Hello socket-land!";
+%! addrinfo = struct ("addr", "127.0.0.1", "port", 9001);
+%! rc = sendto (sock, msg, 0, addrinfo);
+%! assert (rc,length (msg));
+%! pause(1);
+%!
+%! [ret, rdfs, wdfs, edfs] = select(sock+1, [sock], [], [], .2);
+%! assert(ret, 1);
+%! assert(rdfs, [sock]);
+%! assert(wdfs, []);
+%! assert(edfs, []);
+%!
+%! [msg_c, len_c, addr_c] = recvfrom (sock, 100);
+%! assert (msg_c != -1);
+%! assert (len_c, length (msg));
+%! assert (addr_c.port, 9001);
+%!
+%! [ret, rdfs, wdfs, edfs] = select(sock+1, [sock], [], [], .1);
+%! assert(ret, 0);
+%! assert(rdfs, []);
+%! assert(wdfs, []);
+%! assert(edfs, []);
+%!
+%! assert (disconnect (sock), 0);

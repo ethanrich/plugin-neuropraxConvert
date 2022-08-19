@@ -1,0 +1,11 @@
+Name: sockets
+Version: 1.4.0
+Date: 2022-07-22
+Author: John Swensen <jpswensen@comcast.net>
+Maintainer: Octave-Forge community <maintainers@octave.org>
+Title: Sockets
+Description: Socket functions for networking from within octave.
+Categories: Sockets
+Depends: octave (>= 3.6.0)
+License: GPLv3+
+Url: http://octave.sourceforge.net

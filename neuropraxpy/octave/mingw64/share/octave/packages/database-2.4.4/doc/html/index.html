@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- General documentation for the database package for Octave.
+
+Copyright (C) 2016-2018 Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.3, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>database_doc: Top</title>
+
+<meta name="description" content="database_doc: Top">
+<meta name="keywords" content="database_doc: Top">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="../dir/index.html" rel="up" title="(dir)">
+<link href="Installation.html#Installation" rel="next" title="Installation">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<h1 class="settitle" align="center">database_doc</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a name="Top"></a>
+<div class="header">
+<p>
+Next: <a href="Installation.html#Installation" accesskey="n" rel="next">Installation</a>, Up: <a href="../dir/index.html" accesskey="u" rel="up">(dir)</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="General-documentation-for-the-database-package-for-Octave"></a>
+<h1 class="top">General documentation for the database package for Octave</h1>
+
+<p>The info version of this document is accessible, after package
+installation, from the Octave commandline with <code>database_doc()</code>.
+</p>
+<p>This documentation applies to version 2.4.4 of the database
+package.
+</p>
+<p>The database package enables accessing SQL databases from
+Octave. Differences between database implementations will inevitably
+cause some of this packages functions to be specific for a certain
+implementation. Currently, however, this package only supports the
+Postgresql database. Later additions might support further databases,
+and possibly some general functions (with only very basic
+functionality), which can be used for all backends, will also be
+provided.
+</p>
+<p>This documentation currently describes the concepts of SQL access in
+&rsquo;database&rsquo; and the details for Postgresql. Familiarity with SQL and the
+database implementation (Postgresql) is assumed.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Installation.html#Installation" accesskey="1">Installation</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Installation hints.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Concept.html#Concept" accesskey="2">Concept</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Introduction and package concept.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="SQL-data-types.html#SQL-data-types" accesskey="3">SQL data types</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Representation in Octave of types
+                                  defined by SQL.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Arbitrary-Octave-types.html#Arbitrary-Octave-types" accesskey="4">Arbitrary Octave types</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Storing arbitrary Octave types in a
+                                  database.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Setting-options.html#Setting-options" accesskey="5">Setting options</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Functions for setting or retrieving
+                                  options.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Documentation.html#Documentation" accesskey="6">Documentation</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Function database_doc to view
+                                  documentation.
+</td></tr>
+<tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
+Specific databases
+</pre></th></tr><tr><td align="left" valign="top">&bull; <a href="Postgresql.html#Postgresql" accesskey="7">Postgresql</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Description of access to Postgresql
+                                  databases.
+</td></tr>
+<tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
+Indices
+</pre></th></tr><tr><td align="left" valign="top">&bull; <a href="Function-index.html#Function-index" accesskey="8">Function index</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Index of functions in database.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Concept-index.html#Concept-index" accesskey="9">Concept index</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Concept index.
+</td></tr>
+</table>
+
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Installation.html#Installation" accesskey="n" rel="next">Installation</a>, Up: <a href="../dir/index.html" accesskey="u" rel="up">(dir)</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

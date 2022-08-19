@@ -1,0 +1,13 @@
+## DO NOT EDIT! Generated from mpfr_to_string_d.cc
+%!test;
+%!  [s, isexact] = mpfr_to_string_d (-inf, "decimal", .1);
+%!  assert (s, {"0.1"});
+%!  assert (isexact, false);
+%!assert (mpfr_to_string_d (0, "exact hexadecimal", inf), {"inf"});
+%!assert (mpfr_to_string_d (0, "exact hexadecimal", -inf), {"-inf"});
+%!assert (mpfr_to_string_d (0, "exact hexadecimal", nan), {"nan"});
+%!assert (mpfr_to_string_d (0, "exact hexadecimal", 0), {"0x0.0000000000000p+0"});
+%!assert (mpfr_to_string_d (0, "exact hexadecimal", 2), {"0x1.0000000000000p+1"});
+%!assert (mpfr_to_string_d (0, "exact hexadecimal", -1), {"-0x1.0000000000000p+0"});
+%!assert (mpfr_to_string_d (0, "exact hexadecimal", pow2 (-1022)), {"0x1.0000000000000p-1022"});
+%!assert (mpfr_to_string_d (0, "exact hexadecimal", pow2 (-1074)), {"0x0.0000000000001p-1022"});

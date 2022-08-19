@@ -1,0 +1,6 @@
+## DO NOT EDIT! Generated from close.cc
+%!error <Invalid call to zmq_close> zmq_close()
+%!error <Invalid call to zmq_close> zmq_close(10)
+%!test
+%! a = zmq_socket();
+%! zmq_close(a);

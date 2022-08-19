@@ -1,0 +1,35 @@
+## Generated from __tcpclient_properties__.cc
+%!shared ip
+%! ip = resolvehost("www.octave.org", "address");
+%!test
+%! # test get
+%! a = tcpclient (ip, 80);
+%! assert (__tcpclient_properties__ (a,"type"), "tcpclient");
+%! assert (__tcpclient_properties__ (a,"port"), 80);
+%! assert (__tcpclient_properties__ (a,"address"), ip);
+%! assert (__tcpclient_properties__ (a,"timeout"), -1);
+%! assert (__tcpclient_properties__ (a,"status"), "open");
+%! assert (__tcpclient_properties__ (a,"name"), ["TCP-" ip]);
+%! fail ("__tcpclient_properties__ (a,'invalid')", "invalid property name");
+%! clear a
+%!test
+%! # test set
+%! a = tcpclient(ip, 80);
+%! __tcpclient_properties__ (a, 'name', "mytest");
+%! assert (__tcpclient_properties__ (a,"name"), "mytest");
+%! fail ("__tcpclient_properties__ (a,'invalid', 1)", "invalid property name");
+%! clear a
+%!test
+%! # test flush
+%! a = tcpclient(ip, 80);
+%! __tcpclient_properties__ (a, 'flush', 0);
+%! __tcpclient_properties__ (a, 'flush', 1);
+%! __tcpclient_properties__ (a, 'flush', 2);
+%! fail ("__tcpclient_properties__ (a,'flush')", "invalid property name");
+%! clear a
+%!error <wrong number of arguments> __tcpclient_properties__ ()
+%!error <wrong number of arguments> __tcpclient_properties__ (1)
+%!test
+%! a = tcpclient (ip, 80);
+%! fail ("__tcpclient_properties__ (a, 'name', 'test', 0)", "wrong number of arguments");
+%! clear a

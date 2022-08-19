@@ -1,0 +1,588 @@
+                      GNU Octave Interval Package
+               Summary of important user-visible changes
+
+Version 3.2.1 2022-01-28
+========================
+
+This bugfix release fixes compatibility issues with new versions of GNU
+Octave.
+
+   • The minimum required Octave version has been increased from 3.8.0
+     to 4.2.0.
+   • subsref: Access to interval properties using field syntax, e. g.,
+     ‘x.inf’ and ‘x.sup’, has been fixed for Octave 5.1 and later on
+     Windows (bug #59334).
+   • disp: Fix runtime errors in Octave 6 and later, when the function
+     parameter is not a named variable (bug #59334).
+   • numel: Fix runtime warnings in Octave 6 and later, when the
+     function is called with only one parameter.
+   • Syntax errors caused by increment and decrement operators in
+     Octave 7 and later have been fixed (bug #59334).
+   • Interval constants for ‘pi’ and ‘e’ in Octave 7 and later have been
+     fixed.  This also fixes several trigonometric functions, which have
+     produced wrong results in Octave 7.
+   • Compilation errors during package installation with Octave 8 and
+     later have been fixed (bug #61568).
+   • 
+Version 3.2.0 2018-07-01
+========================
+
+   • Fixed a regression where decorated intervals could no longer be
+     used in Octave 4.4 (bug #53331).
+   • intervaltotext: A change in Octave 4.4 has removed the possibility
+     to increase Octave’s output precision beyond 16 decimal digits (bug
+     #53456), which has made it impossible to output intervals with a
+     higher accuracy.  The function ‘intervaltotext’ has been
+     reimplemented with several new format options to customize the
+     format and accuracy of the interval literal.  All recommended
+     conversion specifiers from IEEE Std 1788-2015 are now supported,
+     e. g., intervals can be printed in uncertain form.
+   • printf, fprintf, sprintf: New functions to produce formatted output
+     with interval literals.
+   • numel: Added support for additional arguments to compute the number
+     of elements after indexing an interval array.  This allows combined
+     indexing expressions of the form ‘x(1:2).inf’.
+   • Fixed several warnings during package installation.
+
+Version 3.1.0 2017-12-21
+========================
+
+This minor release introduces two new functions and fixes severe bugs.
+
+   • mod, rem: Two new interval arithmetic functions to compute the
+     remainder of a floored division or truncated division respectively.
+
+   • plot: Fixed a regression with plotting 2D rectangles in the
+     upcoming Octave 4.4.
+
+   • The internal function ‘__print_mesa__’ for off-screen mesa
+     rendering has been removed, because the upstream mesa project no
+     longer supports off-screen and on-screen rendering in a single
+     executable (Debian bug #877149).  It is recommended to use Octave’s
+     ‘print’ function instead, which has greatly been improved in
+     Octave 4.2 regarding the output of rectangles and boxes.
+
+   • A package installation error on 32-bit systems could be fixed
+     (bug #51857).
+
+   • During package installation, FPU control has not be activated on
+     x86-32 platforms.  Thus, the crlibm library could not disable
+     80-bit floating-point arithmetic and produced wrong results.  This
+     has been detected by the interval package, which fell back on the
+     slower mpfr library instead (Debian bug #874135).  After fixing
+     compiler options, x86-32 platforms can now use crlibm
+     correctly—even without 64-bit SSE registers.
+
+   • Source code for interval arithmetic tests from the ITF1788 project
+     have been removed from this package, since the loadable test data
+     ‘itl.mat’ can be edited and processed with Octave easily.  If unit
+     test code for other interval arithmetic libraries shall be
+     generated, find the project at <https://github.com/oheim/ITF1788>.
+
+   • Thanks to Olaf Till, this package obtains a configure script (patch
+     #9518).  It checks for available libraries during package
+     installation and can help to identify missing dependencies.
+
+Version 3.0.0 2017-08-19
+========================
+
+This major release introduces support for N-dimensional arrays of
+intervals.  With previous versions, interval objects have been limited
+to two dimensions.  Only scalar values, vectors, and matrices could be
+created.  Now, interval objects can be used with three or more
+dimensions as well.  Binary and ternary operations support broadcasting
+of singleton dimensions, which can be expanded to produce higher
+dimensional results.
+
+   Most work for this version has been accomplished by Joel Dahne during
+his Google Summer of Code project.  The project involved thorough
+maintenance of all interval functions, which led to improvements and
+bugfixes beyond the original goal.
+
+   • Support for N-dimensional arrays of intervals.
+
+   • Removed interval implementation of ‘meshgrid’, it now falls back on
+     the standard implementation which can output a 3-d grid properly.
+     This no longer automatically converts all input to intervals.  For
+     example, it is possible to create a grid for interval X values and
+     non-interval Y values.
+
+   • dot, prod, sum: Altered how empty input is handled.  They are more
+     consistent with the standard sum and prod functions (return
+     zero/one for 0×0 input along the first dimension).  For the dot
+     function it is slightly different from how the Octave core function
+     handles it at the moment (bug #51333).
+
+   • Output of interval matrices may be customized with ‘format compact’
+     to display more data per page.
+
+   • nthroot, pownrev: Now supports vectorization of N (for nthroot) and
+     P (for pownrev), broadcasting is fully supported.
+
+   • Indexing expressions on intervals can now use the ‘end’ keyword and
+     the special operator ‘:’ to select all entries.  This affects
+     selection of entries and assignment of entries (bug #49592, bug
+     #50626).
+
+   • Adjustments to ITF1788 test suite:
+        • Several further unit tests have been derived from libieeep1788
+          together with the latest version of the interval testing
+          framework.  That is, tests with NaN values, NaI values, IEEE
+          1788 exceptions, and tests for the following functions:
+          numsToInterval, textToInterval, intervalPart, newDev, setDec,
+          decorationPart, and reduction operations.
+        • Unit tests have been reorganized: The source code of test
+          cases has been moved to /src/test/.
+        • The test suite is no longer compiled as separate Octave test
+          files (*.tst).  Instead, any interval test library files
+          (*.itl) are stored as loadable test data (itl.mat).  The test
+          data is then used by built-in self-tests of the functions.
+          This simplifies testing of functions and saves storage space
+          after package installation.  For example, ‘test @infsup/plus’
+          will run any arithmetic tests on the interval plus function.
+
+   • Adjustments to the package documentation:
+        • Information about how to create N-dimensional arrays of
+          intervals.
+        • To improve privacy and page loading times, the package manual
+          no longer uses external references for CSS and web fonts.
+        • The package URL has been updated (after Octave Forge has
+          switched to HTTPS).
+        • HTML fonts have been changed and fallback fonts for Windows
+          have been introduced.
+        • Adjustments to code examples to support the latest versions of
+          the doctest package and symbolic package.
+
+   Bugfixes
+   • Processor support for SSE2 is automatically detected during package
+     installation.  This fixes installation problems on devices without
+     SSE2, for example the usual Android phones and tablets (bug
+     #51758).
+   • wid, mig, mag: Fixed wrong return value for NaI (not an interval)
+     values.  The functions failed to return NaN (not a number).
+   • diag: With more than one argument the function no longer fails with
+     an error.
+   • dot: Fixed error in identification of dimensions when broadcasting:
+     When the optional dimension argument is missing, the first
+     non-singleton dimension of both arguments is used (before
+     broadcasting applies).
+   • infsupdec: Now creates a warning if the ‘[NaI]’ literal is combined
+     with decoration, e. g.  ‘[NaI]_ill’.
+   • infsupdec: No longer produces warnings for mixed parameters with
+     strings and numerics.
+   • verlinineqnn: No longer produces warnings for unverified solutions.
+   • pow: Fixed error when called with vector arguments.  The result was
+     only guaranteed to be sharp in the first entry, e. g.  ‘pow ([0 0],
+     infsup (0, 1))’ produced the interval [0, 1] for the second entry.
+   • pow2rev: Fixed errors when called with non-scalar arguments in two
+     cases, which could produce wrong results.
+   • ctc_intersect, ctc_union: Fixed runtime errors when the combined
+     contractor function is called with less than two output arguments.
+   • sin: Fixed possible interval representation error, where the upper
+     boundary of the result could become a signed zero (bug #51283).
+   • factorial: Improved result decoration for integer input, since the
+     function is continuous (bug #51783).
+
+Version 2.1.0 2016-12-28
+========================
+
+   • The speed of some arithmetic operations has been greatly improved.
+     They have previously been computed by multi-precision arithmetic
+     which simulates binary64 floating-point arithmetic (MPFR library).
+     Now, a specialized correctly rounded mathematical library (crlibm)
+     computes identical results 30–100 times faster.  There is no
+     accuracy drawback, arithmetic operations will compute tight
+     interval enclosures as before.  The following functions benefit
+     from this: acos, asin, atan, cos, cosh, exp, expm1, log, log10,
+     log1p, log2, sin, sinh, tan.
+
+   Bugfixes
+   • Fixed indexing expression in interval constructor for illegal
+     intervals of the form ‘[-inf, -inf]’ or ‘[inf, inf]’
+   • polyval: Fixed unnecessary warnings when evaluated on empty
+     intervals
+   • Fixed compilation errors on FreeBSD 9.3
+
+Version 2.0.0 2016-11-20
+========================
+
+This major release contains fundamental changes to the interval
+constructors.  After a discussion on the P1788 mailing list, it has been
+revealed that this interval package didn’t implement exceptions from the
+standard for interval arithmetic correctly: Operations from IEEE Std
+1788-2015 which trigger an “exception” shall return a value nonetheless.
+Conformance has been improved in this new version, but may break
+compatibility with previous versions.
+
+   A second big news is that the interval package comprises functions
+from VERSOFT, a verification software package by Jiří Rohn, who has
+generously published his work as free software this year.
+Unfortunately, some of VERSOFT’s functions are encrypted and could not
+be included yet.
+
+   • nai: With additional arguments, matrices of NaI (not an interval)
+     values can be constructed.  Previously, NaI has been restricted to
+     be of scalar value.
+
+   • infsup: The bare interval constructor merely triggers a warning
+     instead of an error on illegal input, which creates empty
+     intervals.  If input contains legitimate as well as illegal input,
+     only entries with illegal input will carry empty intervals.
+
+   • infsupdec: The decorated interval constructor may create interval
+     matrices which have NaI (not an interval) as entries.  If input
+     contains legitimate as well as illegal input, only entries with
+     illegal input will carry NaI values.
+
+   • Warning and error identifiers of the constructors have been
+     revised.
+
+     The warning identifier ‘interval:NaI’ has been removed.  Illegal
+     input signals an ‘interval:UndefinedOperation’ warning.  If the
+     input is of an illegal data type or of illegal size, the
+     constructors signal an ‘interval:InvalidOperand’ warning.
+
+     The warning identifier ‘interval:PossiblyUndefinedOperation’ has
+     been renamed to ‘interval:PossiblyUndefined’ to better match the
+     wording in the standard document.  Also, previous versions failed
+     to trigger this warning in cases where there is a floating point
+     number between boundaries U < L, which has been fixed.
+
+   • It is no longer valid to call ‘infsup (+inf, -inf)’ to create an
+     empty interval and the constructor will signal a warning in these
+     cases.  This change has been made to better conform to the
+     ‘numsToInterval’ function from the interval standard.
+
+     You may create empty intervals with either ‘infsup ()’ or
+     ‘infsupdec ()’ or ‘empty ()’.
+
+   • inf, sup: If the input is NaI (not an interval), these functions
+     return NaN (not a number) values instead of an error.
+
+   • Output of intervals in hexadecimal form discriminates between
+     subnormal boundaries and normal boundaries.  Subnormal numbers
+     start with “0x0.” whereas normal numbers start with “0x1.”.
+
+     Also, hexadecimal form has been changed to lower case.
+
+   • resize: New interval elements are initialized with zero instead of
+     empty intervals to better match the corresponding Octave function.
+
+   • Interval constructors may broadcast column and row vectors.
+
+   • Performance improvements: factorial on large arguments; plot and
+     plot3 on input that is plotted as a line.
+
+   • New interval functions: tril, triu, qr
+
+   • New functions which have been ported from Jiří Rohn’s VERSOFT:
+     chol, vereigback, vereigvec, verintlinineqs, verinvnonneg,
+     verlinineqnn, verlinprog
+
+   • recip, sqr: The functions have been removed, after they have been
+     deprecated in version 1.4.0.
+
+   • plot3: Fixed plotting with gnuplot and fixed an issue where the
+     figure did not switch from 2D to 3D after plotting.
+
+   • expm1: Fixed documentation, the function computes exp (X) - 1
+     instead of exp (X - 1).
+
+   • norm: Fixed an error where the Hamming norm of empty intervals was
+     non-empty.
+
+Version 1.5.0 2016-05-31
+========================
+
+   • norm: Added subordinate matrix norms and the max norm
+   • strictsubset: New interval comparison function
+   • Package documentation: Added new example (Cameleon problem), and
+     the growing list of examples has been split into several web pages.
+   • Package documentation: Updated recommendations to install and load
+     the package.  The autoload feature will be removed in Octave 4.2.0.
+     (patch #8981, thanks to juanpi)
+   • Support package installation in Octave 4.1.0+ (bug #47288)
+
+Version 1.4.1 2016-02-13
+========================
+
+   • Fixed a compile error for 32-bit systems during package
+     installation (bug #47100)
+
+Version 1.4.0 2016-02-09
+========================
+
+   • mpower: Improved accuracy and speed.  The interval matrix square
+     can now be computed without dependency errors and with tightest
+     accuracy.
+   • factorial: New interval arithmetic operation
+   • expm, norm: New interval matrix operations
+   • The functions recip and sqr have been deprecated and will be
+     removed in a future release.  Please use ‘1 ./ X’ and ‘X .^ 2’
+     instead.
+
+Bugfixes
+   • bitunpack, interval_bitpack: The order of inf/sup/dec parts has
+     been fixed.  The function documentation describes how the functions
+     behave on little-endian and big-endian systems.
+
+Version 1.3.0 2015-12-22
+========================
+
+   • postpad, prepad, subsasgn: Implicit new elements during subscript
+     assignment and padding have been initialized with empty intervals
+     before this release.  This behavior has changed.  Now, the implicit
+     new element are initialized with zero to make a correct interval
+     extension of the corresponding built-in function.
+   • fsolve: New function to solve (systems of) equations and compute
+     the inverse of a set under a function
+   • ctc_intersect, ctc_union: Utility functions for contractors and the
+     fsolve function
+   • det, prod, recip: New interval arithmetic functions
+   • diag: New utility function to create diagonal matrices or extract
+     vectors from diagonals of matrices
+   • decorationpart: Choose between different return types with a second
+     parameter
+   • For several functions it is now possible to broadcast row vectors
+     against column vectors or vectors against matrices.
+   • The user manual has been restructured for better accessibility by
+     new users.  A bunch of usage examples demonstrates the package’s
+     capabilities.
+
+Bugfixes
+   • sum, sumabs, sumsq: Fixed result for matrices of size zero
+   • powrev1, powrev2: Fixed indexing for vectors
+
+Version 1.2.0 2015-10-01
+========================
+
+   • The output format for intervals has been changed.  The number of
+     decimal places now respects what has been set by the user with the
+     ‘format short’ or ‘format long’ command, and is much shorter by
+     default.  Also it is possible to use ‘format hex’.  The old format
+     can be accessed with the ‘intervaltotext’ function.
+   • fminsearch: New optimizer function for finding the minimum value of
+     a function over interval constraints using the Skelboe-Moore
+     algorithm
+   • fzero: Changed function parameters to support optimset options
+   • power: Improved speed of the general interval power function and
+     monomials with the notation x .^ n
+   • plot, plot3: Added support for colormaps
+
+Bugfixes
+   • mldivide: Fixed algorithm to handle more matrices without error
+   • bisect: Fixed an error during bisection of singleton intervals
+     (thanks to Helmut for finding this during OctConf 2015)
+
+Version 1.1.0 2015-08-03
+========================
+
+   • meshgrid, mince: New utility functions to help plotting of interval
+     functions
+   • linspace: New interval arithmetic function
+   • intersect, max, min, union: Allow evaluation as aggregate functions
+     within an interval matrix along a common dimension
+   • Improvements to the documentation
+        • Added cross-references between package documentation and
+          function reference
+        • Extended information about interval arithmetic in general
+        • Extended information about implemented IEEE Std 1788-2015
+          functions and fixed references to the standard document
+        • Added information about plotting intervals
+        • Simplified package description
+        • Graphics with higher resolutions, demo of interval sombrero
+          function plot on first page, and minor style fixes
+
+Bugfixes
+   • plot3: Fixed plotting of interval edges when plotting several
+     intervals at once using matrices
+
+Version 1.0.0 2015-06-13
+========================
+
+   • IEEE Std 1788-2015, IEEE standard for interval arithmetic, was
+     approved on June 11.  To mark the occasion, the major version
+     number has been raised.
+   • All interval constructors have been extended to create interval
+     matrices from a single string.  Commas or spaces may be used as a
+     column separator (consecutive separators are trimmed).  Semicolon
+     and new line characters can be used as a row separator.
+   • hdist, idist, sdist, smig: New interval numeric functions
+   • User manual: Relicensed under GPL, added examples from the former
+     Octave SIMP package, and various minor improvements.
+
+Bugfixes
+   • mtimes: Fixed matrix-vector multiplication of decorated intervals
+   • Fixed a linking error in mkoctfile that could prevent package
+     installation (bug #45280)
+
+Version 0.2.1 2015-05-30
+========================
+
+   • plot, plot3: New interval plotting functions.  Pay attention to the
+     included examples, which can be executed with ‘demo @infsup/plot’
+     and ‘demo @infsup/plot3’ respectively.
+   • polyval: New interval arithmetic algorithm
+   • bisect: New set operation for bisecting algorithms
+   • sinrev, cosrev, tanrev, atan2rev1, atan2rev2: Now allow non-scalar
+     arguments
+   • Simplified licensing: Relicensed parts of the software that were
+     not under GPL
+   • Updated information for citation of the package
+
+Bugfixes
+   • Fixed generation of the manual in PDF format
+   • subsasgn: Fixed cases where decoration could be lost (bug #42735)
+
+Version 0.2.0 2015-05-03
+========================
+
+   • User manual included in the package, see doc/manual.texinfo
+   • New utility functions: cat, postpad, prepad, reshape, resize
+   • and, or: Removed deprecated functions
+   • Improved display output for cell arrays and new function: disp
+   • Minor performance improvements (all decorated interval functions,
+     horzcat, vertcat)
+
+Bugfixes
+   • issquare, isrow, iscolumn: Fixed compatibility issues with GNU
+     Octave 4.0
+   • cbrt: Allow negative values as parameter
+   • cot: Fixed accuracy for x = 0
+   • cos, csc, sec, sin: Fixed correctness in certain cases
+   • Prevent multibyte characters in Microsoft Windows console
+
+Version 0.1.5 2015-04-06
+========================
+
+   • Implicit decoration of bare intervals triggers a warning now and
+     can be allowed or forbidden by the user.  Implicit decoration of
+     bare interval literals is not affected.
+   • newdec: New operation for explicit promotion of bare intervals into
+     decorated intervals (without warning).
+   • Decorated interval literals with illegal decoration are no longer
+     allowed and produce NaIs.
+   • hull: In contrast to the union function, the interval constructor
+     is no longer considered a set operation and can create intervals
+     with a non-trivial decoration.
+   • setdiff, setxor: New set operations
+   • intersect, union: Renamed set operations; the old function names
+     (and, or) are hereby deprecated and are going to be removed in the
+     next release.
+   • intervaltotext, intervaltoexact: Decimal fractions no longer omit
+     zero before the point, and unnecessary trailing decimal places can
+     be omitted more consistently and in more cases than before (also
+     affects console output).  Improved accuracy and performance with
+     support for interval matrices.
+
+Bugfixes
+   • mtimes, mldivide: Support for broadcasting of scalar parameters
+   • nextout: Support for decorated intervals
+   • An error in GNU Octave core, which could lead to lost or wrong
+     interval decorations, no longer affects decorated intervals
+     (bug #42735)
+   • Some errors in the function documentation have been fixed (thanks
+     to doctest-for-matlab and Colin’s texinfo compatibility patches)
+   • Fixed interval field access on Windows
+
+Version 0.1.4 2015-03-15
+========================
+
+   • New interval constructors: hull, midrad
+   • New interval arithmetic functions: cbrt, cot, coth, csc, csch,
+     dilog, ei, erf, erfc, gamma, gammaln, psi, rsqrt, sec, sech
+   • mtimes: Support for fast, less accurate evaluation using BLAS
+     routines
+   • mldivide, mrdivide, inv: Improved performance by using faster
+     mtimes
+   • infsup, infsupdec: Enabled broadcasting of scalar boundaries
+   • rad: May compute mid and rad simultaneously
+   • subsref: Access to interval properties using field syntax: x.inf
+     and x.sup
+
+Version 0.1.3 2015-02-24
+========================
+
+   • Fixed a compile error that could possibly occur during package
+     installation
+
+Version 0.1.2 2015-02-22
+========================
+
+   • New interval arithmetic functions: nthroot, hypot, log1p, expm1
+   • lu: New operation for LU(P) decomposition of interval matrices
+   • nai: New decorated interval constant
+   • mldivide, mrdivide, inv: Greatly improved accuracy and performance
+     of the linear solver
+   • Improved accuracy of vector sums, dot products, pownrev, and
+     powrev2
+   • powrev1, powrev2, pownrev, mulrev: Now allow non-scalar arguments
+   • overlap: Renamed one overlapping state from equal to equals
+   • mulrevtopair: No longer available, use mulrev with two output
+     parameters for two-output division
+   • setdec: No longer available, use infsupdec instead
+   • Small performance improvements
+
+Bugfixes
+   • Compatibility with GNU Octave 4.0 (bug #43925)
+   • Build problems during package installation with environment
+     variables
+   • iscommoninterval: The decorated variant must return true for common
+     intervals without com decoration
+   • eq: The decorated variant must not consider the decoration value
+   • Several decorated functions: When evaluated on a subset of the
+     function’s domain, the result’s decoration must be dac if the
+     function’s restriction to that subset is continuous
+   • Decorated boolean functions: Must return false when evaluated on
+     NaI input
+   • Interval constructors: A PossibleUndefined warning must be issued
+     if an interval is created from two very close decimal numbers
+     (which can not be separated in the floating-point context) where
+     the lower boundary is greater than the upper boundary when compared
+     with infinite precision
+   • Interval constructors: NaNs must produce empty intervals
+   • Decorated interval constructor: Illegal decorations for empty
+     intervals must be adjusted to trv, and illegal decoration com for
+     unbounded intervals must be adjusted to dac.
+   • cancelminus/cancelplus: The functions returned wrong results if the
+     interval widths could not be compared in double-precision
+   • cos: Accuracy for x = [0] improved
+   • pow, powrev1, powrev2: The function must be defined for x = 0 and
+     y > 0
+   • All reverse operations: Must return a trivial decoration
+     information at best (the only exception is mulrev)
+
+Version 0.1.1 2015-02-01
+========================
+
+   • Increased speed of computation for large matrices
+   • Improved performance for fma and dot
+   • mpfr_vector_dot_d: Changed syntax for faster computation on
+     intervals
+   • Decorated versions of mtimes, mldivide, mpower, inv and reduction
+     operations sum, dot, subabs, subsquare
+   • Renamed function sumsquare to sumsq in accordance with GNU Octave
+     function names
+   • New function: fzero for finding all roots of an interval arithmetic
+     function
+
+Bugfixes
+   • nextout: Function returned wrong results
+   • exacttointerval: Now produces bare intervals instead of decorated
+     intervals in conformance with IEEE P1788
+   • atanh: Function returned wrong results for ±1
+   • dot: Function returned wrong results for some inputs
+   • fma: Function returned wrong results for some inputs
+   • infsup: Function returned wrong interval boundaries for decimal
+     numbers, function failed on mixed numerical and string boundaries
+     in single cell array parameter
+   • mulrevtopair: Fixed order of operands in conformance with
+     IEEE P1788 and wrong results when evaluated on intervals that
+     contain zero
+
+Version 0.1.0 2015-01-21
+========================
+
+   • Initial release version, which already contains all required
+     operations of the preliminary standard document IEEE P1788.
+

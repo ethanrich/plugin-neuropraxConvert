@@ -1,0 +1,46 @@
+
+================================================================================
+This (sparsersb) is a plugin to interface the "librsb" high performance sparse
+matrix library to GNU Octave.
+Author: Michele MARTONE
+================================================================================
+
+Build / use instructions (using pkg):
+
+To use the configure auto-detected librsb from within Octave:
+ > pkg -local -verbose install sparsersb-1.0.9.tar.gz
+ > pkg load sparsersb
+ > help sparsersb
+
+Alternatively:
+ tar czf sparsersb-1.0.9.tar.gz
+ cd sparsersb-1.0.9/src
+ ./configure
+ make
+ make check
+
+It is possible to provide the configure script with a librsb sources 
+archive you have downloaded separately and make it build on the fly for you
+and use it; e.g.: 
+ ./configure --with-librsb-tarball=$HOME/librsb-1.2.0.10.tar.gz
+or setting:
+ export LIBRSB_TARBALL=$HOME/librsb-1.2.0.10.tar.gz
+before entering in Octave and building with pkg:
+ > pkg -local -verbose install sparsersb-1.0.9.tar.gz
+
+On many systems, you will have to build librsb with the PIC (-fPIC on GCC)
+option or you will get link-time problems.
+
+More configure options:
+./configure --help
+
+Usage instructions without using pkg:
+# go to the directory where sparsersb.oct is located and run Octave:
+octave
+# you can use the sparsersb function, starting with e.g.:
+ > help sparsersb
+
+Check out http://librsb.sf.net for the latest librsb release, 
+ http://octave.sourceforge.net/sparsersb/ for the latest sparsersb release and
+ http://hg.code.sf.net/p/octave/sparsersb/ for the latest repository version.
+================================================================================

@@ -1,0 +1,15 @@
+# Defines libbiosig.pc
+prefix=/usr
+exec_prefix=/usr
+libdir=/usr/lib
+includedir=/usr/include
+
+Name: libbiosig
+Description: Biosig library
+Version: 3.0.1
+URL: http://biosig.sf.net
+Requires: 
+Requires.private: 
+Cflags: -D=NDEBUG -D=__4HAERTEL__ -D=WITH_FAMOS -D=WITH_FIFF -D=WITHOUT_NETWORK -D=WITH_SCP3 -D=WITH_FEF -D=MAKE_EDFLIB -D=WITH_LIBTINYXML 
+Libs: -lbiosig -liconv -lws2_32
+Libs.private: -lssp -liconv -lstdc++ -lws2_32 -lz -lcholmod -lm -ltinyxml

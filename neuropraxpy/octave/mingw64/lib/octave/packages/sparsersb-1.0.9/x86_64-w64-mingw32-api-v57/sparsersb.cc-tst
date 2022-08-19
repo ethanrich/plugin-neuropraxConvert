@@ -1,0 +1,2383 @@
+## DO NOT EDIT! Generated from sparsersb.cc
+%!test
+%! assert( 0==nnz(sparsersb(3,3) .- sparse(3,3)) )
+%!test
+%! assert( 0==nnz(sparsersb([],[],[],3,3    ) .- sparse([],[],[],3,3    )) )
+%!test
+%! assert( 0==nnz(sparsersb([],[],[],3,3,123) .- sparse([],[],[],3,3,321)) )
+%!test
+%! s=sparsersb([2]);
+%! assert(s==2);
+%! assert(s!=1)
+%!test
+%! s=sparsersb([1,2],[1,1],[11,21],2,2         );
+%! assert(nnz(s)==2)
+%!test
+%! s=sparsersb([1,2],[1,1],[11,21],2,2,-1      );
+%! assert(nnz(s)==2)
+%!test
+%! s=sparsersb([1,2],[1,1],[11,21]             );
+%! assert(nnz(s)==2)
+%!test
+%! s=sparsersb(10,10                           );
+%! assert(nnz(s)==0)
+%!test
+%! s=sparsersb([1,1],[1,1],[11,21]             );
+%! assert(nnz(s)==1)
+%! assert(s(1,1)==32)
+%!test
+%! s=sparsersb([1,1],[1,1],[11,21],2,2,"unique");
+%! assert(nnz(s)==1),
+%! assert(s(1,1)==21)
+%!test
+%! sparsersb("set","RSB_IO_WANT_VERBOSE_TUNING","1");
+%!test
+%! sparsersb("set","RSB_IO_WANT_VERBOSE_TUNING","0");
+%!test
+%! wvt=0;
+%! try
+%! sparsersb("set","...")
+%! wvt=1;
+%! end_try_catch
+%! assert(wvt==0)
+%!test
+%! sparsersb("set","FIXME: WE UNFORTUNATELY STILL SILENTLY IGNORE ERRORS HERE (NO RETURN VALUE)","1");
+%!test
+%! wvt=-1;
+%! try
+%! wvt=sparsersb("get","RSB_IO_WANT_VERBOSE_TUNING")
+%! assert(wvt==0 || wvt ==1)
+%! end_try_catch
+%! assert(wvt==-1)
+%!test
+%! s=sparsersb([1]);
+%! assert(sparsersb(s,"get","RSB_MIF_LEAVES_COUNT__TO__RSB_BLK_INDEX_T")=="1")
+%!test
+%! s=sparsersb([1]);
+%! assert(str2num(sparsersb(s,"get","RSB_MIF_LEAVES_COUNT__TO__RSB_BLK_INDEX_T"))==1)
+%!test
+%! s=sparsersb([1]);
+%! assert(str2num(sparsersb(s,"get","RSB_MIF_INDEX_STORAGE_IN_BYTES__TO__SIZE_T"))>1)
+%!test
+%! s=sparsersb([1]);
+%! assert(str2num(sparsersb(s,"get","RSB_MIF_INDEX_STORAGE_IN_BYTES_PER_NNZ__TO__RSB_REAL_T"))>1)
+%!test
+%! s=sparsersb([1]);
+%! assert(str2num(sparsersb(1*s,"get","RSB_MIF_MATRIX_TYPECODE__TO__RSB_TYPE_T"))==68) # D
+%!test
+%! s=sparsersb([1]);
+%! assert(str2num(sparsersb(i*s,"get","RSB_MIF_MATRIX_TYPECODE__TO__RSB_TYPE_T"))==90) # Z
+%!test
+%! s=sparsersb([1,1],[1,1],[11,21],2,2,"unique");
+%! assert(str2num(sparsersb(s,"get","RSB_MIF_LEAVES_COUNT__TO__RSB_BLK_INDEX_T"))>0)
+%!test
+%! s=sparsersb([1]);
+%! v=1;
+%! assert(strfind(sparsersb(sparsersb([1]),"get","WRONG SPEC STRING"),"Error")==1)
+%!test
+%! assert(sparsersb(sparsersb([11,0;21,22]),"get","RSB_MIF_TOTAL_SIZE__TO__SIZE_T")>1)
+%!test
+%! assert(length(sparsersb(sparsersb([11,0;21,22]),"RSB_MIF_TOTAL_SIZE__TO__SIZE_T"))>1)
+%!test
+%! s=sparsersb([11,0;21,22]);
+%! assert(sparsersb(s,"RSB_MIF_TOTAL_SIZE__TO__SIZE_T") == sparsersb(s,"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"))
+%!test
+%! s=sparsersb([1]);
+%! sparsersb(sparsersb([11,0;21,22]),"save","sparsersb_temporary_matrix_file.mtx")
+%!test
+%! [S, NROWS, NCOLS, NNZ, REPINFO, FIELD, SYMMETRY] = sparsersb("sparsersb_temporary_matrix_file.mtx"     );
+%! assert(NROWS==2)
+%! assert(NCOLS==2)
+%! assert(NNZ==3)
+%! assert(FIELD=="real");
+%! assert(SYMMETRY=='U');
+%!test
+%! [S, NROWS, NCOLS, NNZ, REPINFO, FIELD, SYMMETRY] = sparsersb("sparsersb_temporary_matrix_file.mtx", "Z");
+%! assert(NROWS==2);
+%! assert(NCOLS==2);
+%! assert(NNZ==3);
+%! assert(FIELD=="complex");
+%! assert(SYMMETRY=='U');
+%!test
+%! [S, NROWS, NCOLS, NNZ, REPINFO, FIELD] = sparsersb("sparsersb_temporary_matrix_file.mtx", "D");
+%! assert(NROWS==2);
+%! assert(NCOLS==2);
+%! assert(NNZ==3);
+%! assert(FIELD=="real");
+%!test
+%! [S, NROWS, NCOLS, NNZ, REPINFO] = sparsersb("sparsersb_temporary_matrix_file.mtx", "D");
+%! assert(NROWS==2);
+%! assert(NCOLS==2);
+%! assert(NNZ==3);
+%!test
+%! [S, NROWS, NCOLS] = sparsersb("sparsersb_temporary_matrix_file.mtx", "D");
+%! assert(NROWS==2);
+%! assert(NCOLS==2);
+%!test
+%! [S, NROWS] = sparsersb("sparsersb_temporary_matrix_file.mtx", "D");
+%! assert(NROWS==2);
+%!test
+%! rrm=sparsersb(sprand(1000,1000,0.001));
+%! sparsersb(rrm,"render", "sparsersb_temporary_render.eps" ,1024); # will use defaults for rWidth
+%!test
+%! rrm=sparsersb(sprand(1000,1000,0.001));
+%! sparsersb(rrm,"render", "sparsersb_temporary_render.eps" ,1024,1024);
+%! # sparsersb(rrm,"renderb", "sparsersb_temporary_renderb.eps"); sparsersb(rrm,"renders", "sparsersb_temporary_renders.eps"); # FIXME
+%!test
+%! a=sparsersb(sprand(100,100,0.4));
+%! sparsersb(a,"autotune");
+%!test
+%! a=sparsersb(sprand(100,100,0.4));
+%! o=sparsersb(a,"AUTOTUNE");
+%! v=0;
+%! try
+%!   assert(o==a)
+%!   v=1
+%! end_try_catch
+%! assert(v==0)
+%! assert(length(o)>10)
+%!test
+%! a=sparsersb(sprand(100,100,0.4));
+%! o=sparsersb(a,"autotune");
+%! assert(o==a)
+%!test
+%! a=sparsersb(sprand(100,100,0.4));
+%! nrhs=2;
+%! o=sparsersb(a,"autotune","n",nrhs);
+%! assert(o==a)
+%!test
+%! a=1*sparsersb(sprand(100,100,0.4));
+%! nrhs=2;
+%! o=sparsersb(a,"autotune","c",nrhs);
+%! assert(o==a)
+%!test
+%! a=i*sparsersb(sprand(100,100,0.4));
+%! nrhs=2;
+%! o=sparsersb(a,"autotune","c",nrhs);
+%! assert(o==a)
+%!test
+%! a=sparsersb(sprand(100,100,0.4));
+%! nrhs=1;
+%! maxr=1;
+%! o=sparsersb(a,"autotune","N",nrhs,maxr);
+%! assert(o==a)
+%!test
+%! a=sparsersb(sprand(100,100,0.4));
+%! nrhs=1;
+%! maxr=1;
+%! tmax=1;
+%! o=sparsersb(a,"autotune","n",nrhs,maxr,tmax);
+%! assert(o==a)
+%!test
+%! a=sparsersb(sprand(100,100,0.4));
+%! nrhs=1;
+%! maxr=1;
+%! tmax=1;
+%! tn=1;
+%! o=sparsersb(a,"autotune","n",nrhs,maxr,tmax,tn);
+%! assert(o==a)
+%!test
+%! a=sparsersb(sprand(100,100,0.4));
+%! nrhs=1;
+%! maxr=1;
+%! tmax=1;
+%! tn=1;
+%! sf=1;
+%! o=sparsersb(a,"autotune","n",nrhs,maxr,tmax,tn,sf);
+%! assert(o==a)
+%!test
+%! a=sparsersb(sprand(100,100,0.4));
+%! nrhs=1;
+%! maxr=1;
+%! tmax=1;
+%! tn=2;
+%! sf=1;
+%! if getenv ("OMP_NUM_THREADS") != "1" ;
+%!   o=sparsersb(a,"autotune","n",nrhs,maxr,tmax,tn,sf);
+%!   assert(o==a)
+%! end
+%!test
+%! a=sparsersb(sprand(100,100,0.4));
+%! nrhs=20;
+%! maxr=1;
+%! tmax=1;
+%! tn=1;
+%! o=sparsersb(a,"autotune","t",nrhs,maxr,tmax,tn);
+%! assert(o==a)
+%!test
+%! a=sparsersb(sprand(100,100,0.4));
+%! nrhs=20;
+%! maxr=1;
+%! tmax=1;
+%! tn=1;
+%! sf=1;
+%! o=sparsersb(a,"autotune","n",nrhs,maxr,tmax,tn,sf);
+%! assert(o==a)
+%!test
+%! a=sparsersb(sprand(100,100,0.4));
+%! nrhs=20;
+%! maxr=1;
+%! tmax=1;
+%! tn=0;
+%! sf=1;
+%! o=sparsersb(a,"autotune","n",nrhs,maxr,tmax,tn,sf);
+%! assert(o==a)
+%!test
+%! a=sparsersb(sprand(100,100,0.4));
+%! nrhs=20;
+%! maxr=0;
+%! tmax=0;
+%! tn=0;
+%! sf=1;
+%! o=sparsersb(a,"autotune","n",nrhs,maxr,tmax,tn,sf);
+%! assert(o==a)
+%!test
+%! a=sparsersb(sprand(100,100,0.4));
+%! nrhs=1;
+%! maxr=0;
+%! tmax=0;
+%! tn=0;
+%! sf=1;
+%! wvt=0;
+%! try
+%! o=sparsersb(a,"autotune","?",nrhs,maxr,tmax,tn,sf);
+%! wvt=1;
+%! end_try_catch
+%! assert(wvt==0)
+%! # assert(o==a) # o undefined
+%!test
+%! assert( nnz(sparse((toeplitz(sparsersb([0,1,2,3]))-toeplitz(sparse([0,1,2,3])))))==0 );
+%!test
+%! assert( prod(sparsersb([11,12,13;21,22,23])(:) - [11,21,12,22,13,23]')==0);
+%!test
+%! A = sprand(4,4,.5);
+%! assert(prod(reshape(sparsersb(A),[8,2]) - reshape(sparse(A),[8,2]))==0);
+%!test
+%! assert(sparsersb([-1,1,2])() == sparsersb([-1,1,2]));
+%!test
+%! % symmetry expansion
+%! A=sparsersb([1+i,0,1;0,1,0;1,0,1]);
+%! assert(nnz(A)==4 && nnz(full(A))==5);
+%!test
+%! % 1-D indexing access is meant to be like in sparse
+%! A=sparsersb([1+i,0,1;0,1,0;1,0,1]);
+%! assert(A(1)==(1+i) && A(3)==1 && sparse(A)(3)==1)
+%! A=sparsersb([1+i,0,1;0,1,0;1,0,1]);
+%! assert(A(1)==(1+i) && A(2)==0 && sparse(A)(2)==0)
+%!test
+%! A=sparsersb([1+i,0,1;0,1,0;1,0,1]);
+%! assert(0==A(2:5)-sparsersb([1,1],[2,4],[1+0i,1+0i],1,4))
+%!test
+%! assert(  nnz(sparse([2,1;1,2])) == 4 && nnz(sparsersb([2,1;1,2])) == 3  )    #    symmetry
+%! assert(  nnz(sparse([2,0;1,2])) == 3 && nnz(sparsersb([2,0;1,2])) == 3  )    # no symmetry
+%!test
+%! assert( (sparse([2,0;1,2]) \ [1;1])  == (sparsersb([2,0;1,2]) \ [1;1])  )
+%! assert( (sparse([2,0;0,2]) \ [1;1])  == (sparsersb([2,0;0,2]) \ [1;1])  )
+%!test
+%! assert( (sparse([2,0;1,2]) * [1;1])  == (sparsersb([2,0;1,2]) * [1;1])  )
+%! assert( (sparse([2,0;0,2]) * [1;1])  == (sparsersb([2,0;0,2]) * [1;1])  )
+%!test
+%! % no symmetry expansion and no conversion:
+%! assert ( ( sparsersb([1,1;1,1])*sparsersb([1,1;1,1] )) == ( sparse([1,0;1,1])*sparse([1,0;1,1]) ) )
+%!test
+%! % symmetry expansion and sparsersb->sparse conversion:
+%! assert ( ( sparsersb([1,1;1,1])*sparse   ([1,1;1,1] )) == ( sparse([1,1;1,1])*sparse([1,1;1,1]) ) )
+%!test
+%! % symmetry expansion and sparsersb->sparse conversion:
+%! assert ( ( sparse   ([1,1;1,1])*sparsersb([1,1;1,1] )) == ( sparse([1,1;1,1])*sparse([1,1;1,1]) ) )
+%!test
+%! % no symmetry expansion and no conversion:
+%! assert ( ( sparsersb([1,1;1,1])+sparsersb([1,1;1,1] )) == ( sparse([1,0;1,1])+sparse([1,0;1,1]) ) )
+%!test
+%! % symmetry expansion and sparsersb->sparse conversion:
+%! assert ( ( sparsersb([1,1;1,1])+sparse   ([1,1;1,1] )) == ( sparse([1,1;1,1])+sparse([1,1;1,1]) ) )
+%!test
+%! % symmetry expansion and sparsersb->sparse conversion:
+%! assert ( ( sparse   ([1,1;1,1])+sparsersb([1,1;1,1] )) == ( sparse([1,1;1,1])+sparse([1,1;1,1]) ) )
+%!test
+%! % symmetry specification: general
+%! assert ( sparsersb([1,2,2],[1,1,2],[1,1,1],"general") == sparse([1,0;1,1]) )
+%!test
+%! % symmetry specification: symmetric
+%! assert ( sparsersb([1,2,2],[1,1,2],[1,1,1],"symmetric") == sparse([1,1;1,1]) )
+%!test
+%! % symmetry specification: symmetric, and conversion and (:,:) access
+%! assert ( sparsersb([1,2,2],[1,1,2],[1,1+i,1],"symmetric") == sparse([1,1+i;1+i,1]) )
+%! assert ( sparsersb([1,2,2],[1,1,2],[1,1+i,1],"symmetric") == sparsersb([1,2,2],[1,1,2],[1,1+i,1],"symmetric")(:,:) )
+%!test
+%! % symmetry specification: hermitian, and conversion and (:,:) access
+%! assert ( sparsersb([1,2,2],[1,1,2],[1,1,1],"hermitian") == sparse([1,1;1,1]) )
+%! assert ( sparsersb([1,2,2],[1,1,2],[1,1,1],"hermitian") == sparsersb([1,2,2],[1,1,2],[1,1,1],"hermitian")(:,:) )
+%!test
+%! % symmetry specification: hermitian, and conversion and (:,:) access
+%! assert ( sparsersb([1,2,2],[1,1,2],[1,1+i,1],"hermitian") == sparse([1,1-i;1+i,1]) )
+%! assert ( sparsersb([1,2,2],[1,1,2],[1,1+i,1],"hermitian") == sparsersb([1,2,2],[1,1,2],[1,1+i,1],"hermitian")(:,:) )
+%!test
+%! % symmetry or hermitianness: no empty triangle access
+%! assert ( sparsersb([1,2,2],[1,1,2],[1,1+i,1],"symmetric")(1,2) == 0 )
+%! assert ( sparsersb([1,2,2],[1,1,2],[1,1+i,1],"hermitian")(1,2) == 0 )
+%! assert ( sparsersb([1,2,2],[1,1,2],[1,1+i,1],"general")(1,2) == 0 )
+%! assert ( sparsersb([1,2,2],[1,1,2],[1,1+i,1],"symmetric")(2,1) != 0 )
+%! assert ( sparsersb([1,2,2],[1,1,2],[1,1+i,1],"hermitian")(2,1) != 0 )
+%! assert ( sparsersb([1,2,2],[1,1,2],[1,1+i,1],"general")(2,1) != 0 )
+%!test
+%! % symmetry expansion
+%! assert ( nnz(sparse(sparsersb([1  ,1;1,1])) - sparse([1  ,1;1,1])) == 0 )
+%! assert ( nnz(sparse(sparsersb([1+i,1;1,1])) - sparse([1+i,1;1,1])) == 0 )
+%! % hermitianness expansion
+%! assert ( nnz(sparsersb([1,1+i;1-i,1]) - sparse([1,1+i;1-i,1])) == 0 )
+%! % no symmetric complex expansion
+%! assert ( nnz(sparsersb([1,1+i;1+i,1]) - sparse([1,1+i;1-i,1])) == 1 )
+%!test
+%! assert( (sparse([2, 0; 1, 2])(:,:))  == (sparsersb([2, 0; 1, 2])(:,:))  )
+%! assert( (sparse([2, 0; i, 2])(:,:))  == (sparsersb([2, 0; i, 2])(:,:))  )
+%!test
+%! assert( (sparse([2, 0; 1, 2])(2,:))  == (sparsersb([2, 0; 1, 2])(2,:))  )
+%! assert( (sparse([2, 0; i, 2])(2,:))  == (sparsersb([2, 0; i, 2])(2,:))  )
+%!test
+%! assert( (sparse([2, 0; 1, 2])(:,2))  == (sparsersb([2, 0; 1, 2])(:,2))  )
+%! assert( (sparse([2, 0; i, 2])(:,2))  == (sparsersb([2, 0; i, 2])(:,2))  )
+%!test
+%! assert( (sparse([2,0;1,2]) * [1;1])  == (sparsersb([2,0;1,2]) * [1;1])  )
+%! assert( (sparse([2,0;0,2]) * [1;1])  == (sparsersb([2,0;0,2]) * [1;1])  )
+%!test
+%! assert( (sparse([2,0;1,2]) * [i;1])  == (sparsersb([2,0;1,2]) * [i;1])  )
+%! assert( (sparse([2,0;0,2]) * [i;1])  == (sparsersb([2,0;0,2]) * [i;1])  )
+%!test
+%! assert( (sparse([2,0;1,2])'* [1;1])  == (sparsersb([2,0;1,2])'* [1;1])  )
+%! assert( (sparse([2,0;0,2])'* [1;1])  == (sparsersb([2,0;0,2])'* [1;1])  )
+%!test
+%! assert( (sparse([2,0;1,2])'* [i;1])  == (sparsersb([2,0;1,2])'* [i;1])  )
+%! assert( (sparse([2,0;0,2])'* [i;1])  == (sparsersb([2,0;0,2])'* [i;1])  )
+%!test
+%! assert( (sparse([2,0;1,2]).'* [1;1])  == (sparsersb([2,0;1,2]).'* [1;1])  )
+%! assert( (sparse([2,0;0,2]).'* [1;1])  == (sparsersb([2,0;0,2]).'* [1;1])  )
+%!test
+%! assert( (sparse([2,0;1,2]).'* [i;1])  == (sparsersb([2,0;1,2]).'* [i;1])  )
+%! assert( (sparse([2,0;0,2]).'* [i;1])  == (sparsersb([2,0;0,2]).'* [i;1])  )
+%!test
+%! assert( (sparse([2,0;1,2]) *  1   )  == (sparsersb([2,0;1,2]) *  1   )  )
+%! assert( (sparse([2,0;0,2]) *  1   )  == (sparsersb([2,0;0,2]) *  1   )  )
+%!test
+%! assert( (sparse([2,0;1,2]) *  i   )  == (sparsersb([2,0;1,2]) *  i   )  )
+%! assert( (sparse([2,0;0,2]) *  i   )  == (sparsersb([2,0;0,2]) *  i   )  )
+%!test
+%! assert( (sparse([2,0;1,2]).*  1   )  == (sparsersb([2,0;1,2]).*  1   )  )
+%! assert( (sparse([2,0;0,2]).*  1   )  == (sparsersb([2,0;0,2]).*  1   )  )
+%!test
+%! assert( (sparse([2,0;1,2]).*  i   )  == (sparsersb([2,0;1,2]).*  i   )  )
+%! assert( (sparse([2,0;0,2]).*  i   )  == (sparsersb([2,0;0,2]).*  i   )  )
+%!test
+%! assert( ( sparse([2,0;1,2]) + 1*sparse([2,0;1,2]) )  == (sparsersb([2,0;1,2]) + 1*sparsersb([2,0;1,2]) )  )
+%!test
+%! assert( ( sparse([2,0;0,2]) + 1*sparse([2,0;0,2]) )  == (sparsersb([2,0;0,2]) + 1*sparsersb([2,0;0,2]) )  )
+%!test
+%! assert( ( sparse([2,0;1,2]) + i*sparse([2,0;1,2]) )  == (sparsersb([2,0;1,2]) + i*sparsersb([2,0;1,2]) )  )
+%!test
+%! assert( ( sparse([2,0;0,2]) + i*sparse([2,0;0,2]) )  == (sparsersb([2,0;0,2]) + i*sparsersb([2,0;0,2]) )  )
+%!test
+%! assert( (sparse([ 1 + 1i,0;0, 1 + 1i]).'* [1,2;1,2]) == (sparsersb([ 1 + 1i,0;0, 1 + 1i]).'* [1,2;1,2]) )
+%!test
+%! A = [0,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [0,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [0,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [0,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [0,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [0,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [0,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [0,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [0,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [0,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [0,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [0,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [0,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(1,:) == sparse (A)(1,:));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(:,1) == sparse (A)(:,1));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [0,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [0,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [0,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [0,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [0,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [0,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [0,;]; assert (reshape (sparsersb (A), 1, 1) == reshape (sparse (A), 1, 1));
+%!test
+%! A = [0,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [0,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [0,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [0,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [0,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [0,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [0,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [0,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [0,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [0,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [0,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [0,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [0,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(1,:) == sparse (A)(1,:));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(:,1) == sparse (A)(:,1));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [0,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [0,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [0,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [0,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [0,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [0,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [0,;]; assert (reshape (sparsersb (A), 1, 1) == reshape (sparse (A), 1, 1));
+%!test
+%! A = [0,0,0,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(1,3) == sparse (A)(1,3));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(1,:) == sparse (A)(1,:));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(3) == sparse (A)(3));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(:,3) == sparse (A)(:,3));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;]; assert (reshape (sparsersb (A), 1, 3) == reshape (sparse (A), 1, 3));
+%!test
+%! A = [0,0,0,;]; assert (reshape (sparsersb (A), 3, 1) == reshape (sparse (A), 3, 1));
+%!test
+%! A = [0,0,0,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(1,3) == sparse (A)(1,3));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(1,:) == sparse (A)(1,:));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(3) == sparse (A)(3));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(:,3) == sparse (A)(:,3));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;]; assert (reshape (sparsersb (A), 1, 3) == reshape (sparse (A), 1, 3));
+%!test
+%! A = [0,0,0,;]; assert (reshape (sparsersb (A), 3, 1) == reshape (sparse (A), 3, 1));
+%!test
+%! A = [0,;0,;0,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(3) == sparse (A)(3));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(3,1) == sparse (A)(3,1));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(3,:) == sparse (A)(3,:));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(:,1) == sparse (A)(:,1));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [0,;0,;0,;]; assert (reshape (sparsersb (A), 1, 3) == reshape (sparse (A), 1, 3));
+%!test
+%! A = [0,;0,;0,;]; assert (reshape (sparsersb (A), 3, 1) == reshape (sparse (A), 3, 1));
+%!test
+%! A = [0,;0,;0,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(3) == sparse (A)(3));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(3,1) == sparse (A)(3,1));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(3,:) == sparse (A)(3,:));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(:,1) == sparse (A)(:,1));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [0,;0,;0,;]; assert (reshape (sparsersb (A), 1, 3) == reshape (sparse (A), 1, 3));
+%!test
+%! A = [0,;0,;0,;]; assert (reshape (sparsersb (A), 3, 1) == reshape (sparse (A), 3, 1));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (sparsersb (A)(3,3) == sparse (A)(3,3));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (sparsersb (A)(3,:) == sparse (A)(3,:));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (sparsersb (A)(9) == sparse (A)(9));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (sparsersb (A)(:,3) == sparse (A)(:,3));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (reshape (sparsersb (A), 1, 9) == reshape (sparse (A), 1, 9));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (reshape (sparsersb (A), 3, 3) == reshape (sparse (A), 3, 3));
+%!test
+%! A = [0,0,0,;0,0,0,;0,3,0,;]; assert (reshape (sparsersb (A), 9, 1) == reshape (sparse (A), 9, 1));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (sparsersb (A)(3,3) == sparse (A)(3,3));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (sparsersb (A)(3,:) == sparse (A)(3,:));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (sparsersb (A)(9) == sparse (A)(9));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (sparsersb (A)(:,3) == sparse (A)(:,3));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (reshape (sparsersb (A), 1, 9) == reshape (sparse (A), 1, 9));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (reshape (sparsersb (A), 3, 3) == reshape (sparse (A), 3, 3));
+%!test
+%! A = [0,0,0,;0,0,0,;0,0,0,;]; assert (reshape (sparsersb (A), 9, 1) == reshape (sparse (A), 9, 1));
+%!test
+%! A = [0,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [0,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [0,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [0,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [0,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [0,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [0,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [0,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [0,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [0,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [0,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [0,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [0,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(1,:) == sparse (A)(1,:));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(:,1) == sparse (A)(:,1));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [0,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [0,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [0,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [0,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [0,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [0,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [0,;]; assert (reshape (sparsersb (A), 1, 1) == reshape (sparse (A), 1, 1));
+%!test
+%! A = [0,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [0,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [0,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [0,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [0,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [0,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [0,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [0,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [0,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [0,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [0,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [0,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [0,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(1,:) == sparse (A)(1,:));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(:,1) == sparse (A)(:,1));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [0,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [0,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [0,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [0,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [0,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [0,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [0,;]; assert (reshape (sparsersb (A), 1, 1) == reshape (sparse (A), 1, 1));
+%!test
+%! A = [22,0,0,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [22,0,0,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [22,0,0,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [22,0,0,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [22,0,0,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [22,0,0,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [22,0,0,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [22,0,0,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [22,0,0,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [22,0,0,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [22,0,0,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [22,0,0,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [22,0,0,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [22,0,0,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [22,0,0,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [22,0,0,;]; assert (sparsersb (A)(1,3) == sparse (A)(1,3));
+%!test
+%! A = [22,0,0,;]; assert (sparsersb (A)(1,:) == sparse (A)(1,:));
+%!test
+%! A = [22,0,0,;]; assert (sparsersb (A)(3) == sparse (A)(3));
+%!test
+%! A = [22,0,0,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [22,0,0,;]; assert (sparsersb (A)(:,3) == sparse (A)(:,3));
+%!test
+%! A = [22,0,0,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [22,0,0,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [22,0,0,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [22,0,0,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [22,0,0,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [22,0,0,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [22,0,0,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [22,0,0,;]; assert (reshape (sparsersb (A), 1, 3) == reshape (sparse (A), 1, 3));
+%!test
+%! A = [22,0,0,;]; assert (reshape (sparsersb (A), 3, 1) == reshape (sparse (A), 3, 1));
+%!test
+%! A = [0,0,0,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(1,3) == sparse (A)(1,3));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(1,:) == sparse (A)(1,:));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(3) == sparse (A)(3));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(:,3) == sparse (A)(:,3));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;]; assert (reshape (sparsersb (A), 1, 3) == reshape (sparse (A), 1, 3));
+%!test
+%! A = [0,0,0,;]; assert (reshape (sparsersb (A), 3, 1) == reshape (sparse (A), 3, 1));
+%!test
+%! A = [0,;0,;68,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [0,;0,;68,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [0,;0,;68,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [0,;0,;68,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [0,;0,;68,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [0,;0,;68,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [0,;0,;68,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [0,;0,;68,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [0,;0,;68,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [0,;0,;68,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [0,;0,;68,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [0,;0,;68,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [0,;0,;68,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [0,;0,;68,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [0,;0,;68,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [0,;0,;68,;]; assert (sparsersb (A)(3) == sparse (A)(3));
+%!test
+%! A = [0,;0,;68,;]; assert (sparsersb (A)(3,1) == sparse (A)(3,1));
+%!test
+%! A = [0,;0,;68,;]; assert (sparsersb (A)(3,:) == sparse (A)(3,:));
+%!test
+%! A = [0,;0,;68,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [0,;0,;68,;]; assert (sparsersb (A)(:,1) == sparse (A)(:,1));
+%!test
+%! A = [0,;0,;68,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [0,;0,;68,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [0,;0,;68,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [0,;0,;68,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [0,;0,;68,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [0,;0,;68,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [0,;0,;68,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [0,;0,;68,;]; assert (reshape (sparsersb (A), 1, 3) == reshape (sparse (A), 1, 3));
+%!test
+%! A = [0,;0,;68,;]; assert (reshape (sparsersb (A), 3, 1) == reshape (sparse (A), 3, 1));
+%!test
+%! A = [0,;0,;0,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(3) == sparse (A)(3));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(3,1) == sparse (A)(3,1));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(3,:) == sparse (A)(3,:));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(:,1) == sparse (A)(:,1));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [0,;0,;0,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [0,;0,;0,;]; assert (reshape (sparsersb (A), 1, 3) == reshape (sparse (A), 1, 3));
+%!test
+%! A = [0,;0,;0,;]; assert (reshape (sparsersb (A), 3, 1) == reshape (sparse (A), 3, 1));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (sparsersb (A)(3,3) == sparse (A)(3,3));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (sparsersb (A)(3,:) == sparse (A)(3,:));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (sparsersb (A)(9) == sparse (A)(9));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (sparsersb (A)(:,3) == sparse (A)(:,3));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (reshape (sparsersb (A), 1, 9) == reshape (sparse (A), 1, 9));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (reshape (sparsersb (A), 3, 3) == reshape (sparse (A), 3, 3));
+%!test
+%! A = [0,0,0,;3,0,0,;0,0,42,;]; assert (reshape (sparsersb (A), 9, 1) == reshape (sparse (A), 9, 1));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (sparsersb (A)(3,3) == sparse (A)(3,3));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (sparsersb (A)(3,:) == sparse (A)(3,:));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (sparsersb (A)(9) == sparse (A)(9));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (sparsersb (A)(:,3) == sparse (A)(:,3));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (reshape (sparsersb (A), 1, 9) == reshape (sparse (A), 1, 9));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (reshape (sparsersb (A), 3, 3) == reshape (sparse (A), 3, 3));
+%!test
+%! A = [0+20*i,0,0,;51,0,0,;0,0,0,;]; assert (reshape (sparsersb (A), 9, 1) == reshape (sparse (A), 9, 1));
+%!test
+%! A = [54,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [54,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [54,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [54,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [54,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [54,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [54,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [54,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [54,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [54,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [54,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [54,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [54,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [54,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [54,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [54,;]; assert (sparsersb (A)(1,:) == sparse (A)(1,:));
+%!test
+%! A = [54,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [54,;]; assert (sparsersb (A)(:,1) == sparse (A)(:,1));
+%!test
+%! A = [54,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [54,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [54,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [54,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [54,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [54,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [54,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [54,;]; assert (reshape (sparsersb (A), 1, 1) == reshape (sparse (A), 1, 1));
+%!test
+%! A = [0,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [0,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [0,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [0,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [0,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [0,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [0,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [0,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [0,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [0,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [0,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [0,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [0,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(1,:) == sparse (A)(1,:));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(:,1) == sparse (A)(:,1));
+%!test
+%! A = [0,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [0,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [0,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [0,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [0,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [0,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [0,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [0,;]; assert (reshape (sparsersb (A), 1, 1) == reshape (sparse (A), 1, 1));
+%!test
+%! A = [81,0,1,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [81,0,1,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [81,0,1,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [81,0,1,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [81,0,1,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [81,0,1,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [81,0,1,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [81,0,1,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [81,0,1,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [81,0,1,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [81,0,1,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [81,0,1,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [81,0,1,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [81,0,1,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [81,0,1,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [81,0,1,;]; assert (sparsersb (A)(1,3) == sparse (A)(1,3));
+%!test
+%! A = [81,0,1,;]; assert (sparsersb (A)(1,:) == sparse (A)(1,:));
+%!test
+%! A = [81,0,1,;]; assert (sparsersb (A)(3) == sparse (A)(3));
+%!test
+%! A = [81,0,1,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [81,0,1,;]; assert (sparsersb (A)(:,3) == sparse (A)(:,3));
+%!test
+%! A = [81,0,1,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [81,0,1,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [81,0,1,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [81,0,1,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [81,0,1,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [81,0,1,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [81,0,1,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [81,0,1,;]; assert (reshape (sparsersb (A), 1, 3) == reshape (sparse (A), 1, 3));
+%!test
+%! A = [81,0,1,;]; assert (reshape (sparsersb (A), 3, 1) == reshape (sparse (A), 3, 1));
+%!test
+%! A = [0,0+16*i,70,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [0,0+16*i,70,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [0,0+16*i,70,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [0,0+16*i,70,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [0,0+16*i,70,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [0,0+16*i,70,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [0,0+16*i,70,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [0,0+16*i,70,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [0,0+16*i,70,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [0,0+16*i,70,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [0,0+16*i,70,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [0,0+16*i,70,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [0,0+16*i,70,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [0,0+16*i,70,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [0,0+16*i,70,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [0,0+16*i,70,;]; assert (sparsersb (A)(1,3) == sparse (A)(1,3));
+%!test
+%! A = [0,0+16*i,70,;]; assert (sparsersb (A)(1,:) == sparse (A)(1,:));
+%!test
+%! A = [0,0+16*i,70,;]; assert (sparsersb (A)(3) == sparse (A)(3));
+%!test
+%! A = [0,0+16*i,70,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [0,0+16*i,70,;]; assert (sparsersb (A)(:,3) == sparse (A)(:,3));
+%!test
+%! A = [0,0+16*i,70,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [0,0+16*i,70,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [0,0+16*i,70,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [0,0+16*i,70,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [0,0+16*i,70,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [0,0+16*i,70,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [0,0+16*i,70,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [0,0+16*i,70,;]; assert (reshape (sparsersb (A), 1, 3) == reshape (sparse (A), 1, 3));
+%!test
+%! A = [0,0+16*i,70,;]; assert (reshape (sparsersb (A), 3, 1) == reshape (sparse (A), 3, 1));
+%!test
+%! A = [0,;10,;9,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [0,;10,;9,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [0,;10,;9,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [0,;10,;9,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [0,;10,;9,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [0,;10,;9,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [0,;10,;9,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [0,;10,;9,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [0,;10,;9,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [0,;10,;9,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [0,;10,;9,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [0,;10,;9,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [0,;10,;9,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [0,;10,;9,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [0,;10,;9,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [0,;10,;9,;]; assert (sparsersb (A)(3) == sparse (A)(3));
+%!test
+%! A = [0,;10,;9,;]; assert (sparsersb (A)(3,1) == sparse (A)(3,1));
+%!test
+%! A = [0,;10,;9,;]; assert (sparsersb (A)(3,:) == sparse (A)(3,:));
+%!test
+%! A = [0,;10,;9,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [0,;10,;9,;]; assert (sparsersb (A)(:,1) == sparse (A)(:,1));
+%!test
+%! A = [0,;10,;9,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [0,;10,;9,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [0,;10,;9,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [0,;10,;9,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [0,;10,;9,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [0,;10,;9,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [0,;10,;9,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [0,;10,;9,;]; assert (reshape (sparsersb (A), 1, 3) == reshape (sparse (A), 1, 3));
+%!test
+%! A = [0,;10,;9,;]; assert (reshape (sparsersb (A), 3, 1) == reshape (sparse (A), 3, 1));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (sparsersb (A)(3) == sparse (A)(3));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (sparsersb (A)(3,1) == sparse (A)(3,1));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (sparsersb (A)(3,:) == sparse (A)(3,:));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (sparsersb (A)(:,1) == sparse (A)(:,1));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (reshape (sparsersb (A), 1, 3) == reshape (sparse (A), 1, 3));
+%!test
+%! A = [0,;0,;60+73*i,;]; assert (reshape (sparsersb (A), 3, 1) == reshape (sparse (A), 3, 1));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (sparsersb (A)(3,3) == sparse (A)(3,3));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (sparsersb (A)(3,:) == sparse (A)(3,:));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (sparsersb (A)(9) == sparse (A)(9));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (sparsersb (A)(:,3) == sparse (A)(:,3));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (reshape (sparsersb (A), 1, 9) == reshape (sparse (A), 1, 9));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (reshape (sparsersb (A), 3, 3) == reshape (sparse (A), 3, 3));
+%!test
+%! A = [58,0,70,;5,62,0,;0,0,86,;]; assert (reshape (sparsersb (A), 9, 1) == reshape (sparse (A), 9, 1));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (sparsersb (A)(3,3) == sparse (A)(3,3));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (sparsersb (A)(3,:) == sparse (A)(3,:));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (sparsersb (A)(9) == sparse (A)(9));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (sparsersb (A)(:,3) == sparse (A)(:,3));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (reshape (sparsersb (A), 1, 9) == reshape (sparse (A), 1, 9));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (reshape (sparsersb (A), 3, 3) == reshape (sparse (A), 3, 3));
+%!test
+%! A = [0+64*i,23+36*i,0,;0,0,0,;8,0,0,;]; assert (reshape (sparsersb (A), 9, 1) == reshape (sparse (A), 9, 1));
+%!test
+%! A = [21,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [21,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [21,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [21,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [21,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [21,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [21,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [21,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [21,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [21,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [21,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [21,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [21,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [21,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [21,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [21,;]; assert (sparsersb (A)(1,:) == sparse (A)(1,:));
+%!test
+%! A = [21,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [21,;]; assert (sparsersb (A)(:,1) == sparse (A)(:,1));
+%!test
+%! A = [21,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [21,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [21,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [21,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [21,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [21,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [21,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [21,;]; assert (reshape (sparsersb (A), 1, 1) == reshape (sparse (A), 1, 1));
+%!test
+%! A = [94+61*i,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [94+61*i,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [94+61*i,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [94+61*i,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [94+61*i,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [94+61*i,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [94+61*i,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [94+61*i,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [94+61*i,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [94+61*i,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [94+61*i,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [94+61*i,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [94+61*i,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [94+61*i,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [94+61*i,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [94+61*i,;]; assert (sparsersb (A)(1,:) == sparse (A)(1,:));
+%!test
+%! A = [94+61*i,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [94+61*i,;]; assert (sparsersb (A)(:,1) == sparse (A)(:,1));
+%!test
+%! A = [94+61*i,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [94+61*i,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [94+61*i,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [94+61*i,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [94+61*i,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [94+61*i,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [94+61*i,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [94+61*i,;]; assert (reshape (sparsersb (A), 1, 1) == reshape (sparse (A), 1, 1));
+%!test
+%! A = [38,64,99,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [38,64,99,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [38,64,99,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [38,64,99,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [38,64,99,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [38,64,99,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [38,64,99,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [38,64,99,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [38,64,99,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [38,64,99,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [38,64,99,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [38,64,99,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [38,64,99,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [38,64,99,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [38,64,99,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [38,64,99,;]; assert (sparsersb (A)(1,3) == sparse (A)(1,3));
+%!test
+%! A = [38,64,99,;]; assert (sparsersb (A)(1,:) == sparse (A)(1,:));
+%!test
+%! A = [38,64,99,;]; assert (sparsersb (A)(3) == sparse (A)(3));
+%!test
+%! A = [38,64,99,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [38,64,99,;]; assert (sparsersb (A)(:,3) == sparse (A)(:,3));
+%!test
+%! A = [38,64,99,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [38,64,99,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [38,64,99,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [38,64,99,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [38,64,99,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [38,64,99,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [38,64,99,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [38,64,99,;]; assert (reshape (sparsersb (A), 1, 3) == reshape (sparse (A), 1, 3));
+%!test
+%! A = [38,64,99,;]; assert (reshape (sparsersb (A), 3, 1) == reshape (sparse (A), 3, 1));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (sparsersb (A)(1,3) == sparse (A)(1,3));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (sparsersb (A)(1,:) == sparse (A)(1,:));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (sparsersb (A)(3) == sparse (A)(3));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (sparsersb (A)(:,3) == sparse (A)(:,3));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (reshape (sparsersb (A), 1, 3) == reshape (sparse (A), 1, 3));
+%!test
+%! A = [0+32*i,84+27*i,78,;]; assert (reshape (sparsersb (A), 3, 1) == reshape (sparse (A), 3, 1));
+%!test
+%! A = [31,;40,;66,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [31,;40,;66,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [31,;40,;66,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [31,;40,;66,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [31,;40,;66,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [31,;40,;66,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [31,;40,;66,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [31,;40,;66,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [31,;40,;66,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [31,;40,;66,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [31,;40,;66,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [31,;40,;66,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [31,;40,;66,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [31,;40,;66,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [31,;40,;66,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [31,;40,;66,;]; assert (sparsersb (A)(3) == sparse (A)(3));
+%!test
+%! A = [31,;40,;66,;]; assert (sparsersb (A)(3,1) == sparse (A)(3,1));
+%!test
+%! A = [31,;40,;66,;]; assert (sparsersb (A)(3,:) == sparse (A)(3,:));
+%!test
+%! A = [31,;40,;66,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [31,;40,;66,;]; assert (sparsersb (A)(:,1) == sparse (A)(:,1));
+%!test
+%! A = [31,;40,;66,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [31,;40,;66,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [31,;40,;66,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [31,;40,;66,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [31,;40,;66,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [31,;40,;66,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [31,;40,;66,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [31,;40,;66,;]; assert (reshape (sparsersb (A), 1, 3) == reshape (sparse (A), 1, 3));
+%!test
+%! A = [31,;40,;66,;]; assert (reshape (sparsersb (A), 3, 1) == reshape (sparse (A), 3, 1));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (sparsersb (A)(3) == sparse (A)(3));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (sparsersb (A)(3,1) == sparse (A)(3,1));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (sparsersb (A)(3,:) == sparse (A)(3,:));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (sparsersb (A)(:,1) == sparse (A)(:,1));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (reshape (sparsersb (A), 1, 3) == reshape (sparse (A), 1, 3));
+%!test
+%! A = [0+90*i,;25+58*i,;26,;]; assert (reshape (sparsersb (A), 3, 1) == reshape (sparse (A), 3, 1));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (sparsersb (A)(3,3) == sparse (A)(3,3));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (sparsersb (A)(3,:) == sparse (A)(3,:));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (sparsersb (A)(9) == sparse (A)(9));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (sparsersb (A)(:,3) == sparse (A)(:,3));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (reshape (sparsersb (A), 1, 9) == reshape (sparse (A), 1, 9));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (reshape (sparsersb (A), 3, 3) == reshape (sparse (A), 3, 3));
+%!test
+%! A = [86,42,100,;1,53,72,;6,97,38,;]; assert (reshape (sparsersb (A), 9, 1) == reshape (sparse (A), 9, 1));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert ( (sparsersb (A)) ==  (sparse (A)));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (istril (sparsersb (A)) == istril (sparse (A)));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (istriu (sparsersb (A)) == istriu (sparse (A)));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (isreal (sparsersb (A)) == isreal (sparse (A)));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (iscomplex (sparsersb (A)) == iscomplex (sparse (A)));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (issymmetric (sparsersb (A)) == issymmetric (sparse (A)));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (ishermitian (sparsersb (A)) == ishermitian (sparse (A)));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (nnz (sparsersb (A)) == nnz (sparse (A)));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (rows (sparsersb (A)) == rows (sparse (A)));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (columns (sparsersb (A)) == columns (sparse (A)));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (sparsersb (A)'*(1*ones(size(A,1))) == sparse (A)'*(1*ones(size(A,1))));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (sparsersb (A)'*(i*ones(size(A,1))) == sparse (A)'*(i*ones(size(A,1))));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (sparsersb (A)( ) == sparse (A)( ));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (sparsersb (A)(1) == sparse (A)(1));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (sparsersb (A)(1,1) == sparse (A)(1,1));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (sparsersb (A)(3,3) == sparse (A)(3,3));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (sparsersb (A)(3,:) == sparse (A)(3,:));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (sparsersb (A)(9) == sparse (A)(9));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (sparsersb (A)(:) == sparse (A)(:));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (sparsersb (A)(:,3) == sparse (A)(:,3));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (sparsersb (A)(:,:) == sparse (A)(:,:));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (sparsersb (A)*(1*ones(size(A,2))) == sparse (A)*(1*ones(size(A,2))));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (sparsersb (A)*(i*ones(size(A,2))) == sparse (A)*(i*ones(size(A,2))));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (sparsersb (A)*1 == sparse (A)*1);
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (sparsersb (A)*i == sparse (A)*i);
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (sparsersb (A).'*(1*ones(size(A,1))) == sparse (A).'*(1*ones(size(A,1))));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (sparsersb (A).'*(i*ones(size(A,1))) == sparse (A).'*(i*ones(size(A,1))));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (reshape (sparsersb (A), 1, 9) == reshape (sparse (A), 1, 9));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (reshape (sparsersb (A), 3, 3) == reshape (sparse (A), 3, 3));
+%!test
+%! A = [88,95,43,;0+76*i,26+64*i,0,;0+61*i,45+54*i,0+15*i,;]; assert (reshape (sparsersb (A), 9, 1) == reshape (sparse (A), 9, 1));
+%!test % REAL/REAL
+%! A = sprandn(1e3,1e3,1/1e3); Arsb = sparsersb(A); v = randn(1e3,1);
+%! assert(A*v,Arsb*v,1e-14);
+%! assert(A.'*v,Arsb.'*v,1e-14);
+%! assert(A'*v,Arsb'*v,1e-14);
+%!test % REAL/COMPLEX
+%! A = sprandn(1e6,1e6,1/1e6); Arsb = sparsersb(A); v = 1i*randn(1e6,1) + randn(1e6,1);
+%! assert(A*v,Arsb*v,1e-14);
+%! assert(A.'*v,Arsb.'*v,1e-14);
+%! assert(A'*v,Arsb'*v,1e-14);
+%!test % COMPLEX/REAL
+%! A = 1i*sprandn(1e3,1e3,1/1e3) + sprandn(1e3,1e3,1/1e3); Arsb = sparsersb(A); v = randn(1e3,1);
+%! assert(A*v,Arsb*v,1e-14);
+%! assert(A.'*v,Arsb.'*v,1e-14);
+%! assert(A'*v,Arsb'*v,1e-14);
+%!test % COMPLEX/COMPLEX
+%! A = 1i*sprandn(1e3,1e3,1/1e3) + sprandn(1e3,1e3,1/1e3); Arsb = sparsersb(A); v = 1i*randn(1e3,1) + randn(1e3,1);
+%! assert(A*v,Arsb*v,1e-14);
+%! assert(A.'*v,Arsb.'*v,1e-14);
+%! assert(A'*v,Arsb'*v,1e-14);
+%!demo
+%! disp("'sparsersb' behaves pretty like 'sparse':")
+%! R=(rand(3)>.6)
+%! A_octave=sparse(R)
+%! A_librsb=sparsersb(R)
+%!demo
+%! disp("The interface of 'sparsersb' is almost like the one of 'sparse'")
+%! disp("Create a 1x1 matrix:")
+%! sparsersb([2])
+%! disp("Create a 2x1 matrix:")
+%! sparsersb([1,2],[1,1],[11,21])
+%! disp("Create a 2x2 matrix:")
+%! sparsersb([1,2],[1,1],[11,21],2,2)
+%! disp("Create a 2x2 lower triangular matrix:")
+%! sparsersb([1,2,2  ],[1,1,2  ],[11,21,   22],2,2)
+%!demo
+%! disp("'sparsersb' has an option to handle duplicates.")
+%! disp("Create a 2x2 lower triangular matrix (last element summed by default):")
+%! sparsersb([1,2,2,2],[1,1,2,2],[11,21,11,11],2,2)
+%! disp("Create a 2x2 lower triangular matrix (last two elements summed explicitly):")
+%! sparsersb([1,2,2,2],[1,1,2,2],[11,21,11,11],2,2,"sum")
+%! disp("Create a 2x2 lower triangular matrix (last element ignored, explicitly):")
+%! sparsersb([1,2,2,2],[1,1,2,2],[11,21,11,11],2,2,"unique")
+%!demo
+%! disp("'sparsersb' support symmetric and hermitian matrices:\n")
+%! disp("2x2 lower tringular:")
+%! sparsersb([1,2,2  ],[1,1,2  ],[11,21 ,  22],2,2,"general")
+%! disp("2x2 symmetric (only lower triangle stored):")
+%! sparsersb([1,2,2  ],[1,1,2  ],[11,21 ,  22],2,2,"symmetric")
+%! disp("2x2 hermitian (only lower triangle stored):")
+%! sparsersb([1,2,2  ],[1,1,2  ],[11,21i,  22],2,2,"hermitian")
+%!demo
+%! disp("Any 'sparse' or 'dense' matrix can be converted to 'sparsersb':")
+%! d=sparsersb(       [1,2;3,4] )
+%! f=sparsersb( full ([1,2;3,4]))
+%! s=sparsersb(sparse([1,2;3,4]))
+%!demo
+%! disp("'sparsersb' detects symmetry:")
+%! d=sparsersb(       [1,2;2,1] )
+%! s=sparsersb(sparse([1,2;2,1]))
+%!demo
+%! disp("'sparsersb' detects hermitianness:")
+%! d=sparsersb(       [1,i;-i,1] )
+%! s=sparsersb(sparse([1,i;-i,1]))
+%!demo
+%! disp("The most important use of 'sparsersb' is for multiplying sparse matrices...\n")
+%! a=sparsersb(       [1,2;3,4] )
+%! disp("...by dense matrices or vectors:\n")
+%! x=[1,2;1,2]
+%!
+%! disp("Untransposed sparse matrix-vector multiplication:")
+%! a*x
+%!
+%! disp("Transposed sparse matrix-vector multiplication:")
+%! a'*x
+%!demo
+%! d=sparsersb(       [1,2;3,4] );
+%! s=sparsersb(sparse([1,2;3,4]));
+%!
+%! disp("Many sparse-sparse matrix operators work on 'sparsersb'\n")
+%! disp("'+' operator:")
+%! s+d
+%! disp("'.+' operator:")
+%! s.+d
+%! disp("'-' operator:")
+%! s-d
+%! disp("'.-' operator:")
+%! s.-d
+%! disp("'*' operator:")
+%! s*d
+%! disp("'.*' operator:")
+%! s.*d
+%! disp("'/' operator:")
+%! s/d
+%! disp("'./' operator:")
+%! s./d
+%! disp("'\\' operator:")
+%! s\[1;1]
+%! disp("And others. Not all operators are native: certain use a conversion; see the printout.\n")
+%!demo
+%! o=sparse(   [1,2;3,4] );
+%! s=sparsersb([1,2;3,4] );
+%!
+%! disp("Most of these operators hide a conversion; see the printout:\n")
+%!
+%! s(:,:)
+%! o(:,:)
+%!
+%! s(:,2)
+%! o(:,2)
+%!
+%! s(2,:)
+%! o(2,:)
+%!
+%! s(:)
+%! o(:)
+%!demo
+%! disp("On large matrices 'sparsersb' may be faster than 'sparse' in sparse matrix-vector multiplication.")
+%! disp("In addition to that, 'sparsersb' has an 'empirical online auto-tuning' functionality.")
+%! disp("It means you run the autotuning on a specific input, and just after, the multiplication might be faster.")
+%! disp("See this case with two different right hand sides (NRHS) count.\n")
+%! M=100000;
+%! N=100000;
+%! P=100 / M;
+%! s=sparse(sprand(M,N,P));
+%!
+%! for NRHSc = {1,7}
+%! r=sparsersb(s); # repeat tuning from 'vanilla' matrix
+%! assert(nnz(s)==nnz(r))
+%! NRHS=cell2mat(NRHSc);
+%!
+%! x=ones(M,NRHS);
+%! printf("Here, a %.2e x %.2e matrix with %.2e nonzeroes, %d NRHS.\n",M,N,nnz(s),NRHS)
+%! tic();
+%! sc=0;
+%! while(toc()<3)
+%!   s*x;
+%!   sc=sc+1;
+%! endwhile
+%! st=toc()/sc;
+%! printf("Each multiplication with 'sparse' took %.1es.\n",st);
+%!
+%! tic();
+%! rc=0;
+%! while(toc()<3)
+%!   r*x;
+%!   rc=rc+1;
+%! endwhile
+%! rt=toc()/rc;
+%! ut=rt; # untuned time
+%! printf("Each multiplication with 'sparsersb' took %.3es, this is %.4g%% of the time taken by 'sparse'.\n",rt,100*rt/st);
+%!
+%! nsb=str2num(sparsersb(r,"get","RSB_MIF_LEAVES_COUNT__TO__RSB_BLK_INDEX_T"));
+%! tic;
+%! r=sparsersb(r,"autotune","n",NRHS);
+%! at_t=toc;
+%! nnb=str2num(sparsersb(r,"get","RSB_MIF_LEAVES_COUNT__TO__RSB_BLK_INDEX_T"));
+%! printf ("Autotuning for %d NRHS took  %.2es (%d -> %d RSB blocks).\n", NRHS, at_t, nsb, nnb);
+%! tic();
+%! rc=0;
+%! while(toc()<3)
+%!   r*x;
+%!   rc=rc+1;
+%! endwhile
+%! rt=toc()/rc;
+%! printf("After tuning, each 'sparsersb' multiplication took %.3es.\n",rt);
+%! printf("This is %.4g%% of the time taken by 'sparse' (%.2fx speedup).\n",100*rt/st,st/rt);
+%! if ut > rt;
+%!   printf ("Autotuning brought a %.2fx speedup over original RSB structure.\n", ut/rt);
+%!   printf ("Time spent in autotuning can be amortized in %.1d iterations.\n", at_t/(ut-rt) );
+%! else
+%!   printf ("RSB autotuning brought no further speedup for NRHS=%d.\n",NRHS);
+%! endif
+%! disp("")
+%! endfor
+%!demo
+%! disp("'sparsersb' can render sparse matrices into Encapsulated Postscript files showing the RSB blocks layout.")
+%! rm = sparsersb(sprand(100000,100000,.0001));
+%! sparsersb(rm,'render','sptest.eps')
+%! disp("You can open sptest.eps now.")

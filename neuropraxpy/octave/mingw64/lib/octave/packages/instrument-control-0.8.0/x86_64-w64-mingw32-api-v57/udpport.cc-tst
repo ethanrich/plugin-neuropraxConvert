@@ -1,0 +1,14 @@
+## Generated from udpport.cc
+%!test
+%! # can create default udp object
+%! a = udpport ();
+%! assert (! isnull (a));
+%! assert (isa (a, 'octave_udpport'));
+%! clear a;
+%!error <Expected property name/value pairs> a = udpport (1)
+%!test
+%! a = udpport ("Name", "test", "Timeout", 2.5);
+%! assert (! isnull (a));
+%! assert (a.Name, "test");
+%! assert (a.Timeout, 2.5);
+%! clear a;

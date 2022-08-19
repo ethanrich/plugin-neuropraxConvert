@@ -1,0 +1,7 @@
+## DO NOT EDIT! Generated from z85_encode.cc
+%!error <Invalid call to zmq_z85_encode()> zmq_z85_encode()
+%!error <Invalid call to zmq_z85_encode()> zmq_z85_encode(1, 2)
+%!error <zeromq: expected input to be uint8 type data> zmq_z85_encode(1)
+%!error <zeromq: input data size must be divisible by 4> zmq_z85_encode(uint8([1 2 4]))
+%!error <zeromq: expected input to be uint8 type data> zmq_z85_encode([1 2 3 4])
+%!assert (zmq_z85_encode(uint8([1 2 3 4])), "0rJua")

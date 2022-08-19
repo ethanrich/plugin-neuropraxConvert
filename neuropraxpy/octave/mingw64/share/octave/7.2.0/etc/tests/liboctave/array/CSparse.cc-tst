@@ -1,0 +1,11 @@
+## DO NOT EDIT!  Generated automatically from CSparse.cc by Make.
+%!assert (max (max (speye (65536) * 1i)), sparse (1i))
+%!assert (min (min (speye (65536) * 1i)), sparse (0))
+%!assert (size (max (sparse (8, 0), [], 1)), [1, 0])
+%!assert (size (max (sparse (8, 0), [], 2)), [8, 0])
+%!assert (size (max (sparse (0, 8), [], 1)), [0, 8])
+%!assert (size (max (sparse (0, 8), [], 2)), [0, 1])
+%!assert (size (min (sparse (8, 0), [], 1)), [1, 0])
+%!assert (size (min (sparse (8, 0), [], 2)), [8, 0])
+%!assert (size (min (sparse (0, 8), [], 1)), [0, 8])
+%!assert (size (min (sparse (0, 8), [], 2)), [0, 1])

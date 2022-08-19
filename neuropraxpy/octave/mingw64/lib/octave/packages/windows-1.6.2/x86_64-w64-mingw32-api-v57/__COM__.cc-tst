@@ -1,0 +1,30 @@
+## DO NOT EDIT! Generated from __COM__.cc
+%!testif HAVE_WINDOWS_H
+%! wshell = actxserver ("WScript.Shell");
+%! assert (!isempty (wshell));
+%!testif HAVE_WINDOWS_H
+%! wshell = actxserver ("WScript.Shell");
+%! # type REG_SZ
+%! val = wshell.RegRead('HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\CurrentVersion');
+%! assert (isa (val, 'char'));
+%! # type REG_DWORD
+%! val = wshell.RegRead('HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\InstallDate');
+%! assert (isscalar (val));
+%! # type REG_BINARY
+%! val = wshell.RegRead('HKLM\SOFTWARE\Microsoft\DirectX\InstalledVersion');
+%! assert (iscell (val));
+%! assert (length (val) > 0);
+%! # type REG_EXPANDSZ
+%! val = wshell.RegRead('HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\ProgramFilesPath');
+%! assert (isa (val, 'char'));
+%!testif HAVE_WINDOWS_H
+%! fail ("actxserver(0)", "invalid ActiveX server name");
+%!test
+%! assert(windows_feature("COM_SafeArraySingleDim"), 0);
+%! windows_feature("COM_SafeArraySingleDim", 1);
+%! assert(windows_feature("COM_SafeArraySingleDim"), 1);
+%! windows_feature("COM_SafeArraySingleDim", 0);
+%!test
+%! fail ("windows_feature()", "Expected a name and optional value");
+%! fail ("windows_feature(1)", "Expected a string");
+%! fail ("windows_feature('a', 1, 1)", "Expected a name and optional value");

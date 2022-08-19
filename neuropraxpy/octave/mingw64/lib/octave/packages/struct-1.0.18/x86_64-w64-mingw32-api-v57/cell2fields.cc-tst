@@ -1,0 +1,12 @@
+## DO NOT EDIT! Generated from cell2fields.cc
+%!test
+%! a(1, 1).a = 1;
+%! a(2, 1).a = 2;
+%! a(1, 1).b = 3;
+%! b = a;
+%! b(1, 1).b = 5;
+%! b(2, 1).b = 6;
+%! b(1, 1).c = 7;
+%! b(2, 1).c = 8;
+%! c = {5, 7; 6, 8};
+%! assert (cell2fields (c, {"b", "c"}, 2, a), b)

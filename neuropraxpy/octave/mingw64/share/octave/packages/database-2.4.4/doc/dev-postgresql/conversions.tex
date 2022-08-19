@@ -1,0 +1,326 @@
+\documentclass[a4paper,landscape]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[landscape]{geometry}
+\usepackage{longtable}
+\usepackage[pdftex,                %%% hyper-references for pdflatex
+breaklinks=true]{hyperref}%        %%% break links if exceeding a single line
+
+\pdfadjustspacing=1                %%% force LaTeX-like character spacing
+
+\oddsidemargin=0mm
+\headsep=0mm
+\headheight=0mm
+\topmargin=0mm
+\textwidth=287mm
+\textheight=160mm
+\hoffset=-20mm
+
+\begin{document}
+
+\begin{longtable}{lp{40mm}p{40mm}p{50mm}p{40mm}p{50mm}}
+type &
+oid &
+array-oid &
+octave type &
+need to specify type &
+conversion \\\hline
+
+int4 &
+23 &
+1007 &
+int32 &
+no &
+NBO \\
+
+int2 &
+21 &
+1005 &
+int16 &
+no &
+NBO \\
+
+int8 &
+20 &
+1016 &
+int64 &
+no &
+NBO \\
+
+float4 &
+700 &
+1021 &
+single &
+no &
+NBO \\
+
+float8 &
+701 &
+1022 &
+double &
+no &
+NBO \\
+
+numeric &
+1700 &
+1231 &
+string &
+yes &
+int16: ndigits, int16: weight of first digit, int16: sign (pos: 0,
+neg: 0x4000, NaN: 0xC000), int16: display scale, ndigits x int8:
+digits \\
+
+money &
+790 &
+791 &
+int64 &
+yes &
+NBO \\
+
+text &
+25 &
+1009 &
+string &
+no &
+to server as is without trailing zero, server does conversion of
+character encoding, if necessary; from server string with already
+client-adapted character encoding (?) \\
+
+varchar &
+1043 &
+1015 &
+string &
+yes &
+same as text \\
+
+bpchar (character(n)) &
+1042 &
+1014 &
+string &
+yes &
+same as text \\
+
+name &
+&
+&
+string $<$ NAMEDATALEN &
+yes &
+same as text \\
+
+bytea &
+17 &
+1001 &
+uint8 vector &
+no &
+no conversion \\
+
+timestamp &
+1114 &
+1115 &
+int64 or double &
+yes &
+see file timeformats.txt \\
+
+timestamptz &
+1184 &
+1185 &
+int64 or double &
+yes &
+see file timeformats.txt \\
+
+time &
+1083 &
+1183 &
+int64 or double &
+yes &
+see file timeformats.txt \\
+
+timetz &
+1266 &
+1270 &
+cell: int64 or double, int32 &
+yes &
+see file timeformats.txt \\
+
+date &
+1082 &
+1182 &
+int32 &
+yes &
+see file timeformats.txt \\
+
+interval &
+1186 &
+1187 &
+string &
+cell: int64 or double, int32, int32 &
+see file timeformats.txt \\
+
+bool &
+16 &
+1000 &
+bool &
+no &
+no conversion \\
+
+enum &
+variable &
+705 (``unknown'') (?) &
+string &
+yes &
+(to server and from server as is without trailing zero (?))\\
+
+point &
+600 &
+1017 &
+2-element float vector &
+no &
+double by double, NBO \\
+
+line (?) &
+628 &
+629 &
+4-element float vector &
+yes &
+double by double, NBO \\
+
+lseg &
+601 &
+1018 &
+4-element float vector &
+no &
+double by double, NBO \\
+
+box &
+603 &
+1020 &
+4-element float vector &
+yes &
+double by double, NBO \\
+
+path &
+602 &
+1019 &
+structure with fields ``closed'' (boolean, is path closed?) and ``path''
+(2n-element float vector) &
+yes  &
+NBO, 1 byte (closed ? 1 : 0), int32 (npts), 2n double \\
+
+polygon &
+604 &
+1027 &
+2n-element float vector &
+yes &
+NBO, int32 (npts), 2n double \\
+
+circle &
+718 &
+719 &
+3-element float vector &
+no &
+double by double, NBO \\
+
+inet &
+869 &
+1041 &
+4 or 5-element uint8 vector or 8 or 9-element uint16 vector &
+yes &
+uint8: \nolinkurl{AF_INET}, \nolinkurl{AF_INET} + 1 means
+\nolinkurl{AF_INET6}; uint8: number of set maskbits (in element 5 or
+9 of octave vector, default 32 and 128); uint8: \nolinkurl{is_cidr}?;
+uint8: addrsize (4 or 16(?)); 4x or 16x uint8: address (left to right) \\
+
+cidr &
+650 &
+651 &
+see inet &
+see inet &
+see inet \\
+
+macaddr &
+829 &
+1040 &
+6-element uint8 vector &
+yes &
+6x uint8 (left to right) \\
+
+bit &
+1560 &
+1561 &
+structure, fields ``bitlen'' (int32) and ``bits'' (uint8 array) &
+yes &
+int32 (NBO): nbits; nbytes times uint8 (left to right, first byte full) \\
+
+varbit &
+1562 &
+1563 &
+see bit &
+yes &
+see bit \\
+
+tsvector &
+3614 &
+3643 &
+No, do not provide communication of this type with
+Octave. one-dimensional cell-array of lexemes, which are
+one-dimensional cell-arrays of length 3, first entry word, second
+entry vector of positions (possibly empty), third entry vector of
+weights (same length as positions), set to zeros (weight D) if no
+weights are given &
+yes &
+int32: nlexemes, nlexemes x (zero-terminated lexeme (from server:
+already in correct encoding), uint16: number of position/weight-data
+(:= npos), npos x uint16: first 2 bits weight (0 == D?) and last 14
+bits position) \\
+
+tsquery &
+3615 &
+3645 &
+Do not provide communication of this type with Octave. &
+&
+\\
+
+uuid &
+2950 &
+2951 &
+16-element uint8 vector &
+yes &
+16 x uint8, left to right \\
+
+xml &
+142 &
+143 &
+string &
+yes &
+\\
+
+array &
+see other types &
+(another dimension) &
+(see \nolinkurl{pq_exec_params} help text) &
+yes &
+int32: ndim, int32: \nolinkurl{has_null}\nolinkurl{(_bitmap)} ? 1 :
+0, uint32: element-oid, 2 x ndim x int32: ((dims[], lbounds[]), ()),
+nelem x (int32: -1 for NULL element or (uint32: length without header,
+data without header in the datatypes binary format)) \\
+
+record &
+variable &
+ &
+one-dimensional cell-array with entries of respective types &
+yes &
+int32: ncols, ncols x (uint32: element-oid, int32: -1 for NULL element
+or (uint32: length without header, data without header in the
+datatypes binary format)) \\
+
+oid &
+(obsolete information 24, 26, 2202--2206, 3734, 3769) &
+(obsolete information 1008, 1009, 2207--2211, 3735, 3770) &
+uint32 &
+no &
+uint32 \\
+
+
+\end{longtable}
+
+\end{document}

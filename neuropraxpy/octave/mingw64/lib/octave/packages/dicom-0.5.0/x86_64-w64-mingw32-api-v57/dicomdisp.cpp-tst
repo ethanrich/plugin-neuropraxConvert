@@ -1,0 +1,13 @@
+## DO NOT EDIT! Generated from dicomdisp.cpp
+%!shared testfile
+%! testfile = tempname ();
+%!fail("dicomdisp");
+%!fail("dicomdisp(1)");
+%!test
+%! wdata = uint8 (10*rand (10,10));
+%! dicomwrite (wdata, testfile);
+%! dicomdisp(testfile);
+%!test
+%! if exist (testfile, 'file')
+%!   delete (testfile);
+%! endif

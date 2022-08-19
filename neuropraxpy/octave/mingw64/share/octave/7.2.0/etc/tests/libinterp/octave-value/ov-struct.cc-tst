@@ -1,0 +1,64 @@
+## DO NOT EDIT!  Generated automatically from ov-struct.cc by Make.
+%!test
+%! x(1).a.a = 1;
+%! x(2).a.a = 2;
+%! assert (size (x), [1, 2]);
+%! assert (x(1).a.a, 1);
+%! assert (x(2).a.a, 2);
+%!test
+%! x(1).a.a = 1;
+%! x(2).a.a = 2;
+%! assert (size (x), [1, 2]);
+%! assert (x(1).a.a, 1);
+%! assert (x(2).a.a, 2);
+%!shared x
+%! x(1).a=1;  x(2).a=2;  x(1).b=3;  x(2).b=3;
+%!assert (struct ("a",1, "b",3), x(1))
+%!assert (isempty (x([])))
+%!assert (isempty (struct ("a",{}, "b",{})))
+%!assert (struct ("a",{1,2}, "b",{3,3}), x)
+%!assert (struct ("a",{1,2}, "b",3), x)
+%!assert (struct ("a",{1,2}, "b",{3}), x)
+%!assert (struct ("b",3, "a",{1,2}), x)
+%!assert (struct ("b",{3}, "a",{1,2}), x)
+%!test x = struct ([]);
+%!assert (size (x), [0,0])
+%!assert (isstruct (x))
+%!assert (isempty (fieldnames (x)))
+%!fail ('struct ("a",{1,2},"b",{1,2,3})', 'dimensions of parameter 2 do not match those of parameter 4')
+%!error <arguments must occur as "field", VALUE pairs> struct (1,2,3,4)
+%!fail ('struct ("1",2,"3")', 'struct: additional arguments must occur as "field", VALUE pairs')
+%!test
+%! x(3).d=1;  x(2).a=2;  x(1).b=3;  x(2).c=3;
+%! assert (isfield (x, "b"));
+%!assert (isfield (struct ("a", "1"), "a"))
+%!assert (isfield ({1}, "c"), false)
+%!assert (isfield (struct ("a", "1"), 10), false)
+%!assert (isfield (struct ("a", "b"), "a "), false)
+%!assert (isfield (struct ("a", 1, "b", 2), {"a", "c"}), [true, false])
+%!test
+%! keys = cellstr (char (floor (rand (100,10)*24+65)))';
+%! vals = mat2cell (rand (100,1), ones (100,1), 1)';
+%! s = struct ([keys; vals]{:});
+%! t = cell2struct (vals, keys, 2);
+%! assert (s, t);
+%! assert (struct2cell (s), vals');
+%! assert (fieldnames (s), keys');
+%!assert (cell2struct ({1; 2}, {"a"; "b"}), struct ("a", 1, "b", 2))
+%!assert (cell2struct ({}, {"f"}, 3), struct ("f", {}))
+%!assert (cell2struct ({1; 2; 3; 4}, {'a', 'b'; 'c', 'd'}),
+%!        struct ('a', 1, 'c', 2, 'b', 3, 'd', 4));
+%!assert (cell2struct ({1, 2, 3, 4}, {'a', 'b'; 'c', 'd'}, 2),
+%!        struct ('a', 1, 'c', 2, 'b', 3, 'd', 4));
+%!error cell2struct ({1, 2, 3, 4}, {'a', 'b'; 'c', 'd'})
+%!shared x
+%! x(3).d=1;  x(2).a=2;  x(1).b=3;  x(2).c=3;  x(6).f="abc123";
+%!
+%!test
+%! y = rmfield (x, "c");
+%! assert (fieldnames (y), {"d"; "a"; "b"; "f"});
+%! assert (size (y), [1, 6]);
+%!test
+%! y = rmfield (x, {"a", "f"});
+%! assert (fieldnames (y), {"d"; "b"; "c"});
+%! assert (size (y), [1, 6]);

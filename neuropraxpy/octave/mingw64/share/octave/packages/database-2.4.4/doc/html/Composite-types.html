@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- General documentation for the database package for Octave.
+
+Copyright (C) 2016-2018 Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.3, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>database_doc: Composite types</title>
+
+<meta name="description" content="database_doc: Composite types">
+<meta name="keywords" content="database_doc: Composite types">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Examples.html#Examples" rel="up" title="Examples">
+<link href="Function-index.html#Function-index" rel="next" title="Function index">
+<link href="Copy-in.html#Copy-in" rel="prev" title="Copy in">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="Composite-types"></a>
+<div class="header">
+<p>
+Previous: <a href="Copy-in.html#Copy-in" accesskey="p" rel="prev">Copy in</a>, Up: <a href="Examples.html#Examples" accesskey="u" rel="up">Examples</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Working-with-composite-types"></a>
+<h4 class="subsection">7.4.3 Working with composite types</h4>
+
+<p>This is a more complicated example with nested composite types.
+</p>
+<div class="example">
+<pre class="example">
+
+# connect
+conn = pq_connect (setdbopts (&quot;dbname&quot;, &quot;test&quot;));
+
+# create a first composite type, consisting of a boolean and an array of
+# booleans
+pq_exec_params (conn,
+&quot;create type complex_bool_array_type as (b bool, ba bool[]);&quot;)
+
+# create a second composite type, consisting of a boolean and the first
+# composite type
+pq_exec_params (conn,
+&quot;create type complex_complex_bool_array_type as (b bool, c complex_bool_array_type);&quot;)
+
+# create a table with one column, holding the second defined composite
+# type
+pq_exec_params (conn,
+&quot;create table complex_complex_bool_array (a complex_complex_bool_array_type);&quot;)
+
+# to enable data exchange using the new types, update type infomation
+pq_update_types (conn);
+
+# construct a data element for an SQL array of booleans in Octave
+d_arr = cell2struct ({2; {true, false; true, true}}, {&quot;ndims&quot;, &quot;data&quot;})
+
+# construct a data element for the first defined composite type in
+# Octave
+d_c1 = {true; d_arr};
+
+# construct a data element for the second defined composite type in
+# Octave
+d_c2 = {false; d_c1};
+
+# insert the data element of the second composite type into the table;
+# note that in this case specification of the parameter type in
+# `param_types' is necessary
+pq_exec_params (conn,
+                &quot;insert into complex_complex_bool_array values ($1);&quot;,
+                {d_c2},
+                setdbopts (&quot;param_types&quot;, {&quot;complex_complex_bool_array_type&quot;}))
+
+# read contents of the table
+result = pq_exec_params (conn, &quot;select * from complex_complex_bool_array&quot;);
+
+
+
+# only for demonstration purpouses, verify that the read data matches
+# the element constructed in Octave;
+# for this, the field `lbounds' is deleted from the returned data
+#
+# note that the verification would not work if we had constructed the
+# data element with rows of cell-arrays instead of columns, which would
+# also have been possible
+rdata = result.data{1};
+rdata{2}{2} = rmfield (rdata{2}{2}, &quot;lbounds&quot;);
+isequal (d_c2, rdata)
+
+# view returned column names
+result.columns
+
+# view returned type information
+result.types
+
+# cleanup
+
+pq_exec_params (conn, &quot;drop table complex_complex_bool_array;&quot;)
+
+pq_exec_params (conn, &quot;drop type complex_complex_bool_array_type;&quot;)
+
+pq_exec_params (conn, &quot;drop type complex_bool_array_type;&quot;)
+
+pq_close (conn);
+
+</pre></div>
+
+
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Copy-in.html#Copy-in" accesskey="p" rel="prev">Copy in</a>, Up: <a href="Examples.html#Examples" accesskey="u" rel="up">Examples</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

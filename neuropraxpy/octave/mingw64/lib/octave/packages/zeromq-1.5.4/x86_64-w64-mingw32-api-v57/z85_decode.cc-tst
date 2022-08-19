@@ -1,0 +1,6 @@
+## DO NOT EDIT! Generated from z85_decode.cc
+%!error <Invalid call to zmq_z85_decode()> zmq_z85_decode()
+%!error <Invalid call to zmq_z85_decode()> zmq_z85_decode("1234", 2)
+%!error <zeromq: expected input to be a string> zmq_z85_decode(1)
+%!error <zeromq: input string size must be divisible by 5> zmq_z85_decode("123")
+%!assert (zmq_z85_decode("0rJua"), uint8([1 2 3 4]))

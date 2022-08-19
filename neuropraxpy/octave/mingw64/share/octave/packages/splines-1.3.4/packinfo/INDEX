@@ -1,0 +1,17 @@
+analysis >> Data analysis
+Spline functions
+ bin_values
+ catmullrom 
+ csapi
+ csape
+ csaps
+ csaps_sel
+ dedup
+ fnder 
+ fnplt 
+ fnval
+ regularization
+ regularization2D
+ tpaps
+ tps_val
+ tps_val_der

@@ -1,0 +1,3649 @@
+@c ---------------------------------------------------
+@node Common Functions
+@section Common Functions
+@cindex Common Functions
+@c Common Functions flushinput
+@c -----------------------------------------
+@subsection flushinput
+@cindex flushinput
+ @deftypefn {} {} flushinput (@var{dev})
+ Flush the instruments input buffers
+
+ @subsubheading Inputs
+ @var{dev} - connected device or array of devices
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{flushoutput}
+ @end deftypefn
+@c Common Functions flushoutput
+@c -----------------------------------------
+@subsection flushoutput
+@cindex flushoutput
+ @deftypefn {} {} flushoutput (@var{dev})
+ Flush the instruments output buffers
+
+ @subsubheading Inputs
+ @var{dev} - connected device or array of devices
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{flushinput}
+ @end deftypefn
+@c Common Functions readbinblock
+@c -----------------------------------------
+@subsection readbinblock
+@cindex readbinblock
+ @deftypefn {} {@var{data} =} readbinblock (@var{dev})
+ @deftypefnx {} {@var{data} =} readbinblock (@var{dev}, @var{datatype})
+ read a binblock of data from a instrument device
+
+ @subsubheading Inputs
+ @var{dev} - connected device
+
+ @var{datatype} - optional data type to read data as (default 'uint8')
+
+ @subsubheading Outputs
+ @var{data} - data read
+
+ @xseealso{flushoutput}
+ @end deftypefn
+@c Common Functions readline
+@c -----------------------------------------
+@subsection readline
+@cindex readline
+ @deftypefn {} {@var{data} =} readline (@var{dev}, @var{data})
+ read data from a instrument device excluding terminator value
+
+ @subsubheading Inputs
+ @var{dev} - connected device
+
+ @subsubheading Outputs
+ @var{data} - ASCII data read
+
+ @xseealso{flushoutput}
+ @end deftypefn
+@c Common Functions writebinblock
+@c -----------------------------------------
+@subsection writebinblock
+@cindex writebinblock
+ @deftypefn {} {} writebinblock (@var{dev}, @var{data}, @var{datatype})
+ Write a IEEE 488.2 binblock of data to a instrument device
+
+ binblock formatted data is defined as:
+
+ #<A><B><C>
+
+ where:
+     <A> ASCII number containing the length of part <B>
+
+     <B> ASCII number containing the number of bytes of <C>
+
+     <C> Binary data block
+
+ @subsubheading Inputs
+ @var{dev} - connected device
+
+ @var{data} - binary data to send
+
+ @var{datatype} - datatype to send data as
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{flushoutput}
+ @end deftypefn
+@c Common Functions writeline
+@c -----------------------------------------
+@subsection writeline
+@cindex writeline
+ @deftypefn {} {} writeline (@var{dev}, @var{data})
+ Write data to a instrument device inclding terminator value
+
+ @subsubheading Inputs
+ @var{dev} - connected device
+
+ @var{data} - ASCII data to write
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{flushoutput}
+ @end deftypefn
+@c Common Functions writeread
+@c -----------------------------------------
+@subsection writeread
+@cindex writeread
+ @deftypefn {} {@var{data} =} writeread (@var{dev}, @var{command})
+ write a ASCII command and read data from a instrument device.
+
+ @subsubheading Inputs
+ @var{dev} - connected device
+
+ @var{command} - ASCII command
+
+ @subsubheading Outputs
+ @var{data} - ASCII data read
+
+ @xseealso{readline, writeline}
+ @end deftypefn
+@c ---------------------------------------------------
+@node General
+@section General
+@cindex General
+@c General instrhelp
+@c -----------------------------------------
+@subsection instrhelp
+@cindex instrhelp
+ @deftypefn {} {} instrhelp ()
+ @deftypefnx {} {} instrhelp (@var{funcname})
+ @deftypefnx {} {} instrhelp (@var{obj})
+ Display instrument help
+
+ @subsubheading Inputs
+ @var{funcname} - function to display help about.@*
+ @var{obj} - object to display help about.@*
+
+ If no input is provided, the function will display and overview
+ of the package functionality.
+
+ @subsubheading Outputs
+ None
+
+ @end deftypefn
+@c General instrhwinfo
+@c -----------------------------------------
+@subsection instrhwinfo
+@cindex instrhwinfo
+ @deftypefn {Function File} {[@var{list}] =} instrhwinfo ()
+ @deftypefnx {Function File} {@var{list} =} instrhwinfo (@var{interface})
+ Query available hardware for instrument-control
+
+ When run without any input parameters, instrhwinfo will provide the toolbox
+ information and a list of supported interfaces.
+
+ @subsubheading Inputs
+ @var{interface} is the instrument interface to query. When provided, instrhwinfo
+ will provide information on the specified interface.
+
+ Currently only interface "serialport","i2c" and "spi" and is supported, which will provide a list of
+ available serial ports or i2c ports.
+
+ @subsubheading Outputs
+ If an output variable is provided, the function will store the information
+ to the variable, otherwise it will be displayed to the screen.
+
+ @subsubheading Example
+ @example
+ instrhwinfo
+ scalar structure containing the fields:
+
+    ToolboxVersion = 0.4.0
+    ToolboxName = octave instrument control package
+    SupportedInterfaces =
+    @{
+      [1,1] = i2c
+      [1,2] = parallel
+      [1,3] = serialport
+      [1,4] = tcp
+      [1,5] = udp
+      [1,6] = usbtmc
+      [1,7] = vxi11
+    @}
+
+ @end example
+
+ @end deftypefn
+@c General resolvehost
+@c -----------------------------------------
+@subsection resolvehost
+@cindex resolvehost
+@deftypefn {Loadable Function} {@var{name} = } resolvehost (@var{host})
+@deftypefnx {Loadable Function} {[@var{name}, @var{address}] = } resolvehost (@var{host})
+@deftypefnx {Loadable Function} {@var{out} = } resolvehost (@var{host}, @var{returntype})
+
+Resolve a network host name or address to network name and address
+
+@subsubheading Inputs
+@var{host} - Host name or IP address string to resolve.@*
+@var{name} - Resolved IP host name.@*
+@var{returntype} - 'name' to get host name, 'address' to get IP address.
+
+@subsubheading Outputs
+@var{name} - Resolved IP host name.@*
+@var{address} - Resolved IP host address.@*
+@var{out} - host name if @var{returntype} is 'name', ipaddress if @var{returntype} is 'address'@*
+
+@subsubheading Example
+@example
+%% get resolved ip name and address pf www.gnu.org
+[name, address] = resolvehost ('www.gnu.org');
+
+%% get ip address of www.gnu.org
+ipaddress = resolvehost ('www.gnu.org', 'address');
+
+@end example
+
+@xseealso{tcp, udp}
+
+@end deftypefn
+@c ---------------------------------------------------
+@node GPIB
+@section GPIB
+@cindex GPIB
+@c GPIB @octave_gpib/fclose
+@c -----------------------------------------
+@subsection @@octave_gpib/fclose
+@cindex fclose
+ @deftypefn {Function File} {@var{res} =} fclose (@var{obj})
+ Closes connection to GPIB device @var{obj}
+ @end deftypefn
+@c GPIB @octave_gpib/fopen
+@c -----------------------------------------
+@subsection @@octave_gpib/fopen
+@cindex fopen
+ @deftypefn {Function File} {@var{res} =} fopen (@var{obj}) (dummy)
+ Opens connection to GPIB device @var{obj}
+ This currently is a dummy function to improve compatibility to MATLAB
+
+ @end deftypefn
+@c GPIB @octave_gpib/fprintf
+@c -----------------------------------------
+@subsection @@octave_gpib/fprintf
+@cindex fprintf
+ @deftypefn {Function File} {} fprintf (@var{obj}, @var{cmd})
+ @deftypefnx {Function File} {} fprintf (@var{obj}, @var{format}, @var{cmd})
+ @deftypefnx {Function File} {} fprintf (@var{obj}, @var{cmd}, @var{mode})
+ @deftypefnx {Function File} {} fprintf (@var{obj}, @var{format}, @var{cmd}, @var{mode})
+ Writes string @var{cmd} to GPIB instrument
+
+ @var{obj} is a GPIB object
+
+ @var{cmd} String
+ @var{format} Format specifier
+ @var{mode} sync
+
+ @end deftypefn
+@c GPIB @octave_gpib/fread
+@c -----------------------------------------
+@subsection @@octave_gpib/fread
+@cindex fread
+ @deftypefn {Function File} {@var{data} =} fread (@var{obj})
+ @deftypefnx {Function File} {@var{data} =} fread (@var{obj}, @var{size})
+ @deftypefnx {Function File} {@var{data} =} fread (@var{obj}, @var{size}, @var{precision})
+ @deftypefnx {Function File} {[@var{data},@var{count}] =} fread (@var{obj}, ...)
+ @deftypefnx {Function File} {[@var{data},@var{count},@var{errmsg}] =} fread (@var{obj}, ...)
+ Reads @var{data} from GPIB instrument
+
+ @var{obj} is a GPIB object
+
+ @var{size} Number of values to read. (Default: 100)
+ @var{precision} precision of data
+
+ @var{count} values read
+ @var{errmsg} read operation error message
+
+ @end deftypefn
+@c GPIB @octave_gpib/fscanf
+@c -----------------------------------------
+@subsection @@octave_gpib/fscanf
+@cindex fscanf
+ @deftypefn {Function File} {@var{res} =} fscanf (@var{obj})
+ @deftypefnx {Function File} {@var{res} =} fscanf (@var{obj}, @var{format})
+ @deftypefnx {Function File} {@var{res} =} fscanf (@var{obj}, @var{format}, @var{size})
+ @deftypefnx {Function File} {[@var{res},@var{count}] =} fscanf (@var{obj}, ...)
+ @deftypefnx {Function File} {[@var{res},@var{count},@var{errmsg}] =} fscanf (@var{obj}, ...)
+ Reads data @var{res} from GPIB instrument
+
+ @var{obj} is a GPIB object
+
+ @var{format} Format specifier
+ @var{size} number of values
+
+ @var{count} values read
+ @var{errmsg} read operation error message
+
+ @end deftypefn
+@c GPIB @octave_gpib/fwrite
+@c -----------------------------------------
+@subsection @@octave_gpib/fwrite
+@cindex fwrite
+ @deftypefn {Function File} {} fwrite (@var{obj}, @var{data})
+ @deftypefnx {Function File} {} fwrite (@var{obj}, @var{data}, @var{precision})
+ @deftypefnx {Function File} {} fwrite (@var{obj}, @var{data}, @var{mode})
+ @deftypefnx {Function File} {} fwrite (@var{obj}, @var{data}, @var{precision}, @var{mode})
+ Writes @var{data} to GPIB instrument
+
+ @var{obj} is a GPIB object
+
+ @var{data} data to write
+ @var{precision} precision of data
+ @var{mode} sync
+
+ @end deftypefn
+@c GPIB clrdevice
+@c -----------------------------------------
+@subsection clrdevice
+@cindex clrdevice
+ @deftypefn {Function File} {} clrdevice (@var{obj})
+ Send clear command to Clear GPIB instrument.
+
+ @var{obj} is a GPIB object
+
+ @end deftypefn
+@c GPIB gpib
+@c -----------------------------------------
+@subsection gpib
+@cindex gpib
+@deftypefn {Loadable Function} {@var{gpib} = } gpib ([@var{gpibid}], [@var{timeout}])
+
+Open gpib interface.
+
+@var{gpibid} - the interface number.@*
+@var{timeout} - the interface timeout value. If omitted defaults to blocking call.
+
+The gpib() shall return instance of @var{octave_gpib} class as the result @var{gpib}.
+@end deftypefn
+@c GPIB gpib_close
+@c -----------------------------------------
+@subsection gpib_close
+@cindex gpib_close
+@deftypefn {Loadable Function} {} gpib_close (@var{gpib})
+
+Close the interface and release a file descriptor.
+
+@var{gpib} - instance of @var{octave_gpib} class.
+@end deftypefn
+@c GPIB gpib_read
+@c -----------------------------------------
+@subsection gpib_read
+@cindex gpib_read
+@deftypefn {Loadable Function} {[@var{data}, @var{count}, @var{eoi}] = } gpib_read (@var{gpib}, @var{n})
+
+Read from gpib interface.
+
+@var{gpib} - instance of @var{octave_gpib} class.@*
+@var{n} - number of bytes to attempt to read of type Integer.
+
+The gpib_read() shall return number of bytes successfully read in @var{count} as Integer and the bytes themselves in @var{data} as uint8 array.
+@var{eoi} indicates read operation complete 
+@end deftypefn
+@c GPIB gpib_timeout
+@c -----------------------------------------
+@subsection gpib_timeout
+@cindex gpib_timeout
+@deftypefn {Loadable Function} {} gpib_timeout (@var{gpib}, @var{timeout})
+@deftypefnx {Loadable Function} {@var{t} = } gpib_timeout (@var{gpib})
+
+Set new or get existing gpib interface timeout parameter. The timeout value is valid from 0 to 17.
+
+@var{gpib} - instance of @var{octave_gpib} class.@*
+@var{timeout} - Value of 0 means never timeout, 11 means one second and 17 means 1000 seconds (see GPIB documentation (ibtmo) for further details)
+
+If @var{timeout} parameter is omitted, the gpib_timeout() shall return current timeout value as the result @var{t}.
+@end deftypefn
+@c GPIB gpib_write
+@c -----------------------------------------
+@subsection gpib_write
+@cindex gpib_write
+@deftypefn {Loadable Function} {@var{n} = } gpib_write (@var{gpib}, @var{data})
+
+Write data to a gpib interface.
+
+@var{gpib} - instance of @var{octave_gpib} class.@*
+@var{data} - data to be written to the gpib interface. Can be either of String or uint8 type.
+
+Upon successful completion, gpib_write() shall return the number of bytes written as the result @var{n}.
+@end deftypefn
+@c GPIB spoll
+@c -----------------------------------------
+@subsection spoll
+@cindex spoll
+ @deftypefn {Function File} {@var{out} =} spoll (@var{obj})
+ @deftypefnx {Function File} {[@var{out},@var{statusByte}] =} spoll (@var{obj})
+ Serial polls GPIB instruments.
+
+ @var{obj} is a GPIB object or a cell array of GPIB objects
+
+ @var{out} GPIB objects ready for service
+ @var{statusByte} status Byte
+
+ @end deftypefn
+@c GPIB trigger
+@c -----------------------------------------
+@subsection trigger
+@cindex trigger
+ @deftypefn {Function File} {} trigger (@var{obj})
+ Triggers GPIB instrument.
+
+ @var{obj} is a GPIB object
+
+ @end deftypefn
+@c ---------------------------------------------------
+@node I2C
+@section I2C
+@cindex I2C
+@c I2C @octave_i2c/fclose
+@c -----------------------------------------
+@subsection @@octave_i2c/fclose
+@cindex fclose
+ @deftypefn {Function File} {@var{res} =} fclose (@var{obj})
+ Closes I2C connection @var{obj}
+ @end deftypefn
+@c I2C @octave_i2c/fopen
+@c -----------------------------------------
+@subsection @@octave_i2c/fopen
+@cindex fopen
+ @deftypefn {Function File} {@var{res} =} fopen (@var{obj}) (dummy)
+ Opens I2C connection @var{obj}
+
+ This currently is a dummy function to improve compatibility to MATLAB
+
+ @end deftypefn
+@c I2C @octave_i2c/fread
+@c -----------------------------------------
+@subsection @@octave_i2c/fread
+@cindex fread
+ @deftypefn {Function File} {@var{data} =} fread (@var{obj})
+ @deftypefnx {Function File} {@var{data} =} fread (@var{obj}, @var{size})
+ @deftypefnx {Function File} {@var{data} =} fread (@var{obj}, @var{size}, @var{precision})
+ @deftypefnx {Function File} {[@var{data},@var{count}] =} fread (@var{obj}, ...)
+ @deftypefnx {Function File} {[@var{data},@var{count},@var{errmsg}] =} fread (@var{obj}, ...)
+ Reads @var{data} from I2C instrument
+
+ @subsubheading Inputs
+ @var{obj} is a I2C object.@*
+ @var{size} Number of values to read. (Default: 100).@*
+ @var{precision} precision of data.@*
+
+ @subsubheading Outputs
+ @var{data} data values.@*
+ @var{count} number of values read.@*
+ @var{errmsg} read operation error message.@*
+
+ @end deftypefn
+@c I2C @octave_i2c/fwrite
+@c -----------------------------------------
+@subsection @@octave_i2c/fwrite
+@cindex fwrite
+ @deftypefn {Function File} {@var{numbytes} = } fwrite (@var{obj}, @var{data})
+ @deftypefnx {Function File} {@var{numbytes} =} fwrite (@var{obj}, @var{data}, @var{precision})
+ Writes @var{data} to I2C instrument
+
+ @subsubheading Inputs
+ @var{obj} is a I2C object.@*
+ @var{data} data to write.@*
+ @var{precision} precision of data.@*
+
+ @subsubheading Outputs
+ returns number of bytes written.
+ @end deftypefn
+@c I2C @octave_i2c/get
+@c -----------------------------------------
+@subsection @@octave_i2c/get
+@cindex get
+ @deftypefn {Function File} {@var{struct} = } get (@var{i2c})
+ @deftypefnx {Function File} {@var{field} = } get (@var{i2c}, @var{property})
+ Get the properties of i2c object.
+
+ @subsubheading Inputs
+ @var{i2c} - instance of @var{octave_i2c} class.@*
+
+ @var{property} - name of property.@*
+
+ @subsubheading Outputs
+ When @var{property} was specified, return the value of that property.@*
+ otherwise return the values of all properties as a structure.@*
+
+ @xseealso{@@octave_i2c/set}
+ @end deftypefn
+@c I2C @octave_i2c/set
+@c -----------------------------------------
+@subsection @@octave_i2c/set
+@cindex set
+ @deftypefn {Function File} set (@var{obj}, @var{property},@var{value})
+ @deftypefnx {Function File} set (@var{obj}, @var{property},@var{value},@dots{})
+ Set the properties of i2c object.
+
+ @subsubheading Inputs
+ @var{obj} - instance of @var{octave_i2c} class.@*
+ @var{property} - name of property.@*
+
+ If @var{property} is a cell so must be @var{value}, it sets the values of
+ all matching properties.
+
+ The function also accepts property-value pairs.
+
+ @subsubheading Properties
+ @table @var
+ @item 'name'
+ Set the name for the i2c socket.
+
+ @item 'remoteaddress'
+ Set the remote address for the i2c socket.
+
+ @end table
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{@@octave_i2c/get}
+ @end deftypefn
+@c I2C i2c
+@c -----------------------------------------
+@subsection i2c
+@cindex i2c
+@deftypefn {Loadable Function} {@var{i2c} = } i2c ([@var{port_path}], [@var{address}])
+
+Open i2c interface.
+
+@subsubheading Inputs
+@var{port_path} - the interface device port/path of type String. If omitted defaults to 
+'/dev/i2c-0'. @*
+@var{address} - the slave device address. If omitted must be set using i2c_addr() call.
+
+@subsubheading Outputs
+@var{i2c} - An instance of @var{octave_i2c} class.
+
+@subsubheading Properties
+The i2c object has the following properties:
+@table @asis
+@item name
+Name of the object
+@item remoteaddress
+the slave device address
+@item port
+The interface driver port (readonly)
+@end table
+@end deftypefn
+@c I2C i2c_addr
+@c -----------------------------------------
+@subsection i2c_addr
+@cindex i2c_addr
+@deftypefn {Loadable Function} {} i2c_addr (@var{i2c}, @var{address})
+@deftypefnx {Loadable Function} {@var{addr} = } i2c_addr (@var{i2c})
+
+Set new or get existing i2c slave device address.
+
+@subsubheading Inputs
+@var{i2c} - instance of @var{octave_i2c} class.@*
+@var{address} - i2c slave device address of type Integer.
+The address is passed in the 7 or 10 lower bits of the argument.
+
+@subsubheading Outputs
+@var{addr} - If @var{address} parameter is omitted, the i2c_addr() shall return
+current i2c slave device address.
+@end deftypefn
+@c I2C i2c_close
+@c -----------------------------------------
+@subsection i2c_close
+@cindex i2c_close
+@deftypefn {Loadable Function} {} i2c_close (@var{i2c})
+
+Close the interface and release a file descriptor.
+
+@subsubheading Inputs
+@var{i2c} - instance of @var{octave_i2c} class.@*
+
+@subsubheading Outputs
+None
+@end deftypefn
+@c I2C i2c_read
+@c -----------------------------------------
+@subsection i2c_read
+@cindex i2c_read
+@deftypefn {Loadable Function} {[@var{data}, @var{count}] = } i2c_read (@var{i2c}, @var{n})
+
+Read from i2c slave device.
+
+@subsubheading Inputs
+@var{i2c} - instance of @var{octave_i2c} class.@*
+@var{n} - number of bytes to attempt to read of type Integer.
+
+@subsubheading Outputs
+The i2c_read() shall return number of bytes successfully read in @var{count} as Integer and the bytes themselves in @var{data} as uint8 array.
+@end deftypefn
+@c I2C i2c_write
+@c -----------------------------------------
+@subsection i2c_write
+@cindex i2c_write
+@deftypefn {Loadable Function} {@var{n} = } i2c_write (@var{i2c}, @var{data})
+
+Write data to a i2c slave device.
+
+@subsubheading Inputs
+@var{i2c} - instance of @var{octave_i2c} class.@*
+@var{data} - data, of type uint8, to be written to the slave device.
+
+@subsubheading Outputs
+Upon successful completion, i2c_write() shall return the number of bytes written as the result @var{n}.
+@end deftypefn
+@c ---------------------------------------------------
+@node Modbus
+@section Modbus
+@cindex Modbus
+@c Modbus @octave_modbus/get
+@c -----------------------------------------
+@subsection @@octave_modbus/get
+@cindex get
+ @deftypefn {Function File} {@var{struct} = } get (@var{dev})
+ @deftypefnx {Function File} {@var{field} = } get (@var{dev}, @var{property})
+ Get the properties of modbus object.
+
+ @subsubheading Inputs
+ @var{dev} - instance of @var{octave_modbus} class.@*
+ @var{property} - name of property.@*
+
+ @subsubheading Outputs
+ When @var{property} was specified, return the value of that property.@*
+ otherwise return the values of all properties as a structure.@*
+
+ @xseealso{@@octave_modbus/set}
+ @end deftypefn
+@c Modbus @octave_modbus/maskWrite
+@c -----------------------------------------
+@subsection @@octave_modbus/maskWrite
+@cindex maskWrite
+ @deftypefn {} {@var{data} =} maskWrite (@var{dev}, @var{address}, @var{andmask}, @var{ormask})
+ @deftypefnx {} {@var{data} =} maskWrite (@var{dev}, @var{address}, @var{andmask}, @var{ormask}, @var{serverid})
+ Read holding register at @var{address} from modbus device @var{dev} apply masking and write the change data.
+
+ writeregister value = (readregister value AND andMask) OR (orMask AND (NOT andMask))
+
+ @subsubheading Inputs
+ @var{dev} - connected modbus device
+
+ @var{address} - address to read from.
+
+ @var{andmask} - AND mask to apply to the register
+
+ @var{ormask} - OR mask to apply to the register
+
+ @var{serverId} - address to send to (0-247). Default of 1 is used if not specified.
+
+ @subsubheading Outputs
+ @var{data} - data read from the device
+
+ @xseealso{modbus}
+ @end deftypefn
+@c Modbus @octave_modbus/read
+@c -----------------------------------------
+@subsection @@octave_modbus/read
+@cindex read
+ @deftypefn {} {@var{data} =} read (@var{dev}, @var{target}, @var{address})
+ @deftypefnx {} {@var{data} =} read (@var{dev}, @var{target}, @var{address}, @var{count})
+ @deftypefnx {} {@var{data} =} read (@var{dev}, @var{target}, @var{address}, @var{count}, @var{serverId}, @var{precision})
+ Read data from modbus device @var{dev} target @var{target} starting at address @var{address}.
+
+ @subsubheading Inputs
+ @var{dev} - connected modbus device
+
+ @var{target} - target type to read. One of 'coils', 'inputs', 'inputregs' or 'holdingregs'
+
+ @var{address} - address to start reading from.
+
+ @var{count} - number of elements to read. If not provided, count is 1.
+
+ @var{serverId} - address to send to (0-247). Default of 1 is used if not specified.
+
+ @var{precision} - Optional precision for how to interpret the read data.
+ Currently known precision values are uint16 (default), int16, uint32, int32, uint64, uint64, single, double.
+
+ @subsubheading Outputs
+ @var{data} - data read from the device
+
+ @xseealso{modbus}
+ @end deftypefn
+@c Modbus @octave_modbus/set
+@c -----------------------------------------
+@subsection @@octave_modbus/set
+@cindex set
+ @deftypefn {Function File} set (@var{obj}, @var{property},@var{value})
+ @deftypefnx {Function File} set (@var{obj}, @var{property},@var{value},@dots{})
+ Set the properties of modbus object.
+
+ @subsubheading Inputs
+ @var{obj} - instance of @var{octave_modbus} class.@*
+ @var{property} - name of property.@*
+
+ If @var{property} is a cell so must be @var{value}, it sets the values of
+ all matching properties.
+
+ The function also accepts property-value pairs.
+
+ @subsubheading Properties
+ @table @var
+ @item 'Name'
+ Set the stored string name of the object.
+
+ @item 'Timeout'
+ Set the timeout value.
+
+ @item 'Numretries'
+ Set the numretries value.
+
+ @item 'ByteOrder'
+ Set the byteorder value
+
+ @item 'WordOrder'
+ Set the wordorder value
+
+ @item 'UserData'
+ Set the userdata value
+
+ @end table
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{@@octave_modbus/get}
+ @end deftypefn
+@c Modbus @octave_modbus/write
+@c -----------------------------------------
+@subsection @@octave_modbus/write
+@cindex write
+ @deftypefn {} {} write (@var{dev}, @var{target}, @var{address}, @var{values})
+ @deftypefnx {} {} read (@var{dev}, @var{target}, @var{address}, @var{values}, @var{serverId}, @var{precision})
+ Write data @var{data} to modbus device @var{dev} target @var{target} starting at address @var{address}.
+
+ @subsubheading Inputs
+ @var{dev} - connected modbus device
+
+ @var{target} - target type to read. One of 'coils' or 'holdingregs'
+
+ @var{address} - address to start reading from.
+
+ @var{data} - data to write.
+
+ @var{serverId} - address to send to (0-247). Default of 1 is used if not specified.
+
+ @var{precision} - Optional precision for how to interpret the write data.
+ Currently known precision values are uint16 (default), int16, uint32, int32, uint64, uint64, single, double.
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{modbus}
+ @end deftypefn
+@c Modbus @octave_modbus/writeRead
+@c -----------------------------------------
+@subsection @@octave_modbus/writeRead
+@cindex writeRead
+ @deftypefn {} {@var{data} =} writeRead (@var{dev}, @var{writeAddress}, @var{values}, @var{readAddress}, @var{readcount})
+ @deftypefnx {} {@var{data} =} writeRead (@var{dev}, @var{writeAddress}, @var{values}, @var{readAddress}, @var{readcount}, @var{serverId})
+ @deftypefnx {} {@var{data} =} writeRead (@var{dev}, @var{writeAddress}, @var{values}, @var{writePrecision}, @var{readAddress}, @var{readCount}, @var{readPrecision})
+ Write data @var{values} to the modbus device @var{dev} holding registers starting at address @var{writeAddress}
+ and then read @var{readCount} register values starting at address @var{readAddress}.
+
+ @subsubheading Inputs
+ @var{dev} - connected modbus device
+
+ @var{writeAddress} - address to start writing to.
+
+ @var{values} - data to write to the device.
+
+ @var{readAddress} - address to start reading from.
+
+ @var{readCount} - number of elements to read.
+
+ @var{serverId} - address to send to (0-247). Default of 1 is used if not specified.
+
+ @var{precision} - Optional precision for how to interpret the read data.
+ Currently known precision values are uint16 (default), int16, uint32, int32, uint64, uint64, single, double.
+
+ @subsubheading Outputs
+ @var{data} - data read from the device
+
+ @xseealso{modbus}
+ @end deftypefn
+@c Modbus modbus
+@c -----------------------------------------
+@subsection modbus
+@cindex modbus
+@deftypefn {Loadable Function} {@var{dev} = } modbus ('tcpip', @var{deviceaddress})
+@deftypefnx {Loadable Function} {@var{dev} = } modbus ('tcpip', @var{deviceaddress}, @var{remoteport})
+@deftypefnx {Loadable Function} {@var{dev} = } modbus ('tcpip', @var{deviceaddress}, @var{name}, @var{value})
+@deftypefnx {Loadable Function} {@var{dev} = } modbus ('serialrtu', @var{serialport})
+@deftypefnx {Loadable Function} {@var{dev} = } modbus ('serialrtu', @var{serialport}, @var{name}, @var{value})
+
+Open modbus interface using a specified transaport of 'tcpip' or 'serialrtu'.
+
+@subsubheading Inputs
+@var{deviceaddress} - the device ip address of type String.@*
+@var{remoteport} - the device remote port number. If not specified, a default of 502 will be used.@*
+@var{name}, @var{value} - Optional name value pairs for setting properties of the object.@*
+@var{serialport} - the name of the serial port to connect to. It must be specified when transport is 'serialrtu'.@*
+
+@subsubheading Common Input Name, Value pairs
+@table @asis
+@item Timeout
+timeout value used for waiting for data
+@item NumRetries
+number of retries after a timeout
+@item UserData
+Additional data to attach to the object
+@end table
+
+@subsubheading Serial RTU Input Name, Value pairs
+@table @asis
+@item BaudRate
+Baudrate for the serial port
+@item DataBits
+number of databits for serial port
+@item Parity
+Parity for serial port ('odd', 'even' or 'none')
+@item StopBits
+number of stopbits for serial port
+@end table
+
+@subsubheading Outputs
+The modbus() shall return instance of @var{octave_modbus} class as the result @var{modbus}.
+
+@subsubheading Properties
+The modbus object has the following public properties:
+@table @asis
+@item Name
+name assigned to the modbus object
+@item Type
+instrument type 'modbus' (readonly)
+@item Port
+Remote port number or serial port name (readonly)
+@item DeviceAddress
+Device address if transport was 'tcpip' (readonly)
+@item Status
+status of the object 'open' or 'closed' (readonly)
+@item Timeout
+timeout value used for waiting for data
+@item NumRetries
+number of retries after a timeout
+@item UserData
+Additional data to attach to the object
+@end table 
+@end deftypefn
+@c ---------------------------------------------------
+@node Parallel
+@section Parallel
+@cindex Parallel
+@c Parallel @octave_parallel/fclose
+@c -----------------------------------------
+@subsection @@octave_parallel/fclose
+@cindex fclose
+ @deftypefn {Function File} {@var{res} =} fclose (@var{obj})
+ Closes parallel connection @var{obj}
+ @end deftypefn
+@c Parallel @octave_parallel/fopen
+@c -----------------------------------------
+@subsection @@octave_parallel/fopen
+@cindex fopen
+ @deftypefn {Function File} {@var{res} =} fopen (@var{obj}) (dummy)
+ Opens parallel interface @var{obj}
+
+ This currently is a dummy function to improve compatibility to MATLAB
+
+ @end deftypefn
+@c Parallel @octave_parallel/fread
+@c -----------------------------------------
+@subsection @@octave_parallel/fread
+@cindex fread
+ @deftypefn {Function File} {@var{data} =} fread (@var{obj})
+ @deftypefnx {Function File} {@var{data} =} fread (@var{obj}, @var{size})
+ @deftypefnx {Function File} {@var{data} =} fread (@var{obj}, @var{size}, @var{precision})
+ @deftypefnx {Function File} {[@var{data},@var{count}] =} fread (@var{obj}, ...)
+ @deftypefnx {Function File} {[@var{data},@var{count},@var{errmsg}] =} fread (@var{obj}, ...)
+ Reads @var{data} from parallel instrument
+
+ @subsubheading Inputs
+ @var{obj} is a parallel object.@*
+ @var{size} Number of values to read. (Default: 1).@*
+ @var{precision} precision of data.@*
+
+ @subsubheading Outputs
+ @var{data} The read data.@*
+ @var{count} values read.@*
+ @var{errmsg} read operation error message.@*
+
+ @end deftypefn
+@c Parallel @octave_parallel/fwrite
+@c -----------------------------------------
+@subsection @@octave_parallel/fwrite
+@cindex fwrite
+ @deftypefn {Function File} {@var{numbytes} = } fwrite (@var{obj}, @var{data})
+ @deftypefnx {Function File} {@var{numbytes} =} fwrite (@var{obj}, @var{data}, @var{precision})
+ Writes @var{data} to parallel instrument
+
+ @subsubheading Inputs
+ @var{obj} is a parallel object.@*
+ @var{data} data to write.@*
+ @var{precision} precision of data.@*
+
+ @subsubheading Outputs
+ returns number of bytes written.
+ @end deftypefn
+@c Parallel parallel
+@c -----------------------------------------
+@subsection parallel
+@cindex parallel
+@deftypefn {Loadable Function} {@var{parallel} = } parallel ([@var{path}], [@var{direction}])
+
+Open Parallel interface.
+
+@subsubheading Inputs
+@var{path} - the interface path of type String. If omitted defaults to '/dev/parport0'.@*
+@var{direction} - the direction of interface drivers of type Integer, see: PP_DATADIR for more info.
+If omitted defaults to 1 (Input).
+
+@subsubheading Outputs
+The parallel() shall return instance of @var{octave_parallel} class as the result @var{parallel}.
+@end deftypefn
+@c Parallel pp_close
+@c -----------------------------------------
+@subsection pp_close
+@cindex pp_close
+@deftypefn {Loadable Function} {} pp_close (@var{parallel})
+
+Close the interface and release a file descriptor.
+
+@subsubheading Inputs
+@var{parallel} - instance of @var{octave_serial} class.@*
+@subsubheading Outputs
+None
+@end deftypefn
+@c Parallel pp_ctrl
+@c -----------------------------------------
+@subsection pp_ctrl
+@cindex pp_ctrl
+@deftypefn {Loadable Function} {} pp_ctrl (@var{parallel}, @var{ctrl})
+@deftypefnx {Loadable Function} {@var{c} = } pp_ctrl (@var{parallel})
+
+Sets or Read the Control lines.
+
+@subsubheading Inputs
+@var{parallel} - instance of @var{octave_parallel} class.@*
+@var{ctrl} - control parameter to be set of type Byte.
+
+@subsubheading Outputs
+If @var{ctrl} parameter is omitted, the pp_ctrl() shall return current Control lines state as the result @var{c}.
+@end deftypefn
+@c Parallel pp_data
+@c -----------------------------------------
+@subsection pp_data
+@cindex pp_data
+@deftypefn {Loadable Function} {} pp_data (@var{parallel}, @var{data})
+@deftypefnx {Loadable Function} {@var{d} = } pp_data (@var{parallel})
+
+Sets or Read the Data lines.
+
+@subsubheading Inputs
+@var{parallel} - instance of @var{octave_parallel} class.@*
+@var{data} - data parameter to be set of type Byte.
+
+@subsubheading Outputs
+If @var{data} parameter is omitted, the pp_data() shall return current Data lines state as the result @var{d}.
+@end deftypefn
+@c Parallel pp_datadir
+@c -----------------------------------------
+@subsection pp_datadir
+@cindex pp_datadir
+@deftypefn {Loadable Function} {} pp_datadir (@var{parallel}, @var{direction})
+@deftypefnx {Loadable Function} {@var{dir} = } pp_datadir (@var{parallel})
+
+Controls the Data line drivers.
+
+Normally the computer's parallel port will drive the data lines,
+but for byte-wide transfers from the peripheral to the host it is useful to turn off those drivers
+and let the peripheral drive the signals. (If the drivers on the computer's parallel port are left
+on when this happens, the port might be damaged.)
+
+@subsubheading Inputs
+@var{parallel} - instance of @var{octave_parallel} class.@*
+@var{direction} - direction parameter of type Integer. Supported values: 0 - the drivers are turned on
+(Output/Forward direction); 1 - the drivers are turned off (Input/Reverse direction).
+
+@subsubheading Outputs
+If @var{direction} parameter is omitted, the pp_datadir() shall return current Data direction as the result @var{dir}.
+@end deftypefn
+@c Parallel pp_stat
+@c -----------------------------------------
+@subsection pp_stat
+@cindex pp_stat
+@deftypefn {Loadable Function} {@var{stat} = } pp_stat (@var{parallel})
+
+Reads the Status lines.
+
+@subsubheading Inputs
+@var{parallel} - instance of @var{octave_parallel} class.@*
+
+@subsubheading Outputs
+The pp_stat() shall return current Status lines state as the result @var{stat}.
+@end deftypefn
+@c ---------------------------------------------------
+@node Serial (Deprecated)
+@section Serial (Deprecated)
+@cindex Serial (Deprecated)
+@c Serial (Deprecated) @octave_serial/fclose
+@c -----------------------------------------
+@subsection @@octave_serial/fclose
+@cindex fclose
+ @deftypefn {Function File} {@var{res} =} fclose (@var{obj})
+ Closes SERIAL connection @var{obj}
+ @end deftypefn
+@c Serial (Deprecated) @octave_serial/flushinput
+@c -----------------------------------------
+@subsection @@octave_serial/flushinput
+@cindex flushinput
+ @deftypefn {Loadable Function} {} flushinput (@var{serial})
+
+ Flush the pending input, which will also make the BytesAvailable property be 0.
+
+ @subsubheading Inputs
+ @var{serial} - instance of @var{octave_serial} class.
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{srl_flush, flushoutput}
+ @end deftypefn
+@c Serial (Deprecated) @octave_serial/flushoutput
+@c -----------------------------------------
+@subsection @@octave_serial/flushoutput
+@cindex flushoutput
+ @deftypefn {Loadable Function} {} flushoutput (@var{serial})
+
+ Flush the output buffer.
+
+ @subsubheading Inputs
+ @var{serial} - instance of @var{octave_serial} class.
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{srl_flush, flushinput}
+ @end deftypefn
+@c Serial (Deprecated) @octave_serial/fopen
+@c -----------------------------------------
+@subsection @@octave_serial/fopen
+@cindex fopen
+ @deftypefn {Function File} {@var{res} =} fopen (@var{obj}) (dummy)
+ Opens SERIAL interface @var{obj}
+
+ This currently is a dummy function to improve compatibility to MATLAB
+
+ @end deftypefn
+@c Serial (Deprecated) @octave_serial/fprintf
+@c -----------------------------------------
+@subsection @@octave_serial/fprintf
+@cindex fprintf
+ @deftypefn {Function File} {@var{numbytes} =} fprintf (@var{obj}, @var{template} ...)
+ Writes formatted string @var{template} using optional parameters to
+ serial instrument
+
+ @subsubheading Inputs
+ @var{obj} is a serial object.@*
+ @var{template} Format template string
+
+ @subsubheading Outputs
+ @var{numbytes} - number of bytes written to the serial device.
+
+ @end deftypefn
+@c Serial (Deprecated) @octave_serial/fread
+@c -----------------------------------------
+@subsection @@octave_serial/fread
+@cindex fread
+ @deftypefn {Function File} {@var{data} =} fread (@var{obj})
+ @deftypefnx {Function File} {@var{data} =} fread (@var{obj}, @var{size})
+ @deftypefnx {Function File} {@var{data} =} fread (@var{obj}, @var{size}, @var{precision})
+ @deftypefnx {Function File} {[@var{data},@var{count}] =} fread (@var{obj}, ...)
+ @deftypefnx {Function File} {[@var{data},@var{count},@var{errmsg}] =} fread (@var{obj}, ...)
+ Reads @var{data} from serial instrument
+
+ @subsubheading Inputs
+ @var{obj} is a serial object.@*
+ @var{size} Number of values to read. (Default: 100).@*
+ @var{precision} precision of data.@*
+
+ @subsubheading Outputs
+ @var{data} The read data.@*
+ @var{count} values read.@*
+ @var{errmsg} read operation error message.@*
+
+ @end deftypefn
+@c Serial (Deprecated) @octave_serial/fwrite
+@c -----------------------------------------
+@subsection @@octave_serial/fwrite
+@cindex fwrite
+ @deftypefn {Function File} {@var{numbytes} = } fwrite (@var{obj}, @var{data})
+ @deftypefnx {Function File} {@var{numbytes} =} fwrite (@var{obj}, @var{data}, @var{precision})
+ Writes @var{data} to serial instrument
+
+ @subsubheading Inputs
+ @var{obj} is a serial object.@*
+ @var{data} data to write.@*
+ @var{precision} precision of data.@*
+
+ @subsubheading Outputs
+ returns number of bytes written.
+ @end deftypefn
+@c Serial (Deprecated) @octave_serial/get
+@c -----------------------------------------
+@subsection @@octave_serial/get
+@cindex get
+ @deftypefn {Function File} {@var{struct} = } get (@var{serial})
+ @deftypefnx {Function File} {@var{field} = } get (@var{serial}, @var{property})
+ Get the properties of serial object.
+
+ @subsubheading Inputs
+ @var{serial} - instance of @var{octave_serial} class.@*
+ @var{property} - name of property.@*
+
+ @subsubheading Outputs
+ When @var{property} was specified, return the value of that property.@*
+ otherwise return the values of all properties as a structure.@*
+
+ @xseealso{@@octave_serial/set}
+ @end deftypefn
+@c Serial (Deprecated) @octave_serial/serialbreak
+@c -----------------------------------------
+@subsection @@octave_serial/serialbreak
+@cindex serialbreak
+ @deftypefn {Function File} {} serialbreak (@var{serial})
+ @deftypefnx {Function File} {} serialbreak (@var{serial}, @var{time})
+ Send a break to the serial port
+
+ @subsubheading Inputs
+ @var{serial} - serial object@*
+ @var{time} - number of milliseconds to break for. If not specified a value of 10 will be used.
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{serial}
+ @end deftypefn
+@c Serial (Deprecated) @octave_serial/set
+@c -----------------------------------------
+@subsection @@octave_serial/set
+@cindex set
+ @deftypefn {Function File} set (@var{obj}, @var{property},@var{value})
+ @deftypefnx {Function File} set (@var{obj}, @var{property},@var{value},@dots{})
+ Set the properties of serial object.
+
+ @subsubheading Inputs
+ @var{serial} - instance of @var{octave_serial} class.@*
+ @var{property} - name of property.@*
+
+ If @var{property} is a cell so must be @var{value}, it sets the values of
+ all matching properties.
+
+ The function also accepts property-value pairs.
+
+ @subsubheading Properties
+ @table @var
+ @item 'baudrate'
+ Set the baudrate of serial port. Supported values by instrument-control:
+ 0, 50, 75, 110, 134, 150, 200, 300, 600, 1200, 1800, 2400, 4800, 9600,
+ 19200, 38400, 57600, 115200 and 230400. The supported baudrate of your
+ serial port may be different.
+
+ @item 'bytesize'
+ Set the bytesize. Supported values: 5, 6, 7 and 8.
+
+ @item 'name'
+ Set the stored string name of the serial object.
+
+ @item 'parity'
+ Set the parity value. Supported values: Even/Odd/None. This Parameter
+ must be of type string. It is case insensitive and can be abbreviated
+ to the first letter only
+
+ @item 'stopbits'
+ Set the number of stopbits. Supported values: 1, 2.
+
+ @item 'timeout'
+ Set the timeout value in tenths of a second. Value of -1 means a
+ blocking call. Maximum value of 255 (i.e. 25.5 seconds).
+
+ @item 'requesttosend'
+ Set the requesttosend (RTS) line.
+
+ @item 'dataterminalready'
+ Set the dataterminalready (DTR) line.
+
+ @end table
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{@@octave_serial/get}
+ @end deftypefn
+@c Serial (Deprecated) @octave_serial/srl_baudrate
+@c -----------------------------------------
+@subsection @@octave_serial/srl_baudrate
+@cindex srl_baudrate
+ @deftypefn {Loadable Function} {} srl_baudrate (@var{serial}, @var{baudrate})\
+ @deftypefnx {Loadable Function} {@var{br} = } srl_baudrate (@var{serial})
+
+ Set new or get existing serial interface baudrate parameter. Only standard values are supported.
+
+ @subsubheading Inputs
+ @var{serial} - instance of @var{octave_serial} class.@*
+ @var{baudrate} - the baudrate value used. Supported values: 0, 50, 75, 110, 134, 150, 200, 300, 600, 1200, 1800, 2400, 4800, 9600 19200, 38400, 57600, 115200 and 230400.@*
+
+ If @var{baudrate} parameter is omitted, the srl_baudrate() shall return current baudrate value as the result @var{br}.
+
+ @subsubheading Outputs
+ @var{br} - The currently set baudrate
+
+ This function is obsolete. Use get and set method instead.
+
+ @end deftypefn
+@c Serial (Deprecated) @octave_serial/srl_bytesize
+@c -----------------------------------------
+@subsection @@octave_serial/srl_bytesize
+@cindex srl_bytesize
+ @deftypefn {Loadable Function} {} srl_bytesize (@var{serial}, @var{bsize})
+ @deftypefnx {Loadable Function} {@var{bs} = } srl_bytesize (@var{serial})
+
+ Set new or get existing serial interface byte size parameter.
+
+ @subsubheading Inputs
+ @var{serial} - instance of @var{octave_serial} class.@*
+ @var{bsize} - byte size of type Integer. Supported values: 5/6/7/8.@*
+
+ If @var{bsize} parameter is omitted, the srl_bytesize() shall return current byte size value
+ or in case of unsupported setting -1, as the result @var{bs}.
+
+ This function is obsolete. Use get and set method instead.
+
+ @subsubheading Outputs
+ @var{bs} -the currently set  byte size.
+
+ @end deftypefn
+@c Serial (Deprecated) @octave_serial/srl_close
+@c -----------------------------------------
+@subsection @@octave_serial/srl_close
+@cindex srl_close
+ @deftypefn {Loadable Function} {} srl_close (@var{serial})
+
+ Close the interface and release a file descriptor.
+
+ @subsubheading Inputs
+ @var{serial} - instance of @var{octave_serial} class.
+
+ This function is obsolete. Use fclose() method instead.
+
+ @subsubheading Outputs
+ None
+
+ @end deftypefn
+@c Serial (Deprecated) @octave_serial/srl_flush
+@c -----------------------------------------
+@subsection @@octave_serial/srl_flush
+@cindex srl_flush
+ @deftypefn {Loadable Function} {} srl_flush (@var{serial}, [@var{q}])
+
+Flush the pending input/output.
+
+ @subsubheading Inputs
+ @var{serial} - instance of @var{octave_serial} class.@*
+ @var{q} - queue selector of type Integer. Supported values:@*
+ @table @asis
+ @item 0
+ flush untransmitted output
+ @item 1
+ flush pending input
+ @item 2
+ flush both pending input and untransmitted output.
+ @end table
+
+ If @var{q} parameter is omitted, the srl_flush() shall flush both, input and output buffers.
+
+ @subsubheading Outputs
+ None
+
+ @end deftypefn
+@c Serial (Deprecated) @octave_serial/srl_parity
+@c -----------------------------------------
+@subsection @@octave_serial/srl_parity
+@cindex srl_parity
+ @deftypefn {Loadable Function} {} srl_parity (@var{serial}, @var{parity})
+ @deftypefnx {Loadable Function} {@var{p} = } srl_parity (@var{serial})
+
+ Set new or get existing serial interface parity parameter. Even/Odd/None values are supported.
+
+ @subsubheading Inputs
+ @var{serial} - instance of @var{octave_serial} class.@*
+ @var{parity} - parity value of type String. Supported values:
+ Even/Odd/None (case insensitive, can be abbreviated to the first letter only)@*
+
+ If @var{parity} parameter is omitted, the srl_parity() shall return current parity value as the result @var{p}.
+
+ This function is obsolete. Use get and set method instead.
+
+ @subsubheading Outputs
+ @var{p} - The currently set parity
+
+ @end deftypefn
+@c Serial (Deprecated) @octave_serial/srl_stopbits
+@c -----------------------------------------
+@subsection @@octave_serial/srl_stopbits
+@cindex srl_stopbits
+ @deftypefn {Loadable Function} {} srl_stopbits (@var{serial}, @var{stopb})
+ @deftypefnx {Loadable Function} {@var{sb} = } srl_stopbits (@var{serial})
+
+ Set new or get existing serial interface stop bits parameter. Only 1 or 2 stop bits are supported.
+
+ @subsubheading Inputs
+ @var{serial} - instance of @var{octave_serial} class.@*
+ @var{stopb} - number of stop bits used. Supported values: 1, 2.@*
+
+ @subsubheading Outputs
+ If @var{stopb} parameter is omitted, the srl_stopbits() shall return current stop bits value as the result @var{sb}.
+
+ This function is obsolete. Use get and set method instead.
+
+ @end deftypefn
+@c Serial (Deprecated) @octave_serial/srl_timeout
+@c -----------------------------------------
+@subsection @@octave_serial/srl_timeout
+@cindex srl_timeout
+ @deftypefn {Loadable Function} {} srl_timeout (@var{serial}, @var{timeout})
+ @deftypefnx {Loadable Function} {@var{t} = } srl_timeout (@var{serial})
+
+ Set new or get existing serial interface timeout parameter used for srl_read() requests. The timeout value is specified in tenths of a second.
+
+ @subsubheading Inputs
+ @var{serial} - instance of @var{octave_serial} class.@*
+ @var{timeout} - srl_read() timeout value in tenths of a second.
+ A value of -1 means a blocking call. Maximum value of 255 (i.e. 25.5 seconds).@*
+
+ @subsubheading Outputs
+ If @var{timeout} parameter is omitted, the srl_timeout() shall return current timeout value as the result @var{t}.
+
+ This function is obsolete. Use get and set method instead.
+
+ @end deftypefn
+@c Serial (Deprecated) serial
+@c -----------------------------------------
+@subsection serial
+@cindex serial
+@deftypefn {Loadable Function} {@var{serial} = } serial ([@var{path}], [@var{baudrate}], [@var{timeout}])
+
+Open serial interface.
+
+@subsubheading Inputs
+@var{path} - the interface path of type String. @*
+@var{baudrate} - the baudrate of interface. If omitted defaults to 115200. @*
+@var{timeout} - the interface timeout value. If omitted defaults to blocking call.
+
+@subsubheading Outputs
+The serial() shall return an instance of @var{octave_serial} class as the result @var{serial}.
+@subsubheading Properties
+The serial object has the following public properties:
+@table @asis
+@item name
+name assigned to the object
+@item type
+instrument type 'serial' (readonly)
+@item port
+OS specific port name (readonly)
+@item status
+status of the object 'open' or 'closed' (readonly)
+@item timeout
+timeout value used for waiting for data
+@item bytesavailable
+number of bytes currently available to read (readonly)
+@item stopbits
+number of stopbits to use
+@item requesttosend
+request to send state - 'on' or 'off'
+@item parity
+Parity setting 'none', 'even', 'odd'
+@item bytesize
+Number of bits to a byte (7 or 8)
+@item baudrate
+Baudrate setting
+@item dataterminalready
+state of dataterminal ready - 'on' or 'off'
+@item pinstatus
+current state of pins (readonly)
+@end table 
+@end deftypefn
+@c Serial (Deprecated) seriallist
+@c -----------------------------------------
+@subsection seriallist
+@cindex seriallist
+ @deftypefn {Function File} {@var{list} = } seriallist ()
+ Returns a list of all serial ports detected in the system.
+
+ @subsubheading Inputs
+ None
+
+ @subsubheading Outputs
+ @var{list} is a string cell array of serial ports names detected
+ in the system.
+
+ @xseealso{instrhwinfo("serial")}
+ @end deftypefn
+@c Serial (Deprecated) srl_read
+@c -----------------------------------------
+@subsection srl_read
+@cindex srl_read
+@deftypefn {Loadable Function} {[@var{data}, @var{count}] = } srl_read (@var{serial}, @var{n})
+
+Read from serial interface.
+
+@subsubheading Inputs
+@var{serial} - instance of @var{octave_serial} class.@*
+@var{n} - number of bytes to attempt to read of type Integer.
+
+@subsubheading Outputs
+The srl_read() shall return number of bytes successfully read in @var{count} as Integer and the bytes themselves in @var{data} as uint8 array.
+@end deftypefn
+@c Serial (Deprecated) srl_write
+@c -----------------------------------------
+@subsection srl_write
+@cindex srl_write
+@deftypefn {Loadable Function} {@var{n} = } srl_write (@var{serial}, @var{data})
+
+Write data to a serial interface.
+
+@subsubheading Inputs
+@var{serial} - instance of @var{octave_serial} class.@*
+@var{data} - data to be written to the serial interface. Can be either of String or uint8 type.
+
+@subsubheading Outputs
+Upon successful completion, srl_write() shall return the number of bytes written as the result @var{n}.
+@end deftypefn
+@c ---------------------------------------------------
+@node Serial Port
+@section Serial Port
+@cindex Serial Port
+@c Serial Port @octave_serialport/configureTerminator
+@c -----------------------------------------
+@subsection @@octave_serialport/configureTerminator
+@cindex configureTerminator
+ @deftypefn {Function File} {} configureTerminator (@var{serial}, @var{term})
+ @deftypefnx {Function File} {} configureTerminator (@var{serial}, @var{readterm}, @var{writeterm})
+ Set terminator for ASCII string manipulation
+
+ @subsubheading Inputs
+ @var{serial} - serialport object@*
+ @var{term} - terminal value for both read and write@*
+ @var{readterm} = terminal value type for read data@*
+ @var{writeterm} = terminal value for written data@*
+
+ The terminal can be either strings "cr", "lf" (default), "lf/cr" or an integer between 0 to 255.
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{serialport}
+ @end deftypefn
+@c Serial Port @octave_serialport/flush
+@c -----------------------------------------
+@subsection @@octave_serialport/flush
+@cindex flush
+ @deftypefn {} {@var{data} =} flush (@var{dev})
+ @deftypefnx {} {@var{data} =} flush (@var{dev}, "input")
+ @deftypefnx {} {@var{data} =} flush (@var{dev}, "output")
+ Flush the serial port buffers
+
+ @subsubheading Inputs
+ @var{dev} - connected serialport device
+
+ If an additional parameter is provided of "input" or "output",
+ then only the input or output buffer will be flushed
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{serialport}
+ @end deftypefn
+@c Serial Port @octave_serialport/fprintf
+@c -----------------------------------------
+@subsection @@octave_serialport/fprintf
+@cindex fprintf
+ @deftypefn {Function File} {@var{numbytes} =} fprintf (@var{obj}, @var{template} ...)
+ Writes formatted string @var{template} using optional parameters to
+ serialport instrument
+
+ @subsubheading Inputs
+ @var{obj} is a serialport object.@*
+ @var{template} Format template string
+
+ @subsubheading Outputs
+ @var{numbytes} - number of bytes written to the serial device.
+
+ @end deftypefn
+@c Serial Port @octave_serialport/fread
+@c -----------------------------------------
+@subsection @@octave_serialport/fread
+@cindex fread
+ @deftypefn {Function File} {@var{data} =} fread (@var{obj})
+ @deftypefnx {Function File} {@var{data} =} fread (@var{obj}, @var{size})
+ @deftypefnx {Function File} {@var{data} =} fread (@var{obj}, @var{size}, @var{precision})
+ @deftypefnx {Function File} {[@var{data},@var{count}] =} fread (@var{obj}, ...)
+ @deftypefnx {Function File} {[@var{data},@var{count},@var{errmsg}] =} fread (@var{obj}, ...)
+ Reads @var{data} from serial port instrument
+
+ @subsubheading Inputs
+ @var{obj} is a serialport object.@*
+ @var{size} Number of values to read.@*
+ @var{precision} precision of data.@*
+
+ @subsubheading Outputs
+ @var{data} The read data.@*
+ @var{count} number of values read.@*
+ @var{errmsg} read operation error message.@*
+
+ @end deftypefn
+@c Serial Port @octave_serialport/fwrite
+@c -----------------------------------------
+@subsection @@octave_serialport/fwrite
+@cindex fwrite
+ @deftypefn {Function File} {@var{numbytes} = } fwrite (@var{obj}, @var{data})
+ @deftypefnx {Function File} {@var{numbytes} =} fwrite (@var{obj}, @var{data}, @var{precision})
+ Writes @var{data} to serial port instrument
+
+ @subsubheading Inputs
+ @var{obj} is a serial port object.@*
+ @var{data} data to write.@*
+ @var{precision} precision of data.@*
+
+ @subsubheading Outputs
+ returns number of bytes written.
+ @end deftypefn
+@c Serial Port @octave_serialport/get
+@c -----------------------------------------
+@subsection @@octave_serialport/get
+@cindex get
+ @deftypefn {Function File} {@var{struct} = } get (@var{serial})
+ @deftypefnx {Function File} {@var{field} = } get (@var{serial}, @var{property})
+ Get the properties of serialport object.
+
+ @subsubheading Inputs
+ @var{serial} - instance of @var{octave_serialport} class.@*
+ @var{property} - name of property.@*
+
+ @subsubheading Outputs
+ When @var{property} was specified, return the value of that property.@*
+ otherwise return the values of all properties as a structure.@*
+
+ @xseealso{@@octave_serial/set}
+ @end deftypefn
+@c Serial Port @octave_serialport/getpinstatus
+@c -----------------------------------------
+@subsection @@octave_serialport/getpinstatus
+@cindex getpinstatus
+ @deftypefn {Function File} {@var{status}} getpinstatus (@var{serial})
+ Get status of serial pins
+
+ @subsubheading Inputs
+ @var{serial} - serial object@*
+
+ @subsubheading Outputs
+ @var{status} - a structure with the logic names of ClearToSend, DataSetReady, CarrierDetect, and RingIndicator
+
+ @xseealso{serialport}
+ @end deftypefn
+@c Serial Port @octave_serialport/read
+@c -----------------------------------------
+@subsection @@octave_serialport/read
+@cindex read
+ @deftypefn {} {@var{data} =} read (@var{dev}, @var{count})
+ @deftypefnx {} {@var{data} =} read (@var{dev}, @var{count}, @var{precision})
+ Read a specified number of values from a serialport
+ using optional precision for valuesize.
+
+ @subsubheading Inputs
+ @var{dev} - connected serialport device
+
+ @var{count} - number of elements to read
+
+ @var{precision} - Optional precision for the output data read data.
+ Currently known precision values are uint8 (default), int8, uint16, int16, uint32, int32, uint64, uint64
+
+ @subsubheading Outputs
+ @var{data} - data read from the device
+
+ @xseealso{serialport}
+ @end deftypefn
+@c Serial Port @octave_serialport/serialbreak
+@c -----------------------------------------
+@subsection @@octave_serialport/serialbreak
+@cindex serialbreak
+ @deftypefn {Function File} {} serialbreak (@var{serial})
+ @deftypefnx {Function File} {} serialbreak (@var{serial}, @var{time})
+ Send a break to the serial port
+
+ @subsubheading Inputs
+ @var{serial} - serialport object@*
+ @var{time} - number of milliseconds to break for. If not specified a value of 10 will be used.
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{serial}
+ @end deftypefn
+@c Serial Port @octave_serialport/set
+@c -----------------------------------------
+@subsection @@octave_serialport/set
+@cindex set
+ @deftypefn {Function File} set (@var{obj}, @var{property},@var{value})
+ @deftypefnx {Function File} set (@var{obj}, @var{property},@var{value},@dots{})
+ Set the properties of serialport object.
+
+ @subsubheading Inputs
+ @var{serial} - instance of @var{octave_serialport} class.@*
+ @var{property} - name of property.@*
+
+ If @var{property} is a cell so must be @var{value}, it sets the values of
+ all matching properties.
+
+ The function also accepts property-value pairs.
+
+ @subsubheading Properties
+ @table @var
+ @item 'baudrate'
+ Set the baudrate of serial port. Supported values by instrument-control:
+ 0, 50, 75, 110, 134, 150, 200, 300, 600, 1200, 1800, 2400, 4800, 9600,
+ 19200, 38400, 57600, 115200 and 230400. The supported baudrate of your
+ serial port may be different.
+
+ @item 'bytesize'
+ Set the bytesize. Supported values: 5, 6, 7 and 8.
+
+ @item 'name'
+ Set the stored string name of the serial object.
+
+ @item 'parity'
+ Set the parity value. Supported values: Even/Odd/None. This Parameter
+ must be of type string. It is case insensitive and can be abbreviated
+ to the first letter only
+
+ @item 'stopbits'
+ Set the number of stopbits. Supported values: 1, 2.
+
+ @item 'timeout'
+ Set the timeout value in tenths of a second. Value of -1 means a
+ blocking call. Maximum value of 255 (i.e. 25.5 seconds).
+
+ @item 'requesttosend'
+ Set the requesttosend (RTS) line.
+
+ @item 'dataterminalready'
+ Set the dataterminalready (DTR) line.
+
+ @end table
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{@@octave_serialport/-get}
+ @end deftypefn
+@c Serial Port @octave_serialport/setDTR
+@c -----------------------------------------
+@subsection @@octave_serialport/setDTR
+@cindex setDTR
+ @deftypefn {} {} setDTR (@var{dev}, @var{true_false})
+ Set the state of the DTR line
+
+ @subsubheading Inputs
+ @var{dev} - connected serial device.@*
+ @var{true_false} - state to set the line.@*
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{serialport, getpinstatus, setRTS}
+ @end deftypefn
+@c Serial Port @octave_serialport/setRTS
+@c -----------------------------------------
+@subsection @@octave_serialport/setRTS
+@cindex setRTS
+ @deftypefn {} {} setRTS (@var{dev}, @var{true_false})
+ Set the state of the RTS line
+
+ @subsubheading Inputs
+ @var{dev} - connected serial device.@*
+ @var{true_false} - state to set the line.@*
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{serialport, getpinstatus}
+ @end deftypefn
+@c Serial Port @octave_serialport/write
+@c -----------------------------------------
+@subsection @@octave_serialport/write
+@cindex write
+ @deftypefn {Function File} {@var{numbytes} = } write (@var{obj}, @var{data})
+ @deftypefnx {Function File} {@var{numbytes} =} write (@var{obj}, @var{data}, @var{precision})
+ Writes @var{data} to serialport instrument
+
+ @subsubheading Inputs
+ @var{obj} is a serialport object.@*
+ @var{data} data to write.@*
+ @var{precision} precision of data.@*
+
+ @subsubheading Outputs
+ returns number of bytes written.
+ @end deftypefn
+@c Serial Port serialport
+@c -----------------------------------------
+@subsection serialport
+@cindex serialport
+@deftypefn {Loadable Function} {@var{serial} = } serialport ([@var{path}], [@var{baudrate}])
+@deftypefnx {Loadable Function} {@var{serial} = } serialport ([@var{path}], [@var{propname}, @var{propvalue}])
+
+Open serial port interface.
+
+@subsubheading Inputs
+@var{path} - the interface path of type String. @*
+@var{baudrate} - the baudrate of interface.@*
+@var{propname},@var{propvalue} - property name/value pairs.
+
+Known input properties:
+@table @asis
+@item BaudRate
+Numeric baudrate value
+@item Timeout
+Numeric timeout value in seconds or -1 to wait forever
+@item StopBits
+number of stopbits to use
+@item Parity
+Parity setting 'none', 'even', 'odd'
+@item DataBits
+Number of bits to a byte (5 to 8)
+@item FlowControl
+Number of bits to a byte 'none', 'hardware', 'software'
+@end table
+
+@subsubheading Outputs
+The serialport() shall return an instance of @var{octave_serialport} class as the result @var{serial}.
+
+@subsubheading Properties
+The serial object has the following public properties:
+@table @asis
+@item Name
+name assigned to the object
+@item Type
+instrument type 'serial' (readonly)
+@item Port
+OS specific port name (readonly)
+@item Status
+status of the object 'open' or 'closed' (readonly)
+@item Timeout
+timeout value used for waiting for data
+@item NumBytesAvailable
+number of bytes currently available to read (readonly)
+@item NumBytesWritten
+number of bytes written (readonly)
+@item StopBits
+number of stopbits to use
+@item Parity
+Parity setting 'none', 'even', 'odd'
+@item DataBits
+Number of bits to a byte (5 to 8)
+@item BaudRate
+Baudrate setting
+@item FlowControl
+Number of bits to a byte 'none', 'hardware', 'software'
+@item PinStatus
+current state of pins (readonly)
+@item UserData
+user defined data
+@end table 
+@end deftypefn
+@c Serial Port serialportlist
+@c -----------------------------------------
+@subsection serialportlist
+@cindex serialportlist
+ @deftypefn {Function File} {@var{list} = } serialportlist ()
+ @deftypefnx {Function File} {@var{list} = } serialportlist ("all")
+ @deftypefnx {Function File} {@var{list} = } serialportlist ("available")
+ Returns a list of all serial ports detected in the system.
+
+ @subsubheading Inputs
+ 'all' - show all serial ports (same as providing no arguments)
+ 'available' - show only serial ports that are available for use
+
+ @subsubheading Outputs
+ @var{list} is a string cell array of serial ports names detected
+ in the system.
+
+ @xseealso{instrhwinfo("serialport")}
+ @end deftypefn
+@c ---------------------------------------------------
+@node SPI
+@section SPI
+@cindex SPI
+@c SPI @octave_spi/fclose
+@c -----------------------------------------
+@subsection @@octave_spi/fclose
+@cindex fclose
+ @deftypefn {Function File} {@var{res} =} fclose (@var{obj})
+ Closes SPI connection @var{obj}
+ @end deftypefn
+@c SPI @octave_spi/fopen
+@c -----------------------------------------
+@subsection @@octave_spi/fopen
+@cindex fopen
+ @deftypefn {Function File} {@var{res} =} fopen (@var{obj}) (dummy)
+ Opens SPI connection @var{obj}
+
+ This currently is a dummy function to improve compatibility to MATLAB
+
+ @end deftypefn
+@c SPI @octave_spi/fread
+@c -----------------------------------------
+@subsection @@octave_spi/fread
+@cindex fread
+ @deftypefn {Function File} {@var{data} =} fread (@var{obj})
+ @deftypefnx {Function File} {@var{data} =} fread (@var{obj}, @var{size})
+ @deftypefnx {Function File} {@var{data} =} fread (@var{obj}, @var{size}, @var{precision})
+ @deftypefnx {Function File} {[@var{data},@var{count}] =} fread (@var{obj}, ...)
+ @deftypefnx {Function File} {[@var{data},@var{count},@var{errmsg}] =} fread (@var{obj}, ...)
+ Reads @var{data} from a SPI instrument
+
+ @subsubheading Inputs
+ @var{obj} is a SPI object.@*
+ @var{size} Number of values to read. (Default: 10).@*
+ @var{precision} precision of data.@*
+
+ @subsubheading Outputs
+ @var{data} data values.@*
+ @var{count} number of values read.@*
+ @var{errmsg} read operation error message.@*
+
+ @end deftypefn
+@c SPI @octave_spi/fwrite
+@c -----------------------------------------
+@subsection @@octave_spi/fwrite
+@cindex fwrite
+ @deftypefn {Function File} {@var{numbytes} = } fwrite (@var{obj}, @var{data})
+ @deftypefnx {Function File} {@var{numbytes} =} fwrite (@var{obj}, @var{data}, @var{precision})
+ Writes @var{data} to SPI instrument
+
+ @subsubheading Inputs
+ @var{obj} is a SPI object.@*
+ @var{data} data to write.@*
+ @var{precision} precision of data.@*
+
+ @subsubheading Outputs
+ returns number of bytes written.
+ @end deftypefn
+@c SPI @octave_spi/get
+@c -----------------------------------------
+@subsection @@octave_spi/get
+@cindex get
+ @deftypefn {Function File} {@var{struct} = } get (@var{spi})
+ @deftypefnx {Function File} {@var{field} = } get (@var{spi}, @var{property})
+ Get the properties of spi object.
+
+ @subsubheading Inputs
+ @var{spi} - instance of @var{octave_spi} class.@*
+
+ @var{property} - name of property.@*
+
+ @subsubheading Properties
+ @table @var
+ @item 'name'
+ Name for the spi socket.
+
+ @item 'bitrate'
+ The bitrate for the spi object.
+
+ @item 'clockpolarity'
+ The clock polarity for the spi object of 'idlehigh' or 'idlelow'.
+
+ @item 'clockphase'
+ The clock phase for the spi object of 'firstedge' or 'secondedge'.
+
+ @item 'port'
+ The device port name.
+
+ @item 'status'
+ The device status of 'open' or 'closed'
+ @end table
+
+ @subsubheading Outputs
+ When @var{property} was specified, return the value of that property.@*
+ otherwise return the values of all properties as a structure.@*
+
+ @xseealso{@@octave_spi/set}
+ @end deftypefn
+@c SPI @octave_spi/read
+@c -----------------------------------------
+@subsection @@octave_spi/read
+@cindex read
+ @deftypefn {Function File} {@var{data} =} read (@var{obj})
+ @deftypefnx {Function File} {@var{data} =} read (@var{obj}, @var{size})
+ Reads @var{data} from SPI instrument
+
+ @subsubheading Inputs
+ @var{obj} is a SPI object.@*
+ @var{size} Number of values to read. (Default: 10).@*
+
+ @subsubheading Outputs
+ @var{data} data values.@*
+
+ @end deftypefn
+@c SPI @octave_spi/set
+@c -----------------------------------------
+@subsection @@octave_spi/set
+@cindex set
+ @deftypefn {Function File} set (@var{obj}, @var{property},@var{value})
+ @deftypefnx {Function File} set (@var{obj}, @var{property},@var{value},@dots{})
+ Set the properties of spi object.
+
+ @subsubheading Inputs
+ @var{obj} - instance of @var{octave_spi} class.@*
+ @var{property} - name of property.@*
+
+ If @var{property} is a cell so must be @var{value}, it sets the values of
+ all matching properties.
+
+ The function also accepts property-value pairs.
+
+ @subsubheading Properties
+ @table @var
+ @item 'name'
+ Set the name for the spi socket.
+
+ @item 'bitrate'
+ Set the bitrate for the spi object.
+
+ @item 'clockpolarity'
+ Set the clock polarity for the spi object of 'idlehigh' or 'idlelow'.
+
+ @item 'clockphase'
+ Set the clock phase for the spi object of 'firstedge' or 'secondedge'.
+
+ @end table
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{@@octave_spi/get}
+ @end deftypefn
+@c SPI @octave_spi/write
+@c -----------------------------------------
+@subsection @@octave_spi/write
+@cindex write
+ @deftypefn {Function File} {@var{numbytes} = } fwrite (@var{obj}, @var{data})
+ Writes @var{data} to SPI instrument
+
+ @subsubheading Inputs
+ @var{obj} is a SPI object.@*
+ @var{data} data to write.@*
+
+ @subsubheading Outputs
+ returns number of bytes written.
+ @end deftypefn
+@c SPI @octave_spi/writeAndRead
+@c -----------------------------------------
+@subsection @@octave_spi/writeAndRead
+@cindex writeAndRead
+ @deftypefn {Function File} {@var{data} =} writeAndRead (@var{obj}, @var{wrdata})
+ Writes and reads @var{data} from SPI instrument
+
+ @subsubheading Inputs
+ @var{obj} is a SPI object.@*
+ @var{wrdata} Data to write.@*
+
+ @subsubheading Outputs
+ @var{data} data values read.@*
+
+ @end deftypefn
+@c SPI spi
+@c -----------------------------------------
+@subsection spi
+@cindex spi
+@deftypefn {Loadable Function} {@var{spi} = } spi ([@var{port_path}])
+@deftypefnx {Loadable Function} {@var{spi} = } spi ([@var{port_path}], [@var{propname}, @var{propvalue}])
+
+Open a spi interface.
+
+@subsubheading Inputs
+@var{port_path} - the interface device port/path of type String. If omitted defaults to 
+'/dev/spi-0'. @*
+@var{propname},@var{propvalue} - property name/value pairs.
+
+Known input properties:
+@table @asis
+@item name
+Name of the object
+@item bitrate
+Numeric bitrate value
+@item clockpolarity
+Clock polarity: idlehigh or idlelow.
+@item clockphase
+Clock phase value: firstedge or secondedge
+@end table
+
+@subsubheading Outputs
+@var{spi} - An instance of @var{octave_spi} class.
+
+@subsubheading Properties
+The spi object has the following properties:
+@table @asis
+@item name
+Name of the object
+@item status
+Open or closed status of object (readonly).
+@item bitrate
+Numeric bitrate value
+@item clockpolarity
+Clock polarity: idlehigh or idlelow.
+@item clockphase
+Clock phase value: firstedge or secondedge
+@item port
+The interface driver port (readonly)
+@end table
+@end deftypefn
+@c SPI spi_close
+@c -----------------------------------------
+@subsection spi_close
+@cindex spi_close
+@deftypefn {Loadable Function} {} spi_close (@var{spi})
+
+Close the interface and release a file descriptor.
+
+@subsubheading Inputs
+@var{spi} - instance of @var{octave_spi} class.@*
+
+@subsubheading Outputs
+None
+@end deftypefn
+@c SPI spi_read
+@c -----------------------------------------
+@subsection spi_read
+@cindex spi_read
+@deftypefn {Loadable Function} {[@var{data}, @var{count}] = } spi_read (@var{spi}, @var{n})
+
+Read from spi slave device.
+
+@subsubheading Inputs
+@var{spi} - instance of @var{octave_spi} class.@*
+@var{n} - number of bytes to attempt to read of type Integer.
+
+@subsubheading Outputs
+The spi_read() shall return number of bytes successfully read in @var{count} as Integer and the bytes themselves in @var{data} as uint8 array.
+@end deftypefn
+@c SPI spi_write
+@c -----------------------------------------
+@subsection spi_write
+@cindex spi_write
+@deftypefn {Loadable Function} {@var{n} = } spi_write (@var{spi}, @var{data})
+
+Write data to a spi slave device.
+
+@subsubheading Inputs
+@var{spi} - instance of @var{octave_spi} class.@*
+@var{data} - data, of type uint8, to be written to the slave device.
+
+@subsubheading Outputs
+Upon successful completion, spi_write() shall return the number of bytes written as the result @var{n}.
+@end deftypefn
+@c SPI spi_writeAndRead
+@c -----------------------------------------
+@subsection spi_writeAndRead
+@cindex spi_writeAndRead
+@deftypefn {Loadable Function} {@var{rddata} = } spi_writeAndRead (@var{spi}, @var{wrdata})
+
+Write data to a spi slave device and then read same number of values.
+
+@subsubheading Inputs
+@var{spi} - instance of @var{octave_spi} class.@*
+@var{wrdata} - data, of type uint8, to be written to the slave device.@*
+
+@subsubheading Outputs
+Upon successful completion, spi_writeAndRead() shall return the bytes read.
+@end deftypefn
+@c ---------------------------------------------------
+@node TCP (Deprecated)
+@section TCP (Deprecated)
+@cindex TCP (Deprecated)
+@c TCP (Deprecated) @octave_tcp/fclose
+@c -----------------------------------------
+@subsection @@octave_tcp/fclose
+@cindex fclose
+ @deftypefn {Function File} {@var{res} =} fclose (@var{obj})
+ Closes TCP connection @var{obj}
+ @end deftypefn
+@c TCP (Deprecated) @octave_tcp/flush
+@c -----------------------------------------
+@subsection @@octave_tcp/flush
+@cindex flush
+ @deftypefn {} {@var{data} =} flush (@var{dev})
+ @deftypefnx {} {@var{data} =} flush (@var{dev}, "input")
+ @deftypefnx {} {@var{data} =} flush (@var{dev}, "output")
+ Flush the tcp socket buffers
+
+ @subsubheading Inputs
+ @var{dev} - connected tcp device
+
+ If an additional parameter is provided of "input" or "output",
+ then only the input or output buffer will be flushed
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{serialport}
+ @end deftypefn
+@c TCP (Deprecated) @octave_tcp/flushinput
+@c -----------------------------------------
+@subsection @@octave_tcp/flushinput
+@cindex flushinput
+ @deftypefn {Loadable Function} {} flushinput (@var{tcp})
+
+ Flush the pending input, which will also make the BytesAvailable property be 0.
+
+ @subsubheading Inputs
+ @var{tcp} - instance of @var{octave_tcp} class.
+
+ @subsubheading Outputs
+ None.
+
+ @xseealso{flushoutput}
+ @end deftypefn
+@c TCP (Deprecated) @octave_tcp/flushoutput
+@c -----------------------------------------
+@subsection @@octave_tcp/flushoutput
+@cindex flushoutput
+ @deftypefn {Loadable Function} {} flushoutput (@var{tcp})
+
+ Flush the output buffer.
+
+ @subsubheading Inputs
+ @var{tcp} - instance of @var{octave_tcp} class.
+
+ @subsubheading Outputs
+ None.
+
+ @xseealso{flushinput}
+ @end deftypefn
+@c TCP (Deprecated) @octave_tcp/fopen
+@c -----------------------------------------
+@subsection @@octave_tcp/fopen
+@cindex fopen
+ @deftypefn {Function File} {@var{res} =} fopen (@var{obj}) (dummy)
+ Opens TCP connection @var{obj}
+
+ This currently is a dummy function to improve compatibility to MATLAB
+
+ @end deftypefn
+@c TCP (Deprecated) @octave_tcp/fprintf
+@c -----------------------------------------
+@subsection @@octave_tcp/fprintf
+@cindex fprintf
+ @deftypefn {Function File} {@var{numbytes} =} fprintf (@var{obj}, @var{template} ...)
+ Writes formatted string @var{template} using optional parameters to
+ TCP instrument
+
+ @subsubheading Inputs
+ @var{obj} is a TCP object.@*
+ @var{template} Format template string
+
+ @subsubheading Outputs
+ Number of characters written
+
+ @end deftypefn
+@c TCP (Deprecated) @octave_tcp/fread
+@c -----------------------------------------
+@subsection @@octave_tcp/fread
+@cindex fread
+ @deftypefn {Function File} {@var{data} =} fread (@var{obj})
+ @deftypefnx {Function File} {@var{data} =} fread (@var{obj}, @var{size})
+ @deftypefnx {Function File} {@var{data} =} fread (@var{obj}, @var{size}, @var{precision})
+ @deftypefnx {Function File} {[@var{data},@var{count}] =} fread (@var{obj}, ...)
+ @deftypefnx {Function File} {[@var{data},@var{count},@var{errmsg}] =} fread (@var{obj}, ...)
+ Reads @var{data} from TCP instrument
+
+ @subsubheading Inputs
+ @var{obj} is a TCP object.@*
+ @var{size} Number of values to read. (Default: 100).@*
+ @var{precision} precision of data.@*
+
+ @subsubheading Outputs
+ @var{data} data read.@*
+ @var{count} values read.@*
+ @var{errmsg} read operation error message.@*
+
+ @end deftypefn
+@c TCP (Deprecated) @octave_tcp/fwrite
+@c -----------------------------------------
+@subsection @@octave_tcp/fwrite
+@cindex fwrite
+ @deftypefn {Function File} {@var{numbytes} = } fwrite (@var{obj}, @var{data})
+ @deftypefnx {Function File} {@var{numbytes} =} fwrite (@var{obj}, @var{data}, @var{precision})
+ Writes @var{data} to TCP instrument
+
+ @subsubheading Inputs
+ @var{obj} is a TCP object.@*
+ @var{data} data to write.@*
+ @var{precision} precision of data.@*
+
+ @subsubheading Outputs
+ returns number of bytes written.
+ @end deftypefn
+@c TCP (Deprecated) @octave_tcp/get
+@c -----------------------------------------
+@subsection @@octave_tcp/get
+@cindex get
+ @deftypefn {Function File} {@var{struct} = } get (@var{tcp})
+ @deftypefnx {Function File} {@var{field} = } get (@var{tcp}, @var{property})
+ Get the properties of tcp object.
+
+ @subsubheading Inputs
+ @var{tcp} - instance of @var{octave_tcp} class.@*
+ @var{property} - name of property.@*
+
+ @subsubheading Outputs
+ When @var{property} was specified, return the value of that property.@*
+ otherwise return the values of all properties as a structure.@*
+
+ @xseealso{@@octave_tcp/set}
+ @end deftypefn
+@c TCP (Deprecated) @octave_tcp/read
+@c -----------------------------------------
+@subsection @@octave_tcp/read
+@cindex read
+ @deftypefn {Function File} {@var{data} =} read (@var{obj})
+ @deftypefnx {Function File} {@var{data} =} read (@var{obj}, @var{size})
+ @deftypefnx {Function File} {@var{data} =} read (@var{obj}, @var{size}, @var{datatype})
+ Reads @var{data} from TCP instrument
+
+ @subsubheading Inputs
+ @var{obj} is a TCP object.@*
+ @var{size} Number of values to read. (Default: 100).@*
+ @var{datatype} datatype of data.@*
+
+ @subsubheading Outputs
+ @var{data} data read.@*
+
+ @end deftypefn
+@c TCP (Deprecated) @octave_tcp/set
+@c -----------------------------------------
+@subsection @@octave_tcp/set
+@cindex set
+ @deftypefn {Function File} set (@var{obj}, @var{property},@var{value})
+ @deftypefnx {Function File} set (@var{obj}, @var{property},@var{value},@dots{})
+ Set the properties of tcp object.
+
+ @subsubheading Inputs
+ If @var{property} is a cell so must be @var{value}, it sets the values of
+ all matching properties.
+
+ The function also accepts property-value pairs.
+
+ @subsubheading Properties
+ @table @var
+ @item 'name'
+ Set the name for the tcp socket.
+
+ @item 'remotehost'
+ Set the remote host name for the tcp socket.
+
+ @item 'remoteport'
+ Set the remote port for the tcp socket.
+
+ @item 'timeout'
+ Set the timeout value in seconds. Value of -1 means a
+ blocking call.
+
+ @end table
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{@@octave_tcp/get}
+ @end deftypefn
+@c TCP (Deprecated) @octave_tcp/write
+@c -----------------------------------------
+@subsection @@octave_tcp/write
+@cindex write
+ @deftypefn {Function File} {@var{numbytes} = } write (@var{obj}, @var{data})
+ @deftypefnx {Function File} {@var{numbytes} =} write (@var{obj}, @var{data}, @var{datatype})
+ Writes @var{data} to TCP instrument
+
+ @subsubheading Inputs
+ @var{obj} is a TCP object.@*
+ @var{data} data to write.@*
+ @var{datatype} datatype of data. If not specified, it defaults to "uint8".@*
+
+ @subsubheading Outputs
+ returns number of bytes written.
+ @end deftypefn
+@c TCP (Deprecated) tcp
+@c -----------------------------------------
+@subsection tcp
+@cindex tcp
+@deftypefn {Loadable Function} {@var{tcp} = } tcp ()
+@deftypefnx {Loadable Function} {@var{tcp} = } tcp (@var{ipaddress})
+@deftypefnx {Loadable Function} {@var{tcp} = } tcp (@var{ipaddress}, @var{port})
+@deftypefnx {Loadable Function} {@var{tcp} = } tcp (@var{ipaddress}, @var{port}, @var{timeout})
+@deftypefnx {Loadable Function} {@var{tcp} = } tcp (@var{ipaddress}, [@var{propertyname}, @var{propertyvalue}])
+@deftypefnx {Loadable Function} {@var{tcp} = } tcp (@var{ipaddress}, @var{port}, [@var{propertyname}, @var{propertyvalue}])
+
+Open tcp interface.
+
+@subsubheading Inputs
+@var{ipaddress} - the ip address of type String. If omitted defaults to '127.0.0.1'.@*
+@var{port} - the port number to connect. If omitted defaults to 23.@*
+@var{timeout} - the interface timeout value. If omitted defaults to blocking call.@*
+@var{propname},@var{propvalue} - property name/value pairs.
+
+Known input properties:
+@table @asis
+@item name
+name value
+@item timeout
+Numeric timeout value or -1 to wait forever
+@end table
+
+@subsubheading Outputs
+The tcp() shall return instance of @var{octave_tcp} class as the result @var{tcp}.
+@subsubheading Properties
+The tcp object has the following public properties:
+@table @asis
+@item name
+name assigned to the tcp object
+@item type
+instrument type 'tcp' (readonly)
+@item localport
+local port number (readonly)
+@item remoteport
+remote port number
+@item remotehost
+remote host
+@item status
+status of the object 'open' or 'closed' (readonly)
+@item timeout
+timeout value in seconds used for waiting for data
+@item bytesavailable
+number of bytes currently available to read (readonly)
+@end table 
+@end deftypefn
+@c TCP (Deprecated) tcp_close
+@c -----------------------------------------
+@subsection tcp_close
+@cindex tcp_close
+@deftypefn {Loadable Function} {} tcp_close (@var{tcp})
+
+Close the interface and release a file descriptor.
+
+@subsubheading Inputs
+@var{tcp} - instance of @var{octave_tcp} class.
+
+@subsubheading Outputs
+None
+@end deftypefn
+@c TCP (Deprecated) tcp_read
+@c -----------------------------------------
+@subsection tcp_read
+@cindex tcp_read
+@deftypefn {Loadable Function} {[@var{data}, @var{count}] = } tcp_read (@var{tcp}, @var{n}, @var{timeout})
+
+Read from tcp interface.
+
+@subsubheading Inputs
+@var{tcp} - instance of @var{octave_tcp} class.@*
+@var{n} - number of bytes to attempt to read of type Integer@*
+@var{timeout} - timeout in ms if different from default of type Integer
+
+@subsubheading Outputs
+@var{count} - number of bytes successfully read as an Integer@*
+@var{data} - data bytes themselves as uint8 array.
+@end deftypefn
+@c TCP (Deprecated) tcp_timeout
+@c -----------------------------------------
+@subsection tcp_timeout
+@cindex tcp_timeout
+@deftypefn {Loadable Function} {} tcp_timeout (@var{tcp}, @var{timeout})
+@deftypefnx {Loadable Function} {@var{t} = } tcp_timeout (@var{tcp})
+
+Set new or get existing tcp interface timeout parameter used for tcp_read() requests. The timeout value is specified in milliseconds.
+
+@subsubheading Inputs
+@var{tcp} - instance of @var{octave_tcp} class.@*
+@var{timeout} - tcp_read() timeout value in milliseconds. Value of -1 means a blocking call.
+
+@subsubheading Outputs
+If @var{timeout} parameter is omitted, the tcp_timeout() shall return current timeout value as the result @var{t}.
+@end deftypefn
+@c TCP (Deprecated) tcp_write
+@c -----------------------------------------
+@subsection tcp_write
+@cindex tcp_write
+@deftypefn {Loadable Function} {@var{n} = } tcp_write (@var{tcp}, @var{data})
+
+Write data to a tcp interface.
+
+@subsubheading Inputs
+@var{tcp} - instance of @var{octave_tcp} class.@*
+@var{data} - data to be written to the tcp interface. Can be either of String or uint8 type.
+
+@subsubheading Outputs
+Upon successful completion, tcp_write() shall return the number of bytes written as the result @var{n}.
+@end deftypefn
+@c TCP (Deprecated) tcpip
+@c -----------------------------------------
+@subsection tcpip
+@cindex tcpip
+ @deftypefn {Function File} {@var{tcp} = } tcpip (@var{host}, [@var{port}], [@var{PropertyName}, @var{PropertyValue}...])
+ Matlab compatible wrapper to the tcp interface.
+
+ NOTE: tcpip has been deprecated. Use tcpclient instead
+
+ @subsubheading Inputs
+ @var{host} - the host name or ip.@*
+ @var{port} - the port number to connect. If omitted defaults to 80.@*
+ @var{PropertyName}, @var{PropertyValue} - Optional property name, value pairs to set on the tcp object.@*
+
+ @subsubheading Properties
+ Currently the only known properties are "timeout" and "name".
+
+ @subsubheading Outputs
+ tcpip will return an instance of @var{octave_tcp} class as the result.
+ @end deftypefn
+@c ---------------------------------------------------
+@node TCP Client
+@section TCP Client
+@cindex TCP Client
+@c TCP Client @octave_tcpclient/configureTerminator
+@c -----------------------------------------
+@subsection @@octave_tcpclient/configureTerminator
+@cindex configureTerminator
+ @deftypefn {Function File} {} configureTerminator (@var{tcp}, @var{term})
+ @deftypefnx {Function File} {} configureTerminator (@var{tcp}, @var{readterm}, @var{writeterm})
+ Set terminator on a tcpclient object for ASCII string manipulation
+
+ @subsubheading Inputs
+ @var{tcp} - tcpclient object@*
+ @var{term} - terminal value for both read and write@*
+ @var{readterm} = terminal value type for read data@*
+ @var{writeterm} = terminal value for written data@*
+
+ The terminal can be either strings "cr", "lf" (default), "lf/cr" or an integer between 0 to 255.
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{tcpport}
+ @end deftypefn
+@c TCP Client @octave_tcpclient/flush
+@c -----------------------------------------
+@subsection @@octave_tcpclient/flush
+@cindex flush
+ @deftypefn {} {@var{data} =} flush (@var{dev})
+ @deftypefnx {} {@var{data} =} flush (@var{dev}, "input")
+ @deftypefnx {} {@var{data} =} flush (@var{dev}, "output")
+ Flush the tcpclient socket buffers
+
+ @subsubheading Inputs
+ @var{dev} - connected tcpclient device
+
+ If an additional parameter is provided of "input" or "output",
+ then only the input or output buffer will be flushed
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{serialport}
+ @end deftypefn
+@c TCP Client @octave_tcpclient/get
+@c -----------------------------------------
+@subsection @@octave_tcpclient/get
+@cindex get
+ @deftypefn {Function File} {@var{struct} = } get (@var{tcpclient})
+ @deftypefnx {Function File} {@var{field} = } get (@var{tcpclient}, @var{property})
+ Get the properties of tcpclient object.
+
+ @subsubheading Inputs
+ @var{tcpclient} - instance of @var{octave_tcpclient} class.@*
+ @var{property} - name of property.@*
+
+ @subsubheading Outputs
+ When @var{property} was specified, return the value of that property.@*
+ otherwise return the values of all properties as a structure.@*
+
+ @xseealso{@@octave_tcpclient/set}
+ @end deftypefn
+@c TCP Client @octave_tcpclient/read
+@c -----------------------------------------
+@subsection @@octave_tcpclient/read
+@cindex read
+ @deftypefn {Function File} {@var{data} =} read (@var{obj})
+ @deftypefnx {Function File} {@var{data} =} read (@var{obj}, @var{size})
+ @deftypefnx {Function File} {@var{data} =} read (@var{obj}, @var{size}, @var{datatype})
+ Reads @var{data} from TCP instrument
+
+ @subsubheading Inputs
+ @var{obj} is a TCP object.@*
+ @var{size} Number of values to read. (Default: NumBytesAvailable).@*
+ @var{datatype} datatype of data.@*
+
+ @subsubheading Outputs
+ @var{data} data read.@*
+
+ @end deftypefn
+@c TCP Client @octave_tcpclient/set
+@c -----------------------------------------
+@subsection @@octave_tcpclient/set
+@cindex set
+ @deftypefn {Function File} set (@var{obj}, @var{property},@var{value})
+ @deftypefnx {Function File} set (@var{obj}, @var{property},@var{value},@dots{})
+ Set the properties of tcpclient object.
+
+ @subsubheading Inputs
+ If @var{property} is a cell so must be @var{value}, it sets the values of
+ all matching properties.
+
+ The function also accepts property-value pairs.
+
+ @subsubheading Properties
+ @table @var
+ @item 'Name'
+ Set the name for the tcpclient socket.
+
+ @item 'UserData'
+ Set user data for the tcpclient socket.
+
+ @item 'Timeout'
+ Set the timeout value in seconds. Value of -1 means a
+ blocking call.
+
+ @end table
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{@@octave_tcpclient/get}
+ @end deftypefn
+@c TCP Client @octave_tcpclient/write
+@c -----------------------------------------
+@subsection @@octave_tcpclient/write
+@cindex write
+ @deftypefn {Function File} {@var{numbytes} = } write (@var{obj}, @var{data})
+ @deftypefnx {Function File} {@var{numbytes} =} write (@var{obj}, @var{data}, @var{datatype})
+ Writes @var{data} to TCP instrument
+
+ @subsubheading Inputs
+ @var{obj} is a TCPclient  object.@*
+ @var{data} data to write.@*
+ @var{datatype} datatype of data. If not specified, it defaults to "uint8".@*
+
+ @subsubheading Outputs
+ returns number of bytes written.
+ @end deftypefn
+@c TCP Client tcpclient
+@c -----------------------------------------
+@subsection tcpclient
+@cindex tcpclient
+@deftypefn {Loadable Function} {@var{tcpclient} = } tcpclient (@var{ipaddress}, @var{port})
+@deftypefnx {Loadable Function} {@var{tcpclient} = } tcpclient (@var{ipaddress}, @var{port}, [@var{propertyname}, @var{propertyvalue}])
+
+Open tcpclient interface.
+
+@subsubheading Inputs
+@var{ipaddress} - the ip address of type String.@*
+@var{port} - the port number to connect.@*
+@var{propname},@var{propvalue} - property name/value pairs.
+
+Known input properties:
+@table @asis
+@item Name
+name value
+@item Timeout
+Numeric timeout value or -1 to wait forever
+@item UserData
+User data value.
+@end table
+
+@subsubheading Outputs
+The tcpclient() shall return instance of @var{octave_tcpclient} class as the result @var{tcpclient}.
+
+@subsubheading Properties
+The tcpclient object has the following public properties:
+@table @asis
+@item Name
+name assigned to the tcpclient object
+@item Type
+instrument type 'tcpclient' (readonly)
+@item Port
+remote port number (Readonly)
+@item Address
+remote host address (Readonly)
+@item Status
+status of the object 'open' or 'closed' (readonly)
+@item Timeout
+timeout value in seconds used for waiting for data
+@item NumBytesAvailable
+number of bytes currently available to read (readonly)
+@item NumBytesWritten
+number of bytes currently available to read (readonly)
+@item ByteOrder
+Byte order  for data (currently not used)
+@item Terminator
+Terminator value used for string data (currently not used)
+@item UserData
+User data
+@end table 
+@end deftypefn
+@c ---------------------------------------------------
+@node TCP Server
+@section TCP Server
+@cindex TCP Server
+@c TCP Server @octave_tcpserver/configureTerminator
+@c -----------------------------------------
+@subsection @@octave_tcpserver/configureTerminator
+@cindex configureTerminator
+ @deftypefn {Function File} {} configureTerminator (@var{tcp}, @var{term})
+ @deftypefnx {Function File} {} configureTerminator (@var{tcp}, @var{readterm}, @var{writeterm})
+ Set terminator on a tcpserver object for ASCII string manipulation
+
+ @subsubheading Inputs
+ @var{tcp} - tcpserver object@*
+ @var{term} - terminal value for both read and write@*
+ @var{readterm} = terminal value type for read data@*
+ @var{writeterm} = terminal value for written data@*
+
+ The terminal can be either strings "cr", "lf" (default), "lf/cr" or an integer between 0 to 255.
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{tcpport}
+ @end deftypefn
+@c TCP Server @octave_tcpserver/flush
+@c -----------------------------------------
+@subsection @@octave_tcpserver/flush
+@cindex flush
+ @deftypefn {} {@var{data} =} flush (@var{dev})
+ @deftypefnx {} {@var{data} =} flush (@var{dev}, "input")
+ @deftypefnx {} {@var{data} =} flush (@var{dev}, "output")
+ Flush the tcpserver socket buffers
+
+ @subsubheading Inputs
+ @var{dev} - connected tcpserver device
+
+ If an additional parameter is provided of "input" or "output",
+ then only the input or output buffer will be flushed
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{serialport}
+ @end deftypefn
+@c TCP Server @octave_tcpserver/get
+@c -----------------------------------------
+@subsection @@octave_tcpserver/get
+@cindex get
+ @deftypefn {Function File} {@var{struct} = } get (@var{tcpserver})
+ @deftypefnx {Function File} {@var{field} = } get (@var{tcpserver}, @var{property})
+ Get the properties of tcpserver object.
+
+ @subsubheading Inputs
+ @var{tcpserver} - instance of @var{octave_tcpserver} class.@*
+ @var{property} - name of property.@*
+
+ @subsubheading Outputs
+ When @var{property} was specified, return the value of that property.@*
+ otherwise return the values of all properties as a structure.@*
+
+ @xseealso{@@octave_tcpserver/set}
+ @end deftypefn
+@c TCP Server @octave_tcpserver/read
+@c -----------------------------------------
+@subsection @@octave_tcpserver/read
+@cindex read
+ @deftypefn {Function File} {@var{data} =} read (@var{obj})
+ @deftypefnx {Function File} {@var{data} =} read (@var{obj}, @var{size})
+ @deftypefnx {Function File} {@var{data} =} read (@var{obj}, @var{size}, @var{datatype})
+ Reads @var{data} from TCP instrument
+
+ @subsubheading Inputs
+ @var{obj} is a TCP Server object.@*
+ @var{size} Number of values to read. (Default: NumBytesAvailable).@*
+ @var{datatype} datatype of data.@*
+
+ @subsubheading Outputs
+ @var{data} data read.@*
+
+ @end deftypefn
+@c TCP Server @octave_tcpserver/set
+@c -----------------------------------------
+@subsection @@octave_tcpserver/set
+@cindex set
+ @deftypefn {Function File} set (@var{obj}, @var{property},@var{value})
+ @deftypefnx {Function File} set (@var{obj}, @var{property},@var{value},@dots{})
+ Set the properties of tcpserver object.
+
+ @subsubheading Inputs
+ If @var{property} is a cell so must be @var{value}, it sets the values of
+ all matching properties.
+
+ The function also accepts property-value pairs.
+
+ @subsubheading Properties
+ @table @var
+ @item 'Name'
+ Set the name for the tcpserver socket.
+
+ @item 'UserData'
+ Set user data for the tcpserver socket.
+
+ @item 'Timeout'
+ Set the timeout value in seconds. Value of -1 means a
+ blocking call.
+
+ @end table
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{@@octave_tcpserver/get}
+ @end deftypefn
+@c TCP Server @octave_tcpserver/write
+@c -----------------------------------------
+@subsection @@octave_tcpserver/write
+@cindex write
+ @deftypefn {Function File} {@var{numbytes} = } write (@var{obj}, @var{data})
+ @deftypefnx {Function File} {@var{numbytes} =} write (@var{obj}, @var{data}, @var{datatype})
+ Writes @var{data} to TCP instrument
+
+ @subsubheading Inputs
+ @var{obj} is a TCPServer object.@*
+ @var{data} data to write.@*
+ @var{datatype} datatype of data. If not specified, it defaults to "uint8".@*
+
+ @subsubheading Outputs
+ returns number of bytes written.
+ @end deftypefn
+@c TCP Server tcpserver
+@c -----------------------------------------
+@subsection tcpserver
+@cindex tcpserver
+@deftypefn {Loadable Function} {@var{tcpserver} = } tcpserver (@var{ipaddress}, @var{port})
+@deftypefnx {Loadable Function} {@var{tcpserver} = } tcpserver (@var{port})
+@deftypefnx {Loadable Function} {@var{tcpserver} = } tcpserver (@dots{}, [@var{propertyname}, @var{propertyvalue}])
+
+Open tcpserver interface.
+
+@subsubheading Inputs
+@var{ipaddress} - the ip address of type String.@*
+@var{port} - the port number to bind.@*
+@var{propname},@var{propvalue} - property name/value pairs.
+
+Known input properties:
+@table @asis
+@item Name
+name value
+@item Timeout
+Numeric timeout value or -1 to wait forever
+@item UserData
+User data value.
+@end table
+
+@subsubheading Outputs
+The tcpserver() shall return instance of @var{octave_tcpserver} class as the result @var{tcpserver}.
+
+@subsubheading Properties
+The tcpserver object has the following public properties:
+@table @asis
+@item Connected
+boolean flag for when connected to a client (Readonly)
+@item ClientPort
+connected client port number (Readonly)
+@item ClientAddress
+connected client address (Readonly)
+@item Name
+name assigned to the tcpserver object
+@item Type
+instrument type 'tcpserver' (readonly)
+@item ServerPort
+server port number (Readonly)
+@item ServerAddress
+server address (Readonly)
+@item Status
+status of the object 'open' or 'closed' (readonly)
+@item Timeout
+timeout value in seconds used for waiting for data
+@item NumBytesAvailable
+number of bytes currently available to read (readonly)
+@item NumBytesWritten
+number of bytes currently available to read (readonly)
+@item ByteOrder
+Byte order  for data (currently not used)
+@item Terminator
+Terminator value used for string data (currently not used)
+@item UserData
+User data
+@end table 
+@end deftypefn
+@c ---------------------------------------------------
+@node UDP (Deprecated)
+@section UDP (Deprecated)
+@cindex UDP (Deprecated)
+@c UDP (Deprecated) @octave_udp/fclose
+@c -----------------------------------------
+@subsection @@octave_udp/fclose
+@cindex fclose
+ @deftypefn {Function File} {@var{res} =} fclose (@var{obj})
+ Closes UDP connection @var{obj}
+ @end deftypefn
+@c UDP (Deprecated) @octave_udp/flush
+@c -----------------------------------------
+@subsection @@octave_udp/flush
+@cindex flush
+ @deftypefn {} {@var{data} =} flush (@var{dev})
+ @deftypefnx {} {@var{data} =} flush (@var{dev}, "input")
+ @deftypefnx {} {@var{data} =} flush (@var{dev}, "output")
+ Flush the udp socket buffers
+
+ @subsubheading Inputs
+ @var{dev} - open udp device
+
+ If an additional parameter is provided of "input" or "output",
+ then only the input or output buffer will be flushed
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{udp}
+ @end deftypefn
+@c UDP (Deprecated) @octave_udp/flushinput
+@c -----------------------------------------
+@subsection @@octave_udp/flushinput
+@cindex flushinput
+ @deftypefn {Loadable Function} {} flushinput (@var{udp})
+
+ Flush the pending input, which will also make the BytesAvailable property be 0.
+
+ @subsubheading Inputs
+ @var{udp} - instance of @var{octave_udp} class.
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{flushoutput}
+ @end deftypefn
+@c UDP (Deprecated) @octave_udp/flushoutput
+@c -----------------------------------------
+@subsection @@octave_udp/flushoutput
+@cindex flushoutput
+ @deftypefn {Loadable Function} {} flushoutput (@var{udp})
+
+ Flush the output buffer.
+
+ @subsubheading Inputs
+ @var{udp} - instance of @var{octave_udp} class.
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{flushinput}
+ @end deftypefn
+@c UDP (Deprecated) @octave_udp/fopen
+@c -----------------------------------------
+@subsection @@octave_udp/fopen
+@cindex fopen
+ @deftypefn {Function File} {@var{res} =} fopen (@var{obj}) (dummy)
+ Opens UDP connection @var{obj}
+ This currently is a dummy function to improve compatibility to MATLAB
+
+ @end deftypefn
+@c UDP (Deprecated) @octave_udp/fprintf
+@c -----------------------------------------
+@subsection @@octave_udp/fprintf
+@cindex fprintf
+ @deftypefn {Function File} {@var{numbytes} =} fprintf (@var{obj}, @var{template} ...)
+ Writes formatted string @var{template} using optional parameters to
+ UDP instrument
+
+ @subsubheading Inputs
+ @var{obj} is a UDP object.@*
+ @var{template} Format template string.@*
+
+ @subsubheading Outputs
+ @var{numbytes} is the number of bytes written to the device
+ @end deftypefn
+@c UDP (Deprecated) @octave_udp/fread
+@c -----------------------------------------
+@subsection @@octave_udp/fread
+@cindex fread
+ @deftypefn {Function File} {@var{data} =} fread (@var{obj})
+ @deftypefnx {Function File} {@var{data} =} fread (@var{obj}, @var{size})
+ @deftypefnx {Function File} {@var{data} =} fread (@var{obj}, @var{size}, @var{precision})
+ @deftypefnx {Function File} {[@var{data},@var{count}] =} fread (@var{obj}, ...)
+ @deftypefnx {Function File} {[@var{data},@var{count},@var{errmsg}] =} fread (@var{obj}, ...)
+ Reads @var{data} from UDP instrument
+
+ @subsubheading Inputs
+ @var{obj} is a UDP object.@*
+ @var{size} Number of values to read. (Default: 100).@*
+ @var{precision} precision of data.@*
+
+ @subsubheading Outputs
+ @var{data} data values.@*
+ @var{count} number of values read.@*
+ @var{errmsg} read operation error message.@*
+
+ @end deftypefn
+@c UDP (Deprecated) @octave_udp/fwrite
+@c -----------------------------------------
+@subsection @@octave_udp/fwrite
+@cindex fwrite
+ @deftypefn {Function File} {@var{numbytes} = } fwrite (@var{obj}, @var{data})
+ @deftypefnx {Function File} {@var{numbytes} =} fwrite (@var{obj}, @var{data}, @var{precision})
+ Writes @var{data} to UDP instrument
+
+ @subsubheading Inputs
+ @var{obj} is a UDP object.@*
+ @var{data} data to write.@*
+ @var{precision} precision of data.@*
+
+ @subsubheading Outputs
+ returns number of bytes written.
+ @end deftypefn
+@c UDP (Deprecated) @octave_udp/get
+@c -----------------------------------------
+@subsection @@octave_udp/get
+@cindex get
+ @deftypefn {Function File} {@var{struct} = } get (@var{udp})
+ @deftypefnx {Function File} {@var{field} = } get (@var{udp}, @var{property})
+ Get the properties of udp object.
+
+ @subsubheading Inputs
+ @var{udp} - instance of @var{octave_udp} class.@*
+
+ @var{property} - name of property.@*
+
+ @subsubheading Outputs
+ When @var{property} was specified, return the value of that property.@*
+ otherwise return the values of all properties as a structure.@*
+
+ @xseealso{@@octave_udp/set}
+ @end deftypefn
+@c UDP (Deprecated) @octave_udp/read
+@c -----------------------------------------
+@subsection @@octave_udp/read
+@cindex read
+ @deftypefn {Function File} {@var{data} =} read (@var{obj})
+ @deftypefnx {Function File} {@var{data} =} read (@var{obj}, @var{size})
+ @deftypefnx {Function File} {@var{data} =} read (@var{obj}, @var{size}, @var{datatype})
+ Reads @var{data} from UDP instrument
+
+ @subsubheading Inputs
+ @var{obj} is a UDP object.@*
+ @var{size} Number of values to read. (Default: BytesAvailable).@*
+ @var{datatype} datatype of data.@*
+
+ @subsubheading Outputs
+ @var{data} data read.@*
+
+ @end deftypefn
+@c UDP (Deprecated) @octave_udp/set
+@c -----------------------------------------
+@subsection @@octave_udp/set
+@cindex set
+ @deftypefn {Function File} set (@var{obj}, @var{property},@var{value})
+ @deftypefnx {Function File} set (@var{obj}, @var{property},@var{value},@dots{})
+ Set the properties of udp object.
+
+ @subsubheading Inputs
+ @var{obj} - instance of @var{octave_udp} class.@*
+ @var{property} - name of property.@*
+
+ If @var{property} is a cell so must be @var{value}, it sets the values of
+ all matching properties.
+
+ The function also accepts property-value pairs.
+
+ @subsubheading Properties
+ @table @var
+ @item 'name'
+ Set the name for the udp socket.
+
+ @item 'remotehost'
+ Set the remote host name for the udp socket.
+
+ @item 'remoteport'
+ Set the remote port for the udp socket.
+
+ @item 'timeout'
+ Set the timeout value in seconds. Value of -1 means a
+ blocking call.
+
+ @end table
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{@@octave_udp/get}
+ @end deftypefn
+@c UDP (Deprecated) @octave_udp/write
+@c -----------------------------------------
+@subsection @@octave_udp/write
+@cindex write
+ @deftypefn {Function File} {@var{numbytes} = } write (@var{obj}, @var{data})
+ @deftypefnx {Function File} {@var{numbytes} = } write (@var{obj}, @var{data}, @var{destinationAddress}, @var{destinationPort}))
+ @deftypefnx {Function File} {@var{numbytes} =} write (@var{obj}, @var{data}, @var{datatype})
+ @deftypefnx {Function File} {@var{numbytes} =} write (@var{obj}, @var{data}, @var{datatype}, @var{destinationAddress}, @var{destinationPort})
+ Writes @var{data} to UDP instrument
+
+ @subsubheading Inputs
+ @var{obj} is a UDP object.@*
+ @var{data} data to write.@*
+ @var{datatype} datatype of data. If not specified defaults to uint8.@*
+ @var{destinationAddress} ipaddress to send to. If not specified, use the remote address.@*
+ @var{destinationPort} port to send to. If not specified, use the remote port.@*
+
+ @subsubheading Outputs
+ returns number of bytes written.
+ @end deftypefn
+@c UDP (Deprecated) udp
+@c -----------------------------------------
+@subsection udp
+@cindex udp
+@deftypefn {Loadable Function} {@var{udp} = } udp ()
+@deftypefnx {Loadable Function} {@var{udp} = } udp (@var{remoteipaddress}, @var{remoteport})
+@deftypefnx {Loadable Function} {@var{udp} = } udp (@var{remoteipaddress}, @var{remoteport}, [@var{propertyname}, @var{propertyvalue} ...])
+
+Open udp interface.
+
+@subsubheading Inputs
+@var{remoteipaddress} - the ip address of type String. If omitted defaults to '127.0.0.1'.@* 
+@var{remoteport} - the port number to connect. If omitted defaults to 23.@* 
+@var{localport} - the local port number to bind. If omitted defaults to 0@* 
+@var{propertyname}, @var{propertyvalue} - property name/value pair
+
+@subsubheading Outputs
+The udp() shall return instance of @var{octave_udp} class as the result @var{udp}.
+
+@subsubheading Properties
+The udp object has the following public properties:
+@table @asis
+@item name
+name assigned to the udp object
+@item type
+instrument type 'udp' (readonly)
+@item localport
+local port number (readonly)
+@item localhost
+local host address (readonly)
+@item remoteport
+remote port number
+@item remotehost
+remote host
+@item status
+status of the object 'open' or 'closed' (readonly)
+@item timeout
+timeout value in seconds used for waiting for data
+@item bytesavailable
+number of bytes currently available to read (readonly)
+@end table 
+@end deftypefn
+@c UDP (Deprecated) udp_close
+@c -----------------------------------------
+@subsection udp_close
+@cindex udp_close
+@deftypefn {Loadable Function} {} udp_close (@var{udp})
+
+Close the interface and release a file descriptor.
+
+@subsubheading Inputs
+@var{udp} - instance of @var{octave_udp} class.
+
+@subsubheading Inputs
+None
+@end deftypefn
+@c UDP (Deprecated) udp_demo
+@c -----------------------------------------
+@subsection udp_demo
+@cindex udp_demo
+ @deftypefn {Function File} {@var{result} =} udp_demo ()
+ Run test SNTP demonstration for udp class
+
+ @xseealso{udp}
+ @end deftypefn
+@c UDP (Deprecated) udp_read
+@c -----------------------------------------
+@subsection udp_read
+@cindex udp_read
+@deftypefn {Loadable Function} {[@var{data}, @var{count}] = } udp_read (@var{udp}, @var{n}, @var{timeout})
+
+Read from udp interface.
+
+@subsubheading Inputs
+@var{udp} - instance of @var{octave_udp} class.@*
+@var{n} - number of bytes to attempt to read of type Integer@*
+@var{timeout} - timeout in ms if different from default of type Integer
+
+@subsubheading Outputs
+The udp_read() shall return number of bytes successfully read in @var{count} as Integer and the bytes themselves in @var{data} as uint8 array.
+@end deftypefn
+@c UDP (Deprecated) udp_timeout
+@c -----------------------------------------
+@subsection udp_timeout
+@cindex udp_timeout
+@deftypefn {Loadable Function} {} udp_timeout (@var{udp}, @var{timeout})
+@deftypefnx {Loadable Function} {@var{t} = } udp_timeout (@var{udp})
+
+Set new or get existing udp interface timeout parameter used for udp_read() requests. The timeout value is specified in milliseconds.
+
+@subsubheading Inputs
+@var{udp} - instance of @var{octave_udp} class.@*
+@var{timeout} - udp_read() timeout value in milliseconds. Value of -1 means a blocking call.
+
+@subsubheading Outputs
+If @var{timeout} parameter is omitted, the udp_timeout() shall return current timeout value as the result @var{t}.
+@end deftypefn
+@c UDP (Deprecated) udp_write
+@c -----------------------------------------
+@subsection udp_write
+@cindex udp_write
+@deftypefn {Loadable Function} {@var{n} = } udp_write (@var{udp}, @var{data})
+
+Write data to a udp interface.
+
+@subsubheading Inputs
+@var{udp} - instance of @var{octave_udp} class.@*
+@var{data} - data to be written to the udp interface. Can be either of String or uint8 type.
+
+@subsubheading Outputs
+Upon successful completion, udp_write() shall return the number of bytes written as the result @var{n}.
+@end deftypefn
+@c ---------------------------------------------------
+@node UDP Port
+@section UDP Port
+@cindex UDP Port
+@c UDP Port @octave_udpport/configureMulticast
+@c -----------------------------------------
+@subsection @@octave_udpport/configureMulticast
+@cindex configureMulticast
+ @deftypefn {} {@var{data} =} configureMulticast((@var{dev}, @var{address})
+ @deftypefnx {} {@var{data} =} configureMulticast((@var{dev}, @var{"off"})
+ Configure udpport device to receive multicast data
+
+ @subsubheading Inputs
+ @var{dev} - open udpport device
+
+ If @var{address}  is 'off' disable udp multicast. Otherwise it is the multicast address to use.
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{udpport}
+ @end deftypefn
+@c UDP Port @octave_udpport/configureTerminator
+@c -----------------------------------------
+@subsection @@octave_udpport/configureTerminator
+@cindex configureTerminator
+ @deftypefn {Function File} {} configureTerminator (@var{udp}, @var{term})
+ @deftypefnx {Function File} {} configureTerminator (@var{udp}, @var{readterm}, @var{writeterm})
+ Set terminator for ASCII string manipulation
+
+ @subsubheading Inputs
+ @var{udp} - udpport object@*
+ @var{term} - terminal value for both read and write@*
+ @var{readterm} = terminal value type for read data@*
+ @var{writeterm} = terminal value for written data@*
+
+ The terminal can be either strings "cr", "lf" (default), "lf/cr" or an integer between 0 to 255.
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{udpport}
+ @end deftypefn
+@c UDP Port @octave_udpport/flush
+@c -----------------------------------------
+@subsection @@octave_udpport/flush
+@cindex flush
+ @deftypefn {} {@var{data} =} flush (@var{dev})
+ @deftypefnx {} {@var{data} =} flush (@var{dev}, "input")
+ @deftypefnx {} {@var{data} =} flush (@var{dev}, "output")
+ Flush the udpport socket buffers
+
+ @subsubheading Inputs
+ @var{dev} - open udpport device
+
+ If an additional parameter is provided of "input" or "output",
+ then only the input or output buffer will be flushed
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{udpport}
+ @end deftypefn
+@c UDP Port @octave_udpport/fprintf
+@c -----------------------------------------
+@subsection @@octave_udpport/fprintf
+@cindex fprintf
+ @deftypefn {Function File} {@var{numbytes} =} fprintf (@var{obj}, @var{template} ...)
+ Writes formatted string @var{template} using optional parameters to
+ UDP instrument
+
+ @subsubheading Inputs
+ @var{obj} is a UDPPort object.@*
+ @var{template} Format template string.@*
+
+ @subsubheading Outputs
+ @var{numbytes} is the number of bytes written to the device
+ @end deftypefn
+@c UDP Port @octave_udpport/fread
+@c -----------------------------------------
+@subsection @@octave_udpport/fread
+@cindex fread
+ @deftypefn {Function File} {@var{data} =} fread (@var{obj})
+ @deftypefnx {Function File} {@var{data} =} fread (@var{obj}, @var{size})
+ @deftypefnx {Function File} {@var{data} =} fread (@var{obj}, @var{size}, @var{precision})
+ @deftypefnx {Function File} {[@var{data},@var{count}] =} fread (@var{obj}, ...)
+ @deftypefnx {Function File} {[@var{data},@var{count},@var{errmsg}] =} fread (@var{obj}, ...)
+ Reads @var{data} from UDP instrument
+
+ @subsubheading Inputs
+ @var{obj} is a UDP port object.@*
+ @var{size} Number of values to read. (Default: 100).@*
+ @var{precision} precision of data.@*
+
+ @subsubheading Outputs
+ @var{data} data values.@*
+ @var{count} number of values read.@*
+ @var{errmsg} read operation error message.@*
+
+ @end deftypefn
+@c UDP Port @octave_udpport/fwrite
+@c -----------------------------------------
+@subsection @@octave_udpport/fwrite
+@cindex fwrite
+ @deftypefn {Function File} {@var{numbytes} = } fwrite (@var{obj}, @var{data})
+ @deftypefnx {Function File} {@var{numbytes} =} fwrite (@var{obj}, @var{data}, @var{precision})
+ Writes @var{data} to UDP instrument
+
+ @subsubheading Inputs
+ @var{obj} is a UDP port object.@*
+ @var{data} data to write.@*
+ @var{precision} precision of data.@*
+
+ @subsubheading Outputs
+ returns number of bytes written.
+ @end deftypefn
+@c UDP Port @octave_udpport/get
+@c -----------------------------------------
+@subsection @@octave_udpport/get
+@cindex get
+ @deftypefn {Function File} {@var{struct} = } get (@var{udpport})
+ @deftypefnx {Function File} {@var{field} = } get (@var{udpport}, @var{property})
+ Get the properties of udpport object.
+
+ @subsubheading Inputs
+ @var{udpport} - instance of @var{octave_udpport} class.@*
+
+ @var{property} - name of property.@*
+
+ @subsubheading Outputs
+ When @var{property} was specified, return the value of that property.@*
+ otherwise return the values of all properties as a structure.@*
+
+ @xseealso{@@octave_udpport/set}
+ @end deftypefn
+@c UDP Port @octave_udpport/read
+@c -----------------------------------------
+@subsection @@octave_udpport/read
+@cindex read
+ @deftypefn {Function File} {@var{data} =} read (@var{obj})
+ @deftypefnx {Function File} {@var{data} =} read (@var{obj}, @var{size})
+ @deftypefnx {Function File} {@var{data} =} read (@var{obj}, @var{size}, @var{datatype})
+ Reads @var{data} from UDP instrument
+
+ @subsubheading Inputs
+ @var{obj} is a UDP object.@*
+ @var{size} Number of values to read. (Default: BytesAvailable).@*
+ @var{datatype} datatype of data.@*
+
+ @subsubheading Outputs
+ @var{data} data read.@*
+
+ @end deftypefn
+@c UDP Port @octave_udpport/set
+@c -----------------------------------------
+@subsection @@octave_udpport/set
+@cindex set
+ @deftypefn {Function File} set (@var{obj}, @var{property},@var{value})
+ @deftypefnx {Function File} set (@var{obj}, @var{property},@var{value},@dots{})
+ Set the properties of udpport object.
+
+ @subsubheading Inputs
+ @var{obj} - instance of @var{octave_udpport} class.@*
+ @var{property} - name of property.@*
+
+ If @var{property} is a cell so must be @var{value}, it sets the values of
+ all matching properties.
+
+ The function also accepts property-value pairs.
+
+ @subsubheading Properties
+ @table @var
+ @item 'Name'
+ Set the name for the udpport socket.
+
+ @item 'UserData'
+ Set the user data of the object.
+
+ @item 'Timeout'
+ Set the timeout value in seconds. Value of -1 means a
+ blocking call.
+
+ @end table
+
+ @subsubheading Outputs
+ None
+
+ @xseealso{@@octave_udpport/get}
+ @end deftypefn
+@c UDP Port @octave_udpport/write
+@c -----------------------------------------
+@subsection @@octave_udpport/write
+@cindex write
+ @deftypefn {Function File} {@var{numbytes} = } write (@var{obj}, @var{data})
+ @deftypefnx {Function File} {@var{numbytes} = } write (@var{obj}, @var{data}, @var{destinationAddress}, @var{destinationPort}))
+ @deftypefnx {Function File} {@var{numbytes} =} write (@var{obj}, @var{data}, @var{datatype})
+ @deftypefnx {Function File} {@var{numbytes} =} write (@var{obj}, @var{data}, @var{datatype}, @var{destinationAddress}, @var{destinationPort})
+ Writes @var{data} to UDP instrument
+
+ @subsubheading Inputs
+ @var{obj} is a UDPPort object.@*
+ @var{data} data to write.@*
+ @var{datatype} datatype of data. If not specified defaults to uint8.@*
+ @var{destinationAddress} ipaddress to send to. If not specified, use the previously used remote address.@*
+ @var{destinationPort} port to send to. If not specified, use the remote port.@*
+
+ @subsubheading Outputs
+ returns number of bytes written.
+ @end deftypefn
+@c UDP Port udpport
+@c -----------------------------------------
+@subsection udpport
+@cindex udpport
+@deftypefn {Loadable Function} {@var{udp} = } udpport ()
+@deftypefnx {Loadable Function} {@var{udp} = } udpport (@var{propertyname}, @var{propertyvalue} ...)
+
+Open udpport interface.
+
+@subsubheading Inputs
+@var{propertyname}, @var{propertyvalue} - property name/value pair
+
+Known input properties:
+@table @asis
+@item Name
+name assigned to the udp object
+@item LocalPort
+local port number
+@item LocalHost
+local host address
+@item Timeout
+timeout value in seconds used for waiting for data
+@item EnablePortSharing
+Boolean if the socket has port sharing enabled (readonly)
+@end table 
+
+@subsubheading Outputs
+The udpport() shall return instance of @var{octave_udp} class as the result @var{udp}.
+
+@subsubheading Properties
+The udp object has the following public properties:
+@table @asis
+@item Name
+name assigned to the udp object
+@item Type
+instrument type 'udpport' (readonly)
+@item LocalPort
+local port number (readonly)
+@item LocalHost
+local host address (readonly)
+@item Status
+status of the object 'open' or 'closed' (readonly)
+@item Timeout
+timeout value in seconds used for waiting for data
+@item NumBytesAvailable
+number of bytes currently available to read (readonly)
+@item MulticastGroup
+multicast group socket  is subscribed to (readonly)
+@item EnableMultcast
+Boolean if the socket has any multicast group it is subscribed to (readonly)
+@item EnablePortSharing
+Boolean if the socket has port sharing enabled (readonly)
+@item Terminator
+Terminator value used for string data (currently not used)
+@end table 
+@end deftypefn
+@c ---------------------------------------------------
+@node USBTMC
+@section USBTMC
+@cindex USBTMC
+@c USBTMC @octave_usbtmc/fclose
+@c -----------------------------------------
+@subsection @@octave_usbtmc/fclose
+@cindex fclose
+ @deftypefn {Function File} {@var{res} =} fclose (@var{obj})
+ Closes USBTMC connection @var{obj}
+
+ @subsubheading Inputs
+ @var{obj} is a usbtmc object.@*
+ @end deftypefn
+@c USBTMC @octave_usbtmc/fopen
+@c -----------------------------------------
+@subsection @@octave_usbtmc/fopen
+@cindex fopen
+ @deftypefn {Function File} {@var{res} =} fopen (@var{obj}) (dummy)
+ Opens USBTMC connection @var{obj}
+ This currently is a dummy function to improve compatibility to MATLAB
+
+ @end deftypefn
+@c USBTMC @octave_usbtmc/fread
+@c -----------------------------------------
+@subsection @@octave_usbtmc/fread
+@cindex fread
+ @deftypefn {Function File} {@var{data} =} fread (@var{obj})
+ @deftypefnx {Function File} {@var{data} =} fread (@var{obj}, @var{size})
+ @deftypefnx {Function File} {@var{data} =} fread (@var{obj}, @var{size}, @var{precision})
+ @deftypefnx {Function File} {[@var{data},@var{count}] =} fread (@var{obj}, ...)
+ @deftypefnx {Function File} {[@var{data},@var{count},@var{errmsg}] =} fread (@var{obj}, ...)
+ Reads @var{data} from usbtmc instrument
+
+ @subsubheading Inputs
+ @var{obj} is a usbtmc object.@*
+ @var{size} Number of values to read. (Default: 100).@*
+ @var{precision} precision of data.@*
+
+ @subsubheading Outputs
+ @var{data} The read data.@*
+ @var{count} values read.@*
+ @var{errmsg} read operation error message.@*
+
+ @end deftypefn
+@c USBTMC @octave_usbtmc/fwrite
+@c -----------------------------------------
+@subsection @@octave_usbtmc/fwrite
+@cindex fwrite
+ @deftypefn {Function File} {@var{numbytes} = } fwrite (@var{obj}, @var{data})
+ @deftypefnx {Function File} {@var{numbytes} =} fwrite (@var{obj}, @var{data}, @var{precision})
+ Writes @var{data} to an usbtmc instrument
+
+ @subsubheading Inputs
+ @var{obj} is a usbtmc object.@*
+ @var{data} data to write.@*
+ @var{precision} precision of data.@*
+
+ @subsubheading Outputs
+ returns number of bytes written.
+ @end deftypefn
+@c USBTMC usbtmc
+@c -----------------------------------------
+@subsection usbtmc
+@cindex usbtmc
+@deftypefn {Loadable Function} {@var{usbtmc} = } usbtmc (@var{path})
+
+Open usbtmc interface.
+
+@subsubheading Inputs
+@var{path} - the interface path of type String. If omitted defaults to '/dev/usbtmc0'.
+
+@subsubheading Outputs
+The usbtmc() shall return instance of @var{octave_usbtmc} class as the result @var{usbtmc}.
+@end deftypefn
+@c USBTMC usbtmc_close
+@c -----------------------------------------
+@subsection usbtmc_close
+@cindex usbtmc_close
+@deftypefn {Loadable Function} {} usbtmc_close (@var{usbtmc})
+
+Close the interface and release a file descriptor.
+
+@subsubheading Inputs
+@var{usbtmc} - instance of @var{octave_usbtmc} class.
+@subsubheading Outputs
+None
+@end deftypefn
+@c USBTMC usbtmc_read
+@c -----------------------------------------
+@subsection usbtmc_read
+@cindex usbtmc_read
+@deftypefn {Loadable Function} {[@var{data}, @var{count}] = } usbtmc_read (@var{usbtmc}, @var{n})
+
+Read from usbtmc slave device.
+
+@subsubheading Inputs
+@var{usbtmc} - instance of @var{octave_usbtmc} class.@*
+@var{n} - number of bytes to attempt to read of type Integer.
+
+@subsubheading Outputs
+@var{count} - the number of bytes successfully read as an Integer.@*
+@var{data} - the read bytes as a uint8 array.
+@end deftypefn
+@c USBTMC usbtmc_write
+@c -----------------------------------------
+@subsection usbtmc_write
+@cindex usbtmc_write
+@deftypefn {Loadable Function} {@var{n} = } usbtmc_write (@var{usbtmc}, @var{data})
+
+Write data to a usbtmc slave device.
+
+@subsubheading Inputs
+@var{usbtmc} - instance of @var{octave_usbtmc} class.@*
+@var{data} - data, of type uint8, to be written to the slave device.
+
+@subsubheading Outputs
+Upon successful completion, usbtmc_write() shall return the number of bytes written as the result @var{n}.
+@end deftypefn
+@c ---------------------------------------------------
+@node VXI11
+@section VXI11
+@cindex VXI11
+@c VXI11 @octave_vxi11/fclose
+@c -----------------------------------------
+@subsection @@octave_vxi11/fclose
+@cindex fclose
+ @deftypefn {Function File} {@var{res} =} fclose (@var{obj})
+ Closes VXI11 connection @var{obj}
+ @end deftypefn
+@c VXI11 @octave_vxi11/fopen
+@c -----------------------------------------
+@subsection @@octave_vxi11/fopen
+@cindex fopen
+ @deftypefn {Function File} {@var{res} =} fopen (@var{obj}) (dummy)
+ Opens VXI11 connection @var{obj}
+ This currently is a dummy function to improve compatibility to MATLAB
+
+ @end deftypefn
+@c VXI11 @octave_vxi11/fread
+@c -----------------------------------------
+@subsection @@octave_vxi11/fread
+@cindex fread
+ @deftypefn {Function File} {@var{data} =} fread (@var{obj})
+ @deftypefnx {Function File} {@var{data} =} fread (@var{obj}, @var{size})
+ @deftypefnx {Function File} {@var{data} =} fread (@var{obj}, @var{size}, @var{precision})
+ @deftypefnx {Function File} {[@var{data},@var{count}] =} fread (@var{obj}, ...)
+ @deftypefnx {Function File} {[@var{data},@var{count},@var{errmsg}] =} fread (@var{obj}, ...)
+ Reads @var{data} from vxi11 instrument
+
+ @subsubheading Inputs
+ @var{obj} is a vxi11 object.@*
+ @var{size} Number of values to read. (Default: 100).@*
+ @var{precision} precision of data.@*
+
+ @subsubheading Outputs
+ @var{data} The read data.@*
+ @var{count} values read.@*
+ @var{errmsg} read operation error message.@*
+
+ @end deftypefn
+@c VXI11 @octave_vxi11/fwrite
+@c -----------------------------------------
+@subsection @@octave_vxi11/fwrite
+@cindex fwrite
+ @deftypefn {Function File} {@var{numbytes} = } fwrite (@var{obj}, @var{data})
+ @deftypefnx {Function File} {@var{numbytes} =} fwrite (@var{obj}, @var{data}, @var{precision})
+ Writes @var{data} to vxi11 instrument
+
+ @subsubheading Inputs
+ @var{obj} is a vxi11 object.@*
+ @var{data} data to write.@*
+ @var{precision} precision of data.@*
+
+ @subsubheading Outputs
+ returns number of bytes written.
+ @end deftypefn
+@c VXI11 vxi11
+@c -----------------------------------------
+@subsection vxi11
+@cindex vxi11
+@deftypefn {Loadable Function} {@var{vxi11} = } vxi11 (@var{ip})
+
+Open vxi11 interface.
+
+@var{path} - the ip address of type String. If omitted defaults to '127.0.0.1'.
+
+The vxi11() shall return instance of @var{octave_vxi11} class as the result @var{vxi11}.
+@end deftypefn
+@c VXI11 vxi11_close
+@c -----------------------------------------
+@subsection vxi11_close
+@cindex vxi11_close
+@deftypefn {Loadable Function} {} vxi11_close (@var{vxi11})
+
+Close the interface and release a file descriptor.
+
+@var{vxi11} - instance of @var{octave_vxi11} class.
+@end deftypefn
+@c VXI11 vxi11_read
+@c -----------------------------------------
+@subsection vxi11_read
+@cindex vxi11_read
+@deftypefn {Loadable Function} {[@var{data}, @var{count}] = } vxi11_read (@var{vxi11}, @var{n})
+
+Read from vxi11 slave device.
+
+@var{vxi11} - instance of @var{octave_vxi11} class.@*
+@var{n} - number of bytes to attempt to read of type Integer.
+
+The vxi11_read() shall return number of bytes successfully read in @var{count} as Integer and the bytes themselves in @var{data} as uint8 array.
+@end deftypefn
+@c VXI11 vxi11_write
+@c -----------------------------------------
+@subsection vxi11_write
+@cindex vxi11_write
+@deftypefn {Loadable Function} {@var{n} = } vxi11_write (@var{vxi11}, @var{data})
+
+Write data to a vxi11 slave device.
+
+@var{vxi11} - instance of @var{octave_vxi11} class.@*
+@var{data} - data to be written to the slave device. Can be either of String or uint8 type.
+
+Upon successful completion, vxi11_write() shall return the number of bytes written as the result @var{n}.
+@end deftypefn

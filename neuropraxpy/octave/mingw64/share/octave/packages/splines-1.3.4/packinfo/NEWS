@@ -1,0 +1,120 @@
+Summary of important user-visible changes for splines 1.3.4:
+-------------------------------------------------------------------
+
+ ** New functions regularization, regularization2D
+
+
+Summary of important user-visible changes for splines 1.3.3:
+-------------------------------------------------------------------
+
+ ** Demo and efficiency improvement (and accuracy fix for new fminbnd
+    default settings) in csaps_sel
+ ** Bug fix in csape
+
+Summary of important user-visible changes for splines 1.3.2:
+-------------------------------------------------------------------
+
+ ** bug fix in csaps
+
+Summary of important user-visible changes for splines 1.3.1:
+-------------------------------------------------------------------
+
+ ** bug fix in fnplt
+
+Summary of important user-visible changes for splines 1.3.0:
+-------------------------------------------------------------------
+
+ ** csape default is now Lagrange boundary conditions (Matlab compatible)
+ ** csaps can return the fit degrees of freedom
+
+Summary of important user-visible changes for splines 1.2.9:
+-------------------------------------------------------------------
+
+ ** new function tps_val_der
+ ** vectorization option for speedup of tps_val 
+
+Summary of important user-visible changes for splines 1.2.8:
+-------------------------------------------------------------------
+
+ ** csaps now returns spline uncertainty at the fitting points xi, 
+    not at the data points x
+
+Summary of important user-visible changes for splines 1.2.7:
+-------------------------------------------------------------------
+
+ ** New regularization option (df_bound) in csaps_sel
+ ** Bug fix in csape
+
+Summary of important user-visible changes for splines 1.2.6:
+-------------------------------------------------------------------
+
+ ** New preprocessing function bin_values
+
+Summary of important user-visible changes for splines 1.2.5:
+-------------------------------------------------------------------
+
+ ** Efficiency improvement in csaps_sel
+
+Summary of important user-visible changes for splines 1.2.4:
+-------------------------------------------------------------------
+
+ ** Bug fix in csape
+
+
+Summary of important user-visible changes for splines 1.2.3:
+-------------------------------------------------------------------
+
+ ** New regularization option (vm) in csaps_sel
+ 
+ ** Checking for NaNs added in csaps and csaps_sel; dedup now can remove NaNs
+
+ ** Bug fix in csape
+
+Summary of important user-visible changes for splines 1.2.2:
+-------------------------------------------------------------------
+
+ ** Bug fix in csaps and csaps_sel
+
+
+Summary of important user-visible changes for splines 1.2.1:
+-------------------------------------------------------------------
+
+ ** Points passed to csaps and csaps_sel now expected to be in strictly ascending order; new function dedup added to sort points and average values given at the same point
+ 
+
+Summary of important user-visible changes for splines 1.2.0:
+-------------------------------------------------------------------
+
+ ** The following functions are new:
+
+      tpaps      tps_val
+      
+
+Summary of important user-visible changes for splines 1.1.2:
+-------------------------------------------------------------------
+
+ ** automatic smoothing parameter selection in csaps fixed
+ 
+ ** calculation of spline coefficients for unequally spaced points in csaps fixed
+ 
+ 
+Summary of important user-visible changes for splines 1.1.1:
+-------------------------------------------------------------------
+
+ ** csape fixed to work correctly for matrix inputs
+ 
+ ** csaps and csaps_sel fixed to extrapolate linearly
+ 
+
+Summary of important user-visible changes for splines 1.1.0:
+-------------------------------------------------------------------
+
+ ** The following functions are new:
+
+      csaps      csaps_sel
+
+ ** fnder() and csape() have been fixed for compatibility with the latest Octave versions.
+
+ ** splines package is now dependent on GNU Octave version 3.6.0 or later.
+
+ ** Package is no longer automatically loaded.

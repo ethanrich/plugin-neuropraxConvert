@@ -1,0 +1,62 @@
+## DO NOT EDIT!  Generated automatically from ov-class.cc by Make.
+%!assert (class (1.1), "double")
+%!assert (class (single (1.1)), "single")
+%!assert (class (uint8 (1)), "uint8")
+%!testif HAVE_JAVA; usejava ("jvm")
+%! jobj = javaObject ("java.lang.StringBuffer");
+%! assert (class (jobj), "java.lang.StringBuffer");
+%!error class ()
+%!assert (isa ("char", "float"), false)
+%!assert (isa (logical (1), "float"), false)
+%!assert (isa (double (13), "float"), true)
+%!assert (isa (single (13), "float"), true)
+%!assert (isa (int8 (13), "float"), false)
+%!assert (isa (int16 (13), "float"), false)
+%!assert (isa (int32 (13), "float"), false)
+%!assert (isa (int64 (13), "float"), false)
+%!assert (isa (uint8 (13), "float"), false)
+%!assert (isa (uint16 (13), "float"), false)
+%!assert (isa (uint32 (13), "float"), false)
+%!assert (isa (uint64 (13), "float"), false)
+%!assert (isa ("char", "numeric"), false)
+%!assert (isa (logical (1), "numeric"), false)
+%!assert (isa (double (13), "numeric"), true)
+%!assert (isa (single (13), "numeric"), true)
+%!assert (isa (int8 (13), "numeric"), true)
+%!assert (isa (int16 (13), "numeric"), true)
+%!assert (isa (int32 (13), "numeric"), true)
+%!assert (isa (int64 (13), "numeric"), true)
+%!assert (isa (uint8 (13), "numeric"), true)
+%!assert (isa (uint16 (13), "numeric"), true)
+%!assert (isa (uint32 (13), "numeric"), true)
+%!assert (isa (uint64 (13), "numeric"), true)
+%!assert (isa (uint8 (13), "integer"), true)
+%!assert (isa (double (13), "integer"), false)
+%!assert (isa (single (13), "integer"), false)
+%!assert (isa (single (13), {"integer", "float", "single"}), [false true true])
+%!assert (isa (double (13), "double"))
+%!assert (isa (single (13), "single"))
+%!assert (isa (int8 (13), "int8"))
+%!assert (isa (int16 (13), "int16"))
+%!assert (isa (int32 (13), "int32"))
+%!assert (isa (int64 (13), "int64"))
+%!assert (isa (uint8 (13), "uint8"))
+%!assert (isa (uint16 (13), "uint16"))
+%!assert (isa (uint32 (13), "uint32"))
+%!assert (isa (uint64 (13), "uint64"))
+%!assert (isa ("string", "char"))
+%!assert (isa (true, "logical"))
+%!assert (isa (false, "logical"))
+%!assert (isa ({1, 2}, "cell"))
+%!assert (isa ({1, 2}, {"numeric", "integer", "cell"}), [false false true])
+%!testif HAVE_JAVA; usejava ("jvm")
+%! ## The first and last assert() are equal on purpose.  The assert() in
+%! ## the middle with an invalid class name will cause the java code to
+%! ## throw exceptions which we then must clear properly (or all other calls
+%! ## will fail).  So we test this too.
+%! assert (isa (javaObject ("java.lang.Double", 10), "java.lang.Number"));
+%! assert (isa (javaObject ("java.lang.Double", 10), "not_a_class"), false);
+%! assert (isa (javaObject ("java.lang.Double", 10), "java.lang.Number"));
+%!test
+%! a.b = 1;
+%! assert (isa (a, "struct"));

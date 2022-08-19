@@ -1,0 +1,11 @@
+autoload ("__ffmpeg_defines__", "cap_ffmpeg_wrapper.oct");
+autoload ("__ffmpeg_output_formats__", "cap_ffmpeg_wrapper.oct");
+autoload ("__cap_open__", "cap_ffmpeg_wrapper.oct");
+autoload ("__cap_get_properties__", "cap_ffmpeg_wrapper.oct");
+autoload ("__cap_grab_frame__", "cap_ffmpeg_wrapper.oct");
+autoload ("__cap_retrieve_frame__", "cap_ffmpeg_wrapper.oct");
+autoload ("__cap_close__", "cap_ffmpeg_wrapper.oct");
+autoload ("__writer_open__", "cap_ffmpeg_wrapper.oct");
+autoload ("__writer_get_properties__", "cap_ffmpeg_wrapper.oct");
+autoload ("__writer_write_frame__", "cap_ffmpeg_wrapper.oct");
+autoload ("__writer_close__", "cap_ffmpeg_wrapper.oct");

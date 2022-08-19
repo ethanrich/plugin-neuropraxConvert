@@ -1,0 +1,36 @@
+.TH BIN2REC 1
+.SH NAME
+bin2rec - converts biosignal data produced with rec2bin,
+into a gdf file. rec2bin and bin2rec are complementary
+functions, which can be useful to dump data, edit date
+and revert it back into the original format.
+
+.SH SYNOPSIS
+.B REC2BIN\  [OPTIONS]\  SOURCE\  [DEST]
+
+
+.SH DESCRIPTION
+ SOURCE is the source file
+ DEST is the destination file
+ Supported OPTIONS are:
+ \-v, \-\-version
+ 	prints version information
+ \-h, \-\-help
+ 	prints this information
+ \-VERBOSE=#, verbosity level #
+ 	0=silent, 9=debugging
+
+.SH AUTHOR
+Alois Schloegl
+
+.SH REPORTING BUGS
+Report bugs to <biosig-general@lists.sourceforge.net>
+
+.SH COPYRIGHT
+Copyright (C) 2008-2020 Alois Schloegl
+License GPLv3+:  GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This  is  free  software:  you  are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+.SH RESOURCES
+https://biosig.sourceforge.io

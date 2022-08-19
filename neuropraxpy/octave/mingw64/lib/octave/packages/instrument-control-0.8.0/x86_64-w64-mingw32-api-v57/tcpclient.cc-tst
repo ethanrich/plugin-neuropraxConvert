@@ -1,0 +1,18 @@
+## Generated from tcpclient.cc
+%!test
+%! addr = resolvehost ('gnu.org', 'address');
+%! a = tcpclient (addr, 80);
+%! assert (! isnull (a));
+%! assert (isa (a, 'octave_tcpclient'));
+%! clear a
+%!test
+%! addr = resolvehost ('gnu.org', 'address');
+%! a = tcpclient (addr, 80, 'name', 'test', 'timeout', 2.5);
+%! assert (! isnull (a));
+%! assert (isa (a, 'octave_tcpclient'));
+%! assert (get(a, 'Name'), 'test');
+%! assert (get(a, 'Timeout'), 2.5);
+%! clear a
+%!error <Invalid call to tcpclient> tcpclient (1)
+%!error <Invalid call to tcpclient> tcpclient (1, 1)
+%!error <Invalid call to tcpclient> tcpclient ('127.0.0.1', '80', 'prop1')

@@ -1,0 +1,3 @@
+## Generated from modbus.cc
+%!error modbus (1)
+%!error modbus ('noatransport', '127.0.0.1')

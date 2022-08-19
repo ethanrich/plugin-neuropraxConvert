@@ -1,0 +1,83 @@
+## DO NOT EDIT!  Generated automatically from variables.cc by Make.
+%!test
+%! global x;
+%! assert (isglobal ("x"), true);
+%! clear -global x;  # cleanup after test
+%!error isglobal ()
+%!error isglobal ("a", "b")
+%!error isglobal (1)
+%!shared dirtmp, __var1
+%! dirtmp = P_tmpdir ();
+%! __var1 = 1;
+%!assert (exist ("__%Highly_unlikely_name%__"), 0)
+%!assert (exist ("__var1"), 1)
+%!assert (exist ("__var1", "var"), 1)
+%!assert (exist ("__var1", "builtin"), 0)
+%!assert (exist ("__var1", "dir"), 0)
+%!assert (exist ("__var1", "file"), 0)
+%!assert (exist ("__var1", "class"), 0)
+%!testif ; isunix ()
+%! assert (exist ("/bin/sh"), 2);
+%! assert (exist ("/bin/sh", "file"), 2);
+%! assert (exist ("/bin/sh", "dir"), 0);
+%! assert (exist ("/dev/null"), 2);
+%! assert (exist ("/dev/null", "file"), 2);
+%! assert (exist ("/dev/null", "dir"), 0);
+%!assert (exist ("print_usage"), 2)
+%!assert (exist ("print_usage.m"), 2)
+%!assert (exist ("print_usage", "file"), 2)
+%!assert (exist ("print_usage", "dir"), 0)
+%!assert (exist ("plot.m", "file"), 2)
+%!assert (exist ("./plot.m", "file"), 0)
+%!assert (exist ("./%nonexistentfile%", "file"), 0)
+%!assert (exist ("%nonexistentfile%", "file"), 0)
+%!test
+%! tname = tempname ();
+%! unwind_protect
+%!   ## open/close file to create it, equivalent of touch
+%!   fid = fopen (tname, "w");
+%!   fclose (fid);
+%!   [~, fname] = fileparts (tname);
+%!   assert (exist (fullfile (tempdir (), fname), "file"), 2);
+%! unwind_protect_cleanup
+%!   unlink (tname);
+%! end_unwind_protect
+%! assert (exist (fullfile (pwd (), "%nonexistentfile%"), "file"), 0);
+%!assert (exist ("fftw"), 3)
+%!assert (exist ("fftw.oct"), 3)
+%!assert (exist ("fftw", "file"), 3)
+%!assert (exist ("fftw", "builtin"), 0)
+%!assert (exist ("ftp"), 2)
+%!assert (exist ("ftp.m"), 2)
+%!assert (exist ("@ftp/ftp"), 2)
+%!assert (exist ("@ftp/ftp.m"), 2)
+%!assert (exist ("ftp", "class"), 0)
+%!assert (exist ("inputParser"), 2)
+%!assert (exist ("inputParser.m"), 2)
+%!assert (exist ("inputParser", "class"), 8)
+%!assert (exist ("sin"), 5)
+%!assert (exist ("sin", "builtin"), 5)
+%!assert (exist ("sin", "file"), 0)
+%!assert (exist (dirtmp), 7)
+%!assert (exist (dirtmp, "dir"), 7)
+%!assert (exist (dirtmp, "file"), 7)
+%!error exist ()
+%!error exist (1,2,3)
+%!error <TYPE must be a string> exist ("a", 1)
+%!error <NAME must be a string> exist (1)
+%!error <unrecognized type argument "foobar"> exist ("a", "foobar")
+%!function __test_clear_no_args__ ()
+%!  global x
+%!  x = 3;
+%!  clear
+%!  assert (! exist ("x", "var"));  # x is not in the current workspace anymore
+%!  global x                        # but still lives in the global workspace
+%!  assert (exist ("x", "var"));
+%!endfunction
+%!test
+%! unwind_protect
+%!   __test_clear_no_args__ ();
+%! unwind_protect_cleanup
+%!   clear -g x
+%! end_unwind_protect
+%!error clear -f -g

@@ -1,0 +1,3 @@
+## DO NOT EDIT! Generated from bind.cc
+%!error <Invalid call to zmq_bind> zmq_bind()
+%!error <Invalid call to zmq_bind> zmq_bind(1)

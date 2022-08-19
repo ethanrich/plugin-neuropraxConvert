@@ -1,0 +1,337 @@
+## DO NOT EDIT!  Generated automatically from chol.cc by Make.
+%!assert (chol ([2, 1; 1, 1]), [sqrt(2), 1/sqrt(2); 0, 1/sqrt(2)], sqrt (eps))
+%!assert (chol (single ([2, 1; 1, 1])), single ([sqrt(2), 1/sqrt(2); 0, 1/sqrt(2)]), sqrt (eps ("single")))
+%!assert (chol ([2, 1; 1, 1], "upper"), [sqrt(2), 1/sqrt(2); 0, 1/sqrt(2)],
+%!        sqrt (eps))
+%!assert (chol ([2, 1; 1, 1], "lower"), [sqrt(2), 0; 1/sqrt(2), 1/sqrt(2)],
+%!        sqrt (eps))
+%!assert (chol ([2, 1; 1, 1], "lower"), chol ([2, 1; 1, 1], "LoweR"))
+%!assert (chol ([2, 1; 1, 1], "upper"), chol ([2, 1; 1, 1], "Upper"))
+%!testif HAVE_CHOLMOD
+%! a = sparse ([2 1; 1 1]);
+%! r = sparse ([sqrt(2), 1/sqrt(2); 0, 1/sqrt(2)]);
+%! [rd, pd, qd] = chol (a);
+%! [rv, pv, qv] = chol (a, "vector");
+%! assert (r, rd, eps)
+%! assert (r, rv, eps)
+%! assert (pd, 0)
+%! assert (pd, pv)
+%! assert (qd, sparse (eye (2)))
+%! assert (qv, [1 2])
+%!
+%! [rv, pv, qv] = chol (a, "Vector"); # check case sensitivity
+%! assert (r, rv, eps)
+%! assert (pd, pv)
+%! assert (qv, [1 2])
+%!testif HAVE_CHOLMOD <*42587>
+%! A = sparse ([1 0 8;0 1 8;8 8 1]);
+%! [Q, p] = chol (A);
+%! assert (p != 0);
+%!error chol ()
+%!error <matrix must be positive definite> chol ([1, 2; 3, 4])
+%!error <requires square matrix> chol ([1, 2; 3, 4; 5, 6])
+%!error <optional arguments must be strings> chol (1, 2)
+%!error <optional argument must be one of "vector", "lower"> chol (1, "foobar")
+%!error <matrix A must be sparse> [L,p,Q] = chol ([1, 2; 3, 4])
+%!error <A must be sparse> [L, p] = chol ([1, 2; 3, 4], "vector")
+%!shared A, Ainv
+%! A = [2,0.2;0.2,1];
+%! Ainv = inv (A);
+%!test
+%! Ainv1 = cholinv (A);
+%! assert (norm (Ainv-Ainv1), 0, 1e-10);
+%!testif HAVE_CHOLMOD
+%! Ainv2 = inv (sparse (A));
+%! assert (norm (Ainv-Ainv2), 0, 1e-10);
+%!testif HAVE_CHOLMOD
+%! Ainv3 = cholinv (sparse (A));
+%! assert (norm (Ainv-Ainv3), 0, 1e-10);
+%!function sparse_chol2inv (T, tol)
+%!  iT = inv (T);
+%!  ciT = chol2inv (chol (T));
+%!  assert (ciT, iT, tol);
+%!  assert (chol2inv (chol ( full (T))), ciT, tol*2);
+%!endfunction
+%!testif HAVE_CHOLMOD
+%! A = gallery ("poisson", 3);
+%! sparse_chol2inv (A, eps);
+%!testif HAVE_CHOLMOD
+%! n = 10;
+%! B = spdiags (ones (n, 1) * [1 2 1], [-1 0 1], n, n);
+%! sparse_chol2inv (B, eps*100);
+%!testif HAVE_CHOLMOD
+%! C = gallery ("tridiag", 5);
+%! sparse_chol2inv (C, eps*10);
+%!testif HAVE_CHOLMOD
+%! D = gallery ("wathen", 1, 1);
+%! sparse_chol2inv (D, eps*10^4);
+%!shared A, u, Ac, uc
+%! A = [  0.436997  -0.131721   0.124120  -0.061673 ;
+%!       -0.131721   0.738529   0.019851  -0.140295 ;
+%!        0.124120   0.019851   0.354879  -0.059472 ;
+%!       -0.061673  -0.140295  -0.059472   0.600939 ];
+%!
+%! u = [  0.98950 ;
+%!        0.39844 ;
+%!        0.63484 ;
+%!        0.13351 ];
+%! Ac = [  0.5585528 + 0.0000000i  -0.1662088 - 0.0315341i   0.0107873 + 0.0236411i  -0.0276775 - 0.0186073i ;
+%!        -0.1662088 + 0.0315341i   0.6760061 + 0.0000000i   0.0011452 - 0.0475528i   0.0145967 + 0.0247641i ;
+%!         0.0107873 - 0.0236411i   0.0011452 + 0.0475528i   0.6263149 - 0.0000000i  -0.1585837 - 0.0719763i ;
+%!        -0.0276775 + 0.0186073i   0.0145967 - 0.0247641i  -0.1585837 + 0.0719763i   0.6034234 - 0.0000000i ];
+%!
+%! uc = [ 0.54267 + 0.91519i ;
+%!        0.99647 + 0.43141i ;
+%!        0.83760 + 0.68977i ;
+%!        0.39160 + 0.90378i ];
+%!test
+%! R = chol (A);
+%! R1 = cholupdate (R, u);
+%! assert (norm (triu (R1)-R1, Inf), 0);
+%! assert (norm (R1'*R1 - R'*R - u*u', Inf) < 1e1*eps);
+%!
+%! R1 = cholupdate (R1, u, "-");
+%! assert (norm (triu (R1)-R1, Inf), 0);
+%! assert (norm (R1 - R, Inf) < 1e1*eps);
+%!test
+%! R = chol (Ac);
+%! R1 = cholupdate (R, uc);
+%! assert (norm (triu (R1)-R1, Inf), 0);
+%! assert (norm (R1'*R1 - R'*R - uc*uc', Inf) < 1e1*eps);
+%!
+%! R1 = cholupdate (R1, uc, "-");
+%! assert (norm (triu (R1)-R1, Inf), 0);
+%! assert (norm (R1 - R, Inf) < 1e1*eps);
+%!test
+%! R = chol (single (A));
+%! R1 = cholupdate (R, single (u));
+%! assert (norm (triu (R1)-R1, Inf), single (0));
+%! assert (norm (R1'*R1 - R'*R - single (u*u'), Inf) < 1e1*eps ("single"));
+%!
+%! R1 = cholupdate (R1, single (u), "-");
+%! assert (norm (triu (R1)-R1, Inf), single (0));
+%! assert (norm (R1 - R, Inf) < 2e1*eps ("single"));
+%!test
+%! R = chol (single (Ac));
+%! R1 = cholupdate (R, single (uc));
+%! assert (norm (triu (R1)-R1, Inf), single (0));
+%! assert (norm (R1'*R1 - R'*R - single (uc*uc'), Inf) < 1e1*eps ("single"));
+%!
+%! R1 = cholupdate (R1, single (uc), "-");
+%! assert (norm (triu (R1)-R1, Inf), single (0));
+%! assert (norm (R1 - R, Inf) < 2e1*eps ("single"));
+%!test
+%! u2 = [  0.35080 ;
+%!         0.63930 ;
+%!         3.31057 ;
+%!        -0.13825 ;
+%!         0.45266 ];
+%!
+%! R = chol (A);
+%!
+%! j = 3;  p = [1:j-1, j+1:5];
+%! R1 = cholinsert (R, j, u2);
+%! A1 = R1'*R1;
+%!
+%! assert (norm (triu (R1)-R1, Inf), 0);
+%! assert (norm (A1(p,p) - A, Inf) < 1e1*eps);
+%!test
+%! u2 = [  0.35080  + 0.04298i;
+%!         0.63930  + 0.23778i;
+%!         3.31057  + 0.00000i;
+%!        -0.13825  + 0.19879i;
+%!         0.45266  + 0.50020i];
+%!
+%! R = chol (Ac);
+%!
+%! j = 3;  p = [1:j-1, j+1:5];
+%! R1 = cholinsert (R, j, u2);
+%! A1 = R1'*R1;
+%!
+%! assert (norm (triu (R1)-R1, Inf), 0);
+%! assert (norm (A1(p,p) - Ac, Inf) < 1e1*eps);
+%!test
+%! u2 = single ([  0.35080 ;
+%!                 0.63930 ;
+%!                 3.31057 ;
+%!                -0.13825 ;
+%!                 0.45266 ]);
+%!
+%! R = chol (single (A));
+%!
+%! j = 3;  p = [1:j-1, j+1:5];
+%! R1 = cholinsert (R, j, u2);
+%! A1 = R1'*R1;
+%!
+%! assert (norm (triu (R1)-R1, Inf), single (0));
+%! assert (norm (A1(p,p) - A, Inf) < 1e1*eps ("single"));
+%!test
+%! u2 = single ([  0.35080  + 0.04298i;
+%!                 0.63930  + 0.23778i;
+%!                 3.31057  + 0.00000i;
+%!                -0.13825  + 0.19879i;
+%!                 0.45266  + 0.50020i]);
+%!
+%! R = chol (single (Ac));
+%!
+%! j = 3;  p = [1:j-1, j+1:5];
+%! R1 = cholinsert (R, j, u2);
+%! A1 = R1'*R1;
+%!
+%! assert (norm (triu (R1)-R1, Inf), single (0));
+%! assert (norm (A1(p,p) - single (Ac), Inf) < 2e1*eps ("single"));
+%!test
+%! cu = chol (triu (A), "upper");
+%! cl = chol (tril (A), "lower");
+%! assert (cu, cl', eps);
+%!test
+%! cca   = chol (Ac);
+%!
+%! ccal  = chol (Ac, "lower");
+%! ccal2 = chol (tril (Ac), "lower");
+%!
+%! ccau  = chol (Ac, "upper");
+%! ccau2 = chol (triu (Ac), "upper");
+%!
+%! assert (cca'*cca,     Ac, eps);
+%! assert (ccau'*ccau,   Ac, eps);
+%! assert (ccau2'*ccau2, Ac, eps);
+%!
+%! assert (cca, ccal',  eps);
+%! assert (cca, ccau,   eps);
+%! assert (cca, ccal2', eps);
+%! assert (cca, ccau2,  eps);
+%!test
+%! cca   = chol (single (Ac));
+%!
+%! ccal  = chol (single (Ac), "lower");
+%! ccal2 = chol (tril (single (Ac)), "lower");
+%!
+%! ccau  = chol (single (Ac), "upper");
+%! ccau2 = chol (triu (single (Ac)), "upper");
+%!
+%! assert (cca'*cca,     single (Ac), eps ("single"));
+%! assert (ccau'*ccau,   single (Ac), eps ("single"));
+%! assert (ccau2'*ccau2, single (Ac), eps ("single"));
+%!
+%! assert (cca, ccal',  eps ("single"));
+%! assert (cca, ccau,   eps ("single"));
+%! assert (cca, ccal2', eps ("single"));
+%! assert (cca, ccau2,  eps ("single"));
+%!test
+%! a = [12,  2,  3,  4;
+%!       2, 14,  5,  3;
+%!       3,  5, 16,  6;
+%!       4,  3,  6, 16];
+%!
+%! b = [0,  1,  2,  3;
+%!     -1,  0,  1,  2;
+%!     -2, -1,  0,  1;
+%!     -3, -2, -1,  0];
+%!
+%! ca = a + i*b;
+%!
+%! cca   = chol (ca);
+%!
+%! ccal  = chol (ca, "lower");
+%! ccal2 = chol (tril (ca), "lower");
+%!
+%! ccau  = chol (ca, "upper");
+%! ccau2 = chol (triu (ca), "upper");
+%!
+%! assert (cca'*cca,     ca, 16*eps);
+%! assert (ccau'*ccau,   ca, 16*eps);
+%! assert (ccau2'*ccau2, ca, 16*eps);
+%!
+%! assert (cca, ccal',  16*eps);
+%! assert (cca, ccau,   16*eps);
+%! assert (cca, ccal2', 16*eps);
+%! assert (cca, ccau2,  16*eps);
+%!test
+%! R = chol (A);
+%!
+%! j = 3;  p = [1:j-1,j+1:4];
+%! R1 = choldelete (R, j);
+%!
+%! assert (norm (triu (R1)-R1, Inf), 0);
+%! assert (norm (R1'*R1 - A(p,p), Inf) < 1e1*eps);
+%!test
+%! R = chol (Ac);
+%!
+%! j = 3;  p = [1:j-1,j+1:4];
+%! R1 = choldelete (R, j);
+%!
+%! assert (norm (triu (R1)-R1, Inf), 0);
+%! assert (norm (R1'*R1 - Ac(p,p), Inf) < 1e1*eps);
+%!test
+%! R = chol (single (A));
+%!
+%! j = 3;  p = [1:j-1,j+1:4];
+%! R1 = choldelete (R, j);
+%!
+%! assert (norm (triu (R1)-R1, Inf), single (0));
+%! assert (norm (R1'*R1 - single (A(p,p)), Inf) < 1e1*eps ("single"));
+%!test
+%! R = chol (single (Ac));
+%!
+%! j = 3;  p = [1:j-1,j+1:4];
+%! R1 = choldelete (R,j);
+%!
+%! assert (norm (triu (R1)-R1, Inf), single (0));
+%! assert (norm (R1'*R1 - single (Ac(p,p)), Inf) < 1e1*eps ("single"));
+%!test
+%! R = chol (A);
+%!
+%! i = 1;  j = 3;  p = [1:i-1, shift(i:j,-1), j+1:4];
+%! R1 = cholshift (R, i, j);
+%!
+%! assert (norm (triu (R1)-R1, Inf), 0);
+%! assert (norm (R1'*R1 - A(p,p), Inf) < 1e1*eps);
+%!
+%! j = 1;  i = 3;  p = [1:j-1, shift(j:i,+1), i+1:4];
+%! R1 = cholshift (R, i, j);
+%!
+%! assert (norm (triu (R1) - R1, Inf), 0);
+%! assert (norm (R1'*R1 - A(p,p), Inf) < 1e1*eps);
+%!test
+%! R = chol (Ac);
+%!
+%! i = 1;  j = 3;  p = [1:i-1, shift(i:j,-1), j+1:4];
+%! R1 = cholshift (R, i, j);
+%!
+%! assert (norm (triu (R1)-R1, Inf), 0);
+%! assert (norm (R1'*R1 - Ac(p,p), Inf) < 1e1*eps);
+%!
+%! j = 1;  i = 3;  p = [1:j-1, shift(j:i,+1), i+1:4];
+%! R1 = cholshift (R, i, j);
+%!
+%! assert (norm (triu (R1)-R1, Inf), 0);
+%! assert (norm (R1'*R1 - Ac(p,p), Inf) < 1e1*eps);
+%!test
+%! R = chol (single (A));
+%!
+%! i = 1;  j = 3;  p = [1:i-1, shift(i:j,-1), j+1:4];
+%! R1 = cholshift (R, i, j);
+%!
+%! assert (norm (triu (R1)-R1, Inf), 0);
+%! assert (norm (R1'*R1 - single (A(p,p)), Inf) < 1e1*eps ("single"));
+%!
+%! j = 1;  i = 3;  p = [1:j-1, shift(j:i,+1), i+1:4];
+%! R1 = cholshift (R, i, j);
+%!
+%! assert (norm (triu (R1)-R1, Inf), 0);
+%! assert (norm (R1'*R1 - single (A(p,p)), Inf) < 1e1*eps ("single"));
+%!test
+%! R = chol (single (Ac));
+%!
+%! i = 1;  j = 3;  p = [1:i-1, shift(i:j,-1), j+1:4];
+%! R1 = cholshift (R, i, j);
+%!
+%! assert (norm (triu (R1)-R1, Inf), 0);
+%! assert (norm (R1'*R1 - single (Ac(p,p)), Inf) < 1e1*eps ("single"));
+%!
+%! j = 1; i = 3; p = [1:j-1, shift(j:i,+1), i+1:4];
+%! R1 = cholshift (R, i, j);
+%!
+%! assert (norm (triu (R1)-R1, Inf), 0);
+%! assert (norm (R1'*R1 - single (Ac(p,p)), Inf) < 1e1*eps ("single"));

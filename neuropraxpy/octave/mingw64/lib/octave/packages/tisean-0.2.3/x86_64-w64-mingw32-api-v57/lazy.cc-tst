@@ -1,0 +1,40 @@
+## DO NOT EDIT! Generated from lazy.cc
+%!demo
+%! hen    = henon (10000);
+%! "The following line is equvalent to 'addnoise -v0.02 hen' from TISEAN";
+%! hen    = hen + std (hen) * 0.02 .* (-6 + sum (rand ([size(hen), 12]), 3));
+%! hendel = delay (hen(:,1));
+%! henlaz = lazy (hen(:,1),7,-0.06,3);
+%! henlaz = delay (henlaz);
+%!
+%! subplot (2,3,1)
+%! plot (hendel(:,1), hendel(:,2), 'b.','markersize', 3);
+%! title ("Noisy data");
+%! pbaspect ([1 1 1]);
+%! axis tight
+%! axis off
+%!
+%! subplot (2,3,4)
+%! plot (henlaz(:,1), henlaz(:,2),'r.','markersize', 3);
+%! title ("Clean data");
+%! pbaspect ([1 1 1]);
+%! axis tight
+%! axis off
+%!
+%! subplot (2,3,[2 3 5 6])
+%! plot (hendel(:,1), hendel(:,2), 'b.','markersize', 3,...
+%!       henlaz(:,1), henlaz(:,2),'r.','markersize', 3);
+%! legend ("Noisy", "Clean");
+%! title ("Superimposed data");
+%! axis tight
+%!###############################################################
+%!fail("lazy([(1:10);(1:10)],7,-0.06)");
+%!fail("lazy((1:10),0,0.04)");
+%!fail("[a,b,c] = lazy((1:10),1,0.05)");
+%!test
+%! "In is generated from Octave using 'in = 1 + 0.5 * rand(10,1);'";
+%! in = [1.47007925526322;1.168775342017635;1.10943000146922; 1.174293926353764;  1.075741574572656; 1.373465364407417; 1.089417388489702; 1.403669883669071;1.452726826806777;  1.016960990335037];
+%! "res was generated using 'lazy -m1 -v0.06 in.dat' from TISEAN 'lazy'";
+%! res = [1.47007930, 0.00000000; 1.17153454, -2.75921822E-03; 1.10942996, 0.00000000; 1.17153454, 2.75933743E-03; 1.07574153, 0.00000000; 1.37346542, 0.00000000; 1.08941734, 0.00000000; 1.40366983, 0.00000000; 1.45272684, 0.00000000; 1.01696098, 0.00000000];
+%! [al,bl] = lazy(in, 1, -0.06);
+%! assert([al,bl],res,1e-6);

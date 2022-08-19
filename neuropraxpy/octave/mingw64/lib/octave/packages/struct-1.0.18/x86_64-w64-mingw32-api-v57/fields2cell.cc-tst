@@ -1,0 +1,2 @@
+## DO NOT EDIT! Generated from fields2cell.cc
+%!assert (fields2cell (cell2struct ({1, 2; 3, 4}, {"a", "b"}, 1), {"a"}), {1, 2})

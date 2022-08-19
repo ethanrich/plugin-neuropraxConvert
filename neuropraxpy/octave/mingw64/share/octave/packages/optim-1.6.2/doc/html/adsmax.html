@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>adsmax (optim_doc)</title>
+
+<meta name="description" content="adsmax (optim_doc)">
+<meta name="keywords" content="adsmax (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="Scalar-optimization.html#Scalar-optimization" rel="up" title="Scalar optimization">
+<link href="nelder_005fmead_005fmin.html#nelder_005fmead_005fmin" rel="next" title="nelder_mead_min">
+<link href="mdsmax.html#mdsmax" rel="prev" title="mdsmax">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="adsmax"></a>
+<div class="header">
+<p>
+Next: <a href="nelder_005fmead_005fmin.html#nelder_005fmead_005fmin" accesskey="n" rel="next">nelder_mead_min</a>, Previous: <a href="mdsmax.html#mdsmax" accesskey="p" rel="prev">mdsmax</a>, Up: <a href="Scalar-optimization.html#Scalar-optimization" accesskey="u" rel="up">Scalar optimization</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="An-alternating-directions-algorithm"></a>
+<h3 class="section">1.8 An alternating directions algorithm</h3>
+<a name="index-adsmax"></a>
+
+<a name="Helptext_003a-1"></a>
+<h4 class="subheading">Helptext:</h4>
+
+<a name="XREFadsmax"></a><pre class="verbatim">ADSMAX  Alternating directions method for direct search optimization.
+       [x, fmax, nf] = ADSMAX(FUN, x0, STOPIT, SAVIT, P) attempts to
+       maximize the function FUN, using the starting vector x0.
+       The alternating directions direct search method is used.
+       Output arguments:
+              x    = vector yielding largest function value found,
+              fmax = function value at x,
+              nf   = number of function evaluations.
+       The iteration is terminated when either
+              - the relative increase in function value between successive
+                iterations is &lt;= STOPIT(1) (default 1e-3),
+              - STOPIT(2) function evaluations have been performed
+                (default inf, i.e., no limit), or
+              - a function value equals or exceeds STOPIT(3)
+                (default inf, i.e., no test on function values).
+       Progress of the iteration is not shown if STOPIT(5) = 0 (default 1).
+       If a non-empty fourth parameter string SAVIT is present, then
+       `SAVE SAVIT x fmax nf' is executed after each inner iteration.
+       By default, the search directions are the co-ordinate directions.
+       The columns of a fifth parameter matrix P specify alternative search
+       directions (P = EYE is the default).
+       NB: x0 can be a matrix.  In the output argument, in SAVIT saves,
+           and in function calls, x has the same shape as x0.
+       ADSMAX(fun, x0, STOPIT, SAVIT, P, P1, P2,...) allows additional
+       arguments to be passed to fun, via feval(fun,x,P1,P2,...).
+    Reference:
+    N. J. Higham, Optimization by direct search in matrix computations,
+       SIAM J. Matrix Anal. Appl, 14(2): 317-333, 1993.
+    N. J. Higham, Accuracy and Stability of Numerical Algorithms,
+       Second edition, Society for Industrial and Applied Mathematics,
+       Philadelphia, PA, 2002; sec. 20.5.
+
+</pre>
+
+
+
+
+</body>
+</html>

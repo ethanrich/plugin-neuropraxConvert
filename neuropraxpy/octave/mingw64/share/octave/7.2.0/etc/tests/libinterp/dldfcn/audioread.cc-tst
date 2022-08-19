@@ -1,0 +1,65 @@
+## DO NOT EDIT!  Generated automatically from audioread.cc by Make.
+%!testif HAVE_SNDFILE <*56889>
+%! fname = [tempname() ".wav"];
+%! unwind_protect
+%!   y1 = uint8 ([0, 1, 2, 253, 254, 255]);
+%!   audiowrite (fname, y1, 8000, "BitsPerSample", 8);
+%!   y2 = audioread (fname, "native");
+%! unwind_protect_cleanup
+%!   unlink (fname);
+%! end_unwind_protect
+%! assert (y1(:), y2);
+%!testif HAVE_SNDFILE <*56889>
+%! fname = [tempname() ".au"];
+%! unwind_protect
+%!   y1 = uint8 ([0, 1, 2, 253, 254, 255]);
+%!   audiowrite (fname, y1, 8000, "BitsPerSample", 8);
+%!   y2 = audioread (fname, "native");
+%! unwind_protect_cleanup
+%!   unlink (fname);
+%! end_unwind_protect
+%! assert (y2, int8 ([-128; -127; -126; 125; 126; 127]));
+%!testif HAVE_SNDFILE <*56889>
+%! fname = [tempname() ".wav"];
+%! unwind_protect
+%!   y1 = int16 ([-32768, -32767, -32766, 32765, 32766, 32767]);
+%!   audiowrite (fname, y1, 8000, "BitsPerSample", 16);
+%!   y2 = audioread (fname, "native");
+%! unwind_protect_cleanup
+%!   unlink (fname);
+%! end_unwind_protect
+%! assert (y1(:), y2);
+%!testif HAVE_SNDFILE <*56889>
+%! fname = [tempname() ".au"];
+%! unwind_protect
+%!   y1 = [-8388608, -8388607, -8388606, 8388605, 8388606, 8388607] / 8388608;
+%!   audiowrite (fname, y1, 8000, "BitsPerSample", 24);
+%!   y2 = audioread (fname, "native");
+%! unwind_protect_cleanup
+%!   unlink (fname);
+%! end_unwind_protect
+%! assert (int32 ([-8388608; -8388607; -8388606; 8388605; 8388606; 8388607]),
+%!         y2);
+%!testif HAVE_SNDFILE <*56889>
+%! fname = [tempname() ".wav"];
+%! unwind_protect
+%!   y1 = int32 ([-2147483648, -2147483647, -2147483646, 2147483645, 2147483646, 2147483647 ]);
+%!   audiowrite (fname, y1, 8000, "BitsPerSample", 32);
+%!   y2 = audioread (fname, "native");
+%! unwind_protect_cleanup
+%!   unlink (fname);
+%! end_unwind_protect
+%! assert (y1(:), y2);
+%!testif HAVE_SNDFILE
+%! fail ("audiowrite (1, 1, 8e3)", "FILENAME must be a string");
+%! fail ("audiowrite ('foo', int64 (1), 8e3)", "wrong type argument 'int64 scalar'");
+%! fail ("audiowrite ('foo', [0 1], [8e3, 8e3])", "FS must be a positive scalar");
+%! fail ("audiowrite ('foo', 1, {8e3})", "FS must be a .* integer");
+%! fail ("audiowrite ('foo', 1, -8e3)", "FS must be a positive");
+%! fail ("audiowrite ('foo', 1, 8e3, 'bitspersample')", "invalid number of arguments");
+%! fail ("audiowrite ('foo', 1, 8e3, 'bitspersample', 48)", "wrong number of bits specified");
+%! fail ("audiowrite ('foo', 1, 8e3, 'quality', [2 3 4])", "Quality value must be a scalar");
+%! fail ("audiowrite ('foo', 1, 8e3, 'quality', NaN)", "Quality value must be .* between 0 and 100");
+%! fail ("audiowrite ('foo', 1, 8e3, 'quality', -1)", "Quality value must be .* between 0 and 100");
+%! fail ("audiowrite ('foo', 1, 8e3, 'quality', 101)", "Quality value must be .* between 0 and 100");
+%! fail ("audiowrite ('foo', 1, 8e3, 'foo', 'bar')", "unrecognized option: 'foo'");

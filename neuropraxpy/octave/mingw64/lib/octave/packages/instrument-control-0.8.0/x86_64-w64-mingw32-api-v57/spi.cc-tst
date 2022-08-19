@@ -1,0 +1,7 @@
+## Generated from spi.cc
+%!test
+%! if any(strcmp(instrhwinfo().SupportedInterfaces, "spi"))
+%!   fail ("spi ()", "Invalid call to spi");
+%! else
+%!   fail ("spi ()", "spi: Your system doesn't support the SPI interface");
+%! endif

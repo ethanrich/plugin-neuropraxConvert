@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Additional documentation for the optim package for Octave.
+
+Copyright (C) Olaf Till <i7tiol@t-online.de>
+
+You can redistribute this documentation and/or modify it under the terms
+of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+This documentation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this documentation; if not, see <http://www.gnu.org/licenses/>. -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Gradient functions (optim_doc)</title>
+
+<meta name="description" content="Gradient functions (optim_doc)">
+<meta name="keywords" content="Gradient functions (optim_doc)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Function-index.html#Function-index" rel="index" title="Function index">
+<link href="index.html#Top" rel="up" title="Top">
+<link href="dfpdp.html#dfpdp" rel="next" title="dfpdp">
+<link href="vfzero.html#vfzero" rel="prev" title="vfzero">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<a name="Gradient-functions"></a>
+<div class="header">
+<p>
+Next: <a href="Helper-functions.html#Helper-functions" accesskey="n" rel="next">Helper functions</a>, Previous: <a href="Zero-finders.html#Zero-finders" accesskey="p" rel="prev">Zero finders</a>, Up: <a href="index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Function-index.html#Function-index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Functions-for-numerical-approximation-of-gradients-and-Hessians"></a>
+<h2 class="chapter">4 Functions for numerical approximation of gradients and Hessians</h2>
+<a name="index-gradient-functions"></a>
+
+<p>You should not usually need to use these functions directly or pass them
+as arguments. They should be chosen and used by optimizer functions,
+possibly subject to their configuration options.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="dfpdp.html#dfpdp" accesskey="1">dfpdp</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Direct user interface to default numerical
+                            gradient method of new frontends.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="deriv.html#deriv" accesskey="2">deriv</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Higher order numerical derivatives.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="numgradient.html#numgradient" accesskey="3">numgradient</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Another numerical gradient function.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="numhessian.html#numhessian" accesskey="4">numhessian</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Numerical Hessian function.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="cdiff.html#cdiff" accesskey="5">cdiff</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">A string, yielding the numerical gradient if
+                            evaluated.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="jacobs.html#jacobs" accesskey="6">jacobs</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Complex step derivatives.
+</td></tr>
+</table>
+
+
+
+
+
+</body>
+</html>

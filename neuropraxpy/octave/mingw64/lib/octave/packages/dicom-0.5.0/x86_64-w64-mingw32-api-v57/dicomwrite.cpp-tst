@@ -1,0 +1,41 @@
+## DO NOT EDIT! Generated from dicomwrite.cpp
+%!shared testfile1, testfile2
+%! testfile1 = tempname ();
+%! testfile2 = tempname ();
+%!test
+%! wdata = uint8 (10*rand (10,10));
+%! dicomwrite (wdata, testfile1);
+%! rdata = dicomread (testfile1);
+%! assert(wdata, rdata);
+%!fail ("dicomwrite", "dicomwrite: should have at least 2 arguments");
+%!fail ("dicomwrite ([],1)");
+%!test
+%! wdata = uint8 (10*rand (10,10));
+%! dicomwrite (wdata, testfile1);
+%! info = dicominfo (testfile1);
+%! dicomwrite (wdata, testfile2, info);
+%!test
+%! wdata = uint8 (10*rand (10,10));
+%! s.PatientName = "fred";
+%! s.PatientID = "1";
+%! dicomwrite (wdata, testfile2, s);
+%! p = dicominfo (testfile2);
+%! assert (p.PatientName, "fred");
+%! assert (p.PatientID, "1");
+%!test
+%! # test we have control of image property information
+%! wdata = uint8 (10*rand (10,10));
+%! dicomwrite (wdata, testfile2);
+%! p = dicominfo (testfile2);
+%! assert (p.PhotometricInterpretation, "MONOCHROME1 ");
+%! s.PhotometricInterpretation = "MONOCHROME2";
+%! dicomwrite (wdata, testfile2, s);
+%! p = dicominfo (testfile2);
+%! assert (p.PhotometricInterpretation, "MONOCHROME2 ");
+%!test
+%! if exist (testfile1, 'file')
+%!   delete (testfile1);
+%! endif
+%! if exist (testfile2, 'file')
+%!   delete (testfile2);
+%! endif

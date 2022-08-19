@@ -1,0 +1,140 @@
+## DO NOT EDIT! Generated from imreconstruct.cc
+%!function recon = parallel_reconstruction (marker, mask,
+%!                                          conn = conndef (ndims (marker), "maximal"))
+%!  do
+%!    previous = marker;
+%!    marker = imdilate (marker, conn);
+%!    ## FIXME https://savannah.gnu.org/bugs/index.php?43712
+%!    if (strcmp (class (marker), "logical"))
+%!      marker = marker & mask;
+%!    else
+%!      marker = min (marker, mask);
+%!    endif
+%!  until (all ((marker == previous)(:)))
+%!  recon = marker;
+%!endfunction
+%!test
+%! for cl = {"int8", "uint8", "int16", "uint16", "int32", "uint32"}
+%!   cl = cl{1};
+%!   a = randi ([intmin(cl) intmax(cl)-30], 100, 100, cl);
+%!   b = a + randi (20, 100, 100, cl);
+%!   assert (imreconstruct (a, b), parallel_reconstruction (a, b))
+%! endfor
+%! for cl = {"double", "single"}
+%!   cl = cl{1};
+%!   a = (rand (100, 100, cl) - 0.5) .* 1000;
+%!   b = a + rand (100, 100, cl) * 100;
+%!   assert (imreconstruct (a, b), parallel_reconstruction (a, b))
+%! endfor
+%!test
+%! for cl = {"int8", "uint8", "int16", "uint16", "int32", "uint32"}
+%!   cl = cl{1};
+%!   a = randi ([intmin(cl) intmax(cl)-30], 100, 100, cl);
+%!   b = a + randi (20, 100, 100, cl);
+%!   c = [0 1 0; 1 1 1; 0 1 0];
+%!   assert (imreconstruct (a, b, c), parallel_reconstruction (a, b, c))
+%! endfor
+%!test
+%! a = randi (210, 100, 100);
+%! b = a + randi (20, 100, 100);
+%! c = ones (3, 1);
+%! assert (imreconstruct (a, b, c), parallel_reconstruction (a, b, c))
+%!test
+%! a = randi (210, 500, 500, 10, 4);
+%! b = a + randi (20, 500, 500, 10, 4);
+%! c = ones (3, 3, 3);
+%! assert (imreconstruct (a, b, c), parallel_reconstruction (a, b, c))
+%!test
+%! a = randi (210, 500, 500, 10, 4);
+%! b = a + randi (20, 500, 500, 10, 4);
+%! c = conndef (4, "minimal");
+%! assert (imreconstruct (a, b, c), parallel_reconstruction (a, b, c))
+%!test
+%! a = [   0   0   0   0   0   0   0   1   0   0
+%!         0   0   0   0   0   0   0   1   0   0
+%!         1   0   0   0   0   0   0   0   0   0
+%!         0   0   0   0   0   0   0   0   0   0
+%!         0   0   0   0   0   0   0   1   0   0
+%!         0   0   0   0   0   0   1   0   0   0
+%!         0   0   0   0   0   0   0   0   0   0
+%!         0   0   0   0   0   0   0   0   0   0
+%!         0   0   0   0   1   0   0   0   0   0
+%!         0   0   0   0   0   0   0   1   0   0];
+%!
+%! b = [   0   1   0   0   0   0   0   1   1   0
+%!         1   1   0   0   0   1   0   1   1   0
+%!         1   1   0   0   1   0   0   0   0   0
+%!         1   1   0   0   0   1   1   0   0   0
+%!         1   0   0   0   0   0   1   1   0   0
+%!         0   1   0   0   0   0   1   1   0   0
+%!         0   0   0   1   0   0   0   0   0   0
+%!         0   0   0   0   1   1   0   0   0   0
+%!         0   0   0   1   1   0   0   0   0   0
+%!         1   0   0   0   1   0   0   1   0   1];
+%!
+%! c = [   0   1   0   0   0   0   0   1   1   0
+%!         1   1   0   0   0   1   0   1   1   0
+%!         1   1   0   0   1   0   0   0   0   0
+%!         1   1   0   0   0   1   1   0   0   0
+%!         1   0   0   0   0   0   1   1   0   0
+%!         0   1   0   0   0   0   1   1   0   0
+%!         0   0   0   1   0   0   0   0   0   0
+%!         0   0   0   0   1   1   0   0   0   0
+%!         0   0   0   1   1   0   0   0   0   0
+%!         0   0   0   0   1   0   0   1   0   0];
+%! assert (imreconstruct (logical (a), logical (b)), logical (c));
+%!
+%! c = [   0   1   0   0   0   0   0   1   1   0
+%!         1   1   0   0   0   0   0   1   1   0
+%!         1   1   0   0   0   0   0   0   0   0
+%!         1   1   0   0   0   1   1   0   0   0
+%!         1   0   0   0   0   0   1   1   0   0
+%!         0   0   0   0   0   0   1   1   0   0
+%!         0   0   0   0   0   0   0   0   0   0
+%!         0   0   0   0   1   1   0   0   0   0
+%!         0   0   0   1   1   0   0   0   0   0
+%!         0   0   0   0   1   0   0   1   0   0];
+%! assert (imreconstruct (logical (a), logical (b), [0 1 0; 1 1 1; 0 1 0]),
+%!         logical (c));
+%!test
+%! do
+%!   b = rand (100, 100, 100) > 0.98;
+%! until (nnz (b) > 4)
+%! b = imdilate (b, ones (5, 5, 5));
+%! a = false (size (b));
+%! f = find (b);
+%! a(f(randi (numel (f), 6, 1))) = true;
+%! assert (imreconstruct (a, b), parallel_reconstruction (a, b))
+%!test
+%! a = randi (200, 100,100, 10, 10);
+%! b = a + randi (20, 100,100, 10, 10);
+%! c1 = ones (3, 3, 3);
+%! c2 = zeros (3, 3, 3, 3);
+%! c2(:,:,:,2) = c1;
+%! assert (imreconstruct (a, b, c1), imreconstruct (a, b, c2))
+%!test
+%! ## Values in MARKER above MASK should be clipped (bug #48794)
+%! ## (well, treated internally as if they were clipped)
+%! mask = logical ([1 1 1; 1 0 1; 1 1 1]);
+%! assert (imreconstruct (true (3, 3), mask), mask)
+%!
+%! mask = ones (5, 5);
+%! mask(2:4,2:4) = 0;
+%! assert (imreconstruct (ones (5, 5), mask), mask)
+%!
+%! mask = ones (5, 5);
+%! mask(2:4,2:4) = 0;
+%! assert (imreconstruct (repmat (2, [5, 5]), mask), mask)
+%!
+%! mask = ones (5, 5);
+%! mask(2:4,2:4) = 0;
+%! assert (imreconstruct (repmat (2, [5, 5]), mask), mask)
+%!
+%! marker = ones (3, 3, 3, 3);
+%! mask = marker;
+%! mask(2, 2, 2, 2) = 0;
+%! assert (imreconstruct (marker, mask), mask)
+%!
+%! marker = randi (210, 100, 100);
+%! assert (imreconstruct (marker +1, marker), marker)
+%! assert (imreconstruct (marker +1, marker), imreconstruct (marker, marker))

@@ -1,0 +1,1269 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<!-- $Id: epstool.htm,v 1.51 2005/06/10 08:45:36 ghostgum Exp $ -->
+<link rel="stylesheet" type="text/css" href="gsview.css" title="GSview Style">
+<title>epstool</title>
+</head>
+<body>
+<h1>
+epstool
+</h1>
+<p>
+EPSTOOL - Create or extract preview images in EPS files.
+<br>
+Release date: 2005-06-10
+</p>
+<h2>
+Table of contents
+</h2>
+<ul>
+<li><a href="#Overview">Overview</a>
+<li><a href="#EPS">Encapsulated PostScript Format</a>
+<li><a href="#Previews">Previews</a>
+<li><a href="#Commands">Commands</a>
+<li><a href="#Options">Options</a>
+<li><a href="#Mac">Macintosh</a>
+<li><a href="#DCS2">DCS 2.0</a>
+<li><a href="#Examples">Examples</a>
+<li><a href="#Notes">Notes</a>
+<li><a href="#Copyright">Copyright</a>
+<li><a href="#Compiling">Compiling</a>
+<li><a href="#Other">Other tools</a>
+<li><a href="#Revision">Revision History</a>
+</ul>
+
+<h2>
+<a name="Overview"></a>
+Overview
+</h2>
+
+<p>
+Epstool is a utility to create or extract preview images in
+EPS files.
+</p>
+
+<p>
+<b>
+Features:
+</b>
+</p>
+<ul>
+ <li> Add Interchange (EPSI), DOS EPS or PICT preview.
+ <li> Extract PostScript or preview from DOS EPS or Macintosh EPSF files.
+ <li> Create preview using ghostscript.
+ <li> Automatically calculate bounding box using
+      ghostscript and update in EPS file.
+ <li> Handle <a href="#DCS2">DCS 2.0</a>.
+ <li> Works under Windows 32 and 64-bit, Unix and OS/2.
+</ul>
+
+<p>
+Usage:  epstool command [options] input_filename output_filename
+</p>
+<p>
+Commands (one only):
+<pre>
+  --add-tiff6p-preview       or  -t6p
+  --add-tiff6u-preview       or  -t6u
+  --add-tiff4-preview        or  -t4
+  --add-tiff-preview         or  -tg
+  --add-interchange-preview  or  -i
+  --add-metafile-preview     or  -w
+  --add-pict-preview
+  --add-user-preview filename
+  --dcs2-multi
+  --dcs2-single
+  --dcs2-report
+  --extract-postscript       or  -p
+  --extract-preview          or  -v
+  --bitmap
+  --copy
+  --dump
+  --test-eps
+  --help                     or  -h
+</pre>
+Options:
+<pre>
+  --bbox                     or  -b
+  --combine-separations filename
+  --combine-tolerance pts
+  --custom-colours filename
+  --debug                    or  -d
+  --device name
+  --doseps-reverse
+  --dpi resolution
+  --dpi-render resolution
+  --ignore-information
+  --ignore-warnings
+  --ignore-errors
+  --gs command
+  --gs-args arguments
+  --mac-binary
+  --mac-double
+  --mac-rsrc
+  --mac-single
+  --missing-separations
+  --page-number page
+  --quiet
+  --rename-separation oldname  newname
+  --replace-composite
+</pre>
+
+<h2>
+<a name="EPS"></a>
+Encapsulated PostScript Format (EPS)
+</h2>
+EPS is a specialised form of a PostScript file that complies
+with the Document Structuring Conventions (DSC) and is intended
+to be embedded inside another PostScript file.
+An EPS file must contain a special first line that identifies
+it as an EPS file (e.g. <b><tt>%!PS-Adobe-3.0 EPSF-3.0</tt></b>) 
+and it must contain a <b><tt>%%BoundingBox:</tt></b> line.
+The EPS file only draws within the rectangle defined by the bounding box.
+The PostScript code must avoid using PostScript operators
+that would interfere with the embedding.  These include
+operators with global effects such as changing the page size
+and changing the half tone screen.
+
+<h2>
+<a name="Previews"></a>
+Previews
+</h2>
+EPS files may contain a preview to be used by programs
+that can't interpret the PostScript code.
+There are three ways to add a preview to an EPS file.
+<dl>
+<dt><b>Interchange</b></dt>
+<dd>This preview is included within PostScript comments in 
+a section marked %%BeginPreview: / %%EndPreview.
+The actual image data is stored in hexadecimal format.
+This format is most commonly used on Unix.
+</dd>
+<dt><b>DOS EPS</b></dt>
+<dd>The preview is a TIFF or Windows Metafile.  A DOS EPS
+file has a 30 byte binary header which gives offsets and lengths
+for the PostScript, TIFF and Windows Metafile sections.
+You can't send a DOS EPS file directly to a printer - you have
+to remove the binary header and preview first.
+This format is most commonly used on MS-Windows.
+<dt><b>PICT</b></dt>
+<dd>The preview is in PICT format stored in the resource fork
+of the file.
+This format is most commonly used on the Macinstosh.
+Epstool provides limited support for this format.
+</dl>
+
+<h2>
+<a name="Commands"></a>
+Commands
+</h2>
+<p>
+One of the following commands must be specified.
+Trying to use more than one command isn't helpful.
+<dl>
+<dt>
+  --add-tiff6p-preview       or  -t6p
+</dt>
+<dd>
+Add a TIFF 6 preview compressed with packbits (simple run length encoding).  
+The preview will normally be full colour, but you can make it greyscale 
+by adding the option <b><tt>--device bmpgray</tt></b> or
+<b><tt>--device pgmraw</tt></b>, or monochrome using
+<b><tt>--device bmpmono</tt></b> or
+<b><tt>--device pbmraw</tt></b>.
+</dd>
+</dd>
+<dt>
+  --add-tiff6u-preview       or  -t6u
+</dt>
+<dd>
+Add a TIFF 6 uncompressed preview.  
+See <b><tt>--add-tiff6p-preview</tt></b> for how to add a greyscale or
+monochrome preview.
+</dd>
+<dt>
+  --add-tiff4-preview        or  -t4
+</dt>
+<dd>
+Add a TIFF 4 preview.  The preview is monochrome and
+is intended for use with old programs that won't read TIFF6,
+such as Word Perfect 5.1 for DOS.
+</dd>
+<dt>
+  --add-tiff-preview         or  -tg
+</dt>
+<dd>
+Add a TIFF preview using ghostscript to generate the TIFF file.  
+You must specify a suitable TIFF device using <b><tt>--device</tt></b>.
+If you want a compressed monochrome image, you might use
+<b><tt>--device tiffg3</tt></b>.
+</dd>
+<dt>
+  --add-interchange-preview  or  -i
+</dt>
+<dd>
+Add a monochrome interchange preview
+</dd>
+<dt>
+  --add-metafile-preview     or  -w
+</dt>
+<dd>
+Add a Windows Metafile (WMF) preview.  The 
+metafile will contain a bitmap, not vector information.
+The preview will normally be full colour.
+See <b><tt>--add-tiff6p-preview</tt></b> for how to add a greyscale or
+monochrome preview.
+</dd>
+<dt>
+  --add-pict-preview
+</dt>
+<dd>
+Add a <a href="#Mac">Mac</a> PICT preview.
+EPSF files with PICT previews can generally be used only on Mac computers.
+The preview will be full colour.  
+The AppleSingle and MacBinary formats will contain the EPSF and 
+the preview.  The AppleDouble or Resource format will contain the 
+preview only and needs to accompany the original EPSF file.
+To specify the file format use <b><tt>--mac-single</tt></b>,
+<b><tt>--mac-double</tt></b>, <b><tt>--mac-binary</tt></b>
+or <b><tt>--mac-rsrc</tt></b>.
+</dd>
+<dt>
+  --add-user-preview <i>filename</i>
+</dt>
+<dd>
+Add a user supplied image as a preview.
+The image can be a Windows bitmap, a PBMPLUS file, a TIFF image
+or a Windows Metafile.  Window bitmaps and PBMPLUS files will be
+converted to TIFF6 compressed with packbits.
+TIFF and Windows Metafile images will be added unchanged.
+</dd>
+<dt>
+  --bitmap
+</dt>
+<dd>
+Create a bitmap of the area within the EPS bounding box.
+The bitmap type must be specified with <b><tt>--device</tt></b>.
+If processing a <a href="#DCS2">DCS 2.0</a> file, 
+the separation can be specified with <b><tt>--page-number</tt></b>.
+</dd>
+<dt>
+  --copy
+</dt>
+<dd>
+Copy the EPS file.  This is generally used with the <b><tt>--bbox</tt></b>
+option to update the bounding box.
+</dd>
+<dt>
+  --dcs2-multi
+</dt>
+<dd>
+Convert DCS 2.0 separations to multiple files.
+See <a href="#DCS2">DCS 2.0</a>.
+If the output name is <b><tt>out.eps</tt></b>,
+then the separations would be named 
+<b><tt>out.eps.Cyan</tt></b> etc.
+</dd>
+<dt>
+  --dcs2-single
+</dt>
+<dd>
+Convert DCS 2.0 separations to a single file.
+See <a href="#DCS2">DCS 2.0</a>.
+</dd>
+<dt>
+  --dcs2-report
+</dt>
+<dd>
+Write the file type, preview type, bounding boxes, 
+separation names, lengths and CMYK values to standard output.
+This can be used to identify if a <a href="#DCS2">DCS 2.0</a> 
+file is missing the composite page or preview.
+</dd>
+<dt>
+  --dump
+</dt>
+<dd>
+Display some information about the file type and DSC comments.
+</dd>
+<dt>
+  --extract-postscript       or  -p
+</dt>
+<dd>
+Extract the PostScript section from a DOS EPS or MacBinary/AppleSingle file.
+</dd>
+<dt>
+  --extract-preview          or  -v
+</dt>
+<dd>
+Extract the preview section from a DOS EPS or MacBinary/AppleSingle file.
+</dd>
+<dt>
+  --help                     or  -h
+</dt>
+<dd>
+Display a summary of the epstool commands and options.
+</dd>
+<dt>
+  --test-eps
+</dt>
+<dd>
+Partially test if a file complies with the EPSF specification.
+</dd>
+</dl>
+
+<h2>
+<a name="Options"></a>
+Options
+</h2>
+<dl>
+<dt>
+  --bbox                     or  -b
+</dt>
+<dd>
+Calculate the bounding box using the ghostscript
+<b><tt>bbox</tt></b> device and update in the EPS file.
+</dd>
+<dt>
+  --combine-separations <i>filename</i>
+</dt>
+<dd>
+Combine the separations of the input <a href="#DCS2">DCS 2.0</a> file
+with those of this file.  It is an error if the bounding boxes do
+not match or they contain separations with the same name.
+This option must be used with 
+<b><tt>--dcs2-multi</tt></b> or <b><tt>--dcs2-single</tt></b>.
+The composite page may later need to be updated with 
+<b><tt>--replace-composite</tt></b>.
+</dd>
+<dt>
+  --combine-tolerance <i>pts</i>
+</dt>
+<dd>
+When using <b><tt>--combine-separations</tt></b>, allow the 
+bounding boxes to vary by up to <i>pts</i> points.  
+The default is 0 so the bounding boxes must match exactly.
+</dd>
+<dt>
+  --custom-colours <i>filename</i>
+</dt>
+<dd>
+When using <b><tt>--replace-composite</tt></b> on a 
+<a href="#DCS2">DCS 2.0</a> file, 
+use the colours specified in this file in preference to
+those specified in the composite page.
+</dd>
+<dt>
+  --debug                    or  -d
+</dt>
+<dd>
+Be more verbose about progress.
+Do not remove temporary files.
+</dd>
+<dt>
+  --doseps-reverse
+</dt>
+<dd>
+When writing a DOS EPS file (TIFF or WMF preview), the default
+is to write the PostScript before the preview.  
+Using <b><tt>--doseps-reverse</tt></b> puts the preview before
+the PostScript section, which is required by some buggy programs.
+Either order is correct.
+</dd>
+<dt>
+  --device <i>name</i>
+</dt>
+<dd>
+Specify a ghostscript device to be used when creating the preview
+or bitmap.  For <b><tt>--add-tiff-preview</tt></b> this must be one
+of the ghostscript tiff devices (e.g. tiffg3, tiff24nc).
+For any other preview, it must be one of the bmp or pbmplus devices
+(e.g. bmpgray, bmp16m, pgmraw, ppmraw).
+For bitmap output (<b><tt>--bitmap</tt></b>) it can be any ghostscript
+bitmap device.
+</dd>
+<dt>
+  --dpi <i>resolution</i>
+</dt>
+<dd>
+Set the resolution of the preview or bitmap.  The default is 72 dpi.
+</dd>
+<dt>
+  --dpi-render <i>resolution</i>
+</dt>
+<dd>
+Render at a higher resolution set by <b><tt>--dpi-render</tt></b>, 
+then down sample to the resolution set by <b><tt>--dpi</tt></b>.
+This works when adding a preview image or using 
+<b><tt>--replace-composite</tt></b>, but not when using
+<b><tt>--bitmap</tt></b>.
+This improves the preview quality when the original contains a 
+pre-rendered image and <b><tt>--dpi-render</tt></b> is set to 
+match the original target printer.
+</dd>
+<dt>
+  --ignore-information
+</dt>
+<dd>
+Ignore information messages from the DSC parser.  Use at your own risk.
+These messages usually indicate that something is wrong with an EPS
+file, but that most EPS handlers probably won't care.
+An example is a line with more than 255 characters.
+</dd>
+<dt>
+  --ignore-warnings
+</dt>
+<dd>
+Ignore warnings from the DSC parser.  Use at your own risk.
+These messages are usually about faults in the DSC comments
+that are recoverable by epstool, but may confuse other EPS
+handlers.  An example is a bounding box that incorrectly
+uses floating point numbers instead of integer.
+</dd>
+<dt>
+  --ignore-errors
+</dt>
+<dd>
+Ignore errors from the DSC parser.  Use at your own risk.
+You really should fix the EPS file first.
+</dd>
+<dt>
+  --gs command
+</dt>
+<dd>
+Specify the name the ghostscript program.  On Unix the default is 
+<b><tt>gs</tt></b>. On Windows, epstool will check the registry
+for installed versions of ghostscript and use the latest, 
+otherwise it will use <b><tt>gswin32c.exe</tt></b>.
+</dd>
+<dt>
+  --gs-args <i>arguments</i>
+</dt>
+<dd>
+Specify additional Ghostscript arguments.
+This might be used to select anti-aliasing with 
+<b><tt>"-dTextAlphaBits=4 -dGraphicsAlphaBits=4"</tt></b>
+</dd>
+<dt>
+  --output <i>filename</i>
+</dt>
+<dd>
+Specify the output file (instead of using the second file parameter).
+Using the filename <b><tt>-</tt></b> causes epstool
+to write to standard output, which requires the use
+of <b><tt>--quiet</tt></b>.
+</dd>
+<dt>
+  --mac-binary
+</dt>
+<dd>
+When adding a PICT preview, use the MacBinary I format
+for the <a href="#Mac">Mac</a>.
+</dd>
+<dt>
+  --mac-double
+</dt>
+<dd>
+When adding a PICT preview, use the AppleDouble format
+for the <a href="#Mac">Mac</a>.
+</dd>
+<dt>
+  --mac-rsrc
+</dt>
+<dd>
+When adding a PICT preview, use the Resource format
+for the <a href="#Mac">Mac</a>.  
+</dd>
+<dt>
+  --mac-single
+</dt>
+<dd>
+When adding a PICT preview, use the AppleSingle format
+for the <a href="#Mac">Mac</a>.  
+</dd>
+<dt>
+  --missing-separations
+</dt>
+<dd>
+When writing a <a href="#DCS2">DCS 2.0</a> file, epstool
+will normally fail if a separation is missing.
+When this option is used, it will remove references to
+missing separations when writing the file.
+</dd>
+<dt>
+  --page-number <i>page</i>
+</dt>
+<dd>
+When creating a bitmap with <b><tt>--device</tt></b> from
+a <a href="#DCS2">DCS 2.0</a> file, <i>page</i> specifies
+the separation to be used.
+Page 1 is the composite and page 2 is the first separation.
+Use <b><tt>--dcs2-report</tt></b> to get the list of 
+separations.
+</dd>
+<dt>
+  --quiet
+</dt>
+<dd>
+Try to run without writing to standard output.
+</dd>
+<dt>
+  --rename-separation <i>oldname  newname</i>
+</dt>
+<dd>
+When copying a <a href="#DCS2">DCS 2.0</a> file with 
+<b><tt>--dcs2-multi</tt></b> or <b><tt>--dcs2-single</tt></b>,
+rename separation <i>oldname</i> to <i>newname</i>.
+This option implies <b><tt>--missing-separations</tt></b>.
+It is assumed that the new name is just an alias for the same colour
+and that the CMYK or RGB values for the separation are not changed.
+This option may be used multiple times.
+This must be used if the input file has two separations with
+the same name.
+</dd>
+<dt>
+  --replace-composite
+</dt>
+<dd>
+Some <a href="#DCS2">DCS 2.0</a> files do not have an image in the 
+composite page.
+This option replaces the composite page with a CMYK image
+derived from the separations.  This option must be used
+with <b><tt>--dcs2-multi</tt></b> or <b><tt>--dcs2-single</tt></b>.
+See also the options 
+<b><tt>--dpi</tt></b> and <b><tt>--custom-colours</tt></b>.
+</dd>
+</dl>
+
+<h2>
+<a name="Mac"></a>Macintosh
+</h2>
+<p>
+The Macintosh does not use a flat file system.  
+Each file can have a data fork and a resource fork.
+EPSF files have the PostScript in the data fork,
+and optionally have a preview in the resource fork
+as a PICT image.  In addition, file type is obtained
+from the finder info rather than a file extension.
+File types use a four character code such as "EPSF"
+or "PICT".
+When Macintosh files are copied to a foreign file system,
+the resource fork may be left behind. 
+Alternatives to retain the resource fork are to package the 
+finder data, data fork and resource fork in a single MacBinary 
+or AppleSingle file, or to put the data fork in a flat file 
+and the finder info and resource fork in an AppleDouble file.
+The Mac OSX finder will handle AppleDouble files automatically
+when copying files to and from a foreign file system.
+When copying <b><tt>test.eps</tt></b> to a foreign file system,
+the data fork would be written as <b><tt>test.eps</tt></b>
+and the finder info and resource fork to the AppleDouble file
+<b><tt>._test.eps</tt></b> or 
+<b><tt>.AppleDouble/test.eps</tt></b>.
+</p>
+<p>
+Epstool can read MacBinary and AppleSingle files.
+It can write MacBinary I, AppleSingle, AppleDouble or Resource files.
+Files written by epstool will have type <b><tt>EPSF</tt></b>
+and creator <b><tt>MSWD</tt></b>.
+When adding a preview to <b><tt>test.eps</tt></b>,
+it is suggested that you create the MacBinary
+file <b><tt>test.eps.bin</tt></b>.  
+On a Macintosh computer you then need to extract it with StuffIt Expander.
+Another alternative is to write the AppleDouble file
+to <b><tt>._test.eps</tt></b> then copy <b>both files</b>
+to a file system accessible to a Mac computer.
+</p>
+<p>
+If the output file name starts with <b><tt>.</tt></b> then
+AppleDouble will be assumed, 
+otherwise if it ends with <b><tt>.as</tt></b> then 
+AppleSingle will be assumed, 
+otherwise if it ends with <b><tt>.rsrc</tt></b> or <b><tt>/rsrc</tt></b> then 
+Resource will be assumed, 
+otherwise MacBinary will be assumed.
+When writing a MacBinary file, it is recommended that you end 
+the filename in <b><tt>.bin</tt></b>.
+To force the file type, use
+<b><tt>--mac-single</tt></b>,
+<b><tt>--mac-double</tt></b>,
+<b><tt>--mac-binary</tt></b>
+or 
+<b><tt>--mac-rsrc</tt></b>.
+</p>
+<p>
+On Mac OS X you can access a file's resource fork from command 
+line tools by appending <b><tt>/rsrc</tt></b> to the original file name. 
+The easiest way to add a preview to the file <b><tt>test.eps</tt></b> 
+on Mac OS X is to let epstool write in <b><tt>--mac-rsrc</tt></b> format 
+to <b><tt>test.eps/rsrc</tt></b> (see <a href="#Examples">Examples</a>).
+</p>
+
+
+<h2>
+<a name="DCS2"></a>Desktop Color Separations (DCS 2.0)
+</h2>
+<p>
+The Desktop Color Separation (DCS) image file format contains
+a low resolution preview, a main file with the full resolution
+composite image, and colour separations with full resolution
+separated plates.
+The separations will typically contain Cyan, Magenta, Yellow,
+Black and possibly spot colours.
+There are two versions of DCS 2.0.
+</p>
+<dl>
+<dt>
+<b>Multiple File</b>
+</dt>
+<dd>
+The main file contains <b><tt>%%PlateFile: (name) EPS Local filename</tt></b>
+comments which give the filenames of the separation plates.
+The main file may contain a low resolution DOS EPS preview.
+The separation files do not contain previews.
+</dd>
+<dt>
+<b>Single File</b>
+</dt>
+<dd>
+This is an abuse of the EPS specification.
+The single file contains the main file and the separations
+concatenated together, which makes the DSC comments incorrect.
+The main file specifies the byte offsets to the separations using
+<b><tt>%%PlateFile: (name) EPS #offset size</tt></b>.
+The single file may then be placed inside a DOS EPS file
+with a low resolution preview.
+By default, epstool writes single file DCS 2.0.
+</dd>
+</dl>
+
+<p>
+Epstool can add previews to single and multiple file DCS 2.0.
+It can split single file DCS 2.0 into multiple files and vice
+versa.  This allows a single file DCS 2.0 to be split,
+the composite image replaced, a new preview created, 
+and then be recombined into a single file.
+</p>
+<p>
+Some DCS 2.0 files do not have an image in the composite page.
+To determine if the composite page does not contain an image,
+use <b><tt>--dcs2-report</tt></b> and look to see if the composite
+section is very short.
+Using <b><tt>--dcs2-single --replace-composite</tt></b> replaces
+the composite page with the headers of the original composite page
+and a body containing a CMYK image derived from the separations.
+Set the resolution of the CMYK image using <b><tt>--dpi</tt></b>.
+</p>
+<p>
+When replacing the composite page with a CMYK image using
+<b><tt>--replace-composite</tt></b>, the <b><tt>--custom-colours</tt></b> 
+option is useful for dealing with DCS 2.0 files that have incorrect
+CMYK colours, for example specifying that the varnish layer is grey.  
+Each line of the CMYK colours file is formatted like a DSC
+<b><tt>%%CMYKCustomColor:</tt></b> or <b><tt>%%RGBCustomColor:</tt></b> 
+line, as shown in the example below.
+</p>
+<pre>
+%%CMYKCustomColor: 0.00 0.00 0.00 0.00 Varnish 
+%%CMYKCustomColor: 1.00 0.68 0.00 0.12 (Dark Blue)
+%%RGBCustomColor: 0.5 0.0 0.0 (Dark Red)
+</pre>
+<p>
+DCS2 files should not have two separations with the same name.
+Epstool will not allow a DCS2 output file to have duplicate 
+separation names.  
+Use <b><tt>--rename-separation</tt></b> to resolve this.
+</p>
+
+<h2>
+<a name="Examples"></a>
+Examples
+</h2>
+
+<p>
+Add colour preview (24bit/pixel) to EPS file
+<br><b><tt>
+&nbsp;  epstool -t6p tiger.eps output.eps
+</tt></b>
+</p>
+
+<p>
+Add TIFF (G3 Fax) preview to tiger.eps.
+<br><b><tt>
+&nbsp;  epstool --add-tiff-preview --device tiffg3 tiger.eps output.eps
+</tt></b><br>
+Any GS TIFF device can be used, e.g. tiffg4, tiffpack
+</p>
+
+<p>
+Extract TIFF preview from tiger.eps
+<br><b><tt>
+&nbsp;  epstool -v tiger.eps tiger.tif
+</tt></b>
+</p>
+
+<p>
+Fix incorrect %%BoundingBox then add TIFF4 preview.
+<br><b><tt>
+&nbsp;  epstool --bbox -t4 golfer.eps output.eps
+</tt></b>
+</p>
+
+<p>
+Adjust the BoundingBox of an existing EPS file, but don't add a preview:
+<br><b><tt>
+&nbsp;  epstool --copy --bbox input.eps output.eps
+</tt></b>
+</p>
+
+<p>
+Add user supplied Windows Metafile to EPS file.
+Typically used when an application can export EPS and WMF separately
+but can't export EPS with WMF preview.
+<br><b><tt>
+&nbsp;  epstool --add-user-preview logo.wmf logo.eps output.eps
+</tt></b>
+</p>
+
+<p>
+Add a PICT preview and write an AppleDouble file.
+<br><b><tt>
+&nbsp;  epstool --add-pict-preview --mac-double tiger.eps ._tiger.eps
+</tt></b>
+<br>
+To be used by a Mac, both <b><tt>tiger.eps</tt></b> and 
+<b><tt>._tiger.eps</tt></b> need to be on a foreign file system 
+accessible to the Mac.
+</p>
+
+<p>
+On Mac OS X you can access a file's resource fork from command line 
+tools by appending "/rsrc" to the file's original name. 
+Add a PICT preview, overwriting the existing resources.
+<br><b><tt>
+&nbsp; epstool --add-pict-preview --mac-rsrc tiger.eps tiger.eps/rsrc
+</tt></b>
+<br>
+
+<h2>
+<a name="Notes"></a>
+Notes
+</h2>
+
+<p>
+When adding a WMF preview to an EPS file using 
+<b><tt>-add-user-preview filename</tt></b>, the
+placeable metafile header is removed from the metafile as it is put 
+into the EPS file.
+When extracting a WMF preview from an EPS file, a placeable metafile
+header is created from the EPS BoundingBox information.  
+This placeable metafile header assumes that the WMF has its origin 
+at (0,0), which might not be correct.
+</p>
+
+<p>
+When epstool is creating a TIFF or WMF preview,
+it will convert palette colour images into 24-bit/pixel.
+</p>
+
+<p>
+The environment variable TEMP should point to a writeable directory
+for temporary files.  If not defined, /tmp will be used for Unix
+and the current directory will be used for other platforms.
+</p>
+
+<h2>
+<a name="Copyright"></a>
+Copyright
+</h2>
+<p>
+  Copyright (C) 1995-2005 Ghostgum Software Pty Ltd.  All rights reserved.
+</p>
+
+<p>
+  This software is provided AS-IS with no warranty, either express or
+  implied.
+</p>
+
+<p>
+  This software is distributed under licence and may not be copied,
+  modified or distributed except as expressly authorised under the terms
+  of the licence contained in the file LICENCE in this distribution.
+</p>
+
+<p>
+  For more information about licensing, please refer to
+  http://www.ghostgum.com.au/ or contact Ghostsgum Software Pty Ltd, 
+  218 Gallaghers Rd, Glen Waverley VIC 3150, AUSTRALIA, 
+  Fax +61 3 9886 6616.
+</p>
+
+<p>
+  Author: Russell Lang, Ghostgum Software Pty Ltd
+<br>
+  Internet: gsview at ghostgum.com.au
+</p>
+
+<h2>
+<a name="Compiling"></a>
+Compiling
+</h2>
+<p>
+To compile epstool on Unix, use<br>
+<b><tt>&nbsp;  make -f src/epstool.mak</tt></b>
+<br>
+To build an RPM<br>
+<b><tt>&nbsp;  rpmbuild -ta epstool-N.NN.tar.gz</tt></b>
+</p>
+<p>
+To compile epstool on MS-Windows, use<br>
+<b><tt>&nbsp;  nmake -f srcwin/epstool.mak VCVER=71</tt></b>
+</p>
+
+<h2>
+<a name="Other"></a>
+Other tools
+</h2>
+<p>
+Other tools that can add previews to EPS files are
+</p>
+<ul>
+<li> <a href="http://www.cs.wisc.edu/~ghost/gsview/index.htm">GSview</A> 
+    (slightly older code than epstool)
+<li> ps2epsi, which is part of <A HREF="http://www.cs.wisc.edu/~ghost/aladdin/index.html">Ghostscript</A>.
+   This only adds Interchange previews.
+<li> <a href="http://www.umich.edu/~archive/mac/util/text/ps2epsplus.sit.hqx">
+     ps2epsplus</A> for creating Mac EPS files on a Mac.
+<li> <a href="http://www.umich.edu/~archive/mac/util/unix/ps2epsmac1.3.shar">
+     ps2epsmac</A> for creating Mac EPS files under Unix.
+
+</ul>
+
+<h2>
+<a name="Revision"></a>
+Revision History
+</h2>
+
+<h3>
+3.08 2005-06-10
+</h3>
+<p>
+Fix Unix-like makefiles to work with non-GNU make.
+<br>
+Install CSS file gsview.css.
+<br>
+Added --ignore-information to ignore DSC parser information messages.
+<br>
+Fixed handling of --ignore-warnings and --ignore-errors so that these
+are now required to process files with warnings or errors.
+<br>
+Added makefile support for cygwin packages.
+<br>
+Added --test-eps making a partial test of EPS compliance.
+<br>
+Added --dump for displaying summary of DSC information.
+<br>
+Builds as Win64 for AMD64, using either Microsoft Visual Studio .NET 2003
+with Windows Server 2003 DDK, or with Microsoft Visual Studio .NET 2005
+beta.
+<br>
+Builds under OS/2 with gcc/emx.
+</p>
+
+<h3>
+3.07 2005-01-07
+</h3>
+<p>
+Fix portability issue for Unix-like systems without shared libraries.
+<br>
+Interchange preview was restricted to 1bit/pixel.
+Add 8bit/pixel grey which isn't commonly used.
+<br>
+Explicitly set the page size when calculating the bounding box,
+to avoid getting erroneous results when the user changes the
+default page size with -sPAPERSIZE=a4 or by modifying gs_init.ps
+to change the default page size on startup.
+This was a problem with some badly configured Linux distributions.
+</p>
+
+<h3>
+3.06 2004-11-28
+</h3>
+<p>
+Fix interchange previews which were inverted.
+<br>
+Fix --bitmap for EPS file without a page, which was broken 
+when --page-number was added.
+<br>
+Identify DCS 1.0 as itself, not DCS 2.0.
+<br>
+More portable on Unix-like systems.
+</p>
+
+<h3>
+3.05 2004-04-22
+</h3>
+<p>
+Write duplicate DCS2 separations to unique files with --dcs2-multi.<br>
+When renaming a DCS2 separation, only rename the first occurence of the
+name, to allow files with duplicate separation names to be fixed.<br>
+Do not allow duplicate separations in an output file.  This must be
+resolved with --rename-separations<br>
+Added --page-number to allow bitmaps of separations to be created.<br>
+Fix bitmap output to stdout with "--bitmap --output -".<br>
+Prevent crash when given a PDF file.<br>
+Put --gs-args near the end of the GS command line, to allow 
+PostScript commands to be embedded.
+</p>
+
+<h3>
+3.04 2004-01-17
+</h3>
+<p>
+Fix bug that caused a crash with -t6p on non-Windows systems.<br>
+Allow output to stdout with filename "-".<br>
+Remove blank lines from interchange preview.<br>
+Rearrange files in the epstool distribution so that it compiles
+with a simple 'make' on Linux.
+</p>
+
+<h3>
+3.03 2003-10-18
+</h3>
+<p>
+  Added Macintosh AppleDouble, AppleSingle, MacBinary and Resource formats,
+  and the ability to add/remove PICT previews.<br>
+  Added --combine-separations and --combine-tolerance.
+  Allow spaces to occur in unquoted DCS1 separation file names.
+</p>
+<h3>
+3.02 2003-05-06
+</h3>
+<p>
+  Added man page and some build updates for Debian.
+</p>
+<h3>
+3.01 2003-02-28
+</h3>
+<p>
+  Added --doseps-reverse.<br>
+  Added --rename-separation.</br>
+  Added bounding box to --dcs2-report output.
+</p>
+<h3>
+3.0 2002-09-17
+</h3>
+<p>
+  Major rewrite.<br>
+  Command line changes.<br>
+  Use ghostscript bbox device for calculating bounding box.<br>
+  Supports multiple file DCS 2.0.<br>
+  Add preview to single file DCS 2.0.<br>
+  Replace composite page of DCS 2.0 with an image derived from
+  the separations.<br>
+  Down sample images to provide anti-aliasing.<br>
+  Removed option to extract a page from a multipage file.  The input 
+  file must now be EPS.
+</p>
+<h3>
+2.2 2002-04-30
+</h3>
+<p>
+  Release with GSview 4.3.
+<br>
+  Fixed bug in extracting a page.
+<br>
+  Handle single file DCS 2.0.
+<br>
+  Added '-k' to create a bitmap of the EPS.
+<h3>
+2.1 2002-02-07
+</h3>
+<p>
+  Release with GSview 4.2.
+<h3>
+2.0 2001-11-23
+</h3>
+<p>
+  Release with GSview 4.1.
+<br>
+  Remove %%BoundingBox from trailer when adding it to header.
+<h3>
+1.92 2001-10-20
+</h3>
+<p>
+  Release with GSview 4.05 beta.
+<br>
+  Added -a<i>args</i> to separate arguments from -g.
+  This is needed because program name is surrounded by
+  quotes and so some shells were treating the arguments
+  as part of the program name.
+</p>
+<h3>
+1.91 2001-10-06
+</h3>
+<p>
+  Release with GSview 4.03 beta.
+</p>
+<h3>
+1.9 2001-07-27
+</h3>
+<p>
+  Release with GSview 4.01 beta.
+<br>
+  Ignore DSC warnings with -e1, ignore DSC errors with -e2.
+</p>
+<h3>
+1.8 2001-06-02
+</h3>
+<p>
+  Release with GSview 4.0.
+</p>
+<h3>
+1.7 2001-03-30
+</h3>
+<p>
+  Allow DSC warnings to be ignored with -e.
+</p>
+<h3>
+1.6 2000-12-28
+</h3>
+<p>
+  Release with GSview 3.6.
+<br>
+  Write correct page ordinal when extracting a page.
+<br>
+  Correctly handle DOS EPS files again.
+</p>
+<h3>
+1.5 2000-12-16
+</h3>
+<p>
+  Release with GSview 3.5.
+</p>
+<h3>
+1.32 2000-11-06
+</h3>
+<p>
+  Updated DSC parser.
+<br>
+  Release with GSview 3.41 beta.
+</p>
+<h3>
+1.4 2000-06-30
+</h3>
+<p>
+  Fixed handling of files without trailers.
+</p>
+<h3>
+1.3 2000-06-25
+</h3>
+<p>
+  Put quotes around Ghostscript EXE name for Windows, OS/2 and Unix.
+  Released with GSview 3.1.
+</p>
+<h3>
+1.21 2000-06-15
+</h3>
+<p>
+  Minor fixes for Linux build.
+</p>
+<h3>
+1.2 2000-06-15
+</h3>
+<p>
+  Release with GSview 3.0.
+</p>
+<h3>
+1.10 2000-04-01
+</h3>
+<p>
+  Fixes to DSC parser.
+</p>
+<h3>
+1.09 2000-03-11
+</h3>
+<p>
+  New DSC parser.
+<br>
+  Added #pragma pack(1) needed by MSVC++.
+<br>
+  Modified BMP reading so it works even if byte packing not used.
+<br>,
+  BMP reading might now work with big-endian architectures, so
+  might be able to use BMP devices on Unix (if compiled into Ghostscript).
+  (Untested).
+</p>
+<h3>
+1.08 2000-02-15
+</h3>
+<p>
+  Fixed incorrect switch statement in psfile_extract_header()
+<br>
+  Fixed -b -c to change the first line to EPS.
+<br>
+  Added -sWIDTHxHEIGHT for use with -b -c and large page sizes.
+</p>
+
+<h3>
+1.07 1998-12-23
+</h3>
+<p>
+  Cope with badly written EPS files that leave items on
+  the stack or dictionary stack.
+</p>
+
+<h3>
+1.06 1998-09-13
+</h3>
+<p>
+  Page calculation for descending page order was wrong.
+<br>
+  If a multipage non-EPS file was used as input, the output
+  didn't contain the correct single page (or copied garbage).
+<br>
+  Added macro for SUNOS4 to use bcopy instead of memmove.
+</p>
+
+<h3>
+1.05 1997-12-09
+</h3>
+<p>
+  When calculating the bounding box from a bitmap, round the
+  area outwards by 0.5 pixels.
+</p>
+
+<h3>
+1.04 1997-11-29
+</h3>
+<p>
+  Released with GSview 2.4
+</p>
+
+<h3>
+1.03 1997-09-22
+</h3>
+<p>
+  TIFF4 preview didn't work from 24bit/pixel source bitmap.
+<br>
+  TIFF 6 packbits didn't compress properly for some data (and
+  consquently caused heap corruption).
+<br>
+  Fixed TIFF 6 output when using palette (4 or 8 bit/pixel).
+</p>
+
+<h3>
+1.02 1997-02-15
+</h3>
+<p>
+  Removed requirement for EPS file to use showpage.
+<br>
+  Added -c to allow correction of %%BoundingBox
+<br>
+  When calculating %%BoundingBox, render to a page of letter
+  width and A4 height.
+<br>
+  Avoid integer overflow on 16bit machines when calculating width 
+  and height.
+<br>
+  If TEMP undefined, default to /tmp on Unix.
+</p>
+
+<h3>
+1.01 1996-11-07
+</h3>
+<p>
+  Release separate from GSview.  No code changes.
+<br>
+  Includes Win32 (epstool.exe) and OS/2 (epstool2.exe) EXEs.
+</p>
+
+<h3>
+1.0 1996-10-13
+</h3>
+<p>
+  Not a beta version.  Included with GSview 2.1.
+</p>
+
+<h3>
+0.81 beta 1996-09-12
+</h3>
+<p>
+  Added TIFF packbits compression.
+<br>
+  Added -zdevice.
+<br>
+  -t5 replaced by -t6u, -t6p.
+<br>
+  -wdevice replaced by -w -zdevice
+<br>
+  -ttiff3 replaced by -tg -ztiffg3
+</p>
+
+<h3>
+0.8 beta 1996-09-09
+</h3>
+<p>
+  Makefile target for Win32.
+<br>
+  Add WMF for all platforms.
+<br>
+  Removed restriction that structures must be byte aligned under Unix.
+<br>
+  Must still be byte aligned under DOS and OS/2.
+<br>
+
+<h3>
+0.7 alpha 1995-10-20
+</h3>
+<p>
+  Fixed a few error messages.
+<br>
+  Use @file to reduce Ghostscript command line length under MS-DOS and OS/2.
+<br>
+  Added -q option to GSview and -dQUIET option to Ghostscript command line 
+  to allow EPS files to be written to stdout.
+</p>
+
+<h3>
+0.6 alpha 1995-10-12
+</h3>
+<p>
+  Delete temporary bmp file.
+<br>
+  Add user supplied preview to a DOS EPS file (which already had a
+  preview) was wrong.
+</p>
+
+<h3>
+0.5 alpha 1995-09-27
+</h3>
+<p>
+  Put stdout into binary mode.
+<br>
+  Write placeable WMF header correctly on 32bit and big-endian machines.
+</p>
+
+<h3>
+0.4 alpha 1995-09-15
+</h3>
+<p>
+  Remove placeable WMF header when adding to EPS file, add placeable
+<br>
+  WMF header when extracting from EPS file.
+</p>
+
+<h3>
+0.3 alpha 1995-09-14
+</h3>
+<p>
+  First release separate from GSview.
+</p>
+
+<h2>
+<a name="End"></a>
+End of epstool documentation
+</h2>
+</body>
+</html>
