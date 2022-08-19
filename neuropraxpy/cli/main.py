@@ -1,18 +1,14 @@
 import click
 import os
 from tqdm import tqdm
-import configparser
 from neuropraxpy.reader.read import collect_files, make_new_dir, call_octave_convert_files, np_to_py
 from neuropraxpy.reader.utils import get_project_root
 
 @click.command()
 def main():
     
-    # get the path of the local octave executable from the user setting
-    ini_path = get_project_root() + "\\cli\\" + "config.ini"
-    config = configparser.ConfigParser()
-    config.read(ini_path)
-    local_octave = config.get('settings','local_octave')
+    # get the path of the octave exe
+    local_octave = get_project_root() + '\\octave\\mingw64\\bin\\octave.exe'
     
     # collect the binary files
     eeg, ee_, _ = collect_files()
