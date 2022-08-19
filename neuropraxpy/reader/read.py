@@ -25,11 +25,7 @@ def make_new_dir(sub='eingelegt'):
     except:
         pass
 
-def call_octave_convert_files(local_octave="", file_to_convert="empty"):
-    # if no file give, insult the user
-    if file_to_convert == "empty":
-        print("Come on then, give us a file")
-    
+def brute_force_octave(local_octave):
     # brute force the environment variable setting. Seems to take 1-5 iterations. No clue why
     os.environ['OCTAVE_EXECUTABLE'] = ""
     t0 = time.time()
@@ -39,7 +35,15 @@ def call_octave_convert_files(local_octave="", file_to_convert="empty"):
         os.environ['OCTAVE_EXECUTABLE'] = local_octave
         if time.time()-t0 > 10:
             raise Exception("Octave not found")
+
+def call_octave_convert_files(local_octave="", file_to_convert="empty"):
+    # if no file give, insult the user
+    if file_to_convert == "empty":
+        print("Come on then, give us a file")
     
+    # set up octave exe
+    brute_force_octave(local_octave)
+
     # when the environment variable is finally set, call octave to convert binary to .mat
     if 'octave' in os.environ['OCTAVE_EXECUTABLE']:
         # get the root directory for this repo
