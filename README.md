@@ -1,13 +1,13 @@
 # tool-neuropraxpy
 This is a CLI (command line interface) tool to read binary files from NEUROPRAX (.EEG/.EE_ files) and parse them into Python dictionaries. Python wraps a module of MATLAB scripts for converting the binary files to .mat format. The hard work was done for me. 
 
-Functionality is limited to Windows. I could update it to include Linux. Let me know. 
+Functionality is currently limited to Windows and requires GNU Octave installation.
 
 Please follow the instructions below.
 
 If there is a bug, please raise an Issue.
 
-# Installation
+# Installation and Use
 
 #### 1. Install GNU Octave ####
 [***Windows Installer***](https://ftpmirror.gnu.org/octave/windows/octave-7.2.0-w64-installer.exe)
@@ -47,3 +47,7 @@ eeg_data = load_pickle(pickles[0])
 ```
 
 2) You now have a variable called `eeg_data` that contains dictionaries of key:values similar to a MATLAB struct. I would recommend using Spyder to have a variable explorer.
+
+# Future Releases
+I'd like to make this tool easier for users by avoiding the hassles of installing this repository and GNU Octave. The best solution is to host this tool on the web. I would think that the size of the EEG files would be the only setback (long upload/download times). For those who find the installation instructions exhausting, a web version may be a good tradeoff. 
+
