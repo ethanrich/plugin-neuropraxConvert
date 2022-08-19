@@ -8,7 +8,7 @@ from neuropraxpy.reader.utils import get_project_root
 def main():
     
     # get the path of the octave exe
-    local_octave = get_project_root() + '\\octave\\mingw64\\bin\\octave.exe'
+    local_octave = get_project_root() + '\\octave\\mingw64\\bin\\octave-cli.exe'
     
     # collect the binary files
     eeg, ee_, _ = collect_files()

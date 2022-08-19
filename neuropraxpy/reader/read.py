@@ -33,12 +33,12 @@ def call_octave_convert_files(local_octave="", file_to_convert="empty"):
     # brute force the environment variable setting. Seems to take 1-5 iterations. No clue why
     os.environ['OCTAVE_EXECUTABLE'] = ""
     t0 = time.time()
-    while "octave.exe" not in os.environ['OCTAVE_EXECUTABLE']:
+    while "octave-cli.exe" not in os.environ['OCTAVE_EXECUTABLE']:
         # get the octave path from the user's input
         OCTAVE_EXECUTABLE = local_octave
         os.environ['OCTAVE_EXECUTABLE'] = local_octave
         if time.time()-t0 > 10:
-            raise Exception("Please add the path to your octave.exe in tool-neuropraxpy\cli\config.ini")
+            raise Exception("Octave not found")
     
     # when the environment variable is finally set, call octave to convert binary to .mat
     if 'octave' in os.environ['OCTAVE_EXECUTABLE']:
