@@ -41,5 +41,5 @@ eeg_data = load_pickle(pickles[0])
 2) You now have a variable called `eeg_data` that contains dictionaries of key:values similar to a MATLAB struct. I would recommend using Spyder to have a variable explorer.
 
 # Future Releases
-Hosting this tool on the web would be cool. The only setback would be file upload/download times.
+Hosting this tool on the web would be cool. The only setback would be file upload/download times. This setback seems to be a greater cost than the user installing the repository once and having much faster usage.
 
