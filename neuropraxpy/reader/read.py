@@ -34,8 +34,8 @@ def brute_force_octave(local_octave):
         # get the octave path from the user's input
         OCTAVE_EXECUTABLE = local_octave
         os.environ['OCTAVE_EXECUTABLE'] = local_octave
-        if time.time()-t0 > 10:
-            raise Exception("Octave not found")
+        if time.time()-t0 > 20:
+            raise Exception("Octave not found. Please try again.")
 
 def call_octave_convert_files(local_octave="", file_to_convert="empty"):
     # if no file given, insult the user
@@ -55,7 +55,7 @@ def call_octave_convert_files(local_octave="", file_to_convert="empty"):
         octave.push("savepath", os.getcwd()) # send where to save the mat files
         octave.loadEEG(file_to_convert, nout=0) # call the conversion function
     else:
-        print("Failed, try again or contact support")
+        print("Failed to load octave, try again or contact support")
         
 def np_to_py(matfile, folder='eingelegt'):
     

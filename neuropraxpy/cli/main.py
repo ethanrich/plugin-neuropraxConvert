@@ -7,6 +7,8 @@ from neuropraxpy.reader.utils import get_project_root
 @click.command()
 def main():
     
+    click.echo("Collecting the files")
+
     # get the path of the octave exe
     local_octave = get_project_root() + '\\octave\\mingw64\\bin\\octave-cli.exe'
     
@@ -17,11 +19,17 @@ def main():
     make_new_dir(sub='eingelegt')
     
     # convert files to Python dicts
-    for file in tqdm(eeg):
-        call_octave_convert_files(local_octave=local_octave, file_to_convert=file)
-        np_to_py(file[:-4] + '_NP_')
-        
+    click.echo("Running conversion")
+    try:
+        for file in tqdm(eeg):
+            call_octave_convert_files(local_octave=local_octave, file_to_convert=file)
+            np_to_py(file[:-4] + '_NP_')
+        success=True
+    except:
+        raise Exception("Something went wrong, please contact support")
+    
     # collect the mat files
+    click.echo("Shifting mat files to folder")
     _, _, mats = collect_files()
     # make a folder for the mat files
     make_new_dir(sub='matfiles')
@@ -30,7 +38,7 @@ def main():
         for mat in mats:
             os.rename(os.getcwd()+"\\"+mat, os.getcwd()+"\\matfiles\\"+mat)
     except:
-        print("Cannot move .mat files, as the destination already has them")
+        click.echo("Cannot move .mat files, as the destination already has them")
 
-    
-    click.echo("Finished with conversion to Python and all files pickled. Bitteschön.")
+    if success:
+        click.echo("Finished with conversion to Python and all files pickled. Bitteschön.")
