@@ -1,4 +1,5 @@
 from neuropraxpy.reader.utils import get_project_root
+from neuropraxpy.reader.load import save_pickle
 import os    
 import pickle
 from scipy.io import loadmat
@@ -37,7 +38,7 @@ def brute_force_octave(local_octave):
             raise Exception("Octave not found")
 
 def call_octave_convert_files(local_octave="", file_to_convert="empty"):
-    # if no file give, insult the user
+    # if no file given, insult the user
     if file_to_convert == "empty":
         print("Come on then, give us a file")
     
@@ -49,17 +50,12 @@ def call_octave_convert_files(local_octave="", file_to_convert="empty"):
         # get the root directory for this repo
         root = get_project_root() + '\\matlab_scripts'
         
-        from oct2py import octave
+        from oct2py import octave # leave this here
         octave.addpath(root) # get the octave files from the repo folder
         octave.push("savepath", os.getcwd()) # send where to save the mat files
         octave.loadEEG(file_to_convert, nout=0) # call the conversion function
     else:
         print("Failed, try again or contact support")
-    
-def save_as_pickle(file_name, to_save):
-    # basic pickle saver
-    with open(file_name + '.pickle', 'wb') as handle:
-        pickle.dump(to_save, handle, protocol=pickle.HIGHEST_PROTOCOL)
         
 def np_to_py(matfile, folder='eingelegt'):
     
@@ -83,10 +79,10 @@ def np_to_py(matfile, folder='eingelegt'):
         # collect the dict into a larger one for later saving
         NP_info_data_marker[which] = np_dict
         # save the dict with each individual file only
-        save_as_pickle(folder + '\\' + matfile + '_' + which, np_dict)
+        save_pickle(folder + '\\' + matfile + '_' + which, np_dict)
                 
     # save the dict with all three files in it
-    save_as_pickle(folder + '\\' + matfile + '_info_data_marker', NP_info_data_marker)
+    save_pickle(folder + '\\' + matfile + '_info_data_marker', NP_info_data_marker)
     
     
 
