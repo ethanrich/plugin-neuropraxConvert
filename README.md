@@ -69,6 +69,10 @@ outlines = mne.viz.topomap._make_head_outlines(sphere, pos, 'head', clip_origin)
 plt.figure(figsize=(12,8))
 epochs.plot_psd_topomap(ch_type='eeg', normalize=True, bands=[(8, 12, 'Alpha Band (8-12 Hz)')], tmin=1, tmax=5, axes=[plt.gca()], outlines='head', vlim=(0, 0.1), cmap='seismic')
 ```
+<img src="img/topo.png" width="500">
+<img src="img/tfr.png" width="1000">
+
+
 
 2) You now have a variable called `eeg_data` that contains dictionaries of key:values similar to a MATLAB struct. I would recommend using Spyder to have a variable explorer.
 
