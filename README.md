@@ -1,5 +1,5 @@
 # tool-neuropraxpy
-This is a CLI (command line interface) tool to read binary files from NEUROPRAX (.EEG/.EE_ files) and parse them into Python dictionaries. Python wraps a module of MATLAB scripts for converting the binary files to .mat format. The hard work was done for me. Functionality is currently limited to Windows. If there is a bug, please raise an Issue.
+This is a CLI (command line interface) tool to read binary files from NEURO PRAX (.EEG/.EE_ files) and parse them into Python dictionaries. Python wraps a module of MATLAB scripts for converting the binary files to .mat format. The hard work was done for me. Functionality is currently limited to Windows. If there is a bug, please raise an Issue.
 
 Note: the repository is ~2.14 GB in size. Please give it time to clone/download and extract.
 
@@ -15,6 +15,8 @@ Please follow the instructions below.
 # Usage
 
 #### 1. Convert Binary Files To Pickle (for Python) ####
+
+NOTE: This tool only works for .EEG and .EE_ files from NEURO PRAX. The folder in which you run the CLI must have at least one .EEG file with a .EE_ of the same name.
 
 1) Open a command prompt or Anaconda Prompt (whatever you used to pip install) in the folder of your .EEG/.EE_ files
 2) Run the command `neuropraxpy`
@@ -71,5 +73,5 @@ epochs.plot_psd_topomap(ch_type='eeg', normalize=True, bands=[(8, 12, 'Alpha Ban
 2) You now have a variable called `eeg_data` that contains dictionaries of key:values similar to a MATLAB struct. I would recommend using Spyder to have a variable explorer.
 
 # Future Releases
-Hosting this tool on the web would be cool. The only setback would be file upload/download times. This setback seems to be a greater cost than the user installing the repository once and having much faster usage.
+Hosting this tool on the web would be cool. The only setback would be file upload/download times. This setback seems to be a greater cost than the user installing the repository once and having much faster usage going forward.
 
