@@ -47,7 +47,11 @@ sf=eeg_data['info']['fa'][0][0] # get the sampling rate
 
 # notch filter
 freqs = (50, 100, 150, 200)
-notched = mne.filter.notch_filter(np.float64(eeg.T).copy(), sf, freqs, method='fir', phase = 'zero-double', trans_bandwidth=5)
+notched = mne.filter.notch_filter(np.float64(eeg.T).copy(), sf, 
+        freqs, 
+        method='fir', 
+        phase='zero-double', 
+        trans_bandwidth=5)
 
 # visualize a spectrogram
 yasa.plot_spectrogram(notched[0,:], sf, win_sec=3)
@@ -67,7 +71,8 @@ picks, pos, merge_channels, names, ch_type, sphere, clip_origin = \
 outlines = mne.viz.topomap._make_head_outlines(sphere, pos, 'head', clip_origin)
 
 plt.figure(figsize=(12,8))
-epochs.plot_psd_topomap(ch_type='eeg', normalize=True, bands=[(8, 12, 'Alpha Band (8-12 Hz)')], tmin=1, tmax=5, axes=[plt.gca()], outlines='head', vlim=(0, 0.1), cmap='seismic')
+epochs.plot_psd_topomap(ch_type='eeg', normalize=True, bands=[(8, 12, 'Alpha Band (8-12 Hz)')], 
+        tmin=1, tmax=5, axes=[plt.gca()], outlines='head', vlim=(0, 0.1), cmap='seismic')
 ```
 <img src="img/topo.png" width="500">
 <img src="img/tfr.png" width="1000">
