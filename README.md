@@ -10,7 +10,8 @@ Please follow the instructions below.
 #### 1. Download Repository ####
 
 1) Git clone this repository to your machine OR download the ZIP folder and extract the files (recommend downloading the ZIP!)
-2) Pip install the package into your python environment
+2) Go get a coffee while the repository downloads. Then go get another coffee while it unzips.
+3) Pip install the package into your python environment
 
 # Usage
 
