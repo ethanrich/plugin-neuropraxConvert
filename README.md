@@ -1,7 +1,7 @@
 # tool-neuropraxpy
 This is a CLI (command line interface) tool to read binary files from NEURO PRAX (.EEG/.EE_ files) and parse them into Python dictionaries. Python wraps a module of MATLAB scripts for converting the binary files to .mat format. The hard work was done for me. Functionality is currently limited to Windows. If there is a bug, please raise an Issue.
 
-Note: the repository is ~2.14 GB in size. Please give it time to clone/download and extract. You're downloading all the Octave libraries without actually installing it. 
+Note: the repository is ~2.14 GB in size. Please give it time to clone/download and extract. The tool includes all the libraries Octave uses without actually installing Octave. 
 
 Please follow the instructions below.
 
